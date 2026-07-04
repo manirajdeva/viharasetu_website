@@ -52,16 +52,17 @@
   }
 
   .nav-logo-mark {
-    width: 48px; height: 48px; object-fit: contain;
+    width: 62px; height: 62px; object-fit: contain;
     border-radius: 50%;
-    padding: 0.35rem;
+    padding: 0.4rem;
     background: linear-gradient(135deg, var(--saffron-light), var(--white));
-    box-shadow: 0 8px 24px rgba(200,97,26,0.18);
+    box-shadow: 0 10px 28px rgba(200,97,26,0.18);
   }
 
   .nav-logo-text {
     display: flex; flex-direction: column;
     line-height: 1.05;
+    gap: 0.05rem;
   }
 
   .nav-logo {
@@ -782,9 +783,21 @@
     margin-bottom: 2rem;
   }
 
+  .footer-brand-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-brand-text {
+    max-width: 38ch;
+  }
+
   .footer-brand {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: var(--cream);
     letter-spacing: 0.06em;
@@ -797,7 +810,17 @@
     color: rgba(250,246,240,0.4);
     letter-spacing: 0.1em;
     line-height: 1.7;
-    max-width: 28ch;
+    max-width: 38ch;
+  }
+
+  .footer-logo-small {
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    border-radius: 18px;
+    padding: 0.55rem;
+    background: linear-gradient(135deg, var(--saffron-light), var(--white));
+    box-shadow: 0 12px 30px rgba(200,97,26,0.2);
   }
 
   .footer-col-title {
@@ -957,8 +980,8 @@
       <img src="images/varanasi_main_image.jpg" alt="Varanasi ghats at dawn" />
       <div class="hero-img-overlay"></div>
       <div class="hero-badge">
-        <span class="hero-badge-text">"Where the Ganges speaks in light"</span>
-        <span class="hero-badge-sub">Varanasi, Uttar Pradesh</span>
+        <span class="hero-badge-text">"    Where the Ganges speaks in light"</span>
+        <span class="hero-badge-sub">"    Varanasi, Uttar Pradesh"</span>
       </div>
     </div>
   </div>
@@ -1201,14 +1224,13 @@
 <footer>
   <div class="footer-top">
     <div>
-      <a class="nav-brand" href="#" style="margin-bottom:0.8rem;">
-        <img class="nav-logo-mark" src="images/Logo.png" alt="Viharasetu logo" style="width:42px;height:42px;" />
-        <span class="nav-logo-text">
-          <span class="nav-logo" style="color:var(--cream); font-size:1.3rem;">Viharasetu</span>
-          <span class="nav-logo-sub" style="color:rgba(250,246,240,0.45);">Sacred Departures</span>
-        </span>
-      </a>
-      <p class="footer-brand-tagline">Bridging the sacred and the seeker. Journeys through India's spiritual heartlands, crafted with reverence and care since 2014.</p>
+      <div class="footer-brand-block">
+        <div class="footer-brand-text">
+          <span class="footer-brand">Viharasetu</span>
+          <p class="footer-brand-tagline">Bridging the sacred and the seeker. Journeys through India's spiritual heartlands, crafted with reverence and care since 2014.</p>
+        </div>
+        <img class="footer-logo-small" src="images/Logo.png" alt="Viharasetu logo" />
+      </div>
     </div>
     <div>
       <p class="footer-col-title">Explore</p>
