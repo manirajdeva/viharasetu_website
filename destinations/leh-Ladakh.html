@@ -191,10 +191,72 @@
     background:var(--ink);
   }
 
+  /* Highlights Grid */
+  .highlights {
+    margin: 56px 0;
+  }
+  .highlights h2 {
+    margin-bottom: 32px;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .highlight-block {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  .highlight-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: -0.3px;
+  }
+  .highlight-block ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style: none;
+  }
+  .highlight-block li {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: var(--ink-soft);
+    position: relative;
+    padding-left: 10px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  .highlight-block li:before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @media (max-width: 860px){
     .gallery{ grid-template-columns: repeat(2, 1fr); grid-auto-rows:120px; }
     .g-big{ grid-column: span 2; grid-row: span 1; height:220px; }
     .cards{ grid-template-columns: 1fr; }
+    .highlights-grid{ grid-template-columns: 1fr; }
     h1{ font-size:36px; }
   }
 </style>
@@ -280,6 +342,274 @@
       </div>
     </div>
 
+    <div class="highlights">
+      <h2>Explore Leh Ladakh</h2>
+      <div class="highlights-grid">
+
+        <div class="highlight-block">
+          <h3>⭐ Must-Visit Attractions</h3>
+          <ul>
+            <li>Pangong Lake ⭐</li>
+            <li>Nubra Valley ⭐</li>
+            <li>Khardung La Pass ⭐</li>
+            <li>Magnetic Hill ⭐</li>
+            <li>Shanti Stupa ⭐</li>
+            <li>Leh Palace ⭐</li>
+            <li>Tso Moriri Lake ⭐</li>
+            <li>Hall of Fame Museum</li>
+            <li>Sangam (Indus & Zanskar Rivers)</li>
+            <li>Lamayuru Monastery</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🛕 Famous Monasteries</h3>
+          <ul>
+            <li>Hemis Monastery ⭐</li>
+            <li>Thiksey Monastery ⭐</li>
+            <li>Diskit Monastery ⭐</li>
+            <li>Lamayuru Monastery ⭐</li>
+            <li>Alchi Monastery ⭐</li>
+            <li>Spituk Monastery</li>
+            <li>Likir Monastery</li>
+            <li>Shey Monastery</li>
+            <li>Phyang Monastery</li>
+            <li>Stakna Monastery</li>
+            <li>Matho Monastery</li>
+            <li>Rizong Monastery</li>
+            <li>Takthok Monastery</li>
+            <li>Chemrey Monastery</li>
+            <li>Basgo Monastery</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🏰 Historical Places</h3>
+          <ul>
+            <li>Leh Palace ⭐</li>
+            <li>Shey Palace</li>
+            <li>Basgo Fort</li>
+            <li>Namgyal Tsemo Monastery</li>
+            <li>Leh Old Town</li>
+            <li>Zorawar Fort</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🌊 Famous Lakes</h3>
+          <ul>
+            <li>Pangong Lake ⭐</li>
+            <li>Tso Moriri ⭐</li>
+            <li>Tso Kar Lake</li>
+            <li>Yarab Tso</li>
+            <li>Kyagar Tso</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🏔️ Mountain Passes</h3>
+          <ul>
+            <li>Khardung La ⭐</li>
+            <li>Chang La ⭐</li>
+            <li>Fotu La</li>
+            <li>Namika La</li>
+            <li>Zoji La</li>
+            <li>Taglang La</li>
+            <li>Wari La</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🏞️ Valleys</h3>
+          <ul>
+            <li>Nubra Valley ⭐</li>
+            <li>Sham Valley</li>
+            <li>Zanskar Valley ⭐</li>
+            <li>Suru Valley</li>
+            <li>Indus Valley</li>
+            <li>Markha Valley</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🌉 Rivers & Viewpoints</h3>
+          <ul>
+            <li>Indus River</li>
+            <li>Zanskar River</li>
+            <li>Sangam View Point ⭐</li>
+            <li>Magnetic Hill</li>
+            <li>Moonland (Lamayuru)</li>
+            <li>Gurudwara Pathar Sahib</li>
+            <li>Sindhu Ghat</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🌄 Nature & Scenic Places</h3>
+          <ul>
+            <li>Pangong Sunrise</li>
+            <li>Tso Moriri Sunrise</li>
+            <li>Hunder Sand Dunes ⭐</li>
+            <li>Diskit View Point</li>
+            <li>Moonland</li>
+            <li>Shayok River</li>
+            <li>Drass Valley</li>
+            <li>Kargil Viewpoints</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🏕️ Adventure Activities</h3>
+          <ul>
+            <li>Camel Safari ⭐</li>
+            <li>ATV Ride</li>
+            <li>River Rafting</li>
+            <li>Trekking</li>
+            <li>Camping</li>
+            <li>Mountain Biking</li>
+            <li>Off-road Jeep Safari</li>
+            <li>Photography Tours</li>
+            <li>Stargazing</li>
+            <li>Motorbike Expedition</li>
+            <li>Ice Hockey (Winter)</li>
+            <li>Snow Trekking</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🛣️ Famous Roads</h3>
+          <ul>
+            <li>Leh–Manali Highway ⭐</li>
+            <li>Leh–Srinagar Highway ⭐</li>
+            <li>Khardung La Road</li>
+            <li>Pangong Route</li>
+            <li>Nubra Valley Road</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🏜️ Desert Attractions</h3>
+          <ul>
+            <li>Hunder Sand Dunes ⭐</li>
+            <li>Double-Humped Camel Ride ⭐</li>
+            <li>Diskit Village</li>
+            <li>Nubra River Banks</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🛍️ Shopping</h3>
+          <ul>
+            <li>Leh Main Market ⭐</li>
+            <li>Tibetan Market</li>
+            <li>Moti Market</li>
+            <li>Local Handicraft Shops</li>
+            <li>Pashmina Shawl Stores</li>
+            <li>Prayer Flag Shops</li>
+            <li>Silver Jewelry Stores</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🍛 Famous Food</h3>
+          <ul>
+            <li>Thukpa ⭐</li>
+            <li>Momos ⭐</li>
+            <li>Skyu</li>
+            <li>Tingmo</li>
+            <li>Chhurpi</li>
+            <li>Butter Tea</li>
+            <li>Yak Cheese</li>
+            <li>Apricot Jam</li>
+            <li>Ladakhi Thali</li>
+            <li>Local Barley Dishes</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🎉 Festivals</h3>
+          <ul>
+            <li>Hemis Festival ⭐</li>
+            <li>Losar Festival ⭐</li>
+            <li>Ladakh Festival</li>
+            <li>Dosmoche Festival</li>
+            <li>Sindhu Darshan Festival</li>
+            <li>Buddha Purnima</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>📍 Nearby Attractions</h3>
+          <ul>
+            <li>Kargil ⭐</li>
+            <li>Drass</li>
+            <li>Lamayuru</li>
+            <li>Alchi Village</li>
+            <li>Turtuk Village ⭐</li>
+            <li>Hanle Observatory ⭐</li>
+            <li>Chumathang Hot Springs</li>
+            <li>Dha-Hanu Village</li>
+            <li>Aryan Valley</li>
+            <li>Umling La Pass</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>📸 Best Photography Spots</h3>
+          <ul>
+            <li>Pangong Lake</li>
+            <li>Shanti Stupa</li>
+            <li>Khardung La</li>
+            <li>Nubra Valley</li>
+            <li>Hunder Sand Dunes</li>
+            <li>Tso Moriri</li>
+            <li>Leh Palace</li>
+            <li>Thiksey Monastery</li>
+            <li>Magnetic Hill</li>
+            <li>Sangam</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>⭐ Top 15 Must-Visit Places</h3>
+          <ul>
+            <li>Pangong Lake</li>
+            <li>Nubra Valley</li>
+            <li>Khardung La Pass</li>
+            <li>Shanti Stupa</li>
+            <li>Leh Palace</li>
+            <li>Thiksey Monastery</li>
+            <li>Hemis Monastery</li>
+            <li>Diskit Monastery</li>
+            <li>Hunder Sand Dunes</li>
+            <li>Magnetic Hill</li>
+            <li>Sangam (Indus & Zanskar)</li>
+            <li>Tso Moriri Lake</li>
+            <li>Alchi Monastery</li>
+            <li>Lamayuru Monastery</li>
+            <li>Turtuk Village</li>
+          </ul>
+        </div>
+
+        <div class="highlight-block">
+          <h3>🌟 Hidden Gems</h3>
+          <ul>
+            <li>Hanle Observatory</li>
+            <li>Umling La (World's Highest Motorable Road)</li>
+            <li>Chumathang Hot Springs</li>
+            <li>Yarab Tso</li>
+            <li>Aryan Valley</li>
+            <li>Dha-Hanu Villages</li>
+            <li>Tso Kar Lake</li>
+            <li>Sumur Village</li>
+            <li>Panamik Hot Springs</li>
+            <li>Basgo Village</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
     <div class="social">
       <p>Have questions about this trip? Reach out to us directly.</p>
       <div class="social-buttons">
@@ -299,5 +629,29 @@
     </div>
 
   </div>
-</body>
+
+  <script>
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const block = entry.target;
+          const delay = Array.from(block.parentElement.children).indexOf(block) * 80;
+          block.style.animationDelay = delay + 'ms';
+          
+          // Stagger list items
+          const listItems = block.querySelectorAll('li');
+          listItems.forEach((item, index) => {
+            item.style.animationDelay = (delay + (index * 40)) + 'ms';
+          });
+          
+          observer.unobserve(block);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('h1, h2, .intro, .experiences, .highlight-block, .card').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 </html>
