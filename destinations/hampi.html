@@ -95,6 +95,42 @@
   }
   .experiences li{ margin-bottom:8px; }
 
+  .hampi-highlights{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:32px;
+    margin-bottom:44px;
+  }
+
+  .highlight-block{
+    background: rgba(255,255,255,0.9);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .highlight-block h2{
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .highlight-block ol,
+  .highlight-block ul{
+    margin: 0;
+    padding-left: 20px;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .highlight-block li{ margin-bottom: 8px; }
+
+  @media (max-width: 900px){
+    .hampi-highlights{
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* Itinerary cards */
   .itineraries h2{ margin-bottom:6px; }
   .itineraries .sub{
@@ -252,117 +288,137 @@
     </div>
 
     <div class="hampi-highlights">
-      <h2>⭐ Must-Visit Attractions</h2>
-      <ol>
-        <li>Virupaksha Temple ⭐</li>
-        <li>Vittala Temple ⭐</li>
-        <li>Stone Chariot ⭐</li>
-        <li>Hampi Bazaar</li>
-        <li>Hemakuta Hill</li>
-        <li>Matanga Hill</li>
-        <li>Sasivekalu Ganesha</li>
-        <li>Kadalekalu Ganesha</li>
-        <li>Lakshmi Narasimha Statue</li>
-        <li>Badavilinga Temple</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>⭐ Must-Visit Attractions</h2>
+        <ol>
+          <li>Virupaksha Temple ⭐</li>
+          <li>Vittala Temple ⭐</li>
+          <li>Stone Chariot ⭐</li>
+          <li>Hampi Bazaar</li>
+          <li>Hemakuta Hill</li>
+          <li>Matanga Hill</li>
+          <li>Sasivekalu Ganesha</li>
+          <li>Kadalekalu Ganesha</li>
+          <li>Lakshmi Narasimha Statue</li>
+          <li>Badavilinga Temple</li>
+        </ol>
+      </div>
 
-      <h2>🛕 Famous Temples</h2>
-      <ol>
-        <li>Virupaksha Temple</li>
-        <li>Vittala Temple</li>
-        <li>Achyutaraya Temple</li>
-        <li>Hazara Rama Temple</li>
-        <li>Krishna Temple</li>
-        <li>Pattabhirama Temple</li>
-        <li>Chandramouleshwara Temple</li>
-        <li>Underground Shiva Temple</li>
-        <li>Kodandarama Temple</li>
-        <li>Malyavanta Raghunatha Temple</li>
-        <li>Jain Temples</li>
-        <li>Badavilinga Temple</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🛕 Famous Temples</h2>
+        <ol>
+          <li>Virupaksha Temple</li>
+          <li>Vittala Temple</li>
+          <li>Achyutaraya Temple</li>
+          <li>Hazara Rama Temple</li>
+          <li>Krishna Temple</li>
+          <li>Pattabhirama Temple</li>
+          <li>Chandramouleshwara Temple</li>
+          <li>Underground Shiva Temple</li>
+          <li>Kodandarama Temple</li>
+          <li>Malyavanta Raghunatha Temple</li>
+          <li>Jain Temples</li>
+          <li>Badavilinga Temple</li>
+        </ol>
+      </div>
 
-      <h2>🏰 Royal Enclosure</h2>
-      <ol>
-        <li>Royal Enclosure ⭐</li>
-        <li>Mahanavami Dibba</li>
-        <li>Stepped Tank</li>
-        <li>King's Audience Hall</li>
-        <li>Queen's Bath</li>
-        <li>Treasury Building</li>
-        <li>Secret Chamber</li>
-        <li>Underground Chamber</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🏰 Royal Enclosure</h2>
+        <ol>
+          <li>Royal Enclosure ⭐</li>
+          <li>Mahanavami Dibba</li>
+          <li>Stepped Tank</li>
+          <li>King's Audience Hall</li>
+          <li>Queen's Bath</li>
+          <li>Treasury Building</li>
+          <li>Secret Chamber</li>
+          <li>Underground Chamber</li>
+        </ol>
+      </div>
 
-      <h2>👑 Zenana Enclosure</h2>
-      <ol>
-        <li>Lotus Mahal ⭐</li>
-        <li>Elephant Stables ⭐</li>
-        <li>Watch Towers</li>
-        <li>Queen's Palace</li>
-        <li>Guard Rooms</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>👑 Zenana Enclosure</h2>
+        <ol>
+          <li>Lotus Mahal ⭐</li>
+          <li>Elephant Stables ⭐</li>
+          <li>Watch Towers</li>
+          <li>Queen's Palace</li>
+          <li>Guard Rooms</li>
+        </ol>
+      </div>
 
-      <h2>🪨 Monuments & Sculptures</h2>
-      <ol>
-        <li>Stone Chariot ⭐</li>
-        <li>Lakshmi Narasimha Statue</li>
-        <li>Badavilinga</li>
-        <li>Sasivekalu Ganesha</li>
-        <li>Kadalekalu Ganesha</li>
-        <li>Yantrodharaka Hanuman Temple</li>
-        <li>Monolithic Bull (Nandi)</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🪨 Monuments & Sculptures</h2>
+        <ol>
+          <li>Stone Chariot ⭐</li>
+          <li>Lakshmi Narasimha Statue</li>
+          <li>Badavilinga</li>
+          <li>Sasivekalu Ganesha</li>
+          <li>Kadalekalu Ganesha</li>
+          <li>Yantrodharaka Hanuman Temple</li>
+          <li>Monolithic Bull (Nandi)</li>
+        </ol>
+      </div>
 
-      <h2>🌄 Hills & Viewpoints</h2>
-      <ol>
-        <li>Matanga Hill ⭐</li>
-        <li>Hemakuta Hill ⭐</li>
-        <li>Anjanadri Hill (Hanuman Birthplace) ⭐</li>
-        <li>Malyavanta Hill</li>
-        <li>Hippie Island Viewpoint</li>
-        <li>Sunset Point</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🌄 Hills & Viewpoints</h2>
+        <ol>
+          <li>Matanga Hill ⭐</li>
+          <li>Hemakuta Hill ⭐</li>
+          <li>Anjanadri Hill (Hanuman Birthplace) ⭐</li>
+          <li>Malyavanta Hill</li>
+          <li>Hippie Island Viewpoint</li>
+          <li>Sunset Point</li>
+        </ol>
+      </div>
 
-      <h2>🌊 Rivers & Nature</h2>
-      <ol>
-        <li>Tungabhadra River ⭐</li>
-        <li>Coracle Boat Ride</li>
-        <li>Riverside Ruins</li>
-        <li>Kodanda Rama Riverbank</li>
-        <li>Sanapur Lake</li>
-        <li>Daroji Bear Sanctuary</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🌊 Rivers & Nature</h2>
+        <ol>
+          <li>Tungabhadra River ⭐</li>
+          <li>Coracle Boat Ride</li>
+          <li>Riverside Ruins</li>
+          <li>Kodanda Rama Riverbank</li>
+          <li>Sanapur Lake</li>
+          <li>Daroji Bear Sanctuary</li>
+        </ol>
+      </div>
 
-      <h2>🏺 Archaeological Sites</h2>
-      <ol>
-        <li>Hampi Archaeological Museum</li>
-        <li>King's Balance</li>
-        <li>Noblemen's Quarters</li>
-        <li>Octagonal Bath</li>
-        <li>Mint Area</li>
-        <li>Pushkarani (Stepped Tank)</li>
-        <li>Ancient Aqueducts</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🏺 Archaeological Sites</h2>
+        <ol>
+          <li>Hampi Archaeological Museum</li>
+          <li>King's Balance</li>
+          <li>Noblemen's Quarters</li>
+          <li>Octagonal Bath</li>
+          <li>Mint Area</li>
+          <li>Pushkarani (Stepped Tank)</li>
+          <li>Ancient Aqueducts</li>
+        </ol>
+      </div>
 
-      <h2>🏛️ Historic Buildings</h2>
-      <ol>
-        <li>Queen's Bath</li>
-        <li>Elephant Stables</li>
-        <li>Lotus Mahal</li>
-        <li>King's Palace Foundation</li>
-        <li>Royal Mint</li>
-        <li>Public Durbar Area</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🏛️ Historic Buildings</h2>
+        <ol>
+          <li>Queen's Bath</li>
+          <li>Elephant Stables</li>
+          <li>Lotus Mahal</li>
+          <li>King's Palace Foundation</li>
+          <li>Royal Mint</li>
+          <li>Public Durbar Area</li>
+        </ol>
+      </div>
 
-      <h2>🌅 Best Sunrise & Sunset Points</h2>
-      <ol>
-        <li>Matanga Hill ⭐</li>
-        <li>Hemakuta Hill</li>
-        <li>Anjanadri Hill</li>
-        <li>Tungabhadra River</li>
-        <li>Sanapur Lake</li>
-      </ol>
+      <div class="highlight-block">
+        <h2>🌅 Best Sunrise & Sunset Points</h2>
+        <ol>
+          <li>Matanga Hill ⭐</li>
+          <li>Hemakuta Hill</li>
+          <li>Anjanadri Hill</li>
+          <li>Tungabhadra River</li>
+          <li>Sanapur Lake</li>
+        </ol>
+      </div>
     </div>
 
     <div class="itineraries">
