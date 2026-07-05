@@ -195,6 +195,24 @@
     background:var(--ink);
   }
 
+  .top-header{
+    display:flex;
+    justify-content:center;   /* Change to flex-start for left alignment */
+    align-items:center;
+    padding:20px 0;
+}
+
+.logo{
+    width:400px;
+    height:auto;
+    cursor:pointer;
+    transition:transform .3s ease;
+}
+
+.logo:hover{
+    transform:scale(1.05);
+}
+
   @media (max-width: 900px){
     .grid{ grid-template-columns: repeat(2, 1fr); }
   }
@@ -207,11 +225,12 @@
 <body>
   <div class="wrap">
 
-    <div class="hero">
-      <div class="eyebrow">Vihara Setu</div>
-      <h1>Incredible India, Curated</h1>
-      <p>Ten sacred rivers, imperial forts, moon-like deserts, and ancient ruins — explore our most-loved destinations across India and pick your itinerary.</p>
-    </div>
+    <header class="top-header">
+    <a href="../../index.html">
+        <img src="../../images/Logo_hor.png" alt="Vihara Setu Logo" class="logo">
+    </a>
+</header>
+
 
     <h2 class="section-title">North &amp; Central India</h2>
     <div class="grid">
