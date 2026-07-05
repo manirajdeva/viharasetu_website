@@ -1206,18 +1206,45 @@
     <p class="newsletter-sub">Share your dream destination and we'll craft a journey that transforms it. No package tours — only pilgrimages shaped around you.</p>
   </div>
 
-  <div class="newsletter-form">
-    <div class="form-row">
-      <input class="nl-input" type="text" placeholder="Your Name" />
-      <input class="nl-input" type="email" placeholder="Email Address" />
-    </div>
-    <input class="nl-input" type="text" placeholder="Dream Destination (e.g. Varanasi, Ladakh, Kerala...)" />
-    <div class="form-row">
-      <input class="nl-input" type="text" placeholder="Travel Dates / Duration" />
-      <button class="nl-btn">Send Enquiry →</button>
-    </div>
-    <p class="nl-note">We respond within 24 hours. No spam, ever.</p>
+
+  <form id="contactForm" class="newsletter-form">
+
+  <div class="form-row">
+    <input id="name" class="nl-input" type="text" placeholder="Your Name" required>
+
+    <input id="email" class="nl-input" type="email" placeholder="Email Address" required>
   </div>
+
+  <input
+    id="phone"
+    class="nl-input"
+    type="tel"
+    placeholder="Contact Number"
+    required>
+
+  <input id="destination"
+         class="nl-input"
+         type="text"
+         placeholder="Dream Destination (e.g. Varanasi, Ladakh, Kerala...)"
+         required>
+
+  <div class="form-row">
+    <input id="travel"
+           class="nl-input"
+           type="text"
+           placeholder="Travel Dates / Duration"
+           required>
+
+    <button type="submit" class="nl-btn">
+      Send Enquiry →
+    </button>
+  </div>
+
+  <p class="nl-note">
+      We respond within 24 hours. No spam, ever.
+  </p>
+
+</form>
 </section>
 
 <!-- FOOTER -->
@@ -1276,7 +1303,7 @@
 
 <script>
   const testimonials = [
-    { quote: '"Viharasetu didn\'t just plan a trip — they handed me a lens through which India became luminous. Every detail held meaning. Every moment, unhurried grace."', author: '— Amara Osei, London' },
+    { quote: '"Viharasetu didn\'t just plan a trip — they handed me a lens through which India became luminous. Every detail held meaning. Every moment, unhurried grace."', author: '— First customer of Viharasetu' },
     { quote: '"The Ladakh itinerary was beyond anything I could have imagined. Silent mornings at 4,000 metres, chanting monks at dusk. I returned a different person."', author: '— Léa Fontaine, Paris' },
     { quote: '"Our family\'s Kerala retreat was the holiday of a lifetime. Viharasetu\'s knowledge of the land and culture is matched only by their warmth."', author: '— Priya Nair, Singapore' },
   ];
@@ -1300,6 +1327,45 @@
     cur = (cur + 1) % testimonials.length;
     dots[cur].click();
   }, 5000);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+emailjs.init({
+    publicKey: "mfNX6UotqC8hxGo2S"
+});
+
+document.getElementById("contactForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+    emailjs.send("service_6rjlxny", "template_sfb4r9q", {
+
+    name: document.getElementById("name").value,
+
+    email: document.getElementById("email").value,
+
+    phone: document.getElementById("phone").value,
+
+    destination: document.getElementById("destination").value,
+
+    travel: document.getElementById("travel").value
+
+  }).then(function () {
+
+        alert("✅ Thank you! Your enquiry has been sent successfully.");
+
+        document.getElementById("contactForm").reset();
+
+    }).catch(function (error) {
+
+        console.error(error);
+
+        alert("❌ Failed to send enquiry. Please try again.");
+
+    });
+
+});
 </script>
 
 </body>
