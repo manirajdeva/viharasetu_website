@@ -318,11 +318,14 @@
         function applyStack(){
           // Clear any inline transforms first
           items.forEach((el)=>{
-            el.style.transitionDelay='0ms';
-            el.style.transform='';
-            el.style.opacity='';
+            el.style.transition = 'none';
+            el.style.transitionDelay = '0ms';
+            el.style.transform = '';
+            el.style.opacity = '';
             el.classList.remove('stacked-top');
           });
+          // Force reflow to ensure styles are applied
+          void gallery.offsetHeight;
           // mark stacked state and show only the first item as circular top
           gallery.classList.add('is-stacked');
           if(items[0]){
@@ -331,17 +334,26 @@
         }
 
         function releaseStack(){
-          // remove stacked-top marker and let column layout take effect
+          // Add transition before releasing
           items.forEach((el, i) => {
+            el.style.transition = 'opacity 500ms ease, transform 700ms cubic-bezier(.22,.61,.36,1)';
             el.style.transitionDelay = (i * 45) + 'ms';
             el.classList.remove('stacked-top');
-            // ensure images flow back into layout: clear positioning-related inline styles
+            // Clear positioning-related inline styles to let CSS handle it
             el.style.transform = '';
             el.style.opacity = '';
             el.style.pointerEvents = '';
             el.style.position = '';
           });
           gallery.classList.remove('is-stacked');
+          
+          // Clear inline styles after animation completes
+          setTimeout(() => {
+            items.forEach(el => {
+              el.style.transition = '';
+              el.style.transitionDelay = '';
+            });
+          }, 1500);
         }
 
         // apply stack once layout is stable
