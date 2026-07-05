@@ -50,35 +50,33 @@
     margin-bottom:36px;
   }
 
-  /* Gallery: show images at their natural aspect ratio (no cropping) */
+  /* Gallery: Masonry-style columns to avoid vertical gaps */
   .gallery{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
+    column-count: 4;
+    column-gap: 10px;
     margin-bottom:56px;
-    align-items:flex-start;
   }
   .gallery a{
-    display:block;
-    flex: 1 1 calc((100% - 30px)/4);
+    display:inline-block;
+    width:100%;
+    margin:0 0 10px;
     border-radius:10px;
     overflow:hidden;
     text-decoration:none;
-    background:transparent;
+    break-inside: avoid;
   }
   .gallery img{
     width:100%;
     height:auto;
-    object-fit:unset;
-    border-radius:10px;
     display:block;
+    border-radius:10px;
     transition: transform .35s ease, filter .25s ease;
   }
   .gallery a:hover img{
     transform: scale(1.02);
     filter: brightness(1.03);
   }
-  .g-big{ flex-basis: calc((100% - 30px)/2); flex-grow:0; }
+  .g-big{ width:100%; }
 
   /* Signature Experiences */
   h2{
@@ -241,11 +239,15 @@
     background:var(--ink);
   }
 
-  @media (max-width: 860px){
-    .gallery{ grid-template-columns: repeat(2, 1fr); grid-auto-rows:120px; }
-    .g-big{ grid-column: span 2; grid-row: span 1; height:220px; }
+  @media (max-width: 900px){
+    .gallery{ column-count: 2; column-gap: 10px; }
+    .g-big{ width:100%; }
     .cards{ grid-template-columns: 1fr; }
     h1{ font-size:36px; }
+  }
+  @media (max-width: 480px){
+    .gallery{ column-count: 1; }
+    .g-big{ width:100%; }
   }
 </style>
 </head>
