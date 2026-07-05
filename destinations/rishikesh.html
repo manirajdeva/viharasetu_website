@@ -37,45 +37,88 @@
   }
   .back-link:hover{ text-decoration:underline; }
 
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
   h1{
     font-family:'Playfair Display', serif;
     font-weight:800;
     font-size:48px;
     margin:20px 0 14px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
   }
   .intro{
     max-width:640px;
     color:var(--ink-soft);
-    font-size:16px;
+    font-size:17px;
     margin-bottom:36px;
+    line-height: 1.8;
+    font-weight: 400;
+    letter-spacing: 0.3px;
   }
 
-  /* Gallery */
+  /* Gallery: Masonry-style columns to avoid vertical gaps */
   .gallery{
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 140px;
-    gap:10px;
+    column-count: 4;
+    column-gap: 10px;
     margin-bottom:56px;
+  }
+  .gallery a{
+    display:inline-block;
+    width:100%;
+    margin:0 0 10px;
+    border-radius:10px;
+    overflow:hidden;
+    text-decoration:none;
+    break-inside: avoid;
   }
   .gallery img{
     width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:10px;
+    height:auto;
     display:block;
-    transition: transform .45s cubic-bezier(.22,.61,.36,1), filter .45s ease;
+    border-radius:10px;
+    transition: transform .35s ease, filter .25s ease;
   }
   .gallery a{
-    display:block;
-    overflow:hidden;
-    border-radius:10px;
+    transition: transform 700ms cubic-bezier(.22,.61,.36,1), opacity 500ms ease;
+    will-change: transform, opacity;
   }
   .gallery a:hover img{
-    transform: scale(1.08);
-    filter: brightness(1.05);
+    transform: scale(1.02);
+    filter: brightness(1.03);
   }
-  .g-big{ grid-column: span 2; grid-row: span 2; }
+  .g-big{ width:100%; }
 
   /* Signature Experiences */
   h2{
@@ -83,6 +126,8 @@
     font-weight:700;
     font-size:28px;
     margin:0 0 16px;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
   }
   .experiences{
     margin-bottom:44px;
@@ -92,8 +137,13 @@
     padding-left:20px;
     color:var(--ink);
     font-size:16px;
+    line-height: 1.8;
   }
-  .experiences li{ margin-bottom:8px; }
+  .experiences li{ 
+    margin-bottom:12px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
 
   /* Itinerary cards */
   .itineraries h2{ margin-bottom:6px; }
@@ -191,11 +241,15 @@
     background:var(--ink);
   }
 
-  @media (max-width: 860px){
-    .gallery{ grid-template-columns: repeat(2, 1fr); grid-auto-rows:120px; }
-    .g-big{ grid-column: span 2; grid-row: span 1; height:220px; }
+  @media (max-width: 900px){
+    .gallery{ column-count: 2; column-gap: 10px; }
+    .g-big{ width:100%; }
     .cards{ grid-template-columns: 1fr; }
     h1{ font-size:36px; }
+  }
+  @media (max-width: 480px){
+    .gallery{ column-count: 1; }
+    .g-big{ width:100%; }
   }
 </style>
 </head>
@@ -208,37 +262,40 @@
       Rishikesh — riverside yoga towns, pilgrim routes and sacred teachings. We connect you with teachers, river rituals and restorative stays.
     </p>
 
-    <!-- Photo gallery: 10 images -->
+    <!-- Photo gallery: 11 images -->
     <div class="gallery">
-      <a class="g-big" href="https://commons.wikimedia.org/wiki/Special:FilePath/Laxman%20Jhula%2C%20Rishikesh.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Laxman%20Jhula%2C%20Rishikesh.jpg?width=700" alt="Laxman Jhula bridge, Rishikesh">
+      <a class="g-big" href="../images/Rishikesh/r1.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r1.jpg" alt="Rishikesh yoga practice">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Ganga%20Aarti%202022%20at%20Shatrughna%20Ghat%20of%20Muni%20Ki%20Reti%20Rishikesh.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ganga%20Aarti%202022%20at%20Shatrughna%20Ghat%20of%20Muni%20Ki%20Reti%20Rishikesh.jpg?width=400" alt="Ganga Aarti at Muni Ki Reti">
+      <a href="../images/Rishikesh/r2.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r2.jpg" alt="Ganga Aarti ceremony">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Front%20entrance%20of%20the%20Parmarth%20Niketan%2C%20in%20Rishikesh%2C%20Uttarakhand.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Front%20entrance%20of%20the%20Parmarth%20Niketan%2C%20in%20Rishikesh%2C%20Uttarakhand.jpg?width=400" alt="Parmarth Niketan ashram entrance">
+      <a href="../images/Rishikesh/r3.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r3.jpg" alt="Ashram entrance">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Lakshman%20Jhula%20glowing%20in%20the%20sunset%2C%20Rishikesh.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lakshman%20Jhula%20glowing%20in%20the%20sunset%2C%20Rishikesh.jpg?width=400" alt="Lakshman Jhula at sunset">
+      <a href="../images/Rishikesh/r4.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r4.jpg" alt="Sunset bridge">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Beauty%20of%20nature%20in%20Rishikesh.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Beauty%20of%20nature%20in%20Rishikesh.jpg?width=400" alt="Himalayan foothills near Rishikesh">
+      <a href="../images/Rishikesh/r5.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r5.jpg" alt="Himalayan foothills">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Kundalini%20Yoga%20Class%20near%20the%20bank%20of%20ganga%20river.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kundalini%20Yoga%20Class%20near%20the%20bank%20of%20ganga%20river.jpg?width=400" alt="Yoga class by the Ganges">
+      <a href="../images/Rishikesh/r6.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r6.jpg" alt="Yoga class">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Beaches%20in%20rishikesh.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Beaches%20in%20rishikesh.jpg?width=400" alt="Riverside beach in Rishikesh">
+      <a href="../images/Rishikesh/r7.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r7.jpg" alt="Riverside beach">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%2C%20Rishikesh%2C%20India.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bridge%2C%20Rishikesh%2C%20India.jpg?width=400" alt="Suspension bridge, Rishikesh">
+      <a href="../images/Rishikesh/r8.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r8.jpg" alt="Suspension bridge">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/%27The%20Holy%20Ganga%27%20by%20Kaustubh%20Nayyar.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/%27The%20Holy%20Ganga%27%20by%20Kaustubh%20Nayyar.jpg?width=400" alt="The Ganges river at Rishikesh">
+      <a href="../images/Rishikesh/r9.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r9.jpg" alt="Holy Ganges">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Mansa%20devi%20temple.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mansa%20devi%20temple.jpg?width=400" alt="Mansa Devi temple">
+      <a href="../images/Rishikesh/r10.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r10.jpg" alt="Mansa Devi temple">
+      </a>
+      <a href="../images/Rishikesh/r11.jpg" target="_blank" rel="noopener">
+        <img src="../images/Rishikesh/r11.jpg" alt="Rishikesh spiritual site">
       </a>
     </div>
 
@@ -299,5 +356,39 @@
     </div>
 
   </div>
+
+  <script>
+    // Scroll-triggered animations using Intersection Observer
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          // Add staggered delay for multiple elements
+          entry.target.style.animationDelay = (index * 0.1) + 's';
+          entry.target.classList.add('fade-in-up');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all text sections
+    document.addEventListener('DOMContentLoaded', () => {
+      // Observe headings and paragraphs
+      document.querySelectorAll('h1, h2, .intro, .experiences, .card').forEach(el => {
+        observer.observe(el);
+      });
+      
+      // Stagger list items
+      document.querySelectorAll('.experiences li').forEach((li, index) => {
+        li.style.animationDelay = (index * 0.08) + 's';
+        li.classList.add('fade-in-up');
+        observer.observe(li);
+      });
+    });
+  </script>
 </body>
 </html>
