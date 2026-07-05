@@ -145,6 +145,46 @@
     letter-spacing: 0.2px;
   }
 
+  .rishikesh-highlights{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:32px;
+    margin-bottom:44px;
+  }
+
+  .highlight-block{
+    background: rgba(255,255,255,0.9);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .highlight-block h2{
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .highlight-block ol,
+  .highlight-block ul{
+    margin: 0;
+    padding-left: 20px;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.9;
+    font-weight: 400;
+  }
+
+  .highlight-block li{ 
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+  }
+
+  @media (max-width: 900px){
+    .rishikesh-highlights{
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* Itinerary cards */
   .itineraries h2{ margin-bottom:6px; }
   .itineraries .sub{
@@ -308,6 +348,184 @@
       </ul>
     </div>
 
+    <div class="rishikesh-highlights">
+      <div class="highlight-block">
+        <h2>⭐ Must-Visit Attractions</h2>
+        <ol>
+          <li>Triveni Ghat ⭐</li>
+          <li>Laxman Jhula ⭐</li>
+          <li>Ram Jhula ⭐</li>
+          <li>Parmarth Niketan Ashram ⭐</li>
+          <li>Beatles Ashram ⭐</li>
+          <li>Neelkanth Mahadev Temple ⭐</li>
+          <li>Ganga Aarti at Triveni Ghat</li>
+          <li>Janki Setu</li>
+          <li>Shivpuri</li>
+          <li>Kaudiyala</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🛕 Famous Temples</h2>
+        <ol>
+          <li>Neelkanth Mahadev Temple ⭐</li>
+          <li>Bharat Mandir</li>
+          <li>Trayambakeshwar Temple (13-Storey Temple)</li>
+          <li>Raghunath Temple</li>
+          <li>Chandreshwar Mahadev Temple</li>
+          <li>Shatrughna Temple</li>
+          <li>Someshwar Temple</li>
+          <li>Kunjapuri Devi Temple ⭐</li>
+          <li>Veerbhadra Temple</li>
+          <li>Lakshman Temple</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🌊 Famous Ghats</h2>
+        <ol>
+          <li>Triveni Ghat ⭐</li>
+          <li>Parmarth Ghat</li>
+          <li>Gita Bhavan Ghat</li>
+          <li>Shatrughna Ghat</li>
+          <li>Swarg Ashram Ghat</li>
+          <li>Ram Jhula Ghat</li>
+          <li>Laxman Jhula Ghat</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🧘 Ashrams & Yoga Centers</h2>
+        <ol>
+          <li>Parmarth Niketan ⭐</li>
+          <li>Sivananda Ashram</li>
+          <li>Swami Dayananda Ashram</li>
+          <li>Omkarananda Ashram</li>
+          <li>Yoga Niketan</li>
+          <li>Phool Chatti Ashram</li>
+          <li>Himalayan Yog Ashram</li>
+          <li>Anand Prakash Yoga Ashram</li>
+          <li>Osho Ganga Dham</li>
+          <li>Rishikesh Yogpeeth</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🌉 Bridges & Landmarks</h2>
+        <ol>
+          <li>Laxman Jhula ⭐</li>
+          <li>Ram Jhula ⭐</li>
+          <li>Janki Setu</li>
+          <li>Suspension Bridge Viewpoints</li>
+          <li>Marine Drive</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🌄 Waterfalls & Nature</h2>
+        <ol>
+          <li>Neer Garh Waterfall ⭐</li>
+          <li>Patna Waterfall</li>
+          <li>Garud Chatti Waterfall</li>
+          <li>Himshail Waterfall</li>
+          <li>Shivpuri Riverside</li>
+          <li>Kaudiyala</li>
+          <li>Phool Chatti Forest</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🏔️ Viewpoints & Hills</h2>
+        <ol>
+          <li>Kunjapuri Temple Sunrise ⭐</li>
+          <li>Marine Drive Viewpoint</li>
+          <li>Shivpuri Hills</li>
+          <li>Kaudiyala Valley</li>
+          <li>Himalayan Viewpoints</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🚣 Adventure Activities</h2>
+        <ul>
+          <li>River Rafting ⭐</li>
+          <li>Bungee Jumping ⭐</li>
+          <li>Giant Swing</li>
+          <li>Flying Fox</li>
+          <li>Zipline</li>
+          <li>Cliff Jumping</li>
+          <li>Kayaking</li>
+          <li>Camping</li>
+          <li>Trekking</li>
+          <li>Mountain Biking</li>
+          <li>Rock Climbing</li>
+          <li>Body Surfing</li>
+        </ul>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🛶 River Experiences</h2>
+        <ol>
+          <li>Ganga River Rafting ⭐</li>
+          <li>Sunset Boat Ride</li>
+          <li>Riverside Camping</li>
+          <li>Beach Camping</li>
+          <li>Ganga Snan</li>
+          <li>Meditation by the River</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🌳 Wildlife & Parks</h2>
+        <ol>
+          <li>Rajaji National Park ⭐</li>
+          <li>Chilla Range</li>
+          <li>Jungle Safari</li>
+          <li>Bird Watching</li>
+          <li>Elephant Safari (seasonal)</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🏛️ Museums & Cultural Places</h2>
+        <ol>
+          <li>Beatles Ashram ⭐</li>
+          <li>Gita Bhavan</li>
+          <li>Vashishta Cave ⭐</li>
+          <li>Yoga Museums</li>
+          <li>Local Art Galleries</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🛍️ Shopping</h2>
+        <ol>
+          <li>Laxman Jhula Market ⭐</li>
+          <li>Ram Jhula Market</li>
+          <li>Rishikesh Main Bazaar</li>
+          <li>Gita Bhavan Market</li>
+          <li>Handmade Craft Stores</li>
+          <li>Spiritual Book Stores</li>
+        </ol>
+      </div>
+
+      <div class="highlight-block">
+        <h2>🍛 Famous Food</h2>
+        <ul>
+          <li>Chotiwala Restaurant ⭐</li>
+          <li>Aloo Puri</li>
+          <li>North Indian Thali</li>
+          <li>Garhwali Cuisine</li>
+          <li>Ayurvedic Cafés</li>
+          <li>Organic Cafés</li>
+          <li>German Bakery</li>
+          <li>Israeli Cuisine</li>
+          <li>Herbal Tea</li>
+          <li>Ganga View Cafés</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="itineraries">
       <h2>Choose Your Itinerary</h2>
       <p class="sub">Every trip is fully customisable — pick a length to see the day-by-day plan.</p>
@@ -378,12 +596,12 @@
     // Observe all text sections
     document.addEventListener('DOMContentLoaded', () => {
       // Observe headings and paragraphs
-      document.querySelectorAll('h1, h2, .intro, .experiences, .card').forEach(el => {
+      document.querySelectorAll('h1, h2, .intro, .experiences, .highlight-block, .card').forEach(el => {
         observer.observe(el);
       });
       
       // Stagger list items
-      document.querySelectorAll('.experiences li').forEach((li, index) => {
+      document.querySelectorAll('.experiences li, .highlight-block li').forEach((li, index) => {
         li.style.animationDelay = (index * 0.08) + 's';
         li.classList.add('fade-in-up');
         observer.observe(li);
