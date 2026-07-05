@@ -37,17 +37,55 @@
   }
   .back-link:hover{ text-decoration:underline; }
 
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
   h1{
     font-family:'Playfair Display', serif;
     font-weight:800;
     font-size:48px;
     margin:20px 0 14px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
   }
   .intro{
     max-width:640px;
     color:var(--ink-soft);
-    font-size:16px;
+    font-size:17px;
     margin-bottom:36px;
+    line-height: 1.8;
+    font-weight: 400;
+    letter-spacing: 0.3px;
   }
 
   /* Gallery */
@@ -83,6 +121,8 @@
     font-weight:700;
     font-size:28px;
     margin:0 0 16px;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
   }
   .experiences{
     margin-bottom:44px;
@@ -92,8 +132,13 @@
     padding-left:20px;
     color:var(--ink);
     font-size:16px;
+    line-height: 1.8;
   }
-  .experiences li{ margin-bottom:8px; }
+  .experiences li{ 
+    margin-bottom:12px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
 
   .hampi-highlights{
     display:grid;
@@ -120,10 +165,14 @@
     padding-left: 20px;
     color: var(--ink);
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.9;
+    font-weight: 400;
   }
 
-  .highlight-block li{ margin-bottom: 8px; }
+  .highlight-block li{ 
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+  }
 
   @media (max-width: 900px){
     .hampi-highlights{
@@ -246,35 +295,32 @@
 
     <!-- Photo gallery: 10 images -->
     <div class="gallery">
-      <a class="g-big" href="https://commons.wikimedia.org/wiki/Special:FilePath/Hampi%20chariot.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hampi%20chariot.jpg?width=700" alt="The Stone Chariot at Vittala Temple">
+      <a class="g-big" href="../images/Hampi/h1.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h1.jpg" alt="Hampi temple ruins">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Courtyard%20at%20Virupaksha%20Temple.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Courtyard%20at%20Virupaksha%20Temple.jpg?width=400" alt="Courtyard, Virupaksha Temple">
+      <a href="../images/Hampi/h2.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h2.jpg" alt="Hampi architecture">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/The%20old%20tree%20at%20the%20famous%20Vijaya%20-%20Vitthala%20temple%2C%20Hampi%2C%20India.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20old%20tree%20at%20the%20famous%20Vijaya%20-%20Vitthala%20temple%2C%20Hampi%2C%20India.jpg?width=400" alt="Vittala Temple grounds">
+      <a href="../images/Hampi/h3.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h3.jpg" alt="Hampi landscape">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Beautiful%20view%20of%20Virupaksha%20temple%20around%2014th%20century%20AD%20in%20Hampi%20of%20Vijayanagara%20in%20Medival%20India.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Beautiful%20view%20of%20Virupaksha%20temple%20around%2014th%20century%20AD%20in%20Hampi%20of%20Vijayanagara%20in%20Medival%20India.jpg?width=400" alt="Virupaksha Temple gopuram">
+      <a href="../images/Hampi/h4.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h4.jpg" alt="Hampi heritage site">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Grand%20Stone%20chariot%20in%20the%20midst%20of%20Mantapas%20at%20Vittala%20Temple%2C%20Hampi.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Grand%20Stone%20chariot%20in%20the%20midst%20of%20Mantapas%20at%20Vittala%20Temple%2C%20Hampi.jpg?width=400" alt="Stone Chariot among the mantapas">
+      <a href="../images/Hampi/h5.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h5.jpg" alt="Hampi ruins">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Virupaksha%20Temple%2CHampi.JPG" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Virupaksha%20Temple%2CHampi.JPG?width=400" alt="Virupaksha Temple">
+      <a href="../images/Hampi/h6.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h6.jpg" alt="Hampi temple complex">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Virupaksha%20temple%20main%20Rajagopuram%2C%20Hampi.JPG" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Virupaksha%20temple%20main%20Rajagopuram%2C%20Hampi.JPG?width=400" alt="Main gopuram, Virupaksha Temple">
+      <a href="../images/Hampi/h7.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h7.jpg" alt="Hampi ancient city">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20chanting%20house%2C%20Vittala%20temple%2C%20Hampi%2C%20Vijayanagara%2C%20Karnataka%20%282018%29.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20chanting%20house%2C%20Vittala%20temple%2C%20Hampi%2C%20Vijayanagara%2C%20Karnataka%20%282018%29.jpg?width=400" alt="Chanting house, Vittala Temple">
+      <a href="../images/Hampi/h8.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h8.jpg" alt="Hampi monuments">
       </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Vijay%20Vittal%20Temple%20Premises-Hampi.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Vijay%20Vittal%20Temple%20Premises-Hampi.jpg?width=400" alt="Vittala Temple premises">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Talarighatta%20Hebbagilu%20%2801%29.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Talarighatta%20Hebbagilu%20%2801%29.jpg?width=400" alt="Riverside steps near Hampi">
+      <a href="../images/Hampi/h9.jpg" target="_blank" rel="noopener">
+        <img src="../images/Hampi/h9.jpg" alt="Hampi archaeological site">
       </a>
     </div>
 
@@ -469,5 +515,39 @@
     </div>
 
   </div>
+
+  <script>
+    // Scroll-triggered animations using Intersection Observer
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          // Add staggered delay for multiple elements
+          entry.target.style.animationDelay = (index * 0.1) + 's';
+          entry.target.classList.add('fade-in-up');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all text sections
+    document.addEventListener('DOMContentLoaded', () => {
+      // Observe headings and paragraphs
+      document.querySelectorAll('h1, h2, .intro, .experiences, .highlight-block, .card').forEach(el => {
+        observer.observe(el);
+      });
+      
+      // Stagger list items
+      document.querySelectorAll('.experiences li, .highlight-block li').forEach((li, index) => {
+        li.style.animationDelay = (index * 0.08) + 's';
+        li.classList.add('fade-in-up');
+        observer.observe(li);
+      });
+    });
+  </script>
 </body>
 </html>
