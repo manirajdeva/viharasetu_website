@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incredible India — Top Destinations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F1EA;
+    --ink: #26221C;
+    --ink-soft: #5C554A;
+    --accent: #BB5A34;
+    --accent-dark: #9C4826;
+    --card: #FFFFFF;
+    --line: #E4DECF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:48px 24px 80px;
+  }
+
+  /* Hero */
+  .hero{
+    text-align:center;
+    max-width:720px;
+    margin:0 auto 52px;
+  }
+  .hero .eyebrow{
+    color:var(--accent);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:52px;
+    margin:0 0 16px;
+  }
+  .hero p{
+    color:var(--ink-soft);
+    font-size:17px;
+    margin:0;
+  }
+
+  /* Destination grid */
+  .section-title{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:26px;
+    margin:0 0 20px;
+  }
+  .section-title:not(:first-of-type){
+    margin-top:56px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:30px;
+  }
+  .dest-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .dest-card:hover{
+    transform:translateY(-6px);
+    box-shadow: 0 14px 30px rgba(38,34,28,0.12);
+  }
+  .dest-card .thumb{
+    position:relative;
+    height:200px;
+    overflow:hidden;
+  }
+  .dest-card .thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .dest-card:hover .thumb img{
+    transform: scale(1.09);
+  }
+  .dest-card .thumb .tag{
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:rgba(38,34,28,0.72);
+    color:#fff;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:999px;
+  }
+  .dest-card .body{
+    padding:20px 22px 22px;
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+  }
+  .dest-card h3{
+    font-family:'Playfair Display', serif;
+    font-size:22px;
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  .dest-card p.tagline{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 16px;
+    flex-grow:1;
+  }
+  .dest-card .meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+  .dest-card .meta .from{
+    font-weight:700;
+    color:var(--ink);
+  }
+  .dest-card .meta .explore{
+    color:var(--accent);
+    font-weight:600;
+  }
+  .dest-card:hover .meta .explore{
+    color:var(--accent-dark);
+  }
+
+  /* Social / contact footer */
+  .social{
+    margin-top:64px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  .social p{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 16px;
+  }
+  .social-buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .social-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:12px 22px;
+    border-radius:999px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    color:#fff;
+    transition:opacity .15s ease;
+  }
+  .social-btn:hover{ opacity:0.9; }
+  .social-btn svg{ width:18px; height:18px; flex-shrink:0; }
+  .social-btn.instagram{
+    background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);
+  }
+  .social-btn.whatsapp{
+    background:#25D366;
+  }
+  .social-btn.email{
+    background:var(--ink);
+  }
+
+  @media (max-width: 900px){
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px){
+    .grid{ grid-template-columns: 1fr; }
+    h1{ font-size:38px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">Vihara Setu</div>
+      <h1>Incredible India, Curated</h1>
+      <p>Ten sacred rivers, imperial forts, moon-like deserts, and ancient ruins — explore our most-loved destinations across India and pick your itinerary.</p>
+    </div>
+
+    <h2 class="section-title">North &amp; Central India</h2>
+    <div class="grid">
+
+      <a class="dest-card" href="../varanasi.html">
+        <div class="thumb">
+          <span class="tag">Uttar Pradesh</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Assi%20Ghat%20Varanasi%20by%20Pradum%20Shukla.jpg?width=500" alt="Varanasi ghats">
+        </div>
+        <div class="body">
+          <h3>Varanasi</h3>
+          <p class="tagline">The living spiritual capital on the banks of the Ganges — dawn aarti, ghats, and layered meaning.</p>
+          <div class="meta"><span class="from">From ₹22,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="../rishikesh.html">
+        <div class="thumb">
+          <span class="tag">Uttarakhand</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Laxman%20Jhula%2C%20Rishikesh.jpg?width=500" alt="Rishikesh, Laxman Jhula">
+        </div>
+        <div class="body">
+          <h3>Rishikesh</h3>
+          <p class="tagline">Riverside yoga towns, pilgrim routes, and sacred teachings in the Himalayan foothills.</p>
+          <div class="meta"><span class="from">From ₹34,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="../agra.html">
+        <div class="thumb">
+          <span class="tag">Uttar Pradesh</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg?width=500" alt="Taj Mahal, Agra">
+        </div>
+        <div class="body">
+          <h3>Agra</h3>
+          <p class="tagline">Home to the Taj Mahal and centuries of Mughal grandeur along the banks of the Yamuna.</p>
+          <div class="meta"><span class="from">From ₹18,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="../hampi.html">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hampi%20chariot.jpg?width=500" alt="Stone Chariot, Hampi">
+        </div>
+        <div class="body">
+          <h3>Hampi</h3>
+          <p class="tagline">The ruined splendour of the Vijayanagara Empire, scattered across a boulder-strewn landscape.</p>
+          <div class="meta"><span class="from">From ₹20,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="../leh-ladakh.html">
+        <div class="thumb">
+          <span class="tag">Ladakh</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Thikse%20Monastery%2C%20Ladakh%2C%20India%2001.jpg?width=500" alt="Thiksey Monastery, Ladakh">
+        </div>
+        <div class="body">
+          <h3>Leh Ladakh</h3>
+          <p class="tagline">High-altitude deserts, turquoise lakes, and centuries-old monasteries in the Himalayas.</p>
+          <div class="meta"><span class="from">From ₹45,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="chardham.html">
+        <div class="thumb">
+          <span class="tag">Uttarakhand</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Badrinath.jpg?width=500" alt="Badrinath Temple">
+        </div>
+        <div class="body">
+          <h3>Chardham</h3>
+          <p class="tagline">The sacred circuit of Yamunotri, Gangotri, Kedarnath &amp; Badrinath in the Himalayas.</p>
+          <div class="meta"><span class="from">From ₹38,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+    </div>
+
+    <h2 class="section-title">South India</h2>
+    <div class="grid">
+
+      <a class="dest-card" href="munnar.html">
+        <div class="thumb">
+          <span class="tag">Kerala</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Green%20hills%20of%20Tea%20Plantations%20%2C%20Munnar.jpg?width=500" alt="Munnar tea plantations">
+        </div>
+        <div class="body">
+          <h3>Munnar</h3>
+          <p class="tagline">Rolling carpets of tea across the Western Ghats and cool mountain air.</p>
+          <div class="meta"><span class="from">From ₹24,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="alleppey.html">
+        <div class="thumb">
+          <span class="tag">Kerala</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Houseboats%20in%20Alleppey%20Backwaters.jpg?width=500" alt="Alleppey houseboats">
+        </div>
+        <div class="body">
+          <h3>Alleppey</h3>
+          <p class="tagline">The Venice of the East — palm-fringed canals and houseboat cruises.</p>
+          <div class="meta"><span class="from">From ₹22,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="mysore.html">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mysore%20Palace%2C%20Mysuru%2C%20Karnataka%2C%20India.jpg?width=500" alt="Mysore Palace">
+        </div>
+        <div class="body">
+          <h3>Mysore</h3>
+          <p class="tagline">The royal city of palaces, silk, and sandalwood, crowned by Chamundi Hills.</p>
+          <div class="meta"><span class="from">From ₹16,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="coorg.html">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20Falls%20in%20Madikeri%20%2C%20Coorg.jpg?width=500" alt="Abbey Falls, Coorg">
+        </div>
+        <div class="body">
+          <h3>Coorg</h3>
+          <p class="tagline">Misty coffee country in the Western Ghats, with waterfalls and river valleys.</p>
+          <div class="meta"><span class="from">From ₹26,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="ooty.html">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/View%20from%20the%20Doddabetta%20Peak%20-%20Ooty%2CTamil%20Nadu.JPG?width=500" alt="Doddabetta Peak, Ooty">
+        </div>
+        <div class="body">
+          <h3>Ooty</h3>
+          <p class="tagline">The Queen of Hill Stations — toy trains, tea gardens, and blue-tinged peaks.</p>
+          <div class="meta"><span class="from">From ₹25,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="pondicherry.html">
+        <div class="thumb">
+          <span class="tag">Pondicherry</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/French%20Consulate%2C%20Pondicherry.jpg?width=500" alt="French Quarter, Pondicherry">
+        </div>
+        <div class="body">
+          <h3>Pondicherry</h3>
+          <p class="tagline">Pastel French Quarter streets meet the Bay of Bengal.</p>
+          <div class="meta"><span class="from">From ₹18,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="munnar.html">
+        <div class="thumb">
+          <span class="tag">Kkarnataka</span>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Green%20hills%20of%20Tea%20Plantations%20%2C%20Munnar.jpg?width=500" alt="Munnar tea plantations">
+        </div>
+        <div class="body">
+          <h3>trek</h3>
+          <p class="tagline">Rolling carpets of tea across the Western Ghats and cool mountain air.</p>
+          <div class="meta"><span class="from">From ₹24,000</span><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="social">
+      <p>Planning a custom trip? Reach out to us directly.</p>
+      <div class="social-buttons">
+        <a class="social-btn instagram" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
+          Follow on Instagram
+        </a>
+        <a class="social-btn whatsapp" href="https://wa.me/919885180515" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
+          Chat on WhatsApp
+        </a>
+        <a class="social-btn email" href="mailto:viharasetu@gmail.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
+          Email Us
+        </a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
