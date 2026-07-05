@@ -72,6 +72,10 @@
     border-radius:10px;
     transition: transform .35s ease, filter .25s ease;
   }
+  .gallery a{
+    transition: transform 700ms cubic-bezier(.22,.61,.36,1), opacity 500ms ease;
+    will-change: transform, opacity;
+  }
   .gallery a:hover img{
     transform: scale(1.02);
     filter: brightness(1.03);
@@ -249,6 +253,9 @@
     .gallery{ column-count: 1; }
     .g-big{ width:100%; }
   }
+
+  /* When images are stacked initially we reduce pointer events so click targets the gallery container */
+  .gallery.is-stacked a{ pointer-events:none; }
 </style>
 </head>
 <body>
@@ -294,6 +301,56 @@
       </a>
     </div>
 
+    <script>
+      // FLIP-style animation: compute offsets to viewport center, apply transforms,
+      // then remove transforms on click to animate images into their grid positions.
+      (function(){
+        const gallery = document.querySelector('.gallery');
+        if(!gallery) return;
+        const items = Array.from(gallery.querySelectorAll('a'));
+
+        function applyStack(){
+          const viewportCenter = {
+            x: window.innerWidth/2,
+            y: window.scrollY + window.innerHeight/2
+          };
+          items.forEach((el, i) => {
+            const r = el.getBoundingClientRect();
+            const elCenter = { x: r.left + r.width/2, y: window.scrollY + r.top + r.height/2 };
+            const dx = viewportCenter.x - elCenter.x;
+            const dy = viewportCenter.y - elCenter.y;
+            // small initial scale and slight stagger via transition-delay
+            el.style.transitionDelay = (i * 30) + 'ms';
+            el.style.transform = `translate(${dx}px, ${dy}px) scale(.85)`;
+            el.style.opacity = '0.98';
+          });
+          gallery.classList.add('is-stacked');
+        }
+
+        function releaseStack(){
+          // remove transforms with a stagger to create a pleasing cascade
+          items.forEach((el, i) => {
+            el.style.transitionDelay = (i * 45) + 'ms';
+            el.style.transform = '';
+            el.style.opacity = '';
+          });
+          gallery.classList.remove('is-stacked');
+        }
+
+        // apply stack once layout is stable
+        window.addEventListener('load', () => setTimeout(applyStack, 120));
+
+        // clicking anywhere in gallery releases the stack
+        gallery.addEventListener('click', function handler(e){
+          // allow only first click to trigger
+          releaseStack();
+          gallery.removeEventListener('click', handler);
+        });
+
+        // also allow Escape to re-stack
+        window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ applyStack(); } });
+      })();
+    </script>
     <div class="experiences">
       <h2>Signature Experiences</h2>
       <ul>
