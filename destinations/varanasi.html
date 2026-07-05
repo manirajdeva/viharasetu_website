@@ -82,6 +82,12 @@
   }
   .g-big{ width:100%; }
 
+  /* Stacked (initial) appearance: place items absolutely at center and show only the top one as a circle */
+  .gallery.is-stacked{ position:relative; min-height:360px; }
+  .gallery.is-stacked a{ position:absolute; left:50%; top:50%; transform: translate(-50%,-50%); opacity:0; pointer-events:none; }
+  .gallery.is-stacked a.stacked-top{ opacity:1; pointer-events:auto; z-index:30; }
+  .gallery.is-stacked a.stacked-top img{ width:360px; height:360px; object-fit:cover; border-radius:50%; box-shadow:0 18px 40px rgba(15,23,42,0.15); }
+
   /* Signature Experiences */
   h2{
     font-family:'Playfair Display', serif;
@@ -310,29 +316,30 @@
         const items = Array.from(gallery.querySelectorAll('a'));
 
         function applyStack(){
-          const viewportCenter = {
-            x: window.innerWidth/2,
-            y: window.scrollY + window.innerHeight/2
-          };
-          items.forEach((el, i) => {
-            const r = el.getBoundingClientRect();
-            const elCenter = { x: r.left + r.width/2, y: window.scrollY + r.top + r.height/2 };
-            const dx = viewportCenter.x - elCenter.x;
-            const dy = viewportCenter.y - elCenter.y;
-            // small initial scale and slight stagger via transition-delay
-            el.style.transitionDelay = (i * 30) + 'ms';
-            el.style.transform = `translate(${dx}px, ${dy}px) scale(.85)`;
-            el.style.opacity = '0.98';
+          // Clear any inline transforms first
+          items.forEach((el)=>{
+            el.style.transitionDelay='0ms';
+            el.style.transform='';
+            el.style.opacity='';
+            el.classList.remove('stacked-top');
           });
+          // mark stacked state and show only the first item as circular top
           gallery.classList.add('is-stacked');
+          if(items[0]){
+            items[0].classList.add('stacked-top');
+          }
         }
 
         function releaseStack(){
-          // remove transforms with a stagger to create a pleasing cascade
+          // remove stacked-top marker and let column layout take effect
           items.forEach((el, i) => {
             el.style.transitionDelay = (i * 45) + 'ms';
+            el.classList.remove('stacked-top');
+            // ensure images flow back into layout: clear positioning-related inline styles
             el.style.transform = '';
             el.style.opacity = '';
+            el.style.pointerEvents = '';
+            el.style.position = '';
           });
           gallery.classList.remove('is-stacked');
         }
