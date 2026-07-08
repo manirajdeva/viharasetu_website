@@ -6,200 +6,34 @@
 <title>Agra — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="destinations-common.css">
 <style>
-  :root{
-    --bg: #F4F1EA;
-    --ink: #26221C;
-    --ink-soft: #5C554A;
-    --accent: #BB5A34;
-    --accent-dark: #9C4826;
-    --card: #FFFFFF;
-    --line: #E4DECF;
+  /* Agra-specific styles */
+  .highlights {
+    margin: 56px 0;
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.55;
+  .highlights h2 {
+    margin-bottom: 32px;
   }
-  .wrap{
-    max-width:1180px;
-    margin:0 auto;
-    padding:32px 24px 80px;
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
   }
-  .back-link{
-    color:var(--accent);
-    text-decoration:none;
-    font-weight:500;
-    font-size:14px;
+  .highlight-block {
+    opacity: 1;
+    animation: fadeInUp 0.8s ease-out forwards;
   }
-  .back-link:hover{ text-decoration:underline; }
-
-  h1{
-    font-family:'Playfair Display', serif;
-    font-weight:800;
-    font-size:48px;
-    margin:20px 0 14px;
-  }
-  .intro{
-    max-width:640px;
-    color:var(--ink-soft);
-    font-size:16px;
-    margin-bottom:36px;
-  }
-
-  /* Gallery */
-  .gallery{
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 140px;
-    gap:10px;
-    margin-bottom:56px;
-  }
-  .gallery img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:10px;
-    display:block;
-    transition: transform .45s cubic-bezier(.22,.61,.36,1), filter .45s ease;
-  }
-  .gallery a{
-    display:block;
-    overflow:hidden;
-    border-radius:10px;
-  }
-  .gallery a:hover img{
-    transform: scale(1.08);
-    filter: brightness(1.05);
-  }
-  .g-big{ grid-column: span 2; grid-row: span 2; }
-
-  /* Signature Experiences */
-  h2{
-    font-family:'Playfair Display', serif;
-    font-weight:700;
-    font-size:28px;
-    margin:0 0 16px;
-  }
-  .experiences{
-    margin-bottom:44px;
-  }
-  .experiences ul{
-    margin:0;
-    padding-left:20px;
-    color:var(--ink);
-    font-size:16px;
-  }
-  .experiences li{ margin-bottom:8px; }
-
-  /* Itinerary cards */
-  .itineraries h2{ margin-bottom:6px; }
-  .itineraries .sub{
-    color:var(--ink-soft);
-    font-size:14px;
-    margin-bottom:20px;
-  }
-  .cards{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:20px;
-  }
-  .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:24px;
-    display:flex;
-    flex-direction:column;
-  }
-  .card h3{
-    font-family:'Playfair Display', serif;
-    font-size:20px;
-    font-weight:700;
-    margin:0 0 10px;
-  }
-  .card p.desc{
-    color:var(--ink-soft);
-    font-size:14px;
-    margin:0 0 16px;
-    flex-grow:1;
-  }
-  .card .price{
-    font-weight:700;
-    font-size:16px;
-    margin-bottom:16px;
-  }
-  .card .price .sym{ font-weight:500; }
-  .btn{
-    display:inline-block;
-    background:var(--accent);
-    color:#fff;
-    text-align:center;
-    padding:11px 18px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    border:none;
-    cursor:pointer;
-    transition:background .15s ease;
-  }
-  .btn:hover{ background:var(--accent-dark); }
-
-  /* Social / contact footer */
-  .social{
-    margin-top:56px;
-    padding-top:32px;
-    border-top:1px solid var(--line);
-    text-align:center;
-  }
-  .social p{
-    color:var(--ink-soft);
-    font-size:14px;
-    margin:0 0 16px;
-  }
-  .social-buttons{
-    display:flex;
-    justify-content:center;
-    gap:14px;
-    flex-wrap:wrap;
-  }
-  .social-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:12px 22px;
-    border-radius:999px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    color:#fff;
-    transition:opacity .15s ease;
-  }
-  .social-btn:hover{ opacity:0.9; }
-  .social-btn svg{ width:18px; height:18px; flex-shrink:0; }
-  .social-btn.instagram{
-    background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);
-  }
-  .social-btn.whatsapp{
-    background:#25D366;
-  }
-  .social-btn.email{
-    background:var(--ink);
-  }
-
-  @media (max-width: 860px){
-    .gallery{ grid-template-columns: repeat(2, 1fr); grid-auto-rows:120px; }
-    .g-big{ grid-column: span 2; grid-row: span 1; height:220px; }
-    .cards{ grid-template-columns: 1fr; }
-    h1{ font-size:36px; }
+  .highlight-block li {
+    opacity: 1;
+    animation: fadeInUp 0.6s ease-out forwards;
   }
 </style>
 </head>
 <body>
+  <div class="logo-header">
+    <img src="../images/Logo_hor.png" alt="Viharasetu logo" />
+  </div>
   <div class="wrap">
     <a class="back-link" href="../index.html">← Back to home</a>
 
@@ -276,9 +110,227 @@
           <div class="price"><span class="sym">₹</span> xxxxx / person</div>
           <a class="btn" href="itinerary-6-nights.html">View Itinerary</a>
         </div>
-
       </div>
     </div>
+
+  <div class="highlights">
+    <h2>Explore Agra</h2>
+    <div class="highlights-grid">
+
+    <div class="highlight-block">
+      <h3>⭐ Must-Visit Attractions</h3>
+      <ul>
+        <li>Taj Mahal ⭐</li>
+        <li>Agra Fort ⭐</li>
+        <li>Mehtab Bagh ⭐</li>
+        <li>Itmad-ud-Daulah (Baby Taj) ⭐</li>
+        <li>Fatehpur Sikri ⭐</li>
+        <li>Akbar's Tomb (Sikandra) ⭐</li>
+        <li>Wildlife SOS Elephant Conservation Centre ⭐</li>
+        <li>Chini Ka Rauza</li>
+        <li>Ram Bagh</li>
+        <li>Jama Masjid Agra</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🛕 Famous Temples & Religious Places</h3>
+      <ul>
+        <li>Mankameshwar Temple ⭐</li>
+        <li>Dayal Bagh Temple ⭐</li>
+        <li>Guru Ka Taal Gurudwara ⭐</li>
+        <li>Jama Masjid Agra ⭐</li>
+        <li>Soami Bagh Samadhi ⭐</li>
+        <li>Balkeshwar Temple</li>
+        <li>St. George's Cathedral</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🏰 Historical Places</h3>
+      <ul>
+        <li>Taj Mahal ⭐</li>
+        <li>Agra Fort ⭐</li>
+        <li>Fatehpur Sikri ⭐</li>
+        <li>Akbar's Tomb ⭐</li>
+        <li>Itmad-ud-Daulah ⭐</li>
+        <li>Chini Ka Rauza ⭐</li>
+        <li>Mariam's Tomb ⭐</li>
+        <li>Jahangir Palace</li>
+        <li>Diwan-i-Khas</li>
+        <li>Diwan-i-Aam</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🌳 Gardens & Parks</h3>
+      <ul>
+        <li>Mehtab Bagh ⭐</li>
+        <li>Ram Bagh ⭐</li>
+        <li>Taj Nature Walk ⭐</li>
+        <li>Mughal Heritage Walk ⭐</li>
+        <li>Paliwal Park</li>
+        <li>Shah Jahan Garden</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🌅 Rivers & Viewpoints</h3>
+      <ul>
+        <li>Yamuna River ⭐</li>
+        <li>Mehtab Bagh Sunset Point ⭐</li>
+        <li>Taj View Point ⭐</li>
+        <li>Taj Nature Walk Viewpoint</li>
+        <li>Keetham Lake ⭐</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🌿 Nature & Scenic Places</h3>
+      <ul>
+        <li>Keetham Lake ⭐</li>
+        <li>Sur Sarovar Bird Sanctuary ⭐</li>
+        <li>National Chambal Sanctuary ⭐</li>
+        <li>Chambal Safari ⭐</li>
+        <li>Bateshwar Ghats ⭐</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🏕️ Adventure Activities</h3>
+      <ul>
+        <li>Chambal River Safari ⭐</li>
+        <li>Bird Watching ⭐</li>
+        <li>Elephant Conservation Visit ⭐</li>
+        <li>Photography Tours ⭐</li>
+        <li>Walking Heritage Tour</li>
+        <li>Cycling Tour</li>
+        <li>Boat Ride (Seasonal)</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🛣️ Famous Roads</h3>
+      <ul>
+        <li>Yamuna Expressway ⭐</li>
+        <li>Agra–Fatehpur Sikri Road ⭐</li>
+        <li>Agra Ring Road</li>
+        <li>Agra–Mathura Road</li>
+        <li>Agra–Delhi Highway</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🛍️ Shopping</h3>
+      <ul>
+        <li>Sadar Bazaar ⭐</li>
+        <li>Kinari Bazaar ⭐</li>
+        <li>Marble Handicraft Shops ⭐</li>
+        <li>Leather Goods Market ⭐</li>
+        <li>Petha Shops ⭐</li>
+        <li>Shah Market</li>
+        <li>Subhash Bazaar</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🍛 Famous Food</h3>
+      <ul>
+        <li>Agra Petha ⭐</li>
+        <li>Bedai & Jalebi ⭐</li>
+        <li>Mughlai Biryani ⭐</li>
+        <li>Dalmoth ⭐</li>
+        <li>Kachori Sabzi</li>
+        <li>Rabri</li>
+        <li>Lassi</li>
+        <li>Mughlai Kebabs</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🎉 Festivals</h3>
+      <ul>
+        <li>Taj Mahotsav ⭐</li>
+        <li>Ram Barat Festival ⭐</li>
+        <li>Bateshwar Fair ⭐</li>
+        <li>Diwali ⭐</li>
+        <li>Holi ⭐</li>
+        <li>Urs Festival</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>📍 Nearby Attractions</h3>
+      <ul>
+        <li>Fatehpur Sikri ⭐</li>
+        <li>Mathura ⭐</li>
+        <li>Vrindavan ⭐</li>
+        <li>Bharatpur Bird Sanctuary ⭐</li>
+        <li>Abhaneri Stepwell ⭐</li>
+        <li>Chambal Safari ⭐</li>
+        <li>Bateshwar ⭐</li>
+        <li>Gwalior ⭐</li>
+        <li>Deeg Palace ⭐</li>
+        <li>Delhi ⭐</li>
+        <li>Jaipur ⭐</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>📸 Best Photography Spots</h3>
+      <ul>
+        <li>Taj Mahal Sunrise ⭐</li>
+        <li>Mehtab Bagh ⭐</li>
+        <li>Agra Fort</li>
+        <li>Itmad-ud-Daulah</li>
+        <li>Fatehpur Sikri</li>
+        <li>Yamuna River</li>
+        <li>Keetham Lake</li>
+        <li>Akbar's Tomb</li>
+        <li>Guru Ka Taal</li>
+        <li>Chambal River</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>⭐ Top 15 Must-Visit Places</h3>
+      <ul>
+        <li>Taj Mahal</li>
+        <li>Agra Fort</li>
+        <li>Mehtab Bagh</li>
+        <li>Itmad-ud-Daulah</li>
+        <li>Fatehpur Sikri</li>
+        <li>Akbar's Tomb</li>
+        <li>Wildlife SOS Elephant Conservation Centre</li>
+        <li>Guru Ka Taal</li>
+        <li>Keetham Lake</li>
+        <li>Sur Sarovar Bird Sanctuary</li>
+        <li>Kinari Bazaar</li>
+        <li>Sadar Bazaar</li>
+        <li>Mankameshwar Temple</li>
+        <li>Chini Ka Rauza</li>
+        <li>Ram Bagh</li>
+      </ul>
+    </div>
+
+    <div class="highlight-block">
+      <h3>🌟 Hidden Gems</h3>
+      <ul>
+        <li>Chini Ka Rauza ⭐</li>
+        <li>Mariam's Tomb ⭐</li>
+        <li>Keetham Lake ⭐</li>
+        <li>Sur Sarovar Bird Sanctuary ⭐</li>
+        <li>Mughal Heritage Walk ⭐</li>
+        <li>Bateshwar Temples ⭐</li>
+        <li>Soami Bagh Samadhi ⭐</li>
+        <li>National Chambal Sanctuary ⭐</li>
+        <li>Kachhpura Village ⭐</li>
+        <li>Gyarah Sidi ⭐</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
 
     <div class="social">
       <p>Have questions about this trip? Reach out to us directly.</p>

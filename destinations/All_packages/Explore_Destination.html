@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore India — By Season &amp; State</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F1EA;
+    --ink: #26221C;
+    --ink-soft: #5C554A;
+    --accent: #BB5A34;
+    --accent-dark: #9C4826;
+    --card: #FFFFFF;
+    --line: #E4DECF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:32px 24px 80px;
+  }
+  /* Top nav with Destinations dropdown */
+  .navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .brand{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  .nav-menu{
+    position:relative;
+  }
+  .nav-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .nav-btn:hover{ border-color:var(--accent); }
+  .nav-btn .chevron{
+    font-size:10px;
+    transition: transform .2s ease;
+  }
+  .nav-menu.open .nav-btn .chevron{ transform: rotate(180deg); }
+  .nav-menu.open .nav-btn{ border-color:var(--accent); }
+
+  .dropdown-panel{
+    position:absolute;
+    top:calc(100% + 10px);
+    right:0;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow: 0 16px 34px rgba(38,34,28,0.16);
+    padding:20px;
+    display:none;
+    flex-direction:column;
+    gap:16px;
+    z-index:50;
+    min-width:420px;
+  }
+  .nav-menu.open .dropdown-panel{
+    display:flex;
+  }
+  .dropdown-columns{
+    display:flex;
+    gap:28px;
+  }
+  .dropdown-col{
+    min-width:160px;
+  }
+  .dropdown-col h4{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .dropdown-col ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    max-height:300px;
+    overflow-y:auto;
+  }
+  .dropdown-col li{
+    margin-bottom:2px;
+  }
+  .dropdown-item{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:8px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .dropdown-item:hover{
+    background:#F4F1EA;
+  }
+  .dropdown-item.active{
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+  }
+  .dropdown-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  .reset-btn{
+    background:none;
+    border:none;
+    color:var(--ink-soft);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    padding:8px 4px;
+    text-decoration:underline;
+  }
+  .reset-btn:hover{ color:var(--ink); }
+  .apply-btn{
+    background:var(--accent);
+    border:none;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:11px 22px;
+    border-radius:10px;
+    cursor:pointer;
+    transition: background .15s ease;
+  }
+  .apply-btn:hover{ background:var(--accent-dark); }
+
+  @media (max-width: 620px){
+    .dropdown-panel{
+      right:auto;
+      left:0;
+      min-width:0;
+      width:min(90vw, 420px);
+    }
+    .dropdown-columns{
+      flex-direction:column;
+      gap:16px;
+    }
+  }
+
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:44px;
+    margin:20px 0 12px;
+  }
+  .intro{
+    max-width:640px;
+    color:var(--ink-soft);
+    font-size:16px;
+    margin-bottom:34px;
+  }
+
+  .result-count{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-bottom:18px;
+  }
+  .result-count b{ color:var(--ink); }
+
+  /* Destination grid */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:22px;
+  }
+  .dest-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    transition: transform .3s ease, box-shadow .3s ease, opacity .25s ease;
+  }
+  .dest-card:hover{
+    transform:translateY(-6px);
+    box-shadow: 0 14px 30px rgba(38,34,28,0.12);
+  }
+  .dest-card.hidden{
+    display:none;
+  }
+  .dest-card .thumb{
+    position:relative;
+    height:180px;
+    overflow:hidden;
+  }
+  .dest-card .thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .dest-card:hover .thumb img{
+    transform: scale(1.09);
+  }
+  .dest-card .thumb .tag{
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:rgba(38,34,28,0.72);
+    color:#fff;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:999px;
+  }
+  .dest-card .thumb .season-tags{
+    position:absolute;
+    bottom:12px;
+    left:12px;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .dest-card .thumb .season-tags span{
+    background:rgba(255,255,255,0.92);
+    color:var(--ink);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:4px 9px;
+    border-radius:999px;
+  }
+  .dest-card .body{
+    padding:18px 20px 20px;
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+  }
+  .dest-card h3{
+    font-family:'Playfair Display', serif;
+    font-size:21px;
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  .dest-card p.tagline{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 16px;
+    flex-grow:1;
+  }
+  .dest-card .meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+  .dest-card .meta .from{
+    font-weight:700;
+    color:var(--ink);
+  }
+  .dest-card .meta .explore{
+    color:var(--accent);
+    font-weight:600;
+  }
+  .dest-card:hover .meta .explore{
+    color:var(--accent-dark);
+  }
+
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--ink-soft);
+    font-size:15px;
+    display:none;
+  }
+  .empty-state.show{ display:block; }
+
+  @media (max-width: 900px){
+    .grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  .back-link{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:500;
+    font-size:14px;
+  }
+  .back-link:hover{ text-decoration:underline; }
+
+  @media (max-width: 620px){
+    .grid{ grid-template-columns: 1fr; }
+    h1{ font-size:32px; }
+  }
+</style>
+
+</head>
+<body>
+  <div class="wrap">
+    <div class="navbar">
+      <a class="back-link" href="../../index.html">← Back to home</a>
+
+      <div class="nav-menu" id="nav-menu">
+        <button class="nav-btn" id="nav-btn">
+          Destinations <span class="chevron">▾</span>
+        </button>
+        <div class="dropdown-panel">
+          <div class="dropdown-columns">
+            <div class="dropdown-col">
+              <h4>By Season</h4>
+              <ul id="season-dropdown">
+                <li><button class="dropdown-item active" data-season="all">All Seasons</button></li>
+                <li><button class="dropdown-item" data-season="Summer">Summer</button></li>
+                <li><button class="dropdown-item" data-season="Monsoon">Monsoon</button></li>
+                <li><button class="dropdown-item" data-season="Winter">Winter</button></li>
+              </ul>
+            </div>
+            <div class="dropdown-col">
+              <h4>By State</h4>
+              <ul id="state-dropdown">
+                <li><button class="dropdown-item active" data-state="all">All States</button></li>
+                <li><button class="dropdown-item" data-state="Andaman and Nicobar Islands">Andaman and Nicobar Islands</button></li>
+                <li><button class="dropdown-item" data-state="Andhra Pradesh">Andhra Pradesh</button></li>
+                <li><button class="dropdown-item" data-state="Arunachal Pradesh">Arunachal Pradesh</button></li>
+                <li><button class="dropdown-item" data-state="Assam">Assam</button></li>
+                <li><button class="dropdown-item" data-state="Bihar">Bihar</button></li>
+                <li><button class="dropdown-item" data-state="Chandigarh">Chandigarh</button></li>
+                <li><button class="dropdown-item" data-state="Chhattisgarh">Chhattisgarh</button></li>
+                <li><button class="dropdown-item" data-state="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</button></li>
+                <li><button class="dropdown-item" data-state="Delhi">Delhi</button></li>
+                <li><button class="dropdown-item" data-state="Goa">Goa</button></li>
+                <li><button class="dropdown-item" data-state="Gujarat">Gujarat</button></li>
+                <li><button class="dropdown-item" data-state="Haryana">Haryana</button></li>
+                <li><button class="dropdown-item" data-state="Himachal Pradesh">Himachal Pradesh</button></li>
+                <li><button class="dropdown-item" data-state="Jammu and Kashmir">Jammu and Kashmir</button></li>
+                <li><button class="dropdown-item" data-state="Jharkhand">Jharkhand</button></li>
+                <li><button class="dropdown-item" data-state="Karnataka">Karnataka</button></li>
+                <li><button class="dropdown-item" data-state="Kerala">Kerala</button></li>
+                <li><button class="dropdown-item" data-state="Ladakh">Ladakh</button></li>
+                <li><button class="dropdown-item" data-state="Lakshadweep">Lakshadweep</button></li>
+                <li><button class="dropdown-item" data-state="Madhya Pradesh">Madhya Pradesh</button></li>
+                <li><button class="dropdown-item" data-state="Maharashtra">Maharashtra</button></li>
+                <li><button class="dropdown-item" data-state="Manipur">Manipur</button></li>
+                <li><button class="dropdown-item" data-state="Meghalaya">Meghalaya</button></li>
+                <li><button class="dropdown-item" data-state="Mizoram">Mizoram</button></li>
+                <li><button class="dropdown-item" data-state="Nagaland">Nagaland</button></li>
+                <li><button class="dropdown-item" data-state="Odisha">Odisha</button></li>
+                <li><button class="dropdown-item" data-state="Puducherry">Puducherry</button></li>
+                <li><button class="dropdown-item" data-state="Punjab">Punjab</button></li>
+                <li><button class="dropdown-item" data-state="Rajasthan">Rajasthan</button></li>
+                <li><button class="dropdown-item" data-state="Sikkim">Sikkim</button></li>
+                <li><button class="dropdown-item" data-state="Tamil Nadu">Tamil Nadu</button></li>
+                <li><button class="dropdown-item" data-state="Telangana">Telangana</button></li>
+                <li><button class="dropdown-item" data-state="Tripura">Tripura</button></li>
+                <li><button class="dropdown-item" data-state="Uttar Pradesh">Uttar Pradesh</button></li>
+                <li><button class="dropdown-item" data-state="Uttarakhand">Uttarakhand</button></li>
+                <li><button class="dropdown-item" data-state="West Bengal">West Bengal</button></li>
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-actions">
+            <button class="reset-btn" id="reset-btn">Reset</button>
+            <button class="apply-btn" id="apply-btn">Apply Filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h1>Explore India</h1>
+    <p class="intro">
+      Browse every destination by season or by state — find the right trip for whenever you're travelling, wherever you want to go.
+    </p>
+
+    <p class="result-count"><b id="result-num">12</b> destinations found</p>
+
+    <div class="grid" id="dest-grid">
+
+      <a class="dest-card" href="varanasi.html" data-state="Uttar Pradesh" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Uttar Pradesh</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Assi%20Ghat%20Varanasi%20by%20Pradum%20Shukla.jpg?width=500" alt="Varanasi ghats">
+        </div>
+        <div class="body">
+          <h3>Varanasi</h3>
+          <p class="tagline">The living spiritual capital on the banks of the Ganges.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="rishikesh.html" data-state="Uttarakhand" data-seasons="Winter,Summer">
+        <div class="thumb">
+          <span class="tag">Uttarakhand</span>
+          <div class="season-tags"><span>Winter</span><span>Summer</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Laxman%20Jhula%2C%20Rishikesh.jpg?width=500" alt="Rishikesh">
+        </div>
+        <div class="body">
+          <h3>Rishikesh</h3>
+          <p class="tagline">Riverside yoga towns and sacred teachings in the Himalayan foothills.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="agra.html" data-state="Uttar Pradesh" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Uttar Pradesh</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg?width=500" alt="Taj Mahal">
+        </div>
+        <div class="body">
+          <h3>Agra</h3>
+          <p class="tagline">Home to the Taj Mahal and Mughal grandeur along the Yamuna.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="/destinations/All_packages/hampi.html" data-state="Karnataka" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hampi%20chariot.jpg?width=500" alt="Hampi">
+        </div>
+        <div class="body">
+          <h3>Hampi</h3>
+          <p class="tagline">Ruined splendour of the Vijayanagara Empire among boulder-strewn hills.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="leh-ladakh.html" data-state="Ladakh" data-seasons="Summer">
+        <div class="thumb">
+          <span class="tag">Ladakh</span>
+          <div class="season-tags"><span>Summer</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Thikse%20Monastery%2C%20Ladakh%2C%20India%2001.jpg?width=500" alt="Leh Ladakh">
+        </div>
+        <div class="body">
+          <h3>Leh Ladakh</h3>
+          <p class="tagline">High-altitude deserts, turquoise lakes, and Himalayan monasteries.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="chardham.html" data-state="Uttarakhand" data-seasons="Summer">
+        <div class="thumb">
+          <span class="tag">Uttarakhand</span>
+          <div class="season-tags"><span>Summer</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Badrinath.jpg?width=500" alt="Chardham">
+        </div>
+        <div class="body">
+          <h3>Chardham</h3>
+          <p class="tagline">The sacred circuit of Yamunotri, Gangotri, Kedarnath &amp; Badrinath.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="munnar.html" data-state="Kerala" data-seasons="Winter,Monsoon">
+        <div class="thumb">
+          <span class="tag">Kerala</span>
+          <div class="season-tags"><span>Winter</span><span>Monsoon</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Green%20hills%20of%20Tea%20Plantations%20%2C%20Munnar.jpg?width=500" alt="Munnar">
+        </div>
+        <div class="body">
+          <h3>Munnar</h3>
+          <p class="tagline">Rolling carpets of tea across the Western Ghats.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="alleppey.html" data-state="Kerala" data-seasons="Monsoon,Winter">
+        <div class="thumb">
+          <span class="tag">Kerala</span>
+          <div class="season-tags"><span>Monsoon</span><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Houseboats%20in%20Alleppey%20Backwaters.jpg?width=500" alt="Alleppey">
+        </div>
+        <div class="body">
+          <h3>Alleppey</h3>
+          <p class="tagline">The Venice of the East — palm-fringed canals and houseboats.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="mysore.html" data-state="Karnataka" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mysore%20Palace%2C%20Mysuru%2C%20Karnataka%2C%20India.jpg?width=500" alt="Mysore">
+        </div>
+        <div class="body">
+          <h3>Mysore</h3>
+          <p class="tagline">The royal city of palaces, silk, and sandalwood.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="coorg.html" data-state="Karnataka" data-seasons="Monsoon,Winter">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <div class="season-tags"><span>Monsoon</span><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Abbey%20Falls%20in%20Madikeri%20%2C%20Coorg.jpg?width=500" alt="Coorg">
+        </div>
+        <div class="body">
+          <h3>Coorg</h3>
+          <p class="tagline">Misty coffee country in the Western Ghats.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="ooty.html" data-state="Tamil Nadu" data-seasons="Summer,Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Summer</span><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/View%20from%20the%20Doddabetta%20Peak%20-%20Ooty%2CTamil%20Nadu.JPG?width=500" alt="Ooty">
+        </div>
+        <div class="body">
+          <h3>Ooty</h3>
+          <p class="tagline">The Queen of Hill Stations — toy trains and tea gardens.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="pondicherry.html" data-state="Puducherry" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Puducherry</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/French%20Consulate%2C%20Pondicherry.jpg?width=500" alt="Pondicherry">
+        </div>
+        <div class="body">
+          <h3>Pondicherry</h3>
+          <p class="tagline">Pastel French Quarter streets meet the Bay of Bengal.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="/destinations/All_packages/hampi.html" data-state="Karnataka" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hampi%20Temple%20Ruins.jpg?width=500" alt="Hampi">
+        </div>
+        <div class="body">
+          <h3>Hampi</h3>
+          <p class="tagline">The ruined splendour of the Vijayanagara Empire scattered across a boulder-strewn landscape.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+    </div>
+
+    <p class="empty-state" id="empty-state">No destinations match this combination of filters — try a different season or state.</p>
+
+  </div>
+
+  <script>
+    let activeSeason = 'all';
+    let activeState = 'all';
+    let pendingSeason = 'all';
+    let pendingState = 'all';
+
+    const cards = Array.from(document.querySelectorAll('.dest-card'));
+    const resultNum = document.getElementById('result-num');
+    const emptyState = document.getElementById('empty-state');
+    const navMenu = document.getElementById('nav-menu');
+    const navBtn = document.getElementById('nav-btn');
+
+    function applyFilters(){
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const seasons = card.dataset.seasons.split(',');
+        const state = card.dataset.state;
+        const seasonMatch = activeSeason === 'all' || seasons.includes(activeSeason);
+        const stateMatch = activeState === 'all' || state === activeState;
+        if (seasonMatch && stateMatch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      resultNum.textContent = visibleCount;
+      emptyState.classList.toggle('show', visibleCount === 0);
+    }
+
+    // Dropdown open/close
+    navBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target)) {
+        navMenu.classList.remove('open');
+      }
+    });
+
+    // Season selection inside dropdown — just marks the pending choice, doesn't filter yet
+    document.getElementById('season-dropdown').addEventListener('click', (e) => {
+      const btn = e.target.closest('.dropdown-item');
+      if (!btn) return;
+      document.querySelectorAll('#season-dropdown .dropdown-item').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      pendingSeason = btn.dataset.season;
+    });
+
+    // State selection inside dropdown — just marks the pending choice, doesn't filter yet
+    document.getElementById('state-dropdown').addEventListener('click', (e) => {
+      const btn = e.target.closest('.dropdown-item');
+      if (!btn) return;
+      document.querySelectorAll('#state-dropdown .dropdown-item').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      pendingState = btn.dataset.state;
+    });
+
+    // Apply Filters — this is where the combo actually filters the package list
+    document.getElementById('apply-btn').addEventListener('click', () => {
+      activeSeason = pendingSeason;
+      activeState = pendingState;
+      applyFilters();
+      navMenu.classList.remove('open');
+      document.getElementById('dest-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Reset — clears both dropdowns back to "All" and re-applies immediately
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      pendingSeason = 'all';
+      pendingState = 'all';
+      activeSeason = 'all';
+      activeState = 'all';
+      document.querySelectorAll('.dropdown-item').forEach(p => p.classList.remove('active'));
+      document.querySelector('#season-dropdown .dropdown-item[data-season="all"]').classList.add('active');
+      document.querySelector('#state-dropdown .dropdown-item[data-state="all"]').classList.add('active');
+      applyFilters();
+    });
+  </script>
+
+</body>
+</html>
