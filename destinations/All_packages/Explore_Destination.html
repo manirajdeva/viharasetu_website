@@ -34,6 +34,7 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:16px;
     margin-bottom:8px;
   }
   .brand{
@@ -179,6 +180,12 @@
       flex-direction:column;
       gap:16px;
     }
+    .navbar{
+      flex-wrap:wrap;
+    }
+    .navbar-right{
+      width:100%;
+    }
   }
 
   h1{
@@ -319,8 +326,53 @@
   }
   .empty-state.show{ display:block; }
 
+  .navbar-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .search-box{
+    position:relative;
+    flex:0 1 280px;
+  }
+  .search-input{
+    width:100%;
+    padding:10px 14px 10px 36px;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--ink);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .search-input:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow: 0 0 0 3px rgba(187,90,52,0.1);
+  }
+  .search-input::placeholder{
+    color:var(--ink-soft);
+  }
+  .search-icon{
+    position:absolute;
+    left:10px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--ink-soft);
+    font-size:14px;
+    pointer-events:none;
+  }
+
   @media (max-width: 900px){
     .grid{ grid-template-columns: repeat(2, 1fr); }
+    .navbar-right{
+      flex-direction:column;
+      gap:12px;
+    }
+    .search-box{
+      flex:1;
+    }
   }
   .back-link{
     color:var(--accent);
@@ -342,10 +394,16 @@
     <div class="navbar">
       <a class="back-link" href="../../index.html">← Back to home</a>
 
-      <div class="nav-menu" id="nav-menu">
-        <button class="nav-btn" id="nav-btn">
-          Destinations <span class="chevron">▾</span>
-        </button>
+      <div class="navbar-right">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Search by destination name...">
+        </div>
+
+        <div class="nav-menu" id="nav-menu">
+          <button class="nav-btn" id="nav-btn">
+            Destinations <span class="chevron">▾</span>
+          </button>
         <div class="dropdown-panel">
           <div class="dropdown-columns">
             <div class="dropdown-col">
@@ -404,6 +462,7 @@
             <button class="reset-btn" id="reset-btn">Reset</button>
             <button class="apply-btn" id="apply-btn">Apply Filters</button>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -595,6 +654,7 @@
   <script>
     let activeSeason = 'all';
     let activeState = 'all';
+    let activeSearch = '';
     let pendingSeason = 'all';
     let pendingState = 'all';
 
@@ -609,9 +669,14 @@
       cards.forEach(card => {
         const seasons = card.dataset.seasons.split(',');
         const state = card.dataset.state;
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const searchTerm = activeSearch.toLowerCase();
+        
         const seasonMatch = activeSeason === 'all' || seasons.includes(activeSeason);
         const stateMatch = activeState === 'all' || state === activeState;
-        if (seasonMatch && stateMatch) {
+        const searchMatch = activeSearch === '' || name.includes(searchTerm);
+        
+        if (seasonMatch && stateMatch && searchMatch) {
           card.classList.remove('hidden');
           visibleCount++;
         } else {
@@ -660,12 +725,20 @@
       document.getElementById('dest-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
+    // Search by destination name — filters in real-time as user types
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      activeSearch = e.target.value;
+      applyFilters();
+    });
+
     // Reset — clears both dropdowns back to "All" and re-applies immediately
     document.getElementById('reset-btn').addEventListener('click', () => {
       pendingSeason = 'all';
       pendingState = 'all';
       activeSeason = 'all';
       activeState = 'all';
+      activeSearch = '';
+      document.getElementById('search-input').value = '';
       document.querySelectorAll('.dropdown-item').forEach(p => p.classList.remove('active'));
       document.querySelector('#season-dropdown .dropdown-item[data-season="all"]').classList.add('active');
       document.querySelector('#state-dropdown .dropdown-item[data-state="all"]').classList.add('active');
