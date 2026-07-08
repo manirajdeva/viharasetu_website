@@ -211,7 +211,7 @@
   /* Destination grid */
   .grid{
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap:22px;
   }
   .dest-card{
@@ -385,6 +385,22 @@
   @media (max-width: 620px){
     .grid{ grid-template-columns: 1fr; }
     h1{ font-size:32px; }
+    .dropdown-panel{
+      right:auto;
+      left:0;
+      min-width:0;
+      width:min(90vw, 420px);
+    }
+    .dropdown-columns{
+      flex-direction:column;
+      gap:16px;
+    }
+    .navbar{
+      flex-wrap:wrap;
+    }
+    .navbar-right{
+      width:100%;
+    }
   }
 </style>
 
