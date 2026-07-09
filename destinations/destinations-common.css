@@ -22,14 +22,6 @@ body {
   font-family: 'Inter', sans-serif;
   line-height: 1.55;
 }
-
-.wrap {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 32px 24px 80px;
-  position: relative;
-}
-
 /* Navigation */
 .back-link {
   color: var(--accent);
@@ -95,7 +87,7 @@ h2 {
 
 /* Intro Section */
 .intro {
-  max-width: 640px;
+  max-width: none;
   color: var(--ink-soft);
   font-size: 16px;
   margin-bottom: 36px;
@@ -324,24 +316,24 @@ h2 {
 }
 
 /* Logo Header */
+.wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    position: relative;
+}
+
 .logo-header {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  z-index: 10;
+    position: absolute;
+    top: 20px;
+    right: 24px; /* Aligns with wrap padding */
+    z-index: 100;
 }
 
 .logo-header img {
-  height: 80px;
-  object-fit: contain;
-  opacity: 1;
-  transition: transform 0.3s ease;
+    height: 80px;
+    width: auto;
 }
-
-.logo-header img:hover {
-  transform: scale(1.05);
-}
-
 /* Social / Contact Footer */
 .social {
   margin-top: 56px;
