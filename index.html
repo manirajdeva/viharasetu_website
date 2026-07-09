@@ -39,7 +39,7 @@
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center;
     padding: 1.2rem 4rem;
     background: rgba(250,246,240,0.9);
     backdrop-filter: blur(14px);
@@ -80,6 +80,11 @@
     text-transform: uppercase;
     color: var(--jade);
     margin-top: 0.2rem;
+  }
+
+  .nav-right {
+    display: flex; align-items: center; gap: 2rem;
+    margin-left: auto;
   }
 
   .nav-links {
@@ -942,13 +947,15 @@
       <span class="nav-logo-sub">From Aastha to Eternal Anubhav</span>
     </span>
   </a>
-  <ul class="nav-links">
-    <li><a href="destinations/All_packages/Explore_Destination.html">Explore Destinations</a></li>
-    <li><a href="#destinations">Experiences</a></li>
-    <li><a href="#journeys">Journeys</a></li>
-    <li><a href="pdf_files/Viharasetu_about.pdf" target="_blank" rel="noopener">About</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Plan My Journey</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="destinations/All_packages/Explore_Destination.html">Explore Destinations</a></li>
+      <li><a href="#destinations">Experiences</a></li>
+      <li><a href="#journeys">Journeys</a></li>
+      <li><a href="pdf_files/Viharasetu_about.pdf" target="_blank" rel="noopener">About</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Plan My Journey</a>
+  </div>
 </nav>
 
 <!-- HERO -->
