@@ -21,6 +21,7 @@ body {
   color: var(--ink);
   font-family: 'Inter', sans-serif;
   line-height: 1.55;
+  cursor: url('../images/cursor.png') 10 10, auto;
 }
 /* Navigation */
 .back-link {
