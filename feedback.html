@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traveler Feedback — Vihara Setu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F1EA;
+    --ink: #26221C;
+    --ink-soft: #5C554A;
+    --accent: #BB5A34;
+    --accent-dark: #9C4826;
+    --card: #FFFFFF;
+    --line: #E4DECF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    position:relative;
+    overflow-x:hidden;
+    cursor: url('images/cursor.png') 10 10, auto;
+  }
+  a, button{ cursor:none; }
+
+ 
+
+  /* Floating background decoration */
+  .bg-decor{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .bg-decor .orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:0.32;
+  }
+  .bg-decor .orb1{
+    width:340px; height:340px;
+    background:var(--accent);
+    top:-100px; left:-100px;
+    animation: float1 24s ease-in-out infinite;
+  }
+  .bg-decor .orb2{
+    width:260px; height:260px;
+    background:#6B7A5E;
+    top:30%; right:-90px;
+    animation: float2 28s ease-in-out infinite;
+  }
+  .bg-decor .orb3{
+    width:220px; height:220px;
+    background:#3E5C76;
+    bottom:5%; left:8%;
+    animation: float3 20s ease-in-out infinite;
+  }
+  .bg-decor .orb4{
+    width:180px; height:180px;
+    background:var(--accent-dark);
+    bottom:-60px; right:15%;
+    animation: float1 26s ease-in-out infinite reverse;
+  }
+  @keyframes float1{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    33%{ transform: translate(60px,40px) scale(1.08); }
+    66%{ transform: translate(-30px,70px) scale(0.95); }
+  }
+  @keyframes float2{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(-70px,-50px) scale(1.1); }
+  }
+  @keyframes float3{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(50px,-40px) scale(1.06); }
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:32px 24px 80px;
+  }
+  .back-link{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:500;
+    font-size:14px;
+  }
+  .back-link:hover{ text-decoration:underline; }
+
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:44px;
+    margin:20px 0 12px;
+  }
+  .intro{
+    max-width:600px;
+    color:var(--ink-soft);
+    font-size:16px;
+    margin-bottom:44px;
+  }
+
+  /* Testimonial cards */
+  .testimonials{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:32px;
+  }
+  .testimonial{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px;
+    display:flex;
+    flex-direction:row;
+    gap:28px;
+    opacity:0;
+    transform: scale(0.82) translateY(24px);
+    transition: transform .25s ease, box-shadow .25s ease;
+    align-items:flex-start;
+  }
+  .testimonial.pop-in{
+    animation: popIn 0.6s cubic-bezier(.34, 1.56, .64, 1) forwards;
+  }
+  .testimonial:hover{
+    transform: translateY(-4px) scale(1.015);
+    box-shadow: 0 16px 32px rgba(38,34,28,0.12);
+  }
+  @keyframes popIn{
+    0%{
+      opacity:0;
+      transform: scale(0.82) translateY(24px);
+    }
+    70%{
+      opacity:1;
+      transform: scale(1.03) translateY(-2px);
+    }
+    100%{
+      opacity:1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  .testimonial .top-row{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+    flex-shrink:0;
+  }
+  .testimonial .avatar{
+    flex-shrink:0;
+    width:140px;
+    height:140px;
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .testimonial .avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .testimonial .avatar svg{
+    width:100%;
+    height:100%;
+  }
+  .testimonial .content{
+    flex-grow:1;
+  }
+  .stars{
+    color:var(--accent);
+    font-size:15px;
+    letter-spacing:2px;
+    margin-bottom:10px;
+  }
+  .testimonial p.quote{
+    color:var(--ink);
+    font-size:16px;
+    margin:0 0 16px;
+    line-height:1.7;
+    text-align:justify;
+    text-justify:inter-word;
+  }
+  .reviewer-name{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .reviewer-trip{
+    color:var(--ink-soft);
+    font-size:13px;
+    margin-top:2px;
+  }
+
+  /* CTA footer */
+  .cta{
+    margin-top:52px;
+    text-align:center;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+  }
+  .cta p{
+    color:var(--ink-soft);
+    font-size:15px;
+    margin:0 0 18px;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--accent);
+    color:#fff;
+    text-align:center;
+    padding:12px 26px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    transition:background .15s ease;
+  }
+  .btn:hover{ background:var(--accent-dark); }
+
+  @media (max-width: 760px){
+    .testimonials{ grid-template-columns: 1fr; }
+    .testimonial{ flex-direction:column; }
+    .testimonial .top-row{ flex-direction:row; align-items:center; }
+    .testimonial .avatar{ width:80px; height:80px; }
+    h1{ font-size:32px; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg-decor" aria-hidden="true">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="orb orb4"></div>
+  </div>
+  <div class="wrap">
+    <a class="back-link" href="index.html">← Back to home</a>
+
+    <h1>Traveler Feedback</h1>
+    <p class="intro">
+      What our travelers say after coming home — real trips, real words, shared with their permission.
+    </p>
+
+    <div class="testimonials" id="testimonials-container"></div>
+
+    <div class="cta">
+      <p>Been on a trip with us? We'd love to hear how it went.</p>
+      <a class="btn" href="mailto:viharasetu@gmail.com">Share Your Feedback</a>
+    </div>
+
+  </div>
+
+  <script>
+    // Pool of all available testimonials — a random 6 are shown on every page load/refresh.
+    const allTestimonials = [
+      {
+        name: "Ananya Sharma",
+        trip: "Varanasi Essentials — 4 Nights",
+        slug: "ananya-sharma",
+        color: "#BB5A34",
+        quote: "The Varanasi trip was unlike anything we'd planned ourselves. Watching the dawn aarti from a boat, with our guide quietly explaining what each ritual meant — that's something no guidebook could have given us. Everything from the heritage walk to the Sarnath visit felt unhurried and personal."
+      },
+      {
+        name: "Rohit Kulkarni",
+        trip: "Kedar-Badri Yatra — 8 Nights",
+        slug: "rohit-kulkarni",
+        color: "#9C4826",
+        quote: "We did the Kedarnath & Badrinath yatra with Vihara Setu and it completely changed how I think about pilgrimage travel. The pony arrangements were handled without a single hiccup, and the Joshimath stay gave us proper time to acclimatise before Badrinath. Genuinely felt looked after."
+      },
+      {
+        name: "Priya Menon",
+        trip: "Kuttanad Explorer — 4 Nights",
+        slug: "priya-menon",
+        color: "#6B7A5E",
+        quote: "Our Alleppey houseboat night is still the highlight of our whole year. Waking up on the Vembanad backwaters with coconut palms on either side, a proper Kerala Sadya for lunch — it was exactly the slow, quiet break we needed. The canoe tour through Kuttanad the next morning was a lovely surprise too."
+      },
+      {
+        name: "Vikram Singh",
+        trip: "Pangong & Nubra Circuit — 8 Nights",
+        slug: "vikram-singh",
+        color: "#3E5C76",
+        quote: "Leh Ladakh was on our list for years and Vihara Setu made it painless — the acclimatisation days were built in properly, so nobody in our group struggled with the altitude. Pangong Tso at sunset and the Khardung La crossing into Nubra were both handled with genuine care for timing and safety."
+      },
+      {
+        name: "Neha Joshi",
+        trip: "Gulmarg Getaway — 2 Nights",
+        slug: "neha-joshi",
+        color: "#8A5A44",
+        quote: "Booked the Gulmarg getaway on a whim and it turned out to be the best short trip we've taken. The gondola ride up to Apharwat Peak was breathtaking, and our guide knew exactly which viewpoints to hit before the crowds arrived. Would book with Vihara Setu again without a second thought."
+      },
+      {
+        name: "Siddharth Deshmukh",
+        trip: "Vijayanagara Explorer — 5 Nights",
+        slug: "siddharth-deshmukh",
+        color: "#B08D57",
+        quote: "The Hampi trip exceeded every expectation. Our guide's knowledge of the Vijayanagara ruins was incredible — small details about the Vittala Temple's musical pillars and the old bazaar that we'd never have picked up on our own. The sunset at Hemakuta Hill was the perfect way to end each day."
+      },
+      {
+        name: "Kavita Rao",
+        trip: "Mughal Heritage Trail — 4 Nights",
+        slug: "kavita-rao",
+        color: "#7A5C61",
+        quote: "The sunrise Taj Mahal visit alone was worth the trip, but what really stood out was the marble inlay workshop — sitting with the artisans and watching them work was something our kids still talk about. Agra Fort in the afternoon light was stunning too."
+      },
+      {
+        name: "Arjun Nair",
+        trip: "Karnataka Royal Circuit — 6 Nights",
+        slug: "arjun-nair",
+        color: "#4E6E58",
+        quote: "Mysore Palace lit up in the evening is a sight I won't forget. Our guide's stories about the royal family made the whole visit feel alive rather than like a museum tour. The silk and sandalwood workshop stop was a thoughtful addition too."
+      },
+      {
+        name: "Meera Iyer",
+        trip: "Kodagu Explorer — 5 Nights",
+        slug: "meera-iyer",
+        color: "#5A6E8C",
+        quote: "Coorg was pure calm — misty mornings on the coffee estate, a proper cupping session that taught us more than we expected, and Abbey Falls at its thundering best since we went right after the monsoon. Loved every quiet minute of it."
+      },
+      {
+        name: "Aditya Verma",
+        trip: "Kashmir Valley Explorer — 5 Nights",
+        slug: "aditya-verma",
+        color: "#A6532E",
+        quote: "Srinagar exceeded every photo we'd seen online. The sunrise shikara ride across Dal Lake, past the floating vegetable sellers, was magical, and our houseboat stay felt like stepping into another era entirely. Can't recommend it enough."
+      },
+      {
+        name: "Sneha Pillai",
+        trip: "Hills & Wildlife — 5 Nights",
+        slug: "sneha-pillai",
+        color: "#8C6A4E",
+        quote: "Munnar's tea gardens are even greener in person. We got lucky with a Nilgiri tahr sighting at Eravikulam, and the guided factory visit finally explained how our morning cup of tea actually gets made. A genuinely relaxing trip."
+      },
+      {
+        name: "Karan Malhotra",
+        trip: "Chardham Express — 9 Nights",
+        slug: "karan-malhotra",
+        color: "#6E4A3E",
+        quote: "Doing all four dhams in nine days sounded ambitious, but the pacing was spot on — never felt rushed at any of the shrines. Badrinath at dusk, with the Alaknanda rushing past, is a memory I'll carry for a long time."
+      }
+    ];
+
+    function shuffle(array) {
+      const arr = array.slice();
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function initials(name) {
+      return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    }
+
+    function renderTestimonial(t) {
+      const photoPath = `images/testimonials/${t.slug}.jpg`;
+      return `
+        <div class="testimonial">
+          <div class="top-row">
+            <div class="avatar">
+              <img src="${photoPath}" alt="${t.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <svg style="display:none" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg"><rect width="84" height="84" fill="${t.color}"/><text x="42" y="52" font-family="Playfair Display, serif" font-size="32" fill="#fff" text-anchor="middle">${initials(t.name)}</text></svg>
+            </div>
+            <div>
+              <div class="reviewer-name">${t.name}</div>
+              <div class="reviewer-trip">${t.trip}</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p class="quote">"${t.quote}"</p>
+        </div>
+      `;
+    }
+
+    const container = document.getElementById('testimonials-container');
+    const selected = shuffle(allTestimonials).slice(0, 6);
+    container.innerHTML = selected.map(renderTestimonial).join('');
+
+    // Pop-in animation as each card scrolls into view
+    const cards = document.querySelectorAll('.testimonial');
+    const cardList = Array.from(cards);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = (cardList.indexOf(el) % 2) * 100;
+          setTimeout(() => el.classList.add('pop-in'), delay);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => observer.observe(card));
+
+    // Custom airplane cursor — follows the mouse with a slight trailing lag
+    // and banks (rotates) to face the direction it's travelling in.
+    const planeCursor = document.getElementById('plane-cursor');
+    const planeIcon = planeCursor.querySelector('.plane-icon');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let curX = mouseX;
+    let curY = mouseY;
+    let angle = -45; // ✈️ glyph points up-right by default
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      planeCursor.style.opacity = '1';
+    });
+    document.addEventListener('mouseleave', () => {
+      planeCursor.style.opacity = '0';
+    });
+
+    function animatePlaneCursor() {
+      const dx = mouseX - curX;
+      const dy = mouseY - curY;
+      curX += dx * 0.18;
+      curY += dy * 0.18;
+
+      if (Math.hypot(dx, dy) > 1) {
+        angle = Math.atan2(dy, dx) * (180 / Math.PI) - 45;
+      }
+
+      planeCursor.style.transform = `translate(${curX}px, ${curY}px)`;
+      planeIcon.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+
+      requestAnimationFrame(animatePlaneCursor);
+    }
+    animatePlaneCursor();
+  </script>
+</body>
+</html>
