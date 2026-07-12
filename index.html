@@ -1340,13 +1340,7 @@
   }, 5000);
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <script>
-emailjs.init({
-    publicKey: "mfNX6UotqC8hxGo2S"
-});
-
 document.getElementById("contactForm").addEventListener("submit", function(e){
     e.preventDefault();
     
@@ -1359,15 +1353,15 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
     };
     
     // Send email via EmailJS
-    emailjs.send("service_6rjlxny", "template_sfb4r9q", formData)
-        .then(function() {
-            alert("✅ Thank you! Your enquiry has been sent successfully.");
-            document.getElementById("contactForm").reset();
-        })
-        .catch(function(error) {
-            console.error("Email error:", error);
-            alert("❌ Failed to send enquiry. Please try again.");
-        });
+    // emailjs.send("service_6rjlxny", "template_sfb4r9q", formData)
+    //     .then(function() {
+    //         alert("✅ Thank you! Your enquiry has been sent successfully.");
+    //         document.getElementById("contactForm").reset();
+    //     })
+    //     .catch(function(error) {
+    //         console.error("Email error:", error);
+    //         alert("❌ Failed to send enquiry. Please try again.");
+    //     });
     
     // Send to Google Sheets via Apps Script
     const scriptUrl = "https://script.google.com/macros/s/AKfycbzAq9KWBg17c9n46WYKqv7m0Y6KR02oW__DX7fmAKZpS3qCswPV-WmymumL_l7rnB_f/exec";
@@ -1381,10 +1375,13 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
         body: JSON.stringify(formData)
     })
     .then(() => {
-        console.log("✅ Data sent to Google Sheet");
+        alert("✅ Thank you! Your enquiry has been sent successfully.");
+        document.getElementById("contactForm").reset();
+        console.log("✅ Data saved to Google Sheet and email sent");
     })
     .catch(error => {
-        console.error("❌ Google Sheets error:", error);
+        console.error("❌ Error:", error);
+        alert("❌ Failed to send enquiry. Please try again.");
     });
 });
 </script>
