@@ -179,6 +179,8 @@
     color: var(--ink-muted);
     max-width: 38ch;
     margin-bottom: 2.5rem;
+    text-align: justify;
+    text-justify: inter-word;
   }
 
   .hero-actions {
@@ -964,7 +966,7 @@
   <div class="hero-left">
     <p class="hero-eyebrow">Sacred Paths of India</p>
     <h1 class="hero-title">Where Every Journey<br>Becomes a <em>Pilgrimage</em></h1>
-    <p class="hero-desc">Viharasetu bridges the ancient and the living — curating transformative travel through India's sacred landscapes, timeless monasteries, and spiritual heartlands.</p>
+    <p class="hero-desc">Viharasetu brings India's most extraordinary destinations to life—offering thoughtfully curated journeys through majestic mountains, serene backwaters, vibrant cities, ancient heritage, and unforgettable experiences.</p>
     <div class="hero-actions">
       <a href="#journeys" class="btn-primary">Explore Journeys</a>
       <a href="#destinations" class="btn-ghost">Our Destinations</a>
@@ -1097,7 +1099,7 @@
   <div class="exp-content">
     <p class="section-tag">How We Travel</p>
     <h2 class="section-title">Experiences Crafted with <em>Intention</em></h2>
-    <p style="font-size:0.9rem; line-height:1.8; color:var(--ink-muted); margin-top:1.2rem; max-width:40ch;">Every journey we curate is designed to connect you with India's timeless heritage, sacred traditions, and living culture. Discover destinations that inspire awe, reflection, and unforgettable memories.</p>
+    <p style="font-size:0.9rem; line-height:1.8; color:var(--ink-muted); margin-top:1.2rem; max-width:40ch; text-align:justify; text-justify:inter-word;">Every journey we curate is designed to connect you with India's timeless heritage, sacred traditions, and living culture. Discover destinations that inspire awe, reflection, and unforgettable memories.</p>
 
     <div class="exp-list">
       <div class="exp-item">
@@ -1346,34 +1348,44 @@ emailjs.init({
 });
 
 document.getElementById("contactForm").addEventListener("submit", function(e){
-
     e.preventDefault();
-    emailjs.send("service_6rjlxny", "template_sfb4r9q", {
-
-    name: document.getElementById("name").value,
-
-    email: document.getElementById("email").value,
-
-    phone: document.getElementById("phone").value,
-
-    destination: document.getElementById("destination").value,
-
-    travel: document.getElementById("travel").value
-
-  }).then(function () {
-
-        alert("✅ Thank you! Your enquiry has been sent successfully.");
-
-        document.getElementById("contactForm").reset();
-
-    }).catch(function (error) {
-
-        console.error(error);
-
-        alert("❌ Failed to send enquiry. Please try again.");
-
+    
+    const formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        destination: document.getElementById("destination").value,
+        travel: document.getElementById("travel").value
+    };
+    
+    // Send email via EmailJS
+    emailjs.send("service_6rjlxny", "template_sfb4r9q", formData)
+        .then(function() {
+            alert("✅ Thank you! Your enquiry has been sent successfully.");
+            document.getElementById("contactForm").reset();
+        })
+        .catch(function(error) {
+            console.error("Email error:", error);
+            alert("❌ Failed to send enquiry. Please try again.");
+        });
+    
+    // Send to Google Sheets via Apps Script
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbzAq9KWBg17c9n46WYKqv7m0Y6KR02oW__DX7fmAKZpS3qCswPV-WmymumL_l7rnB_f/exec";
+    
+    fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(() => {
+        console.log("✅ Data sent to Google Sheet");
+    })
+    .catch(error => {
+        console.error("❌ Google Sheets error:", error);
     });
-
 });
 </script>
 
