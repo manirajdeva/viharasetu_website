@@ -26,18 +26,57 @@
     font-family:'Inter',sans-serif;
     line-height:1.55;
   }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url('../../../images/Logo_hor.png') center center no-repeat;
+    background-size:900px auto;
+    opacity:0.5;
+    z-index:-1;
+    pointer-events:none;
+  }
   .wrap{
     max-width:1180px;
     margin:0 auto;
     padding:32px 24px 80px;
   }
   .back-link{
-    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:#fff;
+    background:var(--accent);
     text-decoration:none;
-    font-weight:500;
+    font-weight:600;
     font-size:14px;
+    padding:10px 20px 10px 16px;
+    border-radius:999px;
+    box-shadow:0 6px 16px rgba(187,90,52,0.28);
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
   }
-  .back-link:hover{ text-decoration:underline; }
+  .back-link:hover{
+    background:var(--accent-dark);
+    transform:translateX(-5px);
+    box-shadow:0 10px 22px rgba(187,90,52,0.4);
+  }
+  .back-link::before{
+    content:"✈️";
+    display:inline-block;
+    transform:scaleX(-1);
+    animation: jet-fly 2.4s ease-in-out infinite;
+  }
+  .back-link:hover::before{
+    animation: jet-fly-fast 0.7s ease-in-out infinite;
+  }
+  @keyframes jet-fly{
+    0%, 100% { transform: scaleX(-1) translateX(0); }
+    50% { transform: scaleX(-1) translateX(-6px); }
+  }
+  @keyframes jet-fly-fast{
+    0%, 100% { transform: scaleX(-1) translateX(0); }
+    50% { transform: scaleX(-1) translateX(-10px); }
+  }
 
   h1{
     font-family:'Playfair Display', serif;
@@ -203,7 +242,7 @@
 </head>
 <body>
   <div class="wrap">
-    <a class="back-link" href="index.html">← Back to home</a>
+    <a class="back-link" href="index.html">Back to home</a>
 
     <h1>Tungnath &amp; Chandrashila</h1>
     <p class="intro">
