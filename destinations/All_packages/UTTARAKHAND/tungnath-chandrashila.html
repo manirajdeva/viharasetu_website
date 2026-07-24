@@ -26,20 +26,22 @@
     font-family:'Inter',sans-serif;
     line-height:1.55;
   }
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:url('../../../images/Logo_hor.png') center center no-repeat;
-    background-size:900px auto;
-    opacity:0.5;
-    z-index:-1;
-    pointer-events:none;
-  }
   .wrap{
     max-width:1180px;
     margin:0 auto;
     padding:32px 24px 80px;
+    position:relative;
+  }
+  .logo-header{
+    position:absolute;
+    top:20px;
+    right:24px;
+    z-index:100;
+  }
+  .logo-header img{
+    height:80px;
+    width:auto;
+    filter: drop-shadow(0 6px 14px rgba(38,34,28,0.18));
   }
   .back-link{
     display:inline-flex;
@@ -192,36 +194,76 @@
 
   /* Social / contact footer */
   .social{
+    position:relative;
     margin-top:56px;
-    padding-top:32px;
-    border-top:1px solid var(--line);
+    padding:40px 32px 210px;
+    background-color:transparent;
+    background-image:
+      linear-gradient(135deg, rgba(187,90,52,0.05), rgba(38,34,28,0.02)),
+      url('../../../images/social_media_back_groung.png');
+    background-repeat:no-repeat, no-repeat;
+    background-position:center, bottom center;
+    background-size:100% 100%, 720px auto;
+    border:1px solid var(--line);
+    border-radius:20px;
     text-align:center;
   }
   .social p{
     color:var(--ink-soft);
-    font-size:14px;
+    font-size:15px;
+    letter-spacing:0.3px;
     margin:0 0 16px;
   }
   .social-buttons{
     display:flex;
     justify-content:center;
-    gap:14px;
+    gap:18px;
     flex-wrap:wrap;
   }
   .social-btn{
+    position:relative;
+    overflow:hidden;
     display:inline-flex;
     align-items:center;
     gap:9px;
-    padding:12px 22px;
+    padding:14px 28px;
     border-radius:999px;
     text-decoration:none;
     font-weight:600;
-    font-size:14px;
+    font-size:14.5px;
+    letter-spacing:0.3px;
     color:#fff;
-    transition:opacity .15s ease;
+    box-shadow:0 8px 20px rgba(38,34,28,0.15);
+    transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;
   }
-  .social-btn:hover{ opacity:0.9; }
-  .social-btn svg{ width:18px; height:18px; flex-shrink:0; }
+  .social-btn::before{
+    content:"";
+    position:absolute;
+    top:0; left:-75%;
+    width:50%;
+    height:100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg);
+    transition: left .6s ease;
+    pointer-events:none;
+  }
+  .social-btn:hover::before{ left:125%; }
+  .social-btn:hover{
+    opacity:1;
+    transform: translateY(-4px) scale(1.03);
+  }
+  .social-btn.instagram:hover{ box-shadow: 0 14px 30px rgba(221,42,123,0.4); }
+  .social-btn.whatsapp:hover{ box-shadow: 0 14px 30px rgba(37,211,102,0.45); }
+  .social-btn.email:hover{ box-shadow: 0 14px 30px rgba(38,34,28,0.4); }
+  .social-btn svg{
+    width:26px;
+    height:26px;
+    padding:5px;
+    box-sizing:border-box;
+    background: rgba(255,255,255,0.22);
+    border-radius:50%;
+    flex-shrink:0;
+  }
   .social-btn.instagram{
     background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);
   }
@@ -237,13 +279,11 @@
     .g-big{ grid-column: span 2; grid-row: span 1; height:220px; }
     .cards{ grid-template-columns: 1fr; }
     h1{ font-size:36px; }
-    body::before{ background-size:560px auto; }
   }
 
   @media (max-width: 480px){
     .gallery{ grid-template-columns: repeat(1, 1fr); grid-auto-rows:180px; }
     .g-big{ grid-column: span 1; grid-row: span 1; height:200px; }
-    body::before{ background-size:300px auto; }
     .social-buttons{ gap:10px; }
     .social-btn{ padding:10px 16px; font-size:13px; }
   }
@@ -251,6 +291,9 @@
 </head>
 <body>
   <div class="wrap">
+    <div class="logo-header">
+      <img src="../../../images/Logo_hor.png" alt="Viharasetu logo" />
+    </div>
     <a class="back-link" href="index.html">Back to home</a>
 
     <h1>Tungnath &amp; Chandrashila</h1>

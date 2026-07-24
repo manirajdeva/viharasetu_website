@@ -6,11 +6,94 @@
 <title>Varanasi — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=4">
+<link rel="stylesheet" href="../../destinations-common.css?v=6">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
+<style>
+  /* Premium social section */
+  .social{
+    position: relative;
+    margin-top: 56px;
+    padding: 40px 32px 210px;
+    background-color: transparent;
+    background-image:
+      linear-gradient(135deg, rgba(187,90,52,0.05), rgba(38,34,28,0.02)),
+      url('../../../images/social_media_back_groung.png');
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, bottom center;
+    background-size: 100% 100%, 720px auto;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+  @media (max-width: 640px){
+    .social{
+      padding-bottom: 130px;
+      background-size: 100% 100%, 100% auto;
+    }
+  }
+  .social p{
+    font-size: 15px;
+    letter-spacing: 0.3px;
+  }
+  .social-buttons{
+    gap: 18px;
+  }
+  .social-btn{
+    position: relative;
+    overflow: hidden;
+    padding: 14px 28px;
+    font-size: 14.5px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 20px rgba(38,34,28,0.15);
+    transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease;
+  }
+  .social-btn::before{
+    content:"";
+    position:absolute;
+    top:0; left:-75%;
+    width:50%;
+    height:100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg);
+    transition: left .6s ease;
+    pointer-events:none;
+  }
+  .social-btn:hover::before{
+    left: 125%;
+  }
+  .social-btn:hover{
+    opacity: 1;
+    transform: translateY(-4px) scale(1.03);
+  }
+  .social-btn.instagram:hover{ box-shadow: 0 14px 30px rgba(221,42,123,0.4); }
+  .social-btn.whatsapp:hover{ box-shadow: 0 14px 30px rgba(37,211,102,0.45); }
+  .social-btn.email:hover{ box-shadow: 0 14px 30px rgba(38,34,28,0.4); }
+  .social-btn svg{
+    width: 26px;
+    height: 26px;
+    padding: 5px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.22);
+    border-radius: 50%;
+  }
+
+  /* Replace the fixed background watermark with a corner logo that scrolls with the page */
+  body::before{
+    content: none;
+  }
+  .logo-header img{
+    filter: drop-shadow(0 6px 14px rgba(38,34,28,0.18));
+  }
+  @media (max-width: 640px){
+    .logo-header{ top: 12px; right: 16px; }
+    .logo-header img{ height: 48px; }
+  }
+</style>
 </head>
 <body>
   <div class="wrap">
+    <div class="logo-header">
+      <img src="../../../images/Logo_hor.png" alt="Viharasetu logo" />
+    </div>
     <a class="back-link" href="../Explore_Destination.html">Back to home</a>
 
     <h1>Varanasi</h1>
@@ -73,7 +156,7 @@
       // Observe all text sections
       document.addEventListener('DOMContentLoaded', () => {
         // Observe headings and paragraphs
-        document.querySelectorAll('h1, h2, .intro, .experiences, .detail-block, .card').forEach(el => {
+        document.querySelectorAll('h1, h2, .intro, .experiences, .detail-block, .card, .social').forEach(el => {
           observer.observe(el);
         });
         
