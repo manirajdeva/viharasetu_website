@@ -11,7 +11,7 @@
 </script>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Kedarnath &amp; Badrinath — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -311,7 +311,7 @@
     right: auto;
     margin: 0;
     left: 50%;
-    bottom: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
     transform: translateX(-50%);
     z-index: 999;
     width: calc(100% - 32px);
@@ -331,7 +331,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   .mobile-contact-bar svg { width: 24px; height: 24px; }
-  body { padding-bottom: 92px; }
+  body { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
 }
 </style>
 

@@ -12,7 +12,7 @@
 
 <link rel="icon" type="image/png" href="images/fevicon.png">
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Viharasetu — Sacred Journeys, Timeless Paths</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
@@ -284,6 +284,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   .btn-primary {
@@ -330,7 +331,8 @@
 
   .hero-stats {
     display: flex;
-    gap: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
     margin-top: 3.5rem;
     padding-top: 2.5rem;
     border-top: 1px solid var(--border);
@@ -1092,6 +1094,20 @@
     .hero-right { height: 45vh; }
     .hero-left { padding: 4rem 1.5rem 2.5rem; }
   }
+
+  @media (max-width: 480px) {
+    nav { padding: 0.9rem 1rem; }
+    .nav-logo-mark { width: 44px; height: 44px; }
+    .nav-logo { font-size: 1.15rem; }
+    .nav-logo-sub { display: none; }
+    .nav-cta { padding: 0.6rem 1.1rem; font-size: 0.68rem; }
+    .hero-title { font-size: clamp(2.2rem, 9vw, 3rem); }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost { flex: 1 1 auto; text-align: center; }
+    .hero-stats { gap: 1rem 1.5rem; }
+    section, .exp-section, .newsletter-section, footer { padding: 3rem 1.25rem; }
+    .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
 </style>
 
 <style>
@@ -1107,7 +1123,7 @@
     right: auto;
     margin: 0;
     left: 50%;
-    bottom: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
     transform: translateX(-50%);
     z-index: 999;
     width: calc(100% - 32px);
@@ -1127,7 +1143,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   .mobile-contact-bar svg { width: 24px; height: 24px; }
-  body { padding-bottom: 92px; }
+  body { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
 }
 </style>
 
