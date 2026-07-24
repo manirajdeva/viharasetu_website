@@ -64,6 +64,29 @@
     font-family: inherit;
   }
   .gate-box input:focus { outline: none; border-color: var(--accent); }
+  .gate-pw-wrap { position: relative; }
+  .gate-pw-wrap input { padding-right: 42px; }
+  .gate-box button.gate-pw-toggle {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    padding: 0;
+    box-shadow: none;
+    font-weight: normal;
+  }
+  .gate-box button.gate-pw-toggle:hover { background: rgba(187,90,52,0.1); color: var(--accent); transform: translateY(-50%); box-shadow: none; }
+  .gate-pw-toggle svg { width: 19px; height: 19px; }
   .gate-box button {
     width: 100%;
     padding: 13px;
@@ -368,7 +391,15 @@
     <h1>Admin Portal</h1>
     <p>Log in to manage enquiries, suppliers, and bookings.</p>
     <input type="text" id="gate-username" placeholder="Username" autocomplete="off" />
-    <input type="password" id="gate-password" placeholder="Password" autocomplete="off" />
+    <div class="gate-pw-wrap">
+      <input type="password" id="gate-password" placeholder="Password" autocomplete="off" />
+      <button type="button" class="gate-pw-toggle" id="gate-pw-toggle" aria-label="Show password">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="gate-pw-icon">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+      </button>
+    </div>
     <button id="gate-submit">Log in</button>
     <div class="gate-error" id="gate-error"></div>
   </div>
@@ -392,6 +423,7 @@
       <div class="nav-item" data-view="enquiries"><span class="ic">✉</span> Enquiries</div>
       <div class="nav-item" data-view="suppliers"><span class="ic">🤝</span> Suppliers</div>
       <div class="nav-item" data-view="bookings"><span class="ic">🧳</span> Bookings</div>
+      <div class="nav-item" data-view="profile"><span class="ic">👤</span> Profile</div>
     </nav>
     <div class="sidebar-footer">
       <a class="nav-item" href="index.html"><span class="ic">⌂</span> Home page</a>
@@ -429,6 +461,31 @@ const USERS = [
 
 let currentUser = null;
 
+// Profile edits (password/mobile/email) are saved in this browser's localStorage,
+// keyed by username, and layered on top of the USERS list above. This means a
+// changed password takes effect immediately without editing this file — but only
+// on this same browser/device, since there's no real backend for accounts.
+const PROFILE_STORAGE_KEY = 'vh_admin_profiles';
+
+function loadProfileOverrides() {
+  try {
+    return JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEY) || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveProfileOverride(username, data) {
+  const all = loadProfileOverrides();
+  all[username] = Object.assign({}, all[username], data);
+  localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(all));
+}
+
+function getEffectiveUsers() {
+  const overrides = loadProfileOverrides();
+  return USERS.map(u => Object.assign({}, u, overrides[u.username] || {}));
+}
+
 // Per-sheet display config: which column drives the colored badge and its options,
 // which column is a long-text field, and the primary (bold) column in the table.
 const SHEET_CONFIG = {
@@ -462,6 +519,16 @@ const gateUsername = document.getElementById('gate-username');
 const gatePassword = document.getElementById('gate-password');
 const gateError = document.getElementById('gate-error');
 
+const EYE_ICON = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>';
+const EYE_OFF_ICON = '<path d="M3 3l18 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.6 5.2A11.4 11.4 0 0 1 12 5c7 0 11 7 11 7a13.5 13.5 0 0 1-3.4 4.1M6.7 6.7C3.7 8.6 1 12 1 12s4 7 11 7a10.8 10.8 0 0 0 4.2-.85" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>';
+
+document.getElementById('gate-pw-toggle').addEventListener('click', () => {
+  const showing = gatePassword.type === 'text';
+  gatePassword.type = showing ? 'password' : 'text';
+  document.getElementById('gate-pw-icon').innerHTML = showing ? EYE_ICON : EYE_OFF_ICON;
+  document.getElementById('gate-pw-toggle').setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+});
+
 function unlock() {
   gate.classList.add('hidden');
   app.classList.add('visible');
@@ -484,7 +551,7 @@ gateUsername.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlo
 gatePassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
 
 function tryUnlock() {
-  const match = USERS.find(u => u.username === gateUsername.value && u.password === gatePassword.value);
+  const match = getEffectiveUsers().find(u => u.username === gateUsername.value && u.password === gatePassword.value);
   if (match) {
     currentUser = match;
     gateError.textContent = '';
@@ -540,6 +607,7 @@ function navigate(view) {
     el.classList.toggle('active', el.dataset.view === view);
   });
   if (view === 'dashboard') renderDashboard();
+  else if (view === 'profile') renderProfile();
   else renderSheetView(view);
 }
 
@@ -633,6 +701,73 @@ function topbarEl(title, sub, buttons) {
     <div class="topbar-actions">${buttons.map(b => `<button class="btn ${b.cls || ''}" id="${b.id}">${b.label}</button>`).join('')}</div>
   `;
   return div;
+}
+
+// ── Profile (change password, mobile, email) ─────────────────
+function renderProfile() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  main.appendChild(topbarEl('Profile', 'Update your contact details or change your password.', []));
+
+  const card = document.createElement('div');
+  card.className = 'table-wrap';
+  card.style.padding = '28px';
+  card.style.maxWidth = '480px';
+  card.innerHTML = `
+    <div class="field"><label>Username</label><input type="text" value="${escapeAttr(currentUser.username)}" disabled /></div>
+    <div class="field"><label>Mobile Number</label><input type="tel" id="profile-mobile" value="${escapeAttr(currentUser.mobile || '')}" placeholder="e.g. 98765 43210" /></div>
+    <div class="field"><label>Email</label><input type="email" id="profile-email" value="${escapeAttr(currentUser.email || '')}" placeholder="you@example.com" /></div>
+    <div class="section-title" style="margin:24px 0 14px;">Change Password</div>
+    <div class="field"><label>Current Password</label><input type="password" id="profile-current-pw" autocomplete="off" /></div>
+    <div class="field"><label>New Password</label><input type="password" id="profile-new-pw" autocomplete="off" /></div>
+    <div class="field"><label>Confirm New Password</label><input type="password" id="profile-confirm-pw" autocomplete="off" /></div>
+    <div id="profile-msg" style="font-size:13px;margin-top:4px;min-height:18px;"></div>
+    <div class="modal-actions" style="justify-content:flex-start;margin-top:12px;">
+      <button class="btn primary" id="profile-save">Save Changes</button>
+    </div>
+  `;
+  main.appendChild(card);
+
+  document.getElementById('profile-save').addEventListener('click', saveProfile);
+}
+
+function saveProfile() {
+  const msg = document.getElementById('profile-msg');
+  const mobile = document.getElementById('profile-mobile').value.trim();
+  const email = document.getElementById('profile-email').value.trim();
+  const currentPw = document.getElementById('profile-current-pw').value;
+  const newPw = document.getElementById('profile-new-pw').value;
+  const confirmPw = document.getElementById('profile-confirm-pw').value;
+
+  const updates = { mobile, email };
+
+  if (currentPw || newPw || confirmPw) {
+    if (currentPw !== currentUser.password) {
+      msg.style.color = 'var(--red)';
+      msg.textContent = 'Current password is incorrect.';
+      return;
+    }
+    if (!newPw || newPw.length < 6) {
+      msg.style.color = 'var(--red)';
+      msg.textContent = 'New password must be at least 6 characters.';
+      return;
+    }
+    if (newPw !== confirmPw) {
+      msg.style.color = 'var(--red)';
+      msg.textContent = 'New password and confirmation do not match.';
+      return;
+    }
+    updates.password = newPw;
+  }
+
+  saveProfileOverride(currentUser.username, updates);
+  currentUser = Object.assign({}, currentUser, updates);
+
+  msg.style.color = 'var(--jade)';
+  msg.textContent = 'Saved.';
+  document.getElementById('profile-current-pw').value = '';
+  document.getElementById('profile-new-pw').value = '';
+  document.getElementById('profile-confirm-pw').value = '';
 }
 
 // ── Generic sheet view (table + search + add/edit/delete) ─────
