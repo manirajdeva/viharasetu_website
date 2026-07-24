@@ -456,7 +456,8 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby16uHDPLkWFMHOQtKH3
 // canDelete: false hides the Delete button for that user — they can still add and edit.
 const USERS = [
   { username: "admin", password: "Viharasetu@2026", canDelete: true },
-  { username: "sirishakandala", password: "sirisha@kandala", canDelete: false }
+  { username: "sirishakandala", password: "sirisha@kandala", canDelete: false },
+  { username: "maniraj1995", password: "Maniraju@111", canDelete: true }
 ];
 
 let currentUser = null;
@@ -484,6 +485,40 @@ function saveProfileOverride(username, data) {
 function getEffectiveUsers() {
   const overrides = loadProfileOverrides();
   return USERS.map(u => Object.assign({}, u, overrides[u.username] || {}));
+}
+
+// Downloads a plain-text snapshot of every account's current username/password
+// (and mobile/email, if set) as a backup you can keep for reference if you
+// forget a password. Browsers can't silently overwrite a fixed file on disk,
+// so each call downloads a fresh file — your browser will add "(1)", "(2)"
+// etc. to the filename if one from an earlier save is still in Downloads.
+function downloadCredentialsBackup() {
+  const users = getEffectiveUsers();
+  const now = new Date();
+  const lines = [
+    'Viharasetu Admin Portal — login backup',
+    'Generated: ' + now.toLocaleString('en-IN'),
+    'Keep this file somewhere private — it contains live passwords.',
+    ''
+  ];
+  users.forEach(u => {
+    lines.push('Username: ' + u.username);
+    lines.push('Password: ' + u.password);
+    if (u.mobile) lines.push('Mobile: ' + u.mobile);
+    if (u.email) lines.push('Email: ' + u.email);
+    lines.push('Can delete entries: ' + (u.canDelete ? 'Yes' : 'No'));
+    lines.push('');
+  });
+
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'viharasetu-admin-credentials.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
 // Per-sheet display config: which column drives the colored badge and its options,
@@ -724,11 +759,13 @@ function renderProfile() {
     <div id="profile-msg" style="font-size:13px;margin-top:4px;min-height:18px;"></div>
     <div class="modal-actions" style="justify-content:flex-start;margin-top:12px;">
       <button class="btn primary" id="profile-save">Save Changes</button>
+      <button class="btn" id="profile-download-backup">⬇ Download login backup (.txt)</button>
     </div>
   `;
   main.appendChild(card);
 
   document.getElementById('profile-save').addEventListener('click', saveProfile);
+  document.getElementById('profile-download-backup').addEventListener('click', downloadCredentialsBackup);
 }
 
 function saveProfile() {
@@ -763,8 +800,14 @@ function saveProfile() {
   saveProfileOverride(currentUser.username, updates);
   currentUser = Object.assign({}, currentUser, updates);
 
-  msg.style.color = 'var(--jade)';
-  msg.textContent = 'Saved.';
+  if (updates.password) {
+    downloadCredentialsBackup();
+    msg.style.color = 'var(--jade)';
+    msg.textContent = 'Saved — a login backup file was downloaded.';
+  } else {
+    msg.style.color = 'var(--jade)';
+    msg.textContent = 'Saved.';
+  }
   document.getElementById('profile-current-pw').value = '';
   document.getElementById('profile-new-pw').value = '';
   document.getElementById('profile-confirm-pw').value = '';
