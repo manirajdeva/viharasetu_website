@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pahalgam — Destinations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../../../images/fevicon.png" type="image/png">
+<style>
+  :root{
+    --bg: #F4F1EA;
+    --ink: #26221C;
+    --ink-soft: #5C554A;
+    --accent: #BB5A34;
+    --accent-dark: #9C4826;
+    --card: #FFFFFF;
+    --line: #E4DECF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    cursor: url('../../../images/cursor.png') 10 10, auto;
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:32px 24px 80px;
+  }
+  .back-link{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:500;
+    font-size:14px;
+  }
+  .back-link:hover{ text-decoration:underline; }
+
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:48px;
+    margin:20px 0 14px;
+  }
+  .intro{
+    max-width:640px;
+    color:var(--ink-soft);
+    font-size:16px;
+    margin-bottom:36px;
+  }
+
+  /* Gallery */
+  .gallery{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 140px;
+    gap:10px;
+    margin-bottom:56px;
+  }
+  .gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:10px;
+    display:block;
+    transition: transform .45s cubic-bezier(.22,.61,.36,1), filter .45s ease;
+  }
+  .gallery a{
+    display:block;
+    overflow:hidden;
+    border-radius:10px;
+  }
+  .gallery a:hover img{
+    transform: scale(1.08);
+    filter: brightness(1.05);
+  }
+  .g-big{ grid-column: span 2; grid-row: span 2; }
+
+  /* Signature Experiences */
+  h2{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:28px;
+    margin:0 0 16px;
+  }
+  .experiences{
+    margin-bottom:44px;
+  }
+  .experiences ul{
+    margin:0;
+    padding-left:20px;
+    color:var(--ink);
+    font-size:16px;
+  }
+  .experiences li{ margin-bottom:8px; }
+
+  /* Itinerary cards */
+  .itineraries h2{ margin-bottom:6px; }
+  .itineraries .sub{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-bottom:20px;
+  }
+  .cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+  }
+  .card h3{
+    font-family:'Playfair Display', serif;
+    font-size:20px;
+    font-weight:700;
+    margin:0 0 10px;
+  }
+  .card p.desc{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 16px;
+    flex-grow:1;
+  }
+  .card .price{
+    font-weight:700;
+    font-size:16px;
+    margin-bottom:16px;
+  }
+  .card .price .sym{ font-weight:500; }
+  .btn{
+    display:inline-block;
+    background:var(--accent);
+    color:#fff;
+    text-align:center;
+    padding:11px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    border:none;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .btn:hover{ background:var(--accent-dark); }
+
+  /* Social / contact footer */
+  .social{
+    margin-top:56px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  .social p{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 16px;
+  }
+  .social-buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .social-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:12px 22px;
+    border-radius:999px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    color:#fff;
+    transition:opacity .15s ease;
+  }
+  .social-btn:hover{ opacity:0.9; }
+  .social-btn svg{ width:18px; height:18px; flex-shrink:0; }
+  .social-btn.instagram{
+    background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);
+  }
+  .social-btn.whatsapp{
+    background:#25D366;
+  }
+  .social-btn.email{
+    background:var(--ink);
+  }
+
+  @media (max-width: 860px){
+    .gallery{ grid-template-columns: repeat(2, 1fr); grid-auto-rows:120px; }
+    .g-big{ grid-column: span 2; grid-row: span 1; height:220px; }
+    .cards{ grid-template-columns: 1fr; }
+    h1{ font-size:36px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back-link" href="/destinations/All_packages/Explore_Destination.html">← Back to home</a>
+
+    <h1>Pahalgam</h1>
+    <p class="intro">
+      Pahalgam — the 'Valley of Shepherds', where the Lidder River winds through pine forests, meadows, and the dramatic Betaab Valley. We arrange valley drives, pony treks, and riverside stays.
+    </p>
+
+    <!-- Photo gallery: 10 images -->
+    <div class="gallery">
+      <a class="g-big" href="https://commons.wikimedia.org/wiki/Special:FilePath/Pahalgam%20Valley.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pahalgam%20Valley.jpg?width=700" alt="Pahalgam Valley">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Betaab%20Valley%20Pahalgham.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Betaab%20Valley%20Pahalgham.jpg?width=400" alt="Betaab Valley, Pahalgam">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Chandanwari%20-%20Pahalgam.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Chandanwari%20-%20Pahalgam.jpg?width=400" alt="Chandanwari, Pahalgam">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Hotel%20by%20the%20Lidder%20river%2C%20Pahalgam%202012.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hotel%20by%20the%20Lidder%20river%2C%20Pahalgam%202012.jpg?width=400" alt="By the Lidder River, Pahalgam">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Himalayan%20peaks%20visible%20from%20pahalgam%20valley.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Himalayan%20peaks%20visible%20from%20pahalgam%20valley.jpg?width=400" alt="Himalayan peaks from Pahalgam valley">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Himalayan%20range%20visible%20from%20pahalgam%20valley.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Himalayan%20range%20visible%20from%20pahalgam%20valley.jpg?width=400" alt="Himalayan range from Pahalgam valley">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Horse%20Riding%20At%20Pahalgam.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Horse%20Riding%20At%20Pahalgam.jpg?width=400" alt="Horse riding at Pahalgam">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Enroute%20betab%20valley.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Enroute%20betab%20valley.jpg?width=400" alt="Enroute to Betaab Valley">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/GLACIER%20FROZEN%20ENROUTE%20TO%20PAHALGAM.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/GLACIER%20FROZEN%20ENROUTE%20TO%20PAHALGAM.jpg?width=400" alt="Frozen glacier enroute to Pahalgam">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Pahalgam%20Golf%20Course%20with%20mountains%20in%20background%2C%20Jammu%20and%20Kashmir%2C%20India.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pahalgam%20Golf%20Course%20with%20mountains%20in%20background%2C%20Jammu%20and%20Kashmir%2C%20India.jpg?width=400" alt="Pahalgam Golf Course">
+      </a>
+    </div>
+
+    <div class="experiences">
+      <h2>Signature Experiences</h2>
+      <ul>
+        <li>Drive through the Betaab Valley and Chandanwari</li>
+        <li>Pony trek along the Lidder River</li>
+        <li>Riverside picnic and trout fishing</li>
+      </ul>
+    </div>
+
+    <div class="itineraries">
+      <h2>Choose Your Itinerary</h2>
+      <p class="sub">Every trip is fully customisable — pick a length to see the day-by-day plan.</p>
+      <div class="cards">
+
+        <div class="card">
+          <h3>Pahalgam Weekend — 2 Nights</h3>
+          <p class="desc">Betaab Valley, Chandanwari, and a Lidder riverside stay.</p>
+          <div class="price"><span class="sym">₹</span> XXXXX / person</div>
+          <a class="btn" href="itinerary-2-nights.html">View Itinerary</a>
+        </div>
+
+        <div class="card">
+          <h3>Valley &amp; River Trail — 4 Nights</h3>
+          <p class="desc">Pony treks, valley drives, and time by the Lidder River.</p>
+          <div class="price"><span class="sym">₹</span> XXXXX / person</div>
+          <a class="btn" href="itinerary-4-nights.html">View Itinerary</a>
+        </div>
+
+        <div class="card">
+          <h3>Kashmir Meadows Circuit — 6 Nights</h3>
+          <p class="desc">Pahalgam combined with a wider meadows-and-valleys circuit.</p>
+          <div class="price"><span class="sym">₹</span> XXXXX / person</div>
+          <a class="btn" href="itinerary-6-nights.html">View Itinerary</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="social">
+      <p>Have questions about this trip? Reach out to us directly.</p>
+      <div class="social-buttons">
+        <a class="social-btn instagram" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
+          Follow on Instagram
+        </a>
+        <a class="social-btn whatsapp" href="https://wa.me/919885180515" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
+          Chat on WhatsApp
+        </a>
+        <a class="social-btn email" href="mailto:viharasetu@gmail.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
+          Email Us
+        </a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

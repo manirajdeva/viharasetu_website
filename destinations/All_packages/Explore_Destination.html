@@ -25,6 +25,16 @@
     font-family:'Inter',sans-serif;
     line-height:1.55;
   }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url('../../images/Logo_hor.png') center center no-repeat;
+    background-size:480px auto;
+    opacity:0.5;
+    z-index:-1;
+    pointer-events:none;
+  }
   .wrap{
     max-width:1180px;
     margin:0 auto;
@@ -216,7 +226,7 @@
     gap:22px;
   }
   .dest-card{
-    background:var(--card);
+    background:transparent;
     border:1px solid var(--line);
     border-radius:16px;
     overflow:hidden;
@@ -284,6 +294,13 @@
     display:flex;
     flex-direction:column;
     flex-grow:1;
+    background:rgba(255,255,255,0.45);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    transition: background .35s ease;
+  }
+  .dest-card:hover .body{
+    background:rgba(255,255,255,1);
   }
   .dest-card h3{
     font-family:'Playfair Display', serif;
@@ -418,7 +435,7 @@
       <div class="navbar-right">
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" placeholder="Search by destination name...">
+          <input type="text" id="search-input" class="search-input" placeholder="Search by destination, place, or state...">
         </div>
 
         <div class="nav-menu" id="nav-menu">
@@ -497,7 +514,7 @@
 
     <div class="grid" id="dest-grid">
 
-      <a class="dest-card" href="/destinations/All_packages/UTTARAKHAND/varanasi.html" data-state="Uttar Pradesh" data-seasons="Winter">
+      <a class="dest-card" href="/destinations/All_packages/UTTAR_PRADESH/varanasi.html" data-state="Uttar Pradesh" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Uttar Pradesh</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -510,7 +527,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="rishikesh.html" data-state="Uttarakhand" data-seasons="Winter,Summer">
+      <a class="dest-card" href="UTTARAKHAND/rishikesh.html" data-state="Uttarakhand" data-seasons="Winter,Summer">
         <div class="thumb">
           <span class="tag">Uttarakhand</span>
           <div class="season-tags"><span>Winter</span><span>Summer</span></div>
@@ -523,7 +540,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="agra.html" data-state="Uttar Pradesh" data-seasons="Winter">
+      <a class="dest-card" href="UTTAR_PRADESH/agra.html" data-state="Uttar Pradesh" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Uttar Pradesh</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -536,7 +553,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="/destinations/All_packages/hampi.html" data-state="Karnataka" data-seasons="Winter">
+      <a class="dest-card" href="/destinations/All_packages/KARNATAKA/hampi.html" data-state="Karnataka" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Karnataka</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -549,7 +566,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="leh-ladakh.html" data-state="Ladakh" data-seasons="Summer">
+      <a class="dest-card" href="LADAKH/leh-ladakh.html" data-state="Ladakh" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Ladakh</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -562,7 +579,33 @@
         </div>
       </a>
 
-      <a class="dest-card" href="chardham.html" data-state="Uttarakhand" data-seasons="Summer">
+      <a class="dest-card" href="HIMACHAL_PRADESH/spiti-valley.html" data-state="Himachal Pradesh" data-seasons="Summer,Winter">
+        <div class="thumb">
+          <span class="tag">Himachal Pradesh</span>
+          <div class="season-tags"><span>Summer</span><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kee%20monastery%20Spiti%20Valley%20%28edited%29.jpg?width=500" alt="Spiti Valley">
+        </div>
+        <div class="body">
+          <h3>Spiti Valley</h3>
+          <p class="tagline">Cold-desert monasteries, high villages, and Chandratal Lake.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="HIMACHAL_PRADESH/shimla-manali-kasol.html" data-state="Himachal Pradesh" data-seasons="Summer,Winter">
+        <div class="thumb">
+          <span class="tag">Himachal Pradesh</span>
+          <div class="season-tags"><span>Summer</span><span>Winter</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mall%20Road%2C%20Shimla%202.jpg?width=500" alt="Shimla, Manali &amp; Kasol">
+        </div>
+        <div class="body">
+          <h3>Shimla, Manali &amp; Kasol</h3>
+          <p class="tagline">Colonial hill towns, Solang Valley, and Parvati Valley cafes in one trail.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="UTTARAKHAND/chardham.html" data-state="Uttarakhand" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Uttarakhand</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -575,7 +618,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="munnar.html" data-state="Kerala" data-seasons="Winter,Monsoon">
+      <a class="dest-card" href="KERALA/munnar.html" data-state="Kerala" data-seasons="Winter,Monsoon">
         <div class="thumb">
           <span class="tag">Kerala</span>
           <div class="season-tags"><span>Winter</span><span>Monsoon</span></div>
@@ -588,7 +631,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="alleppey.html" data-state="Kerala" data-seasons="Monsoon,Winter">
+      <a class="dest-card" href="KERALA/alleppey.html" data-state="Kerala" data-seasons="Monsoon,Winter">
         <div class="thumb">
           <span class="tag">Kerala</span>
           <div class="season-tags"><span>Monsoon</span><span>Winter</span></div>
@@ -601,7 +644,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="mysore.html" data-state="Karnataka" data-seasons="Winter">
+      <a class="dest-card" href="KARNATAKA/mysore.html" data-state="Karnataka" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Karnataka</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -614,7 +657,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="coorg.html" data-state="Karnataka" data-seasons="Monsoon,Winter">
+      <a class="dest-card" href="KARNATAKA/coorg.html" data-state="Karnataka" data-seasons="Monsoon,Winter">
         <div class="thumb">
           <span class="tag">Karnataka</span>
           <div class="season-tags"><span>Monsoon</span><span>Winter</span></div>
@@ -627,7 +670,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="ooty.html" data-state="Tamil Nadu" data-seasons="Summer,Winter">
+      <a class="dest-card" href="TAMIL_NADU/ooty.html" data-state="Tamil Nadu" data-seasons="Summer,Winter">
         <div class="thumb">
           <span class="tag">Tamil Nadu</span>
           <div class="season-tags"><span>Summer</span><span>Winter</span></div>
@@ -640,7 +683,20 @@
         </div>
       </a>
 
-      <a class="dest-card" href="pondicherry.html" data-state="Puducherry" data-seasons="Winter">
+      <a class="dest-card" href="TAMIL_NADU/temple-trail.html" data-state="Tamil Nadu" data-seasons="Winter,Summer">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span><span>Summer</span></div>
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Meenakshi%20Temple%2C%20Gopuram%2C%20Madurai%2C%20India.jpg?width=500" alt="Madurai, Rameswaram, Kanyakumari, Srirangam &amp; Thanjavur temple trail">
+        </div>
+        <div class="body">
+          <h3>Tamil Nadu Temple Trail</h3>
+          <p class="tagline">Madurai, Rameswaram, Kanyakumari, Srirangam &amp; Thanjavur in one circuit.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" href="PUDUCHERRY/pondicherry.html" data-state="Puducherry" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Puducherry</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -653,7 +709,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="kedarnath-badrinath.html" data-state="Uttarakhand" data-seasons="Summer">
+      <a class="dest-card" href="UTTARAKHAND/kedarnath-badrinath.html" data-state="Uttarakhand" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Uttarakhand</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -666,7 +722,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="tungnath-chandrashila.html" data-state="Uttarakhand" data-seasons="Summer">
+      <a class="dest-card" href="UTTARAKHAND/tungnath-chandrashila.html" data-state="Uttarakhand" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Uttarakhand</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -679,7 +735,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="rishikesh-haridwar.html" data-state="Uttarakhand" data-seasons="Winter,Summer">
+      <a class="dest-card" href="UTTARAKHAND/rishikesh-haridwar.html" data-state="Uttarakhand" data-seasons="Winter,Summer">
         <div class="thumb">
           <span class="tag">Uttarakhand</span>
           <div class="season-tags"><span>Winter</span><span>Summer</span></div>
@@ -708,7 +764,7 @@
   </div>
 </a>
 
-      <a class="dest-card" href="jammu_kasmir/srinagar.html" data-state="Jammu and Kashmir" data-seasons="Summer">
+      <a class="dest-card" href="JAMMU_KASHMIR/srinagar.html" data-state="Jammu and Kashmir" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Jammu and Kashmir</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -721,7 +777,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="jammu_kasmir/gulmarg.html" data-state="Jammu and Kashmir" data-seasons="Winter,Summer">
+      <a class="dest-card" href="JAMMU_KASHMIR/gulmarg.html" data-state="Jammu and Kashmir" data-seasons="Winter,Summer">
         <div class="thumb">
           <span class="tag">Jammu and Kashmir</span>
           <div class="season-tags"><span>Winter</span><span>Summer</span></div>
@@ -734,7 +790,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="jammu_kasmir/pahalgam.html" data-state="Jammu and Kashmir" data-seasons="Summer">
+      <a class="dest-card" href="JAMMU_KASHMIR/pahalgam.html" data-state="Jammu and Kashmir" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Jammu and Kashmir</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -747,7 +803,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="jammu_kasmir/sonmarg.html" data-state="Jammu and Kashmir" data-seasons="Summer">
+      <a class="dest-card" href="JAMMU_KASHMIR/sonmarg.html" data-state="Jammu and Kashmir" data-seasons="Summer">
         <div class="thumb">
           <span class="tag">Jammu and Kashmir</span>
           <div class="season-tags"><span>Summer</span></div>
@@ -760,7 +816,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="jammu_kasmir/vaishno-devi.html" data-state="Jammu and Kashmir" data-seasons="Winter">
+      <a class="dest-card" href="JAMMU_KASHMIR/vaishno-devi.html" data-state="Jammu and Kashmir" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Jammu and Kashmir</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -798,11 +854,14 @@
         const seasons = card.dataset.seasons.split(',');
         const state = card.dataset.state;
         const name = card.querySelector('h3').textContent.toLowerCase();
+        const taglineEl = card.querySelector('.tagline');
+        const tagline = taglineEl ? taglineEl.textContent.toLowerCase() : '';
+        const searchableText = name + ' ' + tagline + ' ' + state.toLowerCase();
         const searchTerm = activeSearch.toLowerCase();
-        
+
         const seasonMatch = activeSeason === 'all' || seasons.includes(activeSeason);
         const stateMatch = activeState === 'all' || state === activeState;
-        const searchMatch = activeSearch === '' || name.includes(searchTerm);
+        const searchMatch = activeSearch === '' || searchableText.includes(searchTerm);
         
         if (seasonMatch && stateMatch && searchMatch) {
           card.classList.remove('hidden');
