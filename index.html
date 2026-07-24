@@ -148,6 +148,68 @@
   .nav-toggle.active span:nth-child(2) { opacity: 0; }
   .nav-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
+  /* ── NAV TRAIN ── */
+  .nav-rail-track {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 34px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .nav-rail-track::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 5px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--gold) 0 14px, transparent 14px 26px);
+    opacity: 0.55;
+  }
+
+  .nav-train {
+    position: absolute;
+    bottom: 6px;
+    left: -260px;
+    width: 150px;
+    animation: train-ride 18s linear infinite;
+  }
+
+  .nav-train .train-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 6px 10px rgba(26,22,15,0.28));
+  }
+
+  .nav-train .smoke {
+    position: absolute;
+    top: -3px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, rgba(92,81,67,0.55), transparent 70%);
+    border-radius: 50%;
+    animation: smoke-puff 2.2s ease-out infinite;
+  }
+
+  .nav-train .smoke.s2 { animation-delay: 0.7s; right: 11px; }
+  .nav-train .smoke.s3 { animation-delay: 1.4s; right: 7px; }
+
+  @keyframes train-ride {
+    0% { left: -260px; }
+    100% { left: 100%; }
+  }
+
+  @keyframes smoke-puff {
+    0% { transform: translateY(0) scale(0.6); opacity: 0.55; }
+    100% { transform: translateY(-24px) scale(1.7); opacity: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .nav-train { width: 110px; }
+  }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -1027,6 +1089,45 @@
 
 <!-- NAV -->
 <nav>
+  <div class="nav-rail-track" aria-hidden="true">
+    <div class="nav-train">
+      <svg class="train-svg" viewBox="0 0 260 40" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="trainBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#D97A3A"/>
+            <stop offset="1" stop-color="#8B3E0D"/>
+          </linearGradient>
+        </defs>
+        <line x1="70" y1="24" x2="78" y2="24" stroke="#5C5143" stroke-width="2"/>
+        <line x1="145" y1="24" x2="153" y2="24" stroke="#5C5143" stroke-width="2"/>
+        <line x1="220" y1="24" x2="228" y2="24" stroke="#5C5143" stroke-width="2"/>
+        <rect x="4" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
+        <rect x="12" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <rect x="38" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <circle cx="18" cy="32" r="5" fill="#1A160F"/>
+        <circle cx="56" cy="32" r="5" fill="#1A160F"/>
+        <rect x="78" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
+        <rect x="86" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <rect x="112" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <circle cx="92" cy="32" r="5" fill="#1A160F"/>
+        <circle cx="130" cy="32" r="5" fill="#1A160F"/>
+        <rect x="153" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
+        <rect x="161" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <rect x="187" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <circle cx="167" cy="32" r="5" fill="#1A160F"/>
+        <circle cx="205" cy="32" r="5" fill="#1A160F"/>
+        <rect x="228" y="6" width="30" height="24" rx="6" fill="url(#trainBody)"/>
+        <rect x="234" y="0" width="10" height="10" rx="2" fill="#8B3E0D"/>
+        <circle cx="252" cy="12" r="3" fill="#F7EDD5"/>
+        <rect x="233" y="12" width="16" height="9" rx="2" fill="#F7EDD5" opacity="0.9"/>
+        <circle cx="236" cy="32" r="5" fill="#1A160F"/>
+        <circle cx="250" cy="32" r="5" fill="#1A160F"/>
+      </svg>
+      <span class="smoke s1"></span>
+      <span class="smoke s2"></span>
+      <span class="smoke s3"></span>
+    </div>
+  </div>
   <a class="nav-brand" href="#">
     <img class="nav-logo-mark" src="images/Logo.png" alt="Viharasetu logo" />
     <span class="nav-logo-text">
