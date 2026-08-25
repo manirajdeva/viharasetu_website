@@ -15,7 +15,7 @@
 <title>Madurai, Rameswaram, Kanyakumari, Srirangam &amp; Thanjavur — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 </head>
 <body>
@@ -255,6 +255,60 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Temple Trail Essentials — 5 Nights",
+      sub: "The classic pilgrim triangle: Madurai, Rameswaram, and Kanyakumari.",
+      days: [
+        { day: 1, title: "Arrival in Madurai", items: ["Arrive in Madurai, check-in and freshen up", "Evening aarti at Meenakshi Amman Temple"], tags: ["Dinner"] },
+        { day: 2, title: "Madurai Sightseeing", items: ["Meenakshi Amman Temple detailed tour", "Thirumalai Nayakkar Palace"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Madurai to Rameswaram", items: ["Drive to Rameswaram", "Ramanathaswamy Temple evening darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Rameswaram to Kanyakumari", items: ["Dhanushkodi sunrise visit", "Drive to Kanyakumari"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Kanyakumari", items: ["Vivekananda Rock Memorial", "Sunset at the tri-sea confluence"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Complete Temple Circuit — 8 Nights",
+      sub: "Madurai, Rameswaram, and Kanyakumari, extended north to Srirangam and Thanjavur — all five in one seamless package.",
+      days: [
+        { day: 1, title: "Arrival in Madurai", items: ["Arrive in Madurai, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Madurai Sightseeing", items: ["Meenakshi Amman Temple", "Thirumalai Nayakkar Palace"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Madurai to Rameswaram", items: ["Drive to Rameswaram", "Ramanathaswamy Temple darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Rameswaram to Kanyakumari", items: ["Dhanushkodi sunrise visit", "Drive to Kanyakumari"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Kanyakumari", items: ["Vivekananda Rock Memorial, tri-sea sunset"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Kanyakumari to Srirangam", items: ["Long drive north to Srirangam"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Srirangam Temple", items: ["Ranganathaswamy Temple, one of the largest temple complexes in India"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Srirangam to Thanjavur", items: ["Drive to Thanjavur", "Brihadeeswarar Temple evening visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Unhurried Heritage Trail — 11 Nights",
+      sub: "All five towns at a relaxed pace, with a Dhanushkodi excursion and a Tanjore painting workshop.",
+      days: [
+        { day: 1, title: "Arrival in Madurai", items: ["Arrive in Madurai, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Madurai Sightseeing", items: ["Meenakshi Amman Temple detailed tour"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Madurai Heritage", items: ["Thirumalai Nayakkar Palace, local markets"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Madurai to Rameswaram", items: ["Drive to Rameswaram", "Ramanathaswamy Temple darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Dhanushkodi Excursion", items: ["Full day excursion to the ghost town of Dhanushkodi"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Rameswaram to Kanyakumari", items: ["Drive to Kanyakumari"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Kanyakumari", items: ["Vivekananda Rock Memorial, tri-sea sunset"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Kanyakumari to Srirangam", items: ["Long drive north to Srirangam"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Srirangam Temple", items: ["Ranganathaswamy Temple complex"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Srirangam to Thanjavur", items: ["Drive to Thanjavur", "Brihadeeswarar Temple visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 11, title: "Tanjore Painting Workshop", items: ["Hands-on Tanjore painting workshop with a local artisan"], tags: ["Breakfast", "Dinner"] },
+        { day: 12, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

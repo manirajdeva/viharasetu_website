@@ -15,7 +15,7 @@
 <title>Pondicherry — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -143,6 +143,48 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "French Quarter Weekend — 2 Nights",
+      sub: "White Town heritage walk, Promenade Beach, and local cafes.",
+      days: [
+        { day: 1, title: "Arrival & White Town", items: ["Arrive in Pondicherry, check-in", "Evening walk through White Town's French Quarter"], tags: ["Dinner"] },
+        { day: 2, title: "Promenade & Cafes", items: ["Morning at Promenade Beach", "Afternoon at local French cafes"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Pondy & Auroville — 4 Nights",
+      sub: "Heritage town plus a day exploring Auroville and the ashram.",
+      days: [
+        { day: 1, title: "Arrival & White Town", items: ["Arrive, check-in", "Evening walk through White Town"], tags: ["Dinner"] },
+        { day: 2, title: "Promenade & Cafes", items: ["Promenade Beach", "French Quarter cafes and boutiques"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Sri Aurobindo Ashram", items: ["Visit to Sri Aurobindo Ashram"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Auroville", items: ["Full day at Auroville, including the Matrimandir viewpoint"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Coastal Retreat — 6 Nights",
+      sub: "An unhurried stay combining the French Quarter with nearby beaches.",
+      days: [
+        { day: 1, title: "Arrival & White Town", items: ["Arrive, check-in", "Evening walk through White Town"], tags: ["Dinner"] },
+        { day: 2, title: "Promenade & Cafes", items: ["Promenade Beach", "French Quarter cafes"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Sri Aurobindo Ashram", items: ["Visit to Sri Aurobindo Ashram"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Auroville", items: ["Full day at Auroville and the Matrimandir viewpoint"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Paradise Beach", items: ["Boat ride to Paradise Beach"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Leisure Day", items: ["Free day for cycling around White Town"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

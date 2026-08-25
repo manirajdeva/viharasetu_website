@@ -15,7 +15,7 @@
 <title>Shimla, Manali &amp; Kasol — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 </head>
 <body>
@@ -237,6 +237,60 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Shimla & Manali Getaway — 5 Nights",
+      sub: "Colonial Shimla and the adventure valleys around Manali.",
+      days: [
+        { day: 1, title: "Arrival in Shimla", items: ["Arrive in Shimla, check-in and freshen up", "Evening walk on Mall Road and The Ridge"], tags: ["Dinner"] },
+        { day: 2, title: "Shimla Heritage", items: ["Christ Church, Jakhoo Temple", "Kalka-Shimla Toy Train experience"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Shimla to Manali", items: ["Scenic drive to Manali (approx. 8 hours)", "Evening at Old Manali"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Manali Sightseeing", items: ["Hidimba Devi Temple, Manu Temple", "Vashisht Hot Springs"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Solang Valley", items: ["Paragliding and cable car at Solang Valley", "Evening at leisure"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Complete Himachal Circuit — 8 Nights",
+      sub: "Shimla and Manali, extended into the Parvati Valley for Kasol — all three towns in one seamless package.",
+      days: [
+        { day: 1, title: "Arrival in Shimla", items: ["Arrive in Shimla, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Shimla Heritage", items: ["Mall Road, The Ridge, Christ Church", "Kalka-Shimla Toy Train"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Shimla to Manali", items: ["Scenic drive to Manali", "Evening at Old Manali"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Manali Sightseeing", items: ["Hidimba Devi Temple, Vashisht Hot Springs", "Naggar Castle"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Solang Valley & Rohtang", items: ["Paragliding at Solang Valley", "Snow-point excursion to Rohtang Pass"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Manali to Kasol", items: ["Drive to Kasol via the Parvati Valley", "Evening by the Parvati River"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Kasol & Parvati Valley", items: ["Chalal village walk, riverside cafes", "Manikaran Sahib gurudwara & hot springs"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Kheerganga Trail", items: ["Short trek towards Kheerganga or Tosh village", "Evening at leisure"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Extended Himalayan Escape — 11 Nights",
+      sub: "All three towns at a relaxed pace, with the Kheerganga trek and a full day at Rohtang Pass.",
+      days: [
+        { day: 1, title: "Arrival in Shimla", items: ["Arrive in Shimla, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Shimla Heritage", items: ["Mall Road, The Ridge, Christ Church"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Shimla Toy Train & Kufri", items: ["Kalka-Shimla Toy Train", "Day trip to Kufri"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Shimla to Manali", items: ["Scenic drive to Manali"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Manali Sightseeing", items: ["Hidimba Devi Temple, Vashisht Hot Springs, Naggar Castle"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Solang Valley", items: ["Paragliding and cable car at Solang Valley"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Rohtang Pass", items: ["Full day excursion to Rohtang Pass"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Manali to Kasol", items: ["Drive to Kasol via the Parvati Valley"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Kasol & Parvati Valley", items: ["Chalal village, riverside cafes, Manikaran Sahib"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Kheerganga Trek", items: ["Full-day trek to Kheerganga's hot springs"], tags: ["Breakfast", "Dinner"] },
+        { day: 11, title: "Leisure & Local Markets", items: ["Morning at leisure, Kasol's craft markets"], tags: ["Breakfast", "Dinner"] },
+        { day: 12, title: "Departure", items: ["Check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

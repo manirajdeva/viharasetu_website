@@ -15,7 +15,7 @@
 <title>Munnar — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -143,6 +143,51 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Tea Trails — 3 Nights",
+      sub: "Plantation walks, a tea factory visit, and easy viewpoint treks.",
+      days: [
+        { day: 1, title: "Arrival in Munnar", items: ["Arrive in Munnar, check-in amid the tea gardens"], tags: ["Dinner"] },
+        { day: 2, title: "Tea Plantations & Factory", items: ["Guided tea plantation walk", "Tea Museum and factory visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Viewpoints", items: ["Top Station viewpoint", "Mattupetty Dam"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Hills & Wildlife — 5 Nights",
+      sub: "Eravikulam National Park, waterfalls, and the spice trails around Munnar.",
+      days: [
+        { day: 1, title: "Arrival in Munnar", items: ["Arrive in Munnar, check-in amid the tea gardens"], tags: ["Dinner"] },
+        { day: 2, title: "Tea Plantations & Factory", items: ["Guided tea plantation walk", "Tea Museum and factory visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Eravikulam National Park", items: ["Nilgiri Tahr spotting at Eravikulam National Park"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Waterfalls", items: ["Attukal and Lakkam waterfalls"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Spice Trails", items: ["Guided spice plantation walk", "Top Station viewpoint"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Western Ghats Retreat — 7 Nights",
+      sub: "An unhurried circuit through Munnar's tea country, valleys, and hill villages.",
+      days: [
+        { day: 1, title: "Arrival in Munnar", items: ["Arrive in Munnar, check-in amid the tea gardens"], tags: ["Dinner"] },
+        { day: 2, title: "Tea Plantations & Factory", items: ["Guided tea plantation walk and factory visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Eravikulam National Park", items: ["Nilgiri Tahr spotting at Eravikulam"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Waterfalls", items: ["Attukal and Lakkam waterfalls"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Spice Trails", items: ["Guided spice plantation walk"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Hill Villages", items: ["Drive through Munnar's quiet hill villages"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Leisure Day", items: ["Free morning, Top Station viewpoint at your own pace"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

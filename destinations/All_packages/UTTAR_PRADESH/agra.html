@@ -15,7 +15,7 @@
 <title>Agra — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   /* Agra-specific styles */
@@ -379,6 +379,48 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Taj Getaway — 2 Nights",
+      sub: "Sunrise Taj Mahal visit, Agra Fort, and a local bazaar walk.",
+      days: [
+        { day: 1, title: "Arrival in Agra", items: ["Arrive in Agra, check-in and freshen up", "Evening at Mehtab Bagh for a Taj sunset view"], tags: ["Dinner"] },
+        { day: 2, title: "Taj Mahal & Agra Fort", items: ["Sunrise visit to the Taj Mahal", "Agra Fort in the afternoon", "Evening bazaar walk at Sadar Bazaar"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Mughal Heritage Trail — 4 Nights",
+      sub: "Fatehpur Sikri excursion, marble inlay workshop, and Itmad-ud-Daulah.",
+      days: [
+        { day: 1, title: "Arrival in Agra", items: ["Arrive in Agra, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Taj Mahal Sunrise", items: ["Sunrise visit to the Taj Mahal", "Marble inlay workshop with local artisans"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Agra Fort & Itmad-ud-Daulah", items: ["Agra Fort", "Itmad-ud-Daulah (Baby Taj)"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Fatehpur Sikri", items: ["Full day excursion to Fatehpur Sikri"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Grand Agra Circuit — 6 Nights",
+      sub: "Extended heritage circuit with an optional Mathura & Vrindavan add-on.",
+      days: [
+        { day: 1, title: "Arrival in Agra", items: ["Arrive in Agra, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Taj Mahal Sunrise", items: ["Sunrise visit to the Taj Mahal", "Marble inlay workshop"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Agra Fort & Itmad-ud-Daulah", items: ["Agra Fort", "Itmad-ud-Daulah (Baby Taj)"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Fatehpur Sikri", items: ["Full day excursion to Fatehpur Sikri"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Agra to Mathura", items: ["Drive to Mathura", "Krishna Janmabhoomi Temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Vrindavan Add-on", items: ["Banke Bihari Temple and ISKCON Vrindavan"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

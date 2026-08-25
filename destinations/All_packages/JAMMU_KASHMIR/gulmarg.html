@@ -335,6 +335,136 @@
 }
 </style>
 
+
+<style>
+/* Itinerary day-wise plan popup */
+.itin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(38,34,28,0.55);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+.itin-modal-backdrop.visible { display: flex; }
+.itin-modal {
+  background: var(--card);
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  padding: 36px 36px 40px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  margin: auto;
+}
+.itin-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease, color .2s ease;
+}
+.itin-modal-close:hover { background: var(--bg); color: var(--ink); }
+.itin-modal h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 23px;
+  margin: 0 0 4px;
+  padding-right: 40px;
+  line-height: 1.25;
+}
+.itin-modal .itin-sub {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  margin: 0 0 26px;
+  line-height: 1.6;
+}
+.itin-day-list { position: relative; }
+.itin-day {
+  position: relative;
+  padding-left: 68px;
+  padding-bottom: 26px;
+}
+.itin-day:last-child { padding-bottom: 0; }
+.itin-day::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 36px;
+  bottom: -4px;
+  border-left: 1.5px dashed var(--line);
+}
+.itin-day:last-child::before { display: none; }
+.itin-day-badge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 54px;
+  text-align: center;
+}
+.itin-day-badge .num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--accent);
+  line-height: 1;
+}
+.itin-day-badge .lbl {
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.itin-day-title {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+  letter-spacing: .1px;
+}
+.itin-day ul {
+  margin: 0 0 10px;
+  padding-left: 18px;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.itin-day ul li { margin-bottom: 2px; }
+.itin-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.itin-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .itin-modal-backdrop { padding: 0; align-items: stretch; }
+  .itin-modal { max-width: none; border-radius: 0; min-height: 100%; padding: 28px 20px 40px; }
+  .itin-day { padding-left: 56px; }
+  .itin-day-badge { width: 44px; }
+}
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -457,6 +587,48 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Gulmarg Getaway — 2 Nights",
+      sub: "Gondola ride, meadow walks, and mountain views.",
+      days: [
+        { day: 1, title: "Arrival in Gulmarg", items: ["Arrive in Gulmarg, check-in and freshen up", "Evening meadow walk"], tags: ["Dinner"] },
+        { day: 2, title: "Gondola & Apharwat Peak", items: ["Gondola ride to Apharwat Peak", "Views of Nanga Parbat on a clear day"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Snow & Slopes — 4 Nights",
+      sub: "Skiing or snowboarding lessons plus the full gondola circuit.",
+      days: [
+        { day: 1, title: "Arrival in Gulmarg", items: ["Arrive in Gulmarg, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Gondola Phase 1", items: ["Gondola ride to Kongdoori", "Meadow walks and photography"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Gondola Phase 2 & Apharwat", items: ["Gondola ride to Apharwat Peak", "Snow-point time at the summit"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Ski/Snowboard Lessons", items: ["Guided skiing or snowboarding lesson on the slopes"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Kashmir Ski Circuit — 6 Nights",
+      sub: "Gulmarg's slopes combined with a wider Kashmir valley circuit.",
+      days: [
+        { day: 1, title: "Arrival in Srinagar", items: ["Arrive in Srinagar, transfer to Gulmarg"], tags: ["Dinner"] },
+        { day: 2, title: "Gondola Phase 1", items: ["Gondola ride to Kongdoori and meadow walks"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Gondola Phase 2 & Apharwat", items: ["Gondola ride to Apharwat Peak"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Ski/Snowboard Lessons", items: ["Guided skiing or snowboarding on the slopes"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Gulmarg to Srinagar", items: ["Drive back to Srinagar", "Evening shikara ride on Dal Lake"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Srinagar Sightseeing", items: ["Mughal Gardens — Shalimar Bagh and Nishat Bagh"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

@@ -15,7 +15,7 @@
 <title>Delhi, Mathura, Vrindavan &amp; Agra — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 </head>
 <body>
@@ -235,6 +235,57 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Delhi & Agra Express — 4 Nights",
+      sub: "Delhi's heritage circuit followed by a sunrise Taj Mahal visit and Agra Fort.",
+      days: [
+        { day: 1, title: "Arrival in Delhi", items: ["Arrive in Delhi, check-in and freshen up", "Evening at Chandni Chowk for street food"], tags: ["Dinner"] },
+        { day: 2, title: "Old & New Delhi", items: ["Red Fort and a walk through Chandni Chowk", "Qutub Minar and Humayun's Tomb", "Evening at the Lotus Temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Delhi to Agra", items: ["Drive to Agra (approx. 3-4 hours)", "Check-in, evening at Mehtab Bagh for a Taj sunset view"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Taj Mahal & Agra Fort", items: ["Sunrise visit to the Taj Mahal", "Agra Fort and a local bazaar walk", "Evening at leisure"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Departure", items: ["Morning at leisure, check-out", "Drive back to Delhi for departure"], tags: ["Breakfast", "Train Tickets"] }
+      ]
+    },
+    {
+      title: "Golden Triangle & Krishna Trail — 7 Nights",
+      sub: "Delhi, Mathura and Vrindavan's temple towns, and the Taj Mahal in Agra — all in one seamless package.",
+      days: [
+        { day: 1, title: "Arrival in Delhi", items: ["Arrive in Delhi, check-in and freshen up", "Evening at Chandni Chowk"], tags: ["Dinner"] },
+        { day: 2, title: "Old Delhi Heritage", items: ["Red Fort, Jama Masjid, and Chandni Chowk lanes"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "New Delhi Landmarks", items: ["Qutub Minar, Humayun's Tomb, and the Lotus Temple", "Evening at India Gate"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Delhi to Mathura", items: ["Drive to Mathura (approx. 3 hours)", "Visit Krishna Janmabhoomi Temple", "Evening light & sound show at Prem Mandir"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Vrindavan Temple Lanes", items: ["Banke Bihari Temple and ISKCON Vrindavan", "Nidhivan and Dwarkadhish Temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Mathura to Agra", items: ["Drive to Agra (approx. 2 hours)", "Evening at Mehtab Bagh for a Taj sunset view"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Taj Mahal & Agra Fort", items: ["Sunrise visit to the Taj Mahal", "Agra Fort and Itmad-ud-Daulah (Baby Taj)"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast", "Train Tickets"] }
+      ]
+    },
+    {
+      title: "Complete Heritage & Devotion Circuit — 10 Nights",
+      sub: "All four towns at a relaxed pace, with extra time for Fatehpur Sikri and the Vrindavan temple lanes.",
+      days: [
+        { day: 1, title: "Arrival in Delhi", items: ["Arrive in Delhi, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Old Delhi Heritage", items: ["Red Fort, Jama Masjid, and Chandni Chowk lanes"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "New Delhi Landmarks", items: ["Qutub Minar, Humayun's Tomb, and the Lotus Temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Akshardham & Leisure", items: ["Akshardham Temple", "Evening free for shopping in Delhi"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Delhi to Mathura", items: ["Drive to Mathura", "Krishna Janmabhoomi Temple", "Evening show at Prem Mandir"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Vrindavan Temple Lanes", items: ["Banke Bihari Temple and ISKCON Vrindavan"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Vrindavan at Leisure", items: ["Nidhivan, Dwarkadhish Temple, and the Yamuna ghats"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Mathura to Agra", items: ["Drive to Agra", "Evening at Mehtab Bagh for a Taj sunset view"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Taj Mahal & Agra Fort", items: ["Sunrise visit to the Taj Mahal", "Agra Fort and Itmad-ud-Daulah"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Fatehpur Sikri", items: ["Full day excursion to Fatehpur Sikri", "Evening at leisure"], tags: ["Breakfast", "Dinner"] },
+        { day: 11, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast", "Train Tickets"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

@@ -15,7 +15,7 @@
 <title>Rishikesh — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
     body { cursor: url('../../../images/cursor.png') 10 10, auto; }
@@ -363,6 +363,59 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Yoga & River — 5 Nights",
+      sub: "Daily classes, river rituals, teacher talks.",
+      days: [
+        { day: 1, title: "Arrival in Rishikesh", items: ["Arrive, check-in", "Evening Ganga Aarti at Triveni Ghat"], tags: ["Dinner"] },
+        { day: 2, title: "Yoga Classes Begin", items: ["Morning yoga session", "Talk with a resident teacher"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Ashrams & Ghats", items: ["Parmarth Niketan and Laxman Jhula walk", "Riverside meditation"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "River Rituals", items: ["Morning yoga", "River ritual bathing ceremony"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Rafting & Leisure", items: ["Optional river rafting", "Free time by the Ganges"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Final yoga session, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Mindful Flow — 8 Nights",
+      sub: "Immersive practice and local healing sessions.",
+      days: [
+        { day: 1, title: "Arrival in Rishikesh", items: ["Arrive, check-in", "Evening Ganga Aarti"], tags: ["Dinner"] },
+        { day: 2, title: "Yoga Immersion Begins", items: ["Twice-daily yoga sessions begin"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Ashrams & Ghats", items: ["Parmarth Niketan, Laxman Jhula walk"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Local Healing Session", items: ["Ayurvedic consultation and healing session"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "River Rituals", items: ["Morning yoga, river ritual bathing ceremony"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Meditation Day", items: ["Guided meditation intensive"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Rafting & Leisure", items: ["Optional river rafting", "Free time by the Ganges"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Closing Circle", items: ["Final group session and reflection"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Departure", items: ["Check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Riverside Retreat — 11 Nights",
+      sub: "Retreat format with silent mornings and study groups.",
+      days: [
+        { day: 1, title: "Arrival in Rishikesh", items: ["Arrive, check-in", "Evening Ganga Aarti"], tags: ["Dinner"] },
+        { day: 2, title: "Yoga Immersion Begins", items: ["Twice-daily yoga sessions begin"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Silent Morning Practice", items: ["Silent morning meditation", "Ashram visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Study Group", items: ["Philosophy study group session"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Local Healing Session", items: ["Ayurvedic consultation and healing session"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "River Rituals", items: ["Morning yoga, river ritual bathing ceremony"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Silent Day", items: ["A full day of guided silence"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Study Group", items: ["Second philosophy study group session"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Rafting & Leisure", items: ["Optional river rafting", "Free time by the Ganges"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Closing Circle", items: ["Final group session and reflection"], tags: ["Breakfast", "Dinner"] },
+        { day: 11, title: "Departure", items: ["Check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

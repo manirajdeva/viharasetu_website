@@ -15,7 +15,7 @@
 <title>Hampi — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   body {
@@ -317,6 +317,37 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Ruins & Riverside — 3 Nights",
+      sub: "Virupaksha Temple, Hampi Bazaar, and a coracle ride on the Tungabhadra.",
+      days: [
+        { day: 1, title: "Arrival in Hampi", items: ["Arrive in Hampi, check-in and freshen up", "Evening at Hampi Bazaar"], tags: ["Dinner"] },
+        { day: 2, title: "Virupaksha & Riverside", items: ["Virupaksha Temple", "Coracle ride on the Tungabhadra River"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Royal Centre", items: ["Lotus Mahal, Elephant Stables, and Hazara Rama Temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Departure", items: ["Sunrise at Hemakuta Hill, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Vijayanagara Explorer — 5 Nights",
+      sub: "The full royal & sacred centres, Vittala Temple, and cycling trails through the ruins.",
+      days: [
+        { day: 1, title: "Arrival in Hampi", items: ["Arrive in Hampi, check-in and freshen up"], tags: ["Dinner"] },
+        { day: 2, title: "Sacred Centre", items: ["Virupaksha Temple and Hampi Bazaar", "Coracle ride on the Tungabhadra"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Vittala Temple", items: ["Vittala Temple and its iconic stone chariot", "Musical pillars"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Royal Centre", items: ["Lotus Mahal, Elephant Stables, Hazara Rama Temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Cycling the Ruins", items: ["Cycling trail through the boulder-strewn ruins"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Sunset at Hemakuta Hill the evening before, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

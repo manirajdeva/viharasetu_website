@@ -15,7 +15,7 @@
 <title>Chardham — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -143,6 +143,64 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Do Dham Yatra — 7 Nights",
+      sub: "Kedarnath and Badrinath, the two most-visited shrines of the circuit.",
+      days: [
+        { day: 1, title: "Arrival & Drive to Guptkashi", items: ["Arrive, drive towards Guptkashi for acclimatisation"], tags: ["Dinner"] },
+        { day: 2, title: "Guptkashi to Kedarnath Base", items: ["Drive to Sonprayag, trek to Kedarnath base"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Kedarnath Darshan", items: ["Trek/pony ride to Kedarnath Temple", "Darshan and overnight near the shrine"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Return to Guptkashi", items: ["Trek back down, drive to Guptkashi"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Guptkashi to Joshimath", items: ["Drive to Joshimath via Rudraprayag"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Joshimath to Badrinath", items: ["Drive to Badrinath", "Evening darshan at the temple"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Badrinath Darshan", items: ["Morning darshan, Mana village visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Departure", items: ["Drive back and depart"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Chardham Express — 9 Nights",
+      sub: "All four shrines on a comfortable, well-paced pilgrimage route.",
+      days: [
+        { day: 1, title: "Arrival & Drive to Barkot", items: ["Arrive, drive towards Barkot for Yamunotri"], tags: ["Dinner"] },
+        { day: 2, title: "Yamunotri Darshan", items: ["Trek to Yamunotri Temple, darshan and return"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Barkot to Uttarkashi", items: ["Drive to Uttarkashi towards Gangotri"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Gangotri Darshan", items: ["Drive to Gangotri, temple darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Uttarkashi to Guptkashi", items: ["Drive towards Guptkashi for Kedarnath"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Kedarnath Darshan", items: ["Trek/pony ride to Kedarnath, darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Return & Onward", items: ["Trek back down, drive towards Joshimath"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Badrinath Darshan", items: ["Drive to Badrinath, temple darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Mana Village", items: ["Mana village and the source of the Saraswati river"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Departure", items: ["Drive back and depart"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Complete Chardham Yatra — 12 Nights",
+      sub: "An unhurried circuit of all four dhams with extra acclimatisation days.",
+      days: [
+        { day: 1, title: "Arrival & Acclimatisation", items: ["Arrive in Haridwar/Dehradun, rest and acclimatise"], tags: ["Dinner"] },
+        { day: 2, title: "Drive to Barkot", items: ["Drive towards Barkot for Yamunotri"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Yamunotri Darshan", items: ["Trek to Yamunotri Temple, darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Barkot to Uttarkashi", items: ["Drive to Uttarkashi"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Gangotri Darshan", items: ["Drive to Gangotri, temple darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Uttarkashi to Guptkashi", items: ["Drive towards Guptkashi"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Rest Day", items: ["Acclimatisation rest day in Guptkashi"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Kedarnath Darshan", items: ["Trek/pony ride to Kedarnath, darshan, overnight"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Return from Kedarnath", items: ["Trek back down, drive towards Joshimath"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Badrinath Darshan", items: ["Drive to Badrinath, temple darshan"], tags: ["Breakfast", "Dinner"] },
+        { day: 11, title: "Mana Village", items: ["Mana village and Vasudhara Falls viewpoint"], tags: ["Breakfast", "Dinner"] },
+        { day: 12, title: "Leisure Day", items: ["Rest day before the return journey"], tags: ["Breakfast", "Dinner"] },
+        { day: 13, title: "Departure", items: ["Drive back and depart"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

@@ -335,6 +335,136 @@
 }
 </style>
 
+
+<style>
+/* Itinerary day-wise plan popup */
+.itin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(38,34,28,0.55);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+.itin-modal-backdrop.visible { display: flex; }
+.itin-modal {
+  background: var(--card);
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  padding: 36px 36px 40px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  margin: auto;
+}
+.itin-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease, color .2s ease;
+}
+.itin-modal-close:hover { background: var(--bg); color: var(--ink); }
+.itin-modal h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 23px;
+  margin: 0 0 4px;
+  padding-right: 40px;
+  line-height: 1.25;
+}
+.itin-modal .itin-sub {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  margin: 0 0 26px;
+  line-height: 1.6;
+}
+.itin-day-list { position: relative; }
+.itin-day {
+  position: relative;
+  padding-left: 68px;
+  padding-bottom: 26px;
+}
+.itin-day:last-child { padding-bottom: 0; }
+.itin-day::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 36px;
+  bottom: -4px;
+  border-left: 1.5px dashed var(--line);
+}
+.itin-day:last-child::before { display: none; }
+.itin-day-badge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 54px;
+  text-align: center;
+}
+.itin-day-badge .num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--accent);
+  line-height: 1;
+}
+.itin-day-badge .lbl {
+  font-size: 9px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.itin-day-title {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+  letter-spacing: .1px;
+}
+.itin-day ul {
+  margin: 0 0 10px;
+  padding-left: 18px;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.itin-day ul li { margin-bottom: 2px; }
+.itin-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.itin-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .itin-modal-backdrop { padding: 0; align-items: stretch; }
+  .itin-modal { max-width: none; border-radius: 0; min-height: 100%; padding: 28px 20px 40px; }
+  .itin-day { padding-left: 56px; }
+  .itin-day-badge { width: 44px; }
+}
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -457,6 +587,51 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Srinagar Essentials — 3 Nights",
+      sub: "Dal Lake shikara ride, Mughal gardens, and a houseboat stay.",
+      days: [
+        { day: 1, title: "Arrival & Houseboat Check-in", items: ["Arrive in Srinagar, check-in to your houseboat", "Evening shikara ride on Dal Lake"], tags: ["Dinner"] },
+        { day: 2, title: "Mughal Gardens", items: ["Shalimar Bagh, Nishat Bagh, and Chashme Shahi"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Old City & Markets", items: ["Jama Masjid and the old city lanes", "Floating vegetable market at dawn"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Kashmir Valley Explorer — 5 Nights",
+      sub: "Srinagar's gardens and lake combined with a day trip into the valley.",
+      days: [
+        { day: 1, title: "Arrival & Houseboat Check-in", items: ["Arrive, check-in to your houseboat", "Evening shikara ride on Dal Lake"], tags: ["Dinner"] },
+        { day: 2, title: "Mughal Gardens", items: ["Shalimar Bagh, Nishat Bagh, and Chashme Shahi"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Old City & Markets", items: ["Jama Masjid, old city lanes, floating market"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Valley Day Trip", items: ["Day excursion into the wider Kashmir valley"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Leisure on Dal Lake", items: ["Free morning, optional second shikara ride"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Complete Srinagar Circuit — 7 Nights",
+      sub: "An unhurried circuit of Srinagar's lakes, gardens, and old city.",
+      days: [
+        { day: 1, title: "Arrival & Houseboat Check-in", items: ["Arrive, check-in to your houseboat"], tags: ["Dinner"] },
+        { day: 2, title: "Dal Lake & Shikara", items: ["Full shikara tour of Dal Lake's floating gardens"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Mughal Gardens", items: ["Shalimar Bagh, Nishat Bagh, Chashme Shahi"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Old City & Markets", items: ["Jama Masjid and the old city lanes"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Nagin Lake", items: ["Quiet morning at Nagin Lake", "Local craft workshops"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Valley Day Trip", items: ["Day excursion into the wider Kashmir valley"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Leisure Day", items: ["Free day for shopping and photography"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

@@ -15,7 +15,7 @@
 <title>Coorg — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -143,6 +143,51 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Coffee Country — 3 Nights",
+      sub: "Plantation walks, cupping sessions, and Abbey Falls.",
+      days: [
+        { day: 1, title: "Arrival in Coorg", items: ["Arrive in Coorg, check-in at a plantation stay", "Evening coffee cupping session"], tags: ["Dinner"] },
+        { day: 2, title: "Plantation & Abbey Falls", items: ["Guided coffee plantation walk", "Abbey Falls in the afternoon"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Raja's Seat & Local Market", items: ["Sunset at Raja's Seat", "Madikeri local market"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Kodagu Explorer — 5 Nights",
+      sub: "Talacauvery, river activities, and the Kodava heartland.",
+      days: [
+        { day: 1, title: "Arrival in Coorg", items: ["Arrive in Coorg, check-in at a plantation stay"], tags: ["Dinner"] },
+        { day: 2, title: "Plantation Walk", items: ["Guided coffee plantation walk and cupping session"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Abbey Falls & Raja's Seat", items: ["Abbey Falls", "Sunset at Raja's Seat"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Talacauvery", items: ["Day trip to Talacauvery, source of the Cauvery river"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "River Activities", items: ["River rafting or kayaking near Kushalnagar"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Western Ghats Wild — 7 Nights",
+      sub: "An unhurried circuit through Coorg's valleys, falls, and forests.",
+      days: [
+        { day: 1, title: "Arrival in Coorg", items: ["Arrive in Coorg, check-in at a plantation stay"], tags: ["Dinner"] },
+        { day: 2, title: "Plantation Walk", items: ["Guided coffee plantation walk and cupping session"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Abbey Falls & Raja's Seat", items: ["Abbey Falls", "Sunset at Raja's Seat"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Talacauvery", items: ["Day trip to Talacauvery"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "River Activities", items: ["River rafting or kayaking near Kushalnagar"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Nagarhole Forest", items: ["Day safari towards Nagarhole National Park"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Kodava Heartland", items: ["Visit a traditional Kodava homestead", "Local cuisine tasting"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

@@ -15,7 +15,7 @@
 <title>Varanasi — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   /* Premium social section */
@@ -419,6 +419,98 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Varanasi Essentials — 3 Days",
+      sub: "A focused introduction: Ganga Aarti, Sarnath, and a curated heritage walk through the old city.",
+      days: [
+        { day: 1, title: "Arrival & Evening Aarti", items: [
+          "Arrive in Varanasi, check-in and freshen up",
+          "Evening: witness the Ganga Aarti at Dashashwamedh Ghat",
+          "Overnight stay in Varanasi"
+        ], tags: ["Dinner"] },
+        { day: 2, title: "Old City & Temple Walk", items: [
+          "Sunrise boat ride on the Ganges",
+          "Visit Kashi Vishwanath Temple and Kaal Bhairav Temple",
+          "Guided heritage walk through the old city lanes and local markets",
+          "Overnight stay in Varanasi"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Sarnath & Departure", items: [
+          "After breakfast, visit Sarnath — Dhamek Stupa and Sarnath Museum",
+          "Return to Varanasi, check-out and departure"
+        ], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Pilgrim's Slow Path — 5 Days",
+      sub: "A deeper pilgrimage tempo with ritual learning, temple visits, and a village day-trip along the Ganges.",
+      days: [
+        { day: 1, title: "Arrival & Ganga Aarti", items: [
+          "Arrive, check-in, freshen up",
+          "Evening Ganga Aarti at Dashashwamedh Ghat"
+        ], tags: ["Dinner"] },
+        { day: 2, title: "Ghats & Rituals", items: [
+          "Sunrise boat ride along the Ganges",
+          "Rudrabhishek Puja with a local priest",
+          "Temple walk — Kashi Vishwanath & Annapurna Devi Temple"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Sarnath Day Trip", items: [
+          "Full day excursion to Sarnath — Dhamek Stupa, Chaukhandi Stupa, Ashoka Pillar",
+          "Visit Sarnath Museum and the Thai, Japanese & Tibetan temples"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Village & River Rituals", items: [
+          "Day trip to a nearby riverside village to learn local rituals",
+          "Evening boat cruise on the Ganges"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Reflection & Departure", items: [
+          "Morning meditation session on the ghats",
+          "Free time for local shopping, then departure"
+        ], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Retreat & Reflection — 9 Days",
+      sub: "A residential retreat with guided silence, local healer sessions, and unhurried immersion in the city's rhythm.",
+      days: [
+        { day: 1, title: "Arrival & Orientation", items: [
+          "Arrive, check-in, orientation with your retreat guide"
+        ], tags: ["Dinner"] },
+        { day: 2, title: "Ghats & Ganga Aarti", items: [
+          "Sunrise boat ride along the Ganges",
+          "Evening Ganga Aarti at Dashashwamedh Ghat"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Kashi Temple Walk", items: [
+          "Guided walk to Kashi Vishwanath, Kaal Bhairav & Annapurna Devi temples"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Sarnath Excursion", items: [
+          "Full day visit to Sarnath's stupas, museum, and monasteries"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Guided Silence Day", items: [
+          "A day of guided silence and personal reflection on the ghats"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Local Healer Session", items: [
+          "Session with a local Ayurvedic healer",
+          "Gentle yoga on the ghats"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Village & River Rituals", items: [
+          "Day trip along the Ganges to a riverside village",
+          "Evening boat cruise"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Free Immersion Day", items: [
+          "Unstructured day to explore the city's ghats, markets, and lanes at your own pace"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Departure", items: [
+          "Morning reflection session, check-out and departure"
+        ], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>

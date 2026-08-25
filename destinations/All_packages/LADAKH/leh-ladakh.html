@@ -15,7 +15,7 @@
 <title>Leh Ladakh — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=7">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   /* Leh-Ladakh specific styles */
@@ -451,6 +451,61 @@
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
   </a>
 </div>
+
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Leh Explorer — 5 Nights",
+      sub: "Acclimatisation in Leh, monastery circuit, and the Indus Valley.",
+      days: [
+        { day: 1, title: "Arrival & Acclimatisation", items: ["Arrive in Leh, complete rest for acclimatisation", "Gentle evening walk in the market"], tags: ["Dinner"] },
+        { day: 2, title: "Leh Local Sightseeing", items: ["Leh Palace, Shanti Stupa", "Easy walk, continued acclimatisation"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Monastery Circuit", items: ["Thiksey Monastery, Shey Palace", "Hemis Monastery"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Indus Valley", items: ["Sangam (Indus & Zanskar confluence)", "Magnetic Hill"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Leisure & Local Markets", items: ["Free morning, Leh market for souvenirs"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Departure", items: ["Check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Pangong & Nubra Circuit — 8 Nights",
+      sub: "Overnight at Pangong Tso, Khardung La crossing, and Nubra Valley camel dunes.",
+      days: [
+        { day: 1, title: "Arrival & Acclimatisation", items: ["Arrive in Leh, complete rest for acclimatisation"], tags: ["Dinner"] },
+        { day: 2, title: "Leh Local Sightseeing", items: ["Leh Palace, Shanti Stupa"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Monastery Circuit", items: ["Thiksey Monastery, Shey Palace, Hemis Monastery"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Khardung La to Nubra", items: ["Crossing Khardung La Pass into Nubra Valley", "Camel safari on the sand dunes"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Nubra Valley", items: ["Diskit Monastery", "Hunder village"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Nubra to Pangong Tso", items: ["Drive to Pangong Lake via Shyok route", "Overnight by the lake"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Pangong Tso Sunrise", items: ["Sunrise at Pangong Lake", "Drive back to Leh"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Leisure Day", items: ["Free morning in Leh, local market"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Departure", items: ["Check-out and departure"], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Full Ladakh Expedition — 12 Nights",
+      sub: "The complete high-altitude circuit — monasteries, lakes, valleys, and remote villages.",
+      days: [
+        { day: 1, title: "Arrival & Acclimatisation", items: ["Arrive in Leh, complete rest for acclimatisation"], tags: ["Dinner"] },
+        { day: 2, title: "Leh Local Sightseeing", items: ["Leh Palace, Shanti Stupa"], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Monastery Circuit", items: ["Thiksey, Shey, Hemis monasteries"], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Alchi & Likir", items: ["Alchi Monastery's ancient murals", "Likir Monastery"], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Lamayuru", items: ["Lamayuru Monastery and its moonscape terrain"], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Khardung La to Nubra", items: ["Crossing Khardung La into Nubra Valley", "Camel safari on the dunes"], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Nubra Valley", items: ["Diskit Monastery, Hunder village"], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Nubra to Pangong Tso", items: ["Drive to Pangong Lake via Shyok route", "Overnight by the lake"], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Pangong to Tso Moriri", items: ["Drive towards Tso Moriri Lake"], tags: ["Breakfast", "Dinner"] },
+        { day: 10, title: "Tso Moriri", items: ["Morning at Tso Moriri, remote village visit"], tags: ["Breakfast", "Dinner"] },
+        { day: 11, title: "Return to Leh", items: ["Scenic drive back to Leh"], tags: ["Breakfast", "Dinner"] },
+        { day: 12, title: "Leisure Day", items: ["Free morning in Leh, local market"], tags: ["Breakfast", "Dinner"] },
+        { day: 13, title: "Departure", items: ["Check-out and departure"], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
 
 </body>
 </html>
