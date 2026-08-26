@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1V5MTG26VP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1V5MTG26VP');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>North Goa, South Goa &amp; Dudhsagar — Destinations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../destinations-common.css?v=9">
+<link rel="icon" href="../../../images/fevicon.png" type="image/png">
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo-header">
+      <img src="../../../images/Logo_hor.png" alt="Viharasetu logo" />
+    </div>
+    <a class="back-link" href="../Explore_Destination.html">Back to home</a>
+
+    <h1>North Goa, South Goa &amp; Dudhsagar</h1>
+    <p class="intro">
+      The classic North-South Goa circuit extended inland — beaches and forts up north, Portuguese-era churches and quiet coves down south, and a jungle detour to Dudhsagar, one of India's tallest waterfalls. Best travelled October through March, when the monsoon has cleared and the coast and falls are both at their best.
+    </p>
+
+    <!-- Photo gallery: across all three -->
+    <div class="gallery">
+      <a class="g-big" href="https://commons.wikimedia.org/wiki/Special:FilePath/Doodhsagar%20Waterfalls.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Doodhsagar%20Waterfalls.jpg?width=700" alt="Dudhsagar Falls, Goa">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Panorama%20of%20Baga%20Beach%2C%20Goa.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Panorama%20of%20Baga%20Beach%2C%20Goa.jpg?width=400" alt="Baga Beach, North Goa">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Fort%20Aguada%20-%20the%20seventeenth-century%20Portuguese%20fort%2C%20in%20Goa.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Fort%20Aguada%20-%20the%20seventeenth-century%20Portuguese%20fort%2C%20in%20Goa.jpg?width=400" alt="Fort Aguada, North Goa">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Basilica%20Of%20Bom%20Jesus%2C%20Goa.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Basilica%20Of%20Bom%20Jesus%2C%20Goa.jpg?width=400" alt="Basilica of Bom Jesus, Old Goa">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Colva%20Beach%2C%20Goa.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colva%20Beach%2C%20Goa.jpg?width=400" alt="Colva Beach, South Goa">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Palolem%20Beach%2C%20South%20Goa.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Palolem%20Beach%2C%20South%20Goa.jpg?width=400" alt="Palolem Beach, South Goa">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Rock%20formation%2C%20Palolem%20Beach.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rock%20formation%2C%20Palolem%20Beach.jpg?width=400" alt="Rock formation at Palolem Beach">
+      </a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Beach%20shack%20at%20sunset%2C%20Palolem%2C%20Goa.jpg" target="_blank" rel="noopener">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Beach%20shack%20at%20sunset%2C%20Palolem%2C%20Goa.jpg?width=400" alt="Beach shack at sunset, Palolem">
+      </a>
+    </div>
+
+    <script>
+      const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationDelay = (index * 0.1) + 's';
+            entry.target.classList.add('fade-in-up');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('h1, h2, .intro, .experiences, .detail-block, .card').forEach(el => observer.observe(el));
+        document.querySelectorAll('.experiences li, .detail-block li').forEach((li, index) => {
+          li.style.animationDelay = (index * 0.08) + 's';
+          li.classList.add('fade-in-up');
+          observer.observe(li);
+        });
+      });
+    </script>
+
+    <div class="experiences">
+      <h2>Signature Experiences</h2>
+      <ul>
+        <li>Fort Aguada at sunset and the beach shacks of Baga &amp; Calangute</li>
+        <li>Old Goa's UNESCO-listed churches — Basilica of Bom Jesus and Se Cathedral</li>
+        <li>A jeep safari through the Bhagwan Mahavir Wildlife Sanctuary to Dudhsagar Falls</li>
+      </ul>
+    </div>
+
+    <div class="destination-details">
+      <div class="details-column">
+        <div class="detail-block">
+          <h2>🏖️ North Goa</h2>
+          <ol>
+            <li>Baga Beach ⭐</li>
+            <li>Calangute Beach</li>
+            <li>Fort Aguada ⭐</li>
+            <li>Anjuna Flea Market</li>
+            <li>Chapora Fort</li>
+            <li>Candolim Beach</li>
+          </ol>
+        </div>
+
+        <div class="detail-block">
+          <h2>🌴 South Goa</h2>
+          <ol>
+            <li>Palolem Beach ⭐</li>
+            <li>Colva Beach</li>
+            <li>Basilica of Bom Jesus ⭐</li>
+            <li>Se Cathedral, Old Goa</li>
+            <li>Cabo de Rama Fort</li>
+            <li>Agonda Beach</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="details-column">
+        <div class="detail-block">
+          <h2>💦 Dudhsagar</h2>
+          <ol>
+            <li>Dudhsagar Falls ⭐ — among India's tallest waterfalls</li>
+            <li>Bhagwan Mahavir Wildlife Sanctuary jeep safari</li>
+            <li>Devil's Canyon viewpoint</li>
+            <li>Monsoon-fed cascades along the Mandovi river basin</li>
+          </ol>
+        </div>
+
+        <div class="detail-block">
+          <h2>🎉 Festivals</h2>
+          <ul>
+            <li>Goa Carnival ⭐ — colourful street parades in February</li>
+            <li>Feast of St. Francis Xavier at the Basilica of Bom Jesus</li>
+            <li>Sunburn Festival (December)</li>
+          </ul>
+        </div>
+
+        <div class="detail-block">
+          <h2>🍛 Food &amp; Local Specialties</h2>
+          <ul>
+            <li>Goan Fish Curry Rice ⭐</li>
+            <li>Prawn Balchão</li>
+            <li>Bebinca (layered Goan dessert)</li>
+            <li>Feni — the local cashew or coconut spirit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="itineraries">
+      <h2>Choose Your Itinerary</h2>
+      <p class="sub">Every trip is fully customisable — pick a length to see the day-by-day plan. Best time to travel: October–March.</p>
+      <div class="cards">
+
+        <div class="card">
+          <h3>Goa &amp; Falls Weekend — 4 Nights</h3>
+          <p class="desc">North Goa's beaches and forts, an Old Goa church visit, and a Dudhsagar jeep safari.</p>
+          <div class="price"><span class="sym">Starting from: ₹</span> xxxxx / person</div>
+          <a class="btn" href="itinerary-4-nights.html">View Itinerary</a>
+        </div>
+
+        <div class="card">
+          <h3>Complete Goa Circuit — 6 Nights</h3>
+          <p class="desc">North Goa, Old Goa's basilicas, South Goa's quiet coves, and a Dudhsagar Falls excursion — all in one seamless trail.</p>
+          <div class="price"><span class="sym">₹</span> xxxxx / person</div>
+          <a class="btn" href="itinerary-6-nights.html">View Itinerary</a>
+        </div>
+
+        <div class="card">
+          <h3>Slow Goa &amp; Western Ghats — 8 Nights</h3>
+          <p class="desc">An unhurried pace through both coasts, with extra time at Dudhsagar and the Bhagwan Mahavir Wildlife Sanctuary.</p>
+          <div class="price"><span class="sym">₹</span> xxxxx / person</div>
+          <a class="btn" href="itinerary-8-nights.html">View Itinerary</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="social">
+      <p>Have questions about this trip? Reach out to us directly.</p>
+      <div class="social-buttons">
+        <a class="social-btn instagram" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
+          Follow on Instagram
+        </a>
+        <a class="social-btn whatsapp" href="https://wa.me/919885180515" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
+          Chat on WhatsApp
+        </a>
+        <a class="social-btn email" href="mailto:viharasetu@gmail.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
+          Email Us
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+<div class="mobile-contact-bar" aria-label="Quick contact" role="navigation">
+  <a href="../../../index.html" aria-label="Home">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3.2 3.5 10.1c-.4.3-.6.9-.3 1.4.2.4.6.6 1 .6H6V20a1 1 0 0 0 1 1h4v-5.5a1 1 0 0 1 1-1 1 1 0 0 1 1 1V21h4a1 1 0 0 0 1-1v-8h1.8c.4 0 .8-.2 1-.6.3-.5.1-1.1-.3-1.4L12 3.2Z" fill="#fff"/></svg>
+  </a>
+  <a href="tel:+919885180515" aria-label="Call us">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="#fff"/></svg>
+  </a>
+  <a href="https://wa.me/919885180515" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
+  </a>
+  <a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
+  </a>
+  <a href="../../../index.html#contact" aria-label="Enquiry form">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
+  </a>
+</div>
+
+<script src="../../itinerary-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initItineraryModals([
+    {
+      title: "Goa & Falls Weekend — 4 Nights",
+      sub: "North Goa's beaches and forts, an Old Goa church visit, and a Dudhsagar jeep safari.",
+      days: [
+        { day: 1, title: "Arrival in North Goa", items: [
+          "Arrive, check-in and freshen up",
+          "Evening at Baga Beach"
+        ], tags: ["Dinner"] },
+        { day: 2, title: "North Goa Sightseeing", items: [
+          "Fort Aguada and Candolim Beach",
+          "Calangute Beach and beach shack dinner"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Dudhsagar Falls Safari", items: [
+          "Early start for the jeep safari through Bhagwan Mahavir Wildlife Sanctuary",
+          "Dudhsagar Falls viewpoint and swim spot",
+          "Return to North Goa by evening"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Old Goa Churches", items: [
+          "Basilica of Bom Jesus and Se Cathedral",
+          "Evening at leisure"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Departure", items: [
+          "Morning at leisure, check-out and departure"
+        ], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Complete Goa Circuit — 6 Nights",
+      sub: "North Goa, Old Goa's basilicas, South Goa's quiet coves, and a Dudhsagar Falls excursion — all in one seamless trail.",
+      days: [
+        { day: 1, title: "Arrival in North Goa", items: [
+          "Arrive, check-in and freshen up",
+          "Evening at Baga Beach"
+        ], tags: ["Dinner"] },
+        { day: 2, title: "North Goa Beaches", items: [
+          "Fort Aguada and Candolim Beach",
+          "Calangute Beach"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Dudhsagar Falls Safari", items: [
+          "Jeep safari through Bhagwan Mahavir Wildlife Sanctuary",
+          "Dudhsagar Falls viewpoint and swim spot"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Old Goa Churches", items: [
+          "Basilica of Bom Jesus and Se Cathedral",
+          "Continue south, check-in near Palolem"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "South Goa Beaches", items: [
+          "Palolem Beach and its rock-formation cove",
+          "Colva Beach in the afternoon"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Agonda & Cabo de Rama", items: [
+          "Agonda Beach",
+          "Cabo de Rama Fort viewpoint"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Departure", items: [
+          "Morning at leisure, check-out and departure"
+        ], tags: ["Breakfast"] }
+      ]
+    },
+    {
+      title: "Slow Goa & Western Ghats — 8 Nights",
+      sub: "An unhurried pace through both coasts, with extra time at Dudhsagar and the Bhagwan Mahavir Wildlife Sanctuary.",
+      days: [
+        { day: 1, title: "Arrival in North Goa", items: [
+          "Arrive, check-in and freshen up",
+          "Evening at Baga Beach"
+        ], tags: ["Dinner"] },
+        { day: 2, title: "North Goa Beaches", items: [
+          "Fort Aguada and Candolim Beach",
+          "Calangute Beach"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 3, title: "Anjuna & Chapora", items: [
+          "Anjuna flea market (seasonal)",
+          "Chapora Fort at sunset"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 4, title: "Dudhsagar Falls Safari", items: [
+          "Jeep safari through Bhagwan Mahavir Wildlife Sanctuary",
+          "Dudhsagar Falls viewpoint, swim spot, and Devil's Canyon"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 5, title: "Old Goa Churches", items: [
+          "Basilica of Bom Jesus and Se Cathedral",
+          "Continue south, check-in near Palolem"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 6, title: "Palolem & Agonda", items: [
+          "Palolem Beach and its quiet cove",
+          "Agonda Beach in the afternoon"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 7, title: "Colva & Cabo de Rama", items: [
+          "Colva Beach",
+          "Cabo de Rama Fort viewpoint"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 8, title: "Leisure Day", items: [
+          "Free day for local markets and beach time"
+        ], tags: ["Breakfast", "Dinner"] },
+        { day: 9, title: "Departure", items: [
+          "Morning at leisure, check-out and departure"
+        ], tags: ["Breakfast"] }
+      ]
+    }
+  ]);
+});
+</script>
+
+</body>
+</html>
