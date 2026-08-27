@@ -222,23 +222,14 @@
     100% { left: 100%; }
   }
 
-  @keyframes train-ride-mobile {
-    0% { left: -260px; }
-    100% { left: 100%; }
-  }
-
   @keyframes smoke-puff {
     0% { transform: translateY(0) scale(0.6); opacity: 0.55; }
     100% { transform: translateY(-24px) scale(1.7); opacity: 0; }
   }
 
-  @media (max-width: 900px) {
-    .nav-train {
-      width: 110px;
-      animation: train-ride-mobile 18s linear infinite;
-    }
-    .nav-train .train-svg { width: 100%; }
-    .nav-train .monu-car { display: none; }
+  @media (max-width: 620px) {
+    .nav-train .monu-car { height: 18px; }
+    .nav-train .train-svg { width: 120px; }
   }
 
   /* ── HERO ── */

@@ -45,169 +45,245 @@
     pointer-events:none;
   }
   .wrap{
-    max-width:1180px;
+    max-width:1440px;
     margin:0 auto;
     padding:32px 24px 80px;
   }
-  /* Top nav with Destinations dropdown */
-  .navbar{
+
+  /* ── HEADER ── */
+  .page-header{
+    position:sticky;
+    top:0;
+    z-index:60;
+    width:100%;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 8px 24px rgba(38,34,28,0.06);
+  }
+  .page-header-inner{
+    max-width:1440px;
+    margin:0 auto;
+    padding:18px 24px 10px;
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:16px;
-    margin-bottom:8px;
-  }
-  .brand{
-    font-family:'Playfair Display', serif;
-    font-weight:700;
-    font-size:18px;
-    color:var(--ink);
-    text-decoration:none;
-  }
-  .nav-menu{
     position:relative;
   }
-  .nav-btn{
-    display:inline-flex;
+  .nav-brand{
+    display:flex;
     align-items:center;
-    gap:6px;
-    background:var(--card);
-    border:1px solid var(--line);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:14px;
-    padding:10px 16px;
-    border-radius:10px;
-    cursor:pointer;
-    transition: border-color .15s ease, background .15s ease;
+    gap:14px;
+    text-decoration:none;
   }
-  .nav-btn:hover{ border-color:var(--accent); }
-  .nav-btn .chevron{
-    font-size:10px;
-    transition: transform .2s ease;
+  .nav-logo-mark{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+    border-radius:50%;
+    padding:4px;
+    background:linear-gradient(135deg, #FFF3E6, #FFFFFF);
+    box-shadow:0 8px 20px rgba(200,97,26,0.15);
   }
-  .nav-menu.open .nav-btn .chevron{ transform: rotate(180deg); }
-  .nav-menu.open .nav-btn{ border-color:var(--accent); }
-
-  .dropdown-panel{
-    position:absolute;
-    top:calc(100% + 10px);
-    right:0;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow: 0 16px 34px rgba(38,34,28,0.16);
-    padding:20px;
-    display:none;
+  .nav-logo-text{
+    display:flex;
     flex-direction:column;
-    gap:16px;
-    z-index:50;
-    min-width:420px;
+    line-height:1.05;
+    gap:2px;
   }
-  .nav-menu.open .dropdown-panel{
-    display:flex;
-  }
-  .dropdown-columns{
-    display:flex;
-    gap:28px;
-  }
-  .dropdown-col{
-    min-width:160px;
-  }
-  .dropdown-col h4{
-    font-size:11px;
+  .nav-logo{
+    font-family:'Playfair Display', serif;
+    font-size:19px;
     font-weight:700;
-    letter-spacing:.08em;
+    letter-spacing:.02em;
+    color:var(--accent-dark);
+  }
+  .nav-logo-sub{
+    font-size:10px;
+    letter-spacing:.16em;
     text-transform:uppercase;
     color:var(--ink-soft);
-    margin:0 0 10px;
   }
-  .dropdown-col ul{
+  .nav-right{
+    display:flex;
+    align-items:center;
+    gap:2rem;
+    margin-left:auto;
+  }
+  .nav-links{
+    display:flex;
+    gap:2rem;
     list-style:none;
     margin:0;
     padding:0;
-    max-height:300px;
-    overflow-y:auto;
   }
-  .dropdown-col li{
-    margin-bottom:2px;
-  }
-  .dropdown-item{
-    display:block;
-    width:100%;
-    text-align:left;
-    background:none;
-    border:none;
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    font-size:14px;
-    padding:8px 10px;
-    border-radius:8px;
-    cursor:pointer;
-    transition: background .15s ease, color .15s ease;
-  }
-  .dropdown-item:hover{
-    background:#F4F1EA;
-  }
-  .dropdown-item.active{
-    background:var(--accent);
-    color:#fff;
-    font-weight:600;
-  }
-  .dropdown-actions{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    border-top:1px solid var(--line);
-    padding-top:16px;
-  }
-  .reset-btn{
-    background:none;
-    border:none;
+  .nav-links a{
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
     color:var(--ink-soft);
+    transition: color .3s;
+  }
+  .nav-links a:hover{ color:var(--accent); }
+  .nav-cta{
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    background:linear-gradient(135deg, var(--accent-dark), var(--accent));
+    color:#fff;
+    padding:0.65rem 1.4rem;
+    border:none;
+    cursor:pointer;
     font-family:'Inter',sans-serif;
     font-weight:600;
-    font-size:13px;
-    cursor:pointer;
-    padding:8px 4px;
-    text-decoration:underline;
+    border-radius:999px;
+    transition: transform .3s, box-shadow .3s;
+    text-decoration:none;
+    box-shadow:0 8px 18px rgba(187,90,52,0.22);
+    white-space:nowrap;
   }
-  .reset-btn:hover{ color:var(--ink); }
-  .apply-btn{
-    background:var(--accent);
+  .nav-cta:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 24px rgba(187,90,52,0.28);
+  }
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:space-between;
+    width:22px;
+    height:16px;
+    background:none;
     border:none;
-    color:#fff;
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:14px;
-    padding:11px 22px;
-    border-radius:10px;
     cursor:pointer;
-    transition: background .15s ease;
+    padding:0;
   }
-  .apply-btn:hover{ background:var(--accent-dark); }
+  .nav-toggle span{
+    display:block;
+    height:2px;
+    width:100%;
+    background:var(--ink);
+    border-radius:2px;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2){ opacity:0; }
+  .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
-  @media (max-width: 620px){
-    .dropdown-panel{
-      right:auto;
+  @media (max-width: 900px){
+    .page-header-inner{
+      padding:14px 16px 8px;
+      gap:10px;
+      flex-wrap:nowrap;
+    }
+    .nav-brand{ gap:10px; min-width:0; }
+    .nav-logo-mark{ width:40px; height:40px; flex-shrink:0; }
+    .nav-logo-text{ min-width:0; }
+    .nav-logo{ font-size:15px; }
+    .nav-logo-sub{ font-size:8px; letter-spacing:.08em; white-space:nowrap; }
+    .nav-right{ gap:10px; flex-shrink:0; }
+    .nav-cta{
+      padding:0.55rem 1rem;
+      font-size:10px;
+    }
+    .nav-toggle{ display:flex; }
+    .nav-links{
+      position:absolute;
+      top:100%;
       left:0;
-      min-width:0;
-      width:min(90vw, 420px);
-    }
-    .dropdown-columns{
+      right:0;
       flex-direction:column;
-      gap:16px;
+      gap:0;
+      background:var(--card);
+      box-shadow:0 16px 30px rgba(26,22,15,0.1);
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .35s ease;
+      padding:0 24px;
     }
-    .navbar{
-      flex-wrap:wrap;
+    .nav-links.open{
+      max-height:320px;
+      padding:8px 24px 16px;
     }
-    .navbar-right{
-      width:100%;
+    .nav-links li{ width:100%; }
+    .nav-links a{
+      display:block;
+      padding:.85rem 0;
+      border-bottom:1px solid var(--line);
+    }
+  }
+  @media (max-width: 480px){
+    .nav-logo-sub{ display:none; }
+    .nav-cta{
+      padding:0.5rem 0.8rem;
+      font-size:9px;
     }
   }
 
+  /* ── NAV TRAIN ── */
+  .nav-rail-track {
+    position: relative;
+    height: 34px;
+    overflow: hidden;
+    margin: 16px 0 0;
+    pointer-events: none;
+  }
+  .nav-rail-track::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 5px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--accent) 0 14px, transparent 14px 26px);
+    opacity: 0.45;
+  }
+  .nav-train {
+    position: absolute;
+    bottom: 6px;
+    left: -1000px;
+    width: 960px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    animation: train-ride 34s linear infinite;
+  }
+  .nav-train .train-svg {
+    width: 150px;
+    flex-shrink: 0;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 6px 10px rgba(26,22,15,0.28));
+  }
+  .nav-train .monu-car {
+    height: 24px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 6px rgba(26,22,15,0.25));
+  }
+  .nav-train .smoke {
+    position: absolute;
+    top: -3px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    background: radial-gradient(circle, rgba(92,81,67,0.55), transparent 70%);
+    border-radius: 50%;
+    animation: smoke-puff 2.2s ease-out infinite;
+  }
+  .nav-train .smoke.s2 { animation-delay: 0.7s; right: 11px; }
+  .nav-train .smoke.s3 { animation-delay: 1.4s; right: 7px; }
+  @keyframes train-ride {
+    0% { left: -1000px; }
+    100% { left: 100%; }
+  }
+  @keyframes smoke-puff {
+    0% { transform: translateY(0) scale(0.6); opacity: 0.55; }
+    100% { transform: translateY(-24px) scale(1.7); opacity: 0; }
+  }
+  @media (max-width: 620px) {
+    .nav-train .monu-car { height: 18px; }
+    .nav-train .train-svg { width: 120px; }
+  }
   h1{
     font-family:'Playfair Display', serif;
     font-weight:800;
@@ -353,112 +429,16 @@
   }
   .empty-state.show{ display:block; }
 
-  .navbar-right{
-    display:flex;
-    align-items:center;
-    gap:16px;
-  }
-  .search-box{
-    position:relative;
-    flex:0 1 280px;
-  }
-  .search-input{
-    width:100%;
-    padding:10px 14px 10px 36px;
-    font-family:'Inter',sans-serif;
-    font-size:13px;
-    border:1px solid var(--line);
-    border-radius:10px;
-    background:var(--card);
-    color:var(--ink);
-    transition: border-color .15s ease, box-shadow .15s ease;
-  }
-  .search-input:focus{
-    outline:none;
-    border-color:var(--accent);
-    box-shadow: 0 0 0 3px rgba(187,90,52,0.1);
-  }
-  .search-input::placeholder{
-    color:var(--ink-soft);
-  }
-  .search-icon{
-    position:absolute;
-    left:10px;
-    top:50%;
-    transform:translateY(-50%);
-    color:var(--ink-soft);
-    font-size:14px;
-    pointer-events:none;
-  }
-
   @media (max-width: 900px){
     .grid{ grid-template-columns: repeat(2, 1fr); }
-    .navbar-right{
-      flex-direction:column;
-      gap:12px;
-    }
-    .search-box{
-      flex:1;
-    }
     body::before{
       background-size:560px auto;
     }
-  }
-  .back-link{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    color:#fff;
-    background:var(--accent);
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    padding:10px 20px 10px 16px;
-    border-radius:999px;
-    box-shadow:0 6px 16px rgba(187,90,52,0.28);
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-  }
-  .back-link:hover{
-    background:var(--accent-dark);
-    transform:translateX(-5px);
-    box-shadow:0 10px 22px rgba(187,90,52,0.4);
-  }
-  .back-link .jet{
-    display:inline-block;
-    transform:scaleX(-1);
-    animation: jet-fly 2.4s ease-in-out infinite;
-  }
-  .back-link:hover .jet{
-    animation: jet-fly-fast 0.7s ease-in-out infinite;
-  }
-  @keyframes jet-fly{
-    0%, 100% { transform: scaleX(-1) translateX(0); }
-    50% { transform: scaleX(-1) translateX(-6px); }
-  }
-  @keyframes jet-fly-fast{
-    0%, 100% { transform: scaleX(-1) translateX(0); }
-    50% { transform: scaleX(-1) translateX(-10px); }
   }
 
   @media (max-width: 620px){
     .grid{ grid-template-columns: 1fr; }
     h1{ font-size:32px; }
-    .dropdown-panel{
-      right:auto;
-      left:0;
-      min-width:0;
-      width:min(90vw, 420px);
-    }
-    .dropdown-columns{
-      flex-direction:column;
-      gap:16px;
-    }
-    .navbar{
-      flex-wrap:wrap;
-    }
-    .navbar-right{
-      width:100%;
-    }
     body::before{
       background-size:300px auto;
     }
@@ -509,83 +489,95 @@
 
 </head>
 <body>
-  <div class="wrap">
-    <div class="navbar">
-      <a class="back-link" href="../../index.html"><span class="jet">✈️</span> Back to home</a>
-
-      <div class="navbar-right">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" placeholder="Search by destination, place, or state...">
-        </div>
-
-        <div class="nav-menu" id="nav-menu">
-          <button class="nav-btn" id="nav-btn">
-            Destinations <span class="chevron">▾</span>
-          </button>
-        <div class="dropdown-panel">
-          <div class="dropdown-columns">
-            <div class="dropdown-col">
-              <h4>By Season</h4>
-              <ul id="season-dropdown">
-                <li><button class="dropdown-item active" data-season="all">All Seasons</button></li>
-                <li><button class="dropdown-item" data-season="Summer">Summer</button></li>
-                <li><button class="dropdown-item" data-season="Monsoon">Monsoon</button></li>
-                <li><button class="dropdown-item" data-season="Winter">Winter</button></li>
-              </ul>
-            </div>
-            <div class="dropdown-col">
-              <h4>By State</h4>
-              <ul id="state-dropdown">
-                <li><button class="dropdown-item active" data-state="all">All States</button></li>
-                <li><button class="dropdown-item" data-state="Andaman and Nicobar Islands">Andaman and Nicobar Islands</button></li>
-                <li><button class="dropdown-item" data-state="Andhra Pradesh">Andhra Pradesh</button></li>
-                <li><button class="dropdown-item" data-state="Arunachal Pradesh">Arunachal Pradesh</button></li>
-                <li><button class="dropdown-item" data-state="Assam">Assam</button></li>
-                <li><button class="dropdown-item" data-state="Bihar">Bihar</button></li>
-                <li><button class="dropdown-item" data-state="Chandigarh">Chandigarh</button></li>
-                <li><button class="dropdown-item" data-state="Chhattisgarh">Chhattisgarh</button></li>
-                <li><button class="dropdown-item" data-state="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</button></li>
-                <li><button class="dropdown-item" data-state="Delhi">Delhi</button></li>
-                <li><button class="dropdown-item" data-state="Goa">Goa</button></li>
-                <li><button class="dropdown-item" data-state="Gujarat">Gujarat</button></li>
-                <li><button class="dropdown-item" data-state="Haryana">Haryana</button></li>
-                <li><button class="dropdown-item" data-state="Himachal Pradesh">Himachal Pradesh</button></li>
-                <li><button class="dropdown-item" data-state="Jammu and Kashmir">Jammu and Kashmir</button></li>
-                <li><button class="dropdown-item" data-state="Jharkhand">Jharkhand</button></li>
-                <li><button class="dropdown-item" data-state="Karnataka">Karnataka</button></li>
-                <li><button class="dropdown-item" data-state="Kerala">Kerala</button></li>
-                <li><button class="dropdown-item" data-state="Ladakh">Ladakh</button></li>
-                <li><button class="dropdown-item" data-state="Lakshadweep">Lakshadweep</button></li>
-                <li><button class="dropdown-item" data-state="Madhya Pradesh">Madhya Pradesh</button></li>
-                <li><button class="dropdown-item" data-state="Maharashtra">Maharashtra</button></li>
-                <li><button class="dropdown-item" data-state="Manipur">Manipur</button></li>
-                <li><button class="dropdown-item" data-state="Meghalaya">Meghalaya</button></li>
-                <li><button class="dropdown-item" data-state="Mizoram">Mizoram</button></li>
-                <li><button class="dropdown-item" data-state="Nagaland">Nagaland</button></li>
-                <li><button class="dropdown-item" data-state="Odisha">Odisha</button></li>
-                <li><button class="dropdown-item" data-state="Puducherry">Puducherry</button></li>
-                <li><button class="dropdown-item" data-state="Punjab">Punjab</button></li>
-                <li><button class="dropdown-item" data-state="Rajasthan">Rajasthan</button></li>
-                <li><button class="dropdown-item" data-state="Sikkim">Sikkim</button></li>
-                <li><button class="dropdown-item" data-state="Tamil Nadu">Tamil Nadu</button></li>
-                <li><button class="dropdown-item" data-state="Telangana">Telangana</button></li>
-                <li><button class="dropdown-item" data-state="Tripura">Tripura</button></li>
-                <li><button class="dropdown-item" data-state="Uttar Pradesh">Uttar Pradesh</button></li>
-                <li><button class="dropdown-item" data-state="Uttarakhand">Uttarakhand</button></li>
-                <li><button class="dropdown-item" data-state="West Bengal">West Bengal</button></li>
-              </ul>
-            </div>
-          </div>
-          <div class="dropdown-actions">
-            <button class="reset-btn" id="reset-btn">Reset</button>
-            <button class="apply-btn" id="apply-btn">Apply Filters</button>
-          </div>
-        </div>
-        </div>
+  <div class="page-header">
+    <div class="page-header-inner">
+      <a class="nav-brand" href="../../index.html">
+        <img class="nav-logo-mark" src="../../images/Logo.png" alt="Viharasetu logo" />
+        <span class="nav-logo-text">
+          <span class="nav-logo">Viharasetu</span>
+          <span class="nav-logo-sub">From Aastha to Eternal Anubhav</span>
+        </span>
+      </a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="../../index.html#journeys">Journeys</a></li>
+          <li><a href="../../feedback.html">Feedback</a></li>
+          <li><a href="../../pdf_files/Viharasetu_about.pdf" target="_blank" rel="noopener">About</a></li>
+        </ul>
+        <a href="../../index.html#contact" class="nav-cta">Plan My Journey</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
 
+    <div class="nav-rail-track" aria-hidden="true">
+      <div class="nav-train">
+        <img class="monu-car" src="../../images/Travel_pngs/small/1.png" alt="Red Fort, Delhi" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/2.png" alt="Red Fort, Delhi" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/3.png" alt="Jagannath Temple, Puri" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/4.png" alt="Taj Mahal & India Gate" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/5.png" alt="Jagannath Temple, Puri" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/6.png" alt="South Indian temple gopuram" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/7.png" alt="Konark Sun Temple wheel" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/8.png" alt="Gurudwara" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/9.png" alt="Golden Temple, Amritsar" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/10.png" alt="Ornate temple gateway" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/11.png" alt="Camel safari, Rajasthan" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/12.png" alt="Hawa Mahal, Jaipur" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/13.png" alt="Indian fort" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/14.png" alt="Himalayan peaks" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/15.png" alt="Qutub Minar, Delhi" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/16.png" alt="Temple tower" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/17.png" alt="Thai-style temple" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/18.png" alt="Buddhist pagoda" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/19.png" alt="Khmer temple tower" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/20.png" alt="Charminar, Hyderabad" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/21.png" alt="Bali split gate" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/22.png" alt="Prambanan temple" loading="lazy">
+        <img class="monu-car" src="../../images/Travel_pngs/small/23.png" alt="Chichen Itza, Mexico" loading="lazy">
+        <svg class="train-svg" viewBox="0 0 260 40" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="trainBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#D97A3A"/>
+              <stop offset="1" stop-color="#8B3E0D"/>
+            </linearGradient>
+          </defs>
+          <line x1="70" y1="24" x2="78" y2="24" stroke="#5C5143" stroke-width="2"/>
+          <line x1="145" y1="24" x2="153" y2="24" stroke="#5C5143" stroke-width="2"/>
+          <line x1="220" y1="24" x2="228" y2="24" stroke="#5C5143" stroke-width="2"/>
+          <rect x="4" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
+          <rect x="12" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <rect x="38" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <circle cx="18" cy="32" r="5" fill="#1A160F"/>
+          <circle cx="56" cy="32" r="5" fill="#1A160F"/>
+          <rect x="78" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
+          <rect x="86" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <rect x="112" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <circle cx="92" cy="32" r="5" fill="#1A160F"/>
+          <circle cx="130" cy="32" r="5" fill="#1A160F"/>
+          <rect x="153" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
+          <rect x="161" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <rect x="187" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <circle cx="167" cy="32" r="5" fill="#1A160F"/>
+          <circle cx="205" cy="32" r="5" fill="#1A160F"/>
+          <rect x="228" y="6" width="30" height="24" rx="6" fill="url(#trainBody)"/>
+          <rect x="234" y="0" width="10" height="10" rx="2" fill="#8B3E0D"/>
+          <circle cx="252" cy="12" r="3" fill="#F7EDD5"/>
+          <rect x="233" y="12" width="16" height="9" rx="2" fill="#F7EDD5" opacity="0.9"/>
+          <circle cx="236" cy="32" r="5" fill="#1A160F"/>
+          <circle cx="250" cy="32" r="5" fill="#1A160F"/>
+        </svg>
+        <span class="smoke s1"></span>
+        <span class="smoke s2"></span>
+        <span class="smoke s3"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
     <h1>Explore India</h1>
     <p class="intro">
       Browse every destination by season or by state — find the right trip for whenever you're travelling, wherever you want to go.
@@ -1047,112 +1039,48 @@
   </div>
 
   <script>
-    let activeSeason = 'all';
-    let activeState = 'all';
-    let activeSearch = '';
-    let pendingSeason = 'all';
-    let pendingState = 'all';
-
     const cards = Array.from(document.querySelectorAll('.dest-card'));
     const resultNum = document.getElementById('result-num');
-    const emptyState = document.getElementById('empty-state');
-    const navMenu = document.getElementById('nav-menu');
-    const navBtn = document.getElementById('nav-btn');
+    const destGrid = document.getElementById('dest-grid');
 
     // Re-order the grid alphabetically by state so destinations from the
     // same state sit together, regardless of the order they're listed in the HTML.
-    const destGrid = document.getElementById('dest-grid');
     cards
       .slice()
       .sort((a, b) => a.dataset.state.localeCompare(b.dataset.state))
       .forEach(card => destGrid.appendChild(card));
 
-    function applyFilters(){
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const seasons = card.dataset.seasons.split(',');
-        const state = card.dataset.state;
-        const name = card.querySelector('h3').textContent.toLowerCase();
-        const taglineEl = card.querySelector('.tagline');
-        const tagline = taglineEl ? taglineEl.textContent.toLowerCase() : '';
-        const searchableText = name + ' ' + tagline + ' ' + state.toLowerCase();
-        const searchTerm = activeSearch.toLowerCase();
+    // Compute the real count on load instead of relying on a hardcoded number in the HTML.
+    resultNum.textContent = cards.length;
+  </script>
 
-        const seasonMatch = activeSeason === 'all' || seasons.includes(activeSeason);
-        const stateMatch = activeState === 'all' || state === activeState;
-        const searchMatch = activeSearch === '' || searchableText.includes(searchTerm);
-        
-        if (seasonMatch && stateMatch && searchMatch) {
-          card.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-      resultNum.textContent = visibleCount;
-      emptyState.classList.toggle('show', visibleCount === 0);
+  <script>
+  (function() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (!navToggle || !navLinks) return;
+
+    function closeMenu() {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
     }
 
-    // Compute the real count on load instead of relying on the hardcoded "12" in the HTML.
-    applyFilters();
-
-    // Dropdown open/close
-    navBtn.addEventListener('click', (e) => {
+    navToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      navMenu.classList.toggle('open');
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('active', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
     });
+
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
     document.addEventListener('click', (e) => {
-      if (!navMenu.contains(e.target)) {
-        navMenu.classList.remove('open');
+      if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+        closeMenu();
       }
     });
-
-    // Season selection inside dropdown — just marks the pending choice, doesn't filter yet
-    document.getElementById('season-dropdown').addEventListener('click', (e) => {
-      const btn = e.target.closest('.dropdown-item');
-      if (!btn) return;
-      document.querySelectorAll('#season-dropdown .dropdown-item').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      pendingSeason = btn.dataset.season;
-    });
-
-    // State selection inside dropdown — just marks the pending choice, doesn't filter yet
-    document.getElementById('state-dropdown').addEventListener('click', (e) => {
-      const btn = e.target.closest('.dropdown-item');
-      if (!btn) return;
-      document.querySelectorAll('#state-dropdown .dropdown-item').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      pendingState = btn.dataset.state;
-    });
-
-    // Apply Filters — this is where the combo actually filters the package list
-    document.getElementById('apply-btn').addEventListener('click', () => {
-      activeSeason = pendingSeason;
-      activeState = pendingState;
-      applyFilters();
-      navMenu.classList.remove('open');
-      document.getElementById('dest-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    // Search by destination name — filters in real-time as user types
-    document.getElementById('search-input').addEventListener('input', (e) => {
-      activeSearch = e.target.value;
-      applyFilters();
-    });
-
-    // Reset — clears both dropdowns back to "All" and re-applies immediately
-    document.getElementById('reset-btn').addEventListener('click', () => {
-      pendingSeason = 'all';
-      pendingState = 'all';
-      activeSeason = 'all';
-      activeState = 'all';
-      activeSearch = '';
-      document.getElementById('search-input').value = '';
-      document.querySelectorAll('.dropdown-item').forEach(p => p.classList.remove('active'));
-      document.querySelector('#season-dropdown .dropdown-item[data-season="all"]').classList.add('active');
-      document.querySelector('#state-dropdown .dropdown-item[data-state="all"]').classList.add('active');
-      applyFilters();
-    });
+  })();
   </script>
 
 
