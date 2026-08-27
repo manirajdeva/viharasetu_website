@@ -1586,7 +1586,7 @@
     <div>
       <p class="footer-col-title">Company</p>
       <ul class="footer-links">
-        <li><a href="#">Our Story</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="our-story">Our Story</a></li>
         <li><a href="#">Our Guides</a></li>
         <li><a href="#">Responsible Travel</a></li>
         <li><a href="#">Press & Media</a></li>
@@ -1669,6 +1669,61 @@
     .footer-popup { padding: 1.6rem 1.4rem 1.6rem; border-radius: 16px; }
     .footer-popup-gallery { grid-template-columns: repeat(2, 1fr); }
   }
+
+  .footer-popup-logo {
+    position: absolute;
+    top: 20px;
+    right: 64px;
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    border-radius: 50%;
+    padding: 6px;
+    background: linear-gradient(135deg, var(--saffron-light), var(--white));
+    box-shadow: 0 8px 20px rgba(200,97,26,0.18);
+  }
+  .footer-popup-story h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.15;
+    color: var(--saffron-dark);
+    margin: 0.1rem 70px 0.4rem 0;
+  }
+  .footer-popup-story .fp-story-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--jade);
+    margin: 0 0 1.4rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-popup-story h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.45;
+    color: var(--saffron-dark);
+    margin: 1.5rem 0 0.9rem;
+  }
+  .footer-popup-story .fp-story-brand {
+    margin-top: 1.9rem;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+  }
+  .footer-popup-story .fp-story-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+  }
+  .footer-popup-story strong { color: var(--ink); font-weight: 600; }
+  .footer-popup-story em { font-style: italic; color: var(--saffron-dark); }
+  @media (max-width: 600px) {
+    .footer-popup-logo { width: 38px; height: 38px; top: 16px; right: 54px; }
+    .footer-popup-story h1 { font-size: 1.6rem; margin-right: 56px; }
+  }
 </style>
 
 <script>
@@ -1727,6 +1782,59 @@
           <div><p class="fp-item-title">Silence at 4,000 Metres, Ladakh</p><p class="fp-item-text">At Thiksey, the monastery horns sound just once a day. The rest of the mountain simply listens.</p></div>
           <div><p class="fp-item-title">Monsoon Green, Kerala</p><p class="fp-item-text">Backwaters swollen with rain, the houseboat slows to the pace of the paddy fields drifting past.</p></div>
         </div>`
+    },
+    'our-story': {
+      noHeader: true,
+      logo: true,
+      body: `<div class="footer-popup-story">
+        <h1>The Story Behind ViharaSetu</h1>
+        <p class="fp-story-sub">Three Friends. One Passion. A Bridge to Your Dreams.</p>
+
+        <p>Every journey begins with a dream.</p>
+
+        <p>For us, that dream began with <strong>three friends who simply loved to travel.</strong></p>
+
+        <p>We travelled together, explored new places, experienced different cultures, discovered beautiful destinations, and created memories that stayed with us long after we returned home.</p>
+
+        <p>Along the way, we realised something:</p>
+
+        <p><strong>There are so many people who dream of travelling, but don't know where to start.</strong></p>
+
+        <p>Some struggle with planning.<br>
+        Some worry about budgets.<br>
+        Some don't know which places to visit.<br>
+        Some want to travel with family.<br>
+        Some dream of a spiritual journey.<br>
+        And some are simply waiting for the right opportunity.</p>
+
+        <p>So we thought...</p>
+
+        <p><strong>Why not help people turn those dreams into journeys?</strong></p>
+
+        <p>And that's how <strong>ViharaSetu</strong> began on <strong>February 20, 2026.</strong></p>
+
+        <p>The name <em>ViharaSetu</em> represents what we want to be —</p>
+
+        <h4>A bridge between your dreams and the destinations you've always wanted to experience.</h4>
+
+        <p>From spiritual journeys to family holidays.<br>
+        From trips with friends to Himalayan adventures.<br>
+        From weekend escapes to long-awaited dream vacations.</p>
+
+        <p>We want to make travel <strong>simple, comfortable, meaningful and accessible.</strong></p>
+
+        <p>We don't want to just sell you a package.</p>
+
+        <p><strong>We want to understand your dream, plan your journey, and be there along the way.</strong></p>
+
+        <p>Because we believe every traveller has a story waiting to be written.</p>
+
+        <p>And maybe your next chapter begins with a journey.</p>
+
+        <h4 class="fp-story-brand">ViharaSetu</h4>
+        <p><strong>A bridge for your travel dreams.</strong></p>
+        <p class="fp-story-tagline"><strong>From Aastha to Eternal Anubhav.</strong></p>
+      </div>`
     }
   };
 
@@ -1748,7 +1856,9 @@
   function openPopup(key) {
     const data = popups[key];
     if (!data) return;
-    content.innerHTML = `<p class="footer-popup-tag">${data.tag}</p><h2>${data.title}</h2>${data.body}`;
+    const logoHtml = data.logo ? '<img class="footer-popup-logo" src="images/Logo.png" alt="Viharasetu logo">' : '';
+    const headerHtml = data.noHeader ? '' : `<p class="footer-popup-tag">${data.tag}</p><h2>${data.title}</h2>`;
+    content.innerHTML = `${logoHtml}${headerHtml}${data.body}`;
     backdrop.classList.add('visible');
     document.body.style.overflow = 'hidden';
     backdrop.scrollTop = 0;
