@@ -239,11 +239,12 @@
   .nav-train {
     position: absolute;
     bottom: 6px;
-    left: -1000px;
+    left: 0;
     width: max-content;
     display: flex;
     align-items: flex-end;
     gap: 3px;
+    will-change: transform;
     animation: train-ride 34s linear infinite;
   }
   .nav-train .train-svg {
@@ -273,8 +274,8 @@
   .nav-train .smoke.s2 { animation-delay: 0.7s; right: 11px; }
   .nav-train .smoke.s3 { animation-delay: 1.4s; right: 7px; }
   @keyframes train-ride {
-    0% { left: -1000px; }
-    100% { left: 100%; }
+    0% { transform: translateX(-1000px); }
+    100% { transform: translateX(100vw); }
   }
   @keyframes smoke-puff {
     0% { transform: translateY(0) scale(0.6); opacity: 0.55; }
