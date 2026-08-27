@@ -1596,11 +1596,11 @@
     <div>
       <p class="footer-col-title">Help</p>
       <ul class="footer-links">
-        <li><a href="#">FAQs</a></li>
-        <li><a href="#">Booking Policy</a></li>
-        <li><a href="#">Visa Guidance</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="faqs">FAQs</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="booking-policy">Booking Policy</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="visa-guidance">Visa Guidance</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="contact-us">Contact Us</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="privacy-policy">Privacy Policy</a></li>
       </ul>
     </div>
   </div>
@@ -1657,6 +1657,10 @@
   .footer-popup-list { display: flex; flex-direction: column; gap: 0.9rem; margin: 0 0 1.2rem; }
   .footer-popup-list .fp-item-title { font-weight: 600; color: var(--ink); font-size: 0.92rem; margin: 0 0 0.2rem; }
   .footer-popup-list .fp-item-text { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; margin: 0; }
+  .footer-popup-list .fp-item-text a,
+  .footer-popup p a { color: var(--saffron-dark); text-decoration: underline; }
+  .footer-popup-list .fp-item-text a:hover,
+  .footer-popup p a:hover { color: var(--saffron); }
   .footer-popup-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 1rem; }
   .footer-popup-gallery img { width: 100%; height: 90px; object-fit: cover; border-radius: 10px; }
   .footer-popup-cta {
@@ -1835,6 +1839,58 @@
         <p><strong>A bridge for your travel dreams.</strong></p>
         <p class="fp-story-tagline"><strong>From Aastha to Eternal Anubhav.</strong></p>
       </div>`
+    },
+    faqs: {
+      tag: 'Good to Know',
+      title: 'Frequently Asked Questions',
+      body: `<div class="footer-popup-list">
+          <div><p class="fp-item-title">How far in advance should I book?</p><p class="fp-item-text">For Himalayan and peak-season journeys, 4–6 weeks ahead is ideal. We can also arrange shorter-notice trips depending on availability.</p></div>
+          <div><p class="fp-item-title">Can the itinerary be customised?</p><p class="fp-item-text">Yes — every package is a starting point. Tell us your dates, pace, and interests and we'll tailor the plan around you.</p></div>
+          <div><p class="fp-item-title">What's usually included?</p><p class="fp-item-text">Stays, ground transport, and the experiences listed on each package page. Flights, personal expenses, and anything marked optional are excluded unless stated.</p></div>
+          <div><p class="fp-item-title">Do you arrange family, solo, and group trips?</p><p class="fp-item-text">All three. Let us know the group size and we'll adjust vehicles, rooms, and pacing accordingly.</p></div>
+          <div><p class="fp-item-title">How do I get a final quote?</p><p class="fp-item-text">Share your dream destination and travel dates through the enquiry form and we'll respond within 24 hours.</p></div>
+        </div>`
+    },
+    'booking-policy': {
+      tag: 'Before You Book',
+      title: 'Booking Policy',
+      body: `<div class="footer-popup-list">
+          <div><p class="fp-item-title">Enquiry &amp; confirmation</p><p class="fp-item-text">Submit an enquiry with your destination and travel dates. We'll share a tailored itinerary and quote before anything is confirmed.</p></div>
+          <div><p class="fp-item-title">Booking deposit</p><p class="fp-item-text">A partial advance secures your dates once the itinerary is finalised; the balance is due before departure as agreed in your quote.</p></div>
+          <div><p class="fp-item-title">Rescheduling</p><p class="fp-item-text">Travel dates can be moved subject to availability — reach out as early as possible if your plans change.</p></div>
+          <div><p class="fp-item-title">Cancellations &amp; refunds</p><p class="fp-item-text">Refund terms depend on how close to departure you cancel and are confirmed in writing at the time of booking, along with your specific package.</p></div>
+        </div>`
+    },
+    'visa-guidance': {
+      tag: 'Travel Documents',
+      title: 'Visa &amp; Permit Guidance',
+      body: `<div class="footer-popup-list">
+          <div><p class="fp-item-title">For international travellers</p><p class="fp-item-text">We share guidance on the Indian e-Visa/visa process and the documents typically required, so you arrive prepared.</p></div>
+          <div><p class="fp-item-title">Restricted &amp; protected areas</p><p class="fp-item-text">Regions like Ladakh, Arunachal Pradesh, and parts of Sikkim need an Inner Line Permit (ILP) or Protected Area Permit (PAP) — we help arrange these for the relevant packages.</p></div>
+          <div><p class="fp-item-title">ID for domestic travel</p><p class="fp-item-text">A valid government photo ID is required for flights, trains, and hotel check-ins across every itinerary.</p></div>
+        </div>
+        <p style="margin-top:0.8rem; font-size:0.8rem;">Requirements vary by destination and nationality — we'll confirm exactly what you need once your itinerary is set.</p>`
+    },
+    'contact-us': {
+      tag: "Let's Talk",
+      title: 'Contact Us',
+      body: `<p>Have a question before you enquire? Reach us directly:</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">Call / WhatsApp</p><p class="fp-item-text"><a href="tel:+919885180515">+91 98851 80515</a></p></div>
+          <div><p class="fp-item-title">Email</p><p class="fp-item-text"><a href="mailto:viharasetu@gmail.com">viharasetu@gmail.com</a></p></div>
+          <div><p class="fp-item-title">Instagram</p><p class="fp-item-text"><a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">@viharasetu</a></p></div>
+        </div>
+        <a class="footer-popup-cta" href="#contact">Fill the enquiry form →</a>`
+    },
+    'privacy-policy': {
+      tag: 'Your Data',
+      title: 'Privacy Policy',
+      body: `<div class="footer-popup-list">
+          <div><p class="fp-item-title">What we collect</p><p class="fp-item-text">Only what you share via our enquiry form — name, email, phone, destination, and travel dates — to plan and respond to your trip request.</p></div>
+          <div><p class="fp-item-title">How it's used</p><p class="fp-item-text">Solely to get in touch about your journey. We don't sell or share your details with third parties.</p></div>
+          <div><p class="fp-item-title">Analytics</p><p class="fp-item-text">We use standard website analytics to understand traffic; this doesn't identify you personally.</p></div>
+          <div><p class="fp-item-title">Questions or deletion requests</p><p class="fp-item-text">Email <a href="mailto:viharasetu@gmail.com">viharasetu@gmail.com</a> any time.</p></div>
+        </div>`
     }
   };
 
@@ -1852,6 +1908,10 @@
   closeBtn.addEventListener('click', closePopup);
   backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closePopup(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
+  content.addEventListener('click', (e) => {
+    const a = e.target.closest('a.footer-popup-cta');
+    if (a && (a.getAttribute('href') || '').startsWith('#')) closePopup();
+  });
 
   function openPopup(key) {
     const data = popups[key];
