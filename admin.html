@@ -450,76 +450,13 @@
 // ── Configuration ─────────────────────────────────────────────
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby16uHDPLkWFMHOQtKH3ggej7MnRNW4Lfrn5RPrLkNpN-6Vj8aFitTBHjgvIqi1qaDQzA/exec";
 
-// CHANGE THESE before you rely on it — this is a basic deterrent only, not real security
-// (anyone can view this file's source and read the usernames/passwords). Do not store
-// sensitive data in the sheet if that's a concern.
-// canDelete: false hides the Delete button for that user — they can still add and edit.
-const USERS = [
-  { username: "admin", password: "Viharasetu@2026", canDelete: true },
-  { username: "sirishakandala", password: "sirisha@kandala", canDelete: false },
-  { username: "maniraj1995", password: "Maniraju@111", canDelete: true }
-];
-
+// Accounts live in the "Admins" tab of the Google Sheet now, checked by Code.gs —
+// not in this file. See google-apps-script/Code.gs for setup instructions.
 let currentUser = null;
 
-// Profile edits (password/mobile/email) are saved in this browser's localStorage,
-// keyed by username, and layered on top of the USERS list above. This means a
-// changed password takes effect immediately without editing this file — but only
-// on this same browser/device, since there's no real backend for accounts.
-const PROFILE_STORAGE_KEY = 'vh_admin_profiles';
-
-function loadProfileOverrides() {
-  try {
-    return JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEY) || '{}');
-  } catch (e) {
-    return {};
-  }
-}
-
-function saveProfileOverride(username, data) {
-  const all = loadProfileOverrides();
-  all[username] = Object.assign({}, all[username], data);
-  localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(all));
-}
-
-function getEffectiveUsers() {
-  const overrides = loadProfileOverrides();
-  return USERS.map(u => Object.assign({}, u, overrides[u.username] || {}));
-}
-
-// Downloads a plain-text snapshot of every account's current username/password
-// (and mobile/email, if set) as a backup you can keep for reference if you
-// forget a password. Browsers can't silently overwrite a fixed file on disk,
-// so each call downloads a fresh file — your browser will add "(1)", "(2)"
-// etc. to the filename if one from an earlier save is still in Downloads.
-function downloadCredentialsBackup() {
-  const users = getEffectiveUsers();
-  const now = new Date();
-  const lines = [
-    'Viharasetu Admin Portal — login backup',
-    'Generated: ' + now.toLocaleString('en-IN'),
-    'Keep this file somewhere private — it contains live passwords.',
-    ''
-  ];
-  users.forEach(u => {
-    lines.push('Username: ' + u.username);
-    lines.push('Password: ' + u.password);
-    if (u.mobile) lines.push('Mobile: ' + u.mobile);
-    if (u.email) lines.push('Email: ' + u.email);
-    lines.push('Can delete entries: ' + (u.canDelete ? 'Yes' : 'No'));
-    lines.push('');
-  });
-
-  const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'viharasetu-admin-credentials.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
+// Held only in memory for this tab's session (never persisted) so every admin
+// request can re-prove identity to Code.gs, which has no server-side sessions.
+let currentCreds = null;
 
 // Per-sheet display config: which column drives the colored badge and its options,
 // which column is a long-text field, and the primary (bold) column in the table.
@@ -577,6 +514,7 @@ function lock() {
   gatePassword.value = '';
   gateError.textContent = '';
   currentUser = null;
+  currentCreds = null;
 }
 
 // No persistence at all, on purpose: refreshing the page, clicking "Log out",
@@ -585,14 +523,29 @@ document.getElementById('gate-submit').addEventListener('click', tryUnlock);
 gateUsername.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
 gatePassword.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
 
-function tryUnlock() {
-  const match = getEffectiveUsers().find(u => u.username === gateUsername.value && u.password === gatePassword.value);
-  if (match) {
-    currentUser = match;
-    gateError.textContent = '';
+async function tryUnlock() {
+  const username = gateUsername.value.trim();
+  const password = gatePassword.value;
+  if (!username || !password) {
+    gateError.textContent = 'Enter your username and password.';
+    return;
+  }
+  const submitBtn = document.getElementById('gate-submit');
+  submitBtn.disabled = true;
+  gateError.textContent = '';
+  try {
+    const data = await callScript({ action: 'login', username: username, password: password });
+    if (!data.ok) {
+      gateError.textContent = data.error || 'Incorrect username or password.';
+      return;
+    }
+    currentUser = data.user;
+    currentCreds = { username: username, password: password };
     unlock();
-  } else {
-    gateError.textContent = 'Incorrect username or password.';
+  } catch (err) {
+    gateError.textContent = 'Could not reach the server. Please try again.';
+  } finally {
+    submitBtn.disabled = false;
   }
 }
 
@@ -759,17 +712,16 @@ function renderProfile() {
     <div id="profile-msg" style="font-size:13px;margin-top:4px;min-height:18px;"></div>
     <div class="modal-actions" style="justify-content:flex-start;margin-top:12px;">
       <button class="btn primary" id="profile-save">Save Changes</button>
-      <button class="btn" id="profile-download-backup">⬇ Download login backup (.txt)</button>
     </div>
   `;
   main.appendChild(card);
 
   document.getElementById('profile-save').addEventListener('click', saveProfile);
-  document.getElementById('profile-download-backup').addEventListener('click', downloadCredentialsBackup);
 }
 
-function saveProfile() {
+async function saveProfile() {
   const msg = document.getElementById('profile-msg');
+  const saveBtn = document.getElementById('profile-save');
   const mobile = document.getElementById('profile-mobile').value.trim();
   const email = document.getElementById('profile-email').value.trim();
   const currentPw = document.getElementById('profile-current-pw').value;
@@ -779,7 +731,7 @@ function saveProfile() {
   const updates = { mobile, email };
 
   if (currentPw || newPw || confirmPw) {
-    if (currentPw !== currentUser.password) {
+    if (currentPw !== currentCreds.password) {
       msg.style.color = 'var(--red)';
       msg.textContent = 'Current password is incorrect.';
       return;
@@ -797,16 +749,19 @@ function saveProfile() {
     updates.password = newPw;
   }
 
-  saveProfileOverride(currentUser.username, updates);
-  currentUser = Object.assign({}, currentUser, updates);
-
-  if (updates.password) {
-    downloadCredentialsBackup();
-    msg.style.color = 'var(--jade)';
-    msg.textContent = 'Saved — a login backup file was downloaded.';
-  } else {
+  saveBtn.disabled = true;
+  try {
+    const data = await postAction({ action: 'updateProfile', values: updates });
+    currentUser = data.user;
+    if (updates.password) currentCreds = Object.assign({}, currentCreds, { password: updates.password });
     msg.style.color = 'var(--jade)';
     msg.textContent = 'Saved.';
+  } catch (err) {
+    msg.style.color = 'var(--red)';
+    msg.textContent = 'Failed to save: ' + err.message;
+    return;
+  } finally {
+    saveBtn.disabled = false;
   }
   document.getElementById('profile-current-pw').value = '';
   document.getElementById('profile-new-pw').value = '';
@@ -1068,12 +1023,19 @@ function confirmDelete(key, rowIndex) {
 // preflight (OPTIONS) request that Apps Script web apps don't handle, which
 // silently breaks the request. Apps Script reads the raw body regardless of
 // the declared content type, so this still parses fine server-side.
-function postAction(payload) {
+function callScript(payload) {
   return fetch(SCRIPT_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
-  }).then(res => res.json()).then(data => {
+  }).then(res => res.json());
+}
+
+// Like callScript, but for actions that need to prove who's calling — merges
+// in the current session's username/password, since Code.gs re-checks them
+// on every request rather than trusting a session token.
+function postAction(payload) {
+  return callScript(Object.assign({}, payload, currentCreds)).then(data => {
     if (!data.ok) throw new Error(data.error || 'Unknown error');
     return data;
   });
