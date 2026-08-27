@@ -387,6 +387,20 @@ h2 {
     width: auto;
     filter: drop-shadow(0 6px 14px rgba(38,34,28,0.18));
 }
+
+/* Below this width the "Home"/"Back to Destinations" buttons take the full row
+   and would sit under the absolutely-positioned logo, so stack the logo above them instead. */
+@media (max-width: 640px) {
+  .logo-header {
+    position: static;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .logo-header img {
+    height: 48px;
+  }
+}
 /* Social / Contact Footer */
 .social {
   position: relative;
