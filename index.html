@@ -1984,21 +1984,29 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
     //         alert("❌ Failed to send enquiry. Please try again.");
     //     });
     
-    // Send to Google Sheets via Apps Script
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbzAq9KWBg17c9n46WYKqv7m0Y6KR02oW__DX7fmAKZpS3qCswPV-WmymumL_l7rnB_f/exec";
-    
+    // Send to Google Sheets via Apps Script.
+    // Sent as text/plain on purpose: a JSON Content-Type header triggers a CORS
+    // preflight (OPTIONS) request that Apps Script web apps don't handle, which
+    // silently breaks the request. Apps Script reads the raw body regardless of
+    // the declared content type, so this still parses fine server-side. Using a
+    // real (non "no-cors") request means we can read the response — including
+    // the auto-generated Enquiry ID — and actually detect failures.
+    const scriptUrl = "https://script.google.com/macros/s/AKfycby16uHDPLkWFMHOQtKH3ggej7MnRNW4Lfrn5RPrLkNpN-6Vj8aFitTBHjgvIqi1qaDQzA/exec";
+
     fetch(scriptUrl, {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain;charset=utf-8'
         },
         body: JSON.stringify(formData)
     })
-    .then(() => {
-        alert("✅ Thank you! Your enquiry has been sent successfully.");
+    .then(res => res.json())
+    .then(data => {
+        if (!data.ok) throw new Error(data.error || 'Unknown error');
+        alert("✅ Thank you! Your enquiry has been sent successfully."
+            + (data.enquiryId ? "\n\nYour enquiry ID: " + data.enquiryId + " — quote this if you follow up with us." : ""));
         document.getElementById("contactForm").reset();
-        console.log("✅ Data saved to Google Sheet and email sent");
+        console.log("✅ Data saved to Google Sheet", data.enquiryId ? "— Enquiry ID: " + data.enquiryId : "");
     })
     .catch(error => {
         console.error("❌ Error:", error);
