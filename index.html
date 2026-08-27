@@ -1576,11 +1576,11 @@
     <div>
       <p class="footer-col-title">Explore</p>
       <ul class="footer-links">
-        <li><a href="#">Destinations</a></li>
-        <li><a href="#">Journeys</a></li>
-        <li><a href="#">Experiences</a></li>
-        <li><a href="#">Photo Gallery</a></li>
-        <li><a href="#">Travel Journal</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="destinations">Destinations</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="journeys">Journeys</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="experiences">Experiences</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="gallery">Photo Gallery</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="journal">Travel Journal</a></li>
       </ul>
     </div>
     <div>
@@ -1614,6 +1614,154 @@
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-popup-backdrop {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(26,22,15,0.75);
+    display: none; align-items: center; justify-content: center;
+    padding: 40px 20px;
+  }
+  .footer-popup-backdrop.visible { display: flex; }
+  .footer-popup {
+    background: var(--cream);
+    border-radius: 20px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 2.2rem 2.2rem 2rem;
+    position: relative;
+    box-shadow: 0 40px 90px rgba(26,22,15,0.35);
+  }
+  .footer-popup-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: none; background: var(--saffron-light); color: var(--saffron-dark);
+    font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .footer-popup-close:hover { background: var(--gold-light); }
+  .footer-popup-tag {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin: 0 0 0.5rem;
+  }
+  .footer-popup h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; color: var(--ink); margin: 0 0 0.9rem;
+  }
+  .footer-popup p {
+    font-size: 0.9rem; line-height: 1.75; color: var(--ink-muted); margin: 0 0 1rem;
+  }
+  .footer-popup-list { display: flex; flex-direction: column; gap: 0.9rem; margin: 0 0 1.2rem; }
+  .footer-popup-list .fp-item-title { font-weight: 600; color: var(--ink); font-size: 0.92rem; margin: 0 0 0.2rem; }
+  .footer-popup-list .fp-item-text { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; margin: 0; }
+  .footer-popup-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 1rem; }
+  .footer-popup-gallery img { width: 100%; height: 90px; object-fit: cover; border-radius: 10px; }
+  .footer-popup-cta {
+    display: inline-block; margin-top: 0.4rem;
+    padding: 0.7rem 1.4rem; border-radius: 999px;
+    background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+    color: var(--white); text-decoration: none; font-size: 0.82rem; font-weight: 600;
+  }
+  @media (max-width: 600px) {
+    .footer-popup { padding: 1.6rem 1.4rem 1.6rem; border-radius: 16px; }
+    .footer-popup-gallery { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+(function () {
+  const popups = {
+    destinations: {
+      tag: 'Where We Go',
+      title: 'Destinations We Cover',
+      body: `<p>35 curated packages across 15 states — from the snow-lit monasteries of Ladakh and the Buddhist trails of Arunachal Pradesh, to the temple towns of Tamil Nadu, the backwaters of Kerala, and the sacred ghats of Varanasi.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">Himalayan trails</p><p class="fp-item-text">Ladakh, Spiti Valley, Kedarnath–Badrinath, Valley of Flowers</p></div>
+          <div><p class="fp-item-title">Sacred cities</p><p class="fp-item-text">Varanasi, Rishikesh–Haridwar, Vaishno Devi</p></div>
+          <div><p class="fp-item-title">Southern shores &amp; backwaters</p><p class="fp-item-text">Kerala, Goa, Lakshadweep, Puducherry</p></div>
+        </div>
+        <a class="footer-popup-cta" href="destinations/All_packages/Explore_Destination.html">Browse all destinations →</a>`
+    },
+    journeys: {
+      tag: 'Curated Itineraries',
+      title: 'Signature Journeys',
+      body: `<p>Multi-day, hand-paced itineraries built around each region's own rhythm — no rushed checklists, just enough time to actually arrive.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">The Eternal City — Varanasi &amp; Sarnath</p><p class="fp-item-text">7 nights. Ganga Aarti at dawn to Buddhist ruins at Sarnath.</p></div>
+          <div><p class="fp-item-title">Sky High — Monasteries of the Himalayas</p><p class="fp-item-text">10 nights. Thiksey, Hemis, Diskit — gompas between earth and sky.</p></div>
+          <div><p class="fp-item-title">Kerala Backwater Retreat</p><p class="fp-item-text">Houseboats, spice gardens, and slow mornings on the water.</p></div>
+        </div>`
+    },
+    experiences: {
+      tag: 'How We Travel',
+      title: 'Experiences Crafted with Intention',
+      body: `<p>Every journey we curate is designed to connect you with India's timeless heritage, sacred traditions, and living culture.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">🛕 Ancient Temple Explorations</p><p class="fp-item-text">Centuries-old temples renowned for their architecture and craftsmanship.</p></div>
+          <div><p class="fp-item-title">🌅 Sacred River Experiences</p><p class="fp-item-text">Sunrise and evening rituals along India's most revered river ghats.</p></div>
+          <div><p class="fp-item-title">🏛️ Heritage &amp; Cultural Trails</p><p class="fp-item-text">UNESCO heritage sites, royal monuments, and historic cities with local guides.</p></div>
+          <div><p class="fp-item-title">📸 Authentic Local Experiences</p><p class="fp-item-text">Local traditions, festivals, cuisine, and artisan communities.</p></div>
+        </div>`
+    },
+    gallery: {
+      tag: 'A Glimpse',
+      title: 'Photo Gallery',
+      body: `<p>Moments from the road — a small preview of what awaits on each journey.</p>
+        <div class="footer-popup-gallery">
+          <img src="images/varanasi.jpg" alt="Varanasi ghats" loading="lazy">
+          <img src="images/hampi.jpg" alt="Hampi ruins" loading="lazy">
+          <img src="images/ladak.jpg" alt="Ladakh monastery" loading="lazy">
+          <img src="images/valley_of_flowers.jpg" alt="Valley of Flowers" loading="lazy">
+          <img src="images/kashi_ghats.jpg" alt="Kashi ghats" loading="lazy">
+          <img src="images/waterfals.jpg" alt="Waterfalls" loading="lazy">
+        </div>`
+    },
+    journal: {
+      tag: 'From the Road',
+      title: 'Travel Journal',
+      body: `<div class="footer-popup-list">
+          <div><p class="fp-item-title">Sunrise Over the Ganga, Varanasi</p><p class="fp-item-text">The city wakes before the sun does — oil lamps drifting downriver, temple bells answering bells across the ghats.</p></div>
+          <div><p class="fp-item-title">Silence at 4,000 Metres, Ladakh</p><p class="fp-item-text">At Thiksey, the monastery horns sound just once a day. The rest of the mountain simply listens.</p></div>
+          <div><p class="fp-item-title">Monsoon Green, Kerala</p><p class="fp-item-text">Backwaters swollen with rain, the houseboat slows to the pace of the paddy fields drifting past.</p></div>
+        </div>`
+    }
+  };
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'footer-popup-backdrop';
+  backdrop.innerHTML = '<div class="footer-popup"><button type="button" class="footer-popup-close" aria-label="Close">✕</button><div class="footer-popup-content"></div></div>';
+  document.body.appendChild(backdrop);
+  const content = backdrop.querySelector('.footer-popup-content');
+  const closeBtn = backdrop.querySelector('.footer-popup-close');
+
+  function closePopup() {
+    backdrop.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+  closeBtn.addEventListener('click', closePopup);
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closePopup(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
+
+  function openPopup(key) {
+    const data = popups[key];
+    if (!data) return;
+    content.innerHTML = `<p class="footer-popup-tag">${data.tag}</p><h2>${data.title}</h2>${data.body}`;
+    backdrop.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    backdrop.scrollTop = 0;
+  }
+
+  document.querySelectorAll('.footer-popup-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPopup(link.dataset.popup);
+    });
+  });
+})();
+</script>
 
 <script>
   const testimonials = [
