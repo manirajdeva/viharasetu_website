@@ -1,0 +1,5 @@
+# clasp — local Apps Script deploy working dir + credentials (not for the repo)
+gas-deploy/
+.clasp.json
+.clasprc.json
+node_modules/

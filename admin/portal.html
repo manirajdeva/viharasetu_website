@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin — Viharasetu</title>
+<link rel="icon" type="image/png" href="../images/fevicon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="css/admin.css" rel="stylesheet" />
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu">☰</button>
+<div class="sidebar-scrim" id="sidebarScrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="../images/Logo.png" alt="Viharasetu logo" />
+      <div>
+        <div class="name">Viharasetu</div>
+        <div class="sub">Admin Portal</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item" data-view="dashboard"><span class="ic">◈</span> Dashboard</div>
+      <div class="nav-item" data-view="enquiries"><span class="ic">✉</span> Enquiries</div>
+      <div class="nav-item" data-view="suppliers"><span class="ic">🤝</span> Suppliers</div>
+      <div class="nav-item" data-view="bookings"><span class="ic">🧳</span> Bookings</div>
+      <div class="nav-item" data-view="payments"><span class="ic">💳</span> Payments</div>
+      <div class="nav-item" data-view="reports"><span class="ic">📊</span> Reports</div>
+      <div class="nav-item" data-view="profile"><span class="ic">👤</span> Profile</div>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-item" href="../index.html"><span class="ic">⌂</span> Home page</a>
+      <div class="nav-item" id="logoutBtn"><span class="ic">⏻</span> Log out</div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="page-title"><span id="pageTitle">Dashboard</span><small id="pageSubtitle">Overview across every sheet</small></div>
+      <div class="topbar-user">
+        <span id="userName" class="mono"></span>
+        <div class="avatar" id="userAvatar">A</div>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <section class="view" id="view-dashboard"></section>
+      <section class="view" id="view-enquiries"></section>
+      <section class="view" id="view-suppliers"></section>
+      <section class="view" id="view-bookings"></section>
+      <section class="view" id="view-payments"></section>
+      <section class="view" id="view-reports"></section>
+      <section class="view" id="view-profile"></section>
+    </main>
+  </div>
+</div>
+
+<!-- Shared add/edit modal -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <h2 id="modalTitle">Edit</h2>
+    <div id="modalFields" class="form-grid"></div>
+    <div class="modal-actions">
+      <button class="btn" id="modalCancel">Cancel</button>
+      <button class="btn primary" id="modalSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<datalist id="enquiryIdList"></datalist>
+<div class="toast-host" id="toastHost"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/shell.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/enquiries.js"></script>
+<script src="js/suppliers.js"></script>
+<script src="js/bookings.js"></script>
+<script src="js/payments.js"></script>
+<script src="js/reports.js"></script>
+</body>
+</html>

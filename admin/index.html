@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin Login — Viharasetu</title>
+<link rel="icon" type="image/png" href="../images/fevicon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="css/admin.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-card">
+    <a href="../index.html" aria-label="Go to homepage"><img class="auth-logo" src="../images/Logo.png" alt="Viharasetu logo" /></a>
+    <h1>Admin Portal</h1>
+    <p class="subtitle">Log in to manage enquiries, suppliers, bookings &amp; payments.</p>
+
+    <div id="expiredNotice" class="auth-error" style="display:none;">Your session expired. Please log in again.</div>
+    <div id="mockNotice" style="display:none;font-size:12px;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:12px;">
+      Local mock backend — data isn't saved. Log in with <b>admin</b> / <b>admin123</b>. Add <code>?api=live</code> for the real backend.
+    </div>
+
+    <form id="loginForm" novalidate>
+      <input type="text" id="username" placeholder="Username" autocomplete="username" autofocus />
+      <div class="pw-wrap">
+        <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+        <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">
+          <svg id="pwIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
+          </svg>
+        </button>
+      </div>
+      <button type="submit" class="btn-block" id="loginBtn">Log in</button>
+      <div class="auth-error" id="loginError"></div>
+    </form>
+
+    <p class="auth-foot">&copy; <span id="year"></span> Viharasetu. All rights reserved.</p>
+  </div>
+</div>
+
+<div class="toast-host" id="toastHost"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  if (Auth.isLoggedIn()) location.replace('portal.html');
+  if (typeof useMockApi !== 'undefined' && useMockApi) {
+    document.getElementById('mockNotice').style.display = 'block';
+  }
+  if (new URLSearchParams(location.search).get('expired') === '1') {
+    document.getElementById('expiredNotice').style.display = 'block';
+  }
+
+  const EYE = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>';
+  const EYE_OFF = '<path d="M3 3l18 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.6 5.2A11.4 11.4 0 0 1 12 5c7 0 11 7 11 7a13.5 13.5 0 0 1-3.4 4.1M6.7 6.7C3.7 8.6 1 12 1 12s4 7 11 7a10.8 10.8 0 0 0 4.2-.85" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>';
+
+  document.getElementById('pwToggle').addEventListener('click', () => {
+    const input = document.getElementById('password');
+    const showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    document.getElementById('pwIcon').innerHTML = showing ? EYE : EYE_OFF;
+  });
+
+  const form = document.getElementById('loginForm');
+  const errorBox = document.getElementById('loginError');
+  const loginBtn = document.getElementById('loginBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.textContent = '';
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    if (!username || !password) { errorBox.textContent = 'Enter your username and password.'; return; }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Logging in…';
+    try {
+      const data = await Api.login(username, password);
+      Auth.saveSession(data);
+      location.href = 'portal.html';
+    } catch (err) {
+      errorBox.textContent = err.message || 'Login failed. Please try again.';
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Log in';
+    }
+  });
+</script>
+</body>
+</html>
