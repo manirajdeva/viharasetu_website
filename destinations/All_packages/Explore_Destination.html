@@ -1018,7 +1018,7 @@
         <div class="thumb">
           <span class="tag">Arunachal Pradesh</span>
           <div class="season-tags"><span>Summer</span><span>Winter</span></div>
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tawang%20Monastery,%20Tawang,%20Arunachal%20Pradesh,%20India.jpg?width=500" alt="Tawang Monastery">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/TawangMonastery-ArunachalPradesh-1.jpg?width=500" alt="Tawang Monastery">
         </div>
         <div class="body">
           <h3>Tawang &amp; the Monastery Circuit</h3>
@@ -1045,6 +1045,14 @@
     const emptyState = document.getElementById('empty-state');
     const navMenu = document.getElementById('nav-menu');
     const navBtn = document.getElementById('nav-btn');
+
+    // Re-order the grid alphabetically by state so destinations from the
+    // same state sit together, regardless of the order they're listed in the HTML.
+    const destGrid = document.getElementById('dest-grid');
+    cards
+      .slice()
+      .sort((a, b) => a.dataset.state.localeCompare(b.dataset.state))
+      .forEach(card => destGrid.appendChild(card));
 
     function applyFilters(){
       let visibleCount = 0;
