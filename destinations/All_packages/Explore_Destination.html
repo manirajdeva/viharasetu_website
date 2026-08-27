@@ -1080,6 +1080,9 @@
       emptyState.classList.toggle('show', visibleCount === 0);
     }
 
+    // Compute the real count on load instead of relying on the hardcoded "12" in the HTML.
+    applyFilters();
+
     // Dropdown open/close
     navBtn.addEventListener('click', (e) => {
       e.stopPropagation();
