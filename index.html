@@ -179,16 +179,28 @@
   .nav-train {
     position: absolute;
     bottom: 6px;
-    left: -260px;
-    width: 150px;
-    animation: train-ride 18s linear infinite;
+    left: -1000px;
+    width: 960px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    animation: train-ride 34s linear infinite;
   }
 
   .nav-train .train-svg {
-    width: 100%;
+    width: 150px;
+    flex-shrink: 0;
     height: auto;
     display: block;
     filter: drop-shadow(0 6px 10px rgba(26,22,15,0.28));
+  }
+
+  .nav-train .monu-car {
+    height: 24px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 6px rgba(26,22,15,0.25));
   }
 
   .nav-train .smoke {
@@ -206,6 +218,11 @@
   .nav-train .smoke.s3 { animation-delay: 1.4s; right: 7px; }
 
   @keyframes train-ride {
+    0% { left: -1000px; }
+    100% { left: 100%; }
+  }
+
+  @keyframes train-ride-mobile {
     0% { left: -260px; }
     100% { left: 100%; }
   }
@@ -216,7 +233,12 @@
   }
 
   @media (max-width: 900px) {
-    .nav-train { width: 110px; }
+    .nav-train {
+      width: 110px;
+      animation: train-ride-mobile 18s linear infinite;
+    }
+    .nav-train .train-svg { width: 100%; }
+    .nav-train .monu-car { display: none; }
   }
 
   /* ── HERO ── */
@@ -1167,6 +1189,29 @@
 <nav>
   <div class="nav-rail-track" aria-hidden="true">
     <div class="nav-train">
+      <img class="monu-car" src="images/Travel_pngs/small/1.png" alt="Red Fort, Delhi" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/2.png" alt="Red Fort, Delhi" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/3.png" alt="Jagannath Temple, Puri" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/4.png" alt="Taj Mahal & India Gate" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/5.png" alt="Jagannath Temple, Puri" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/6.png" alt="South Indian temple gopuram" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/7.png" alt="Konark Sun Temple wheel" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/8.png" alt="Gurudwara" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/9.png" alt="Golden Temple, Amritsar" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/10.png" alt="Ornate temple gateway" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/11.png" alt="Camel safari, Rajasthan" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/12.png" alt="Hawa Mahal, Jaipur" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/13.png" alt="Indian fort" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/14.png" alt="Himalayan peaks" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/15.png" alt="Qutub Minar, Delhi" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/16.png" alt="Temple tower" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/17.png" alt="Thai-style temple" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/18.png" alt="Buddhist pagoda" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/19.png" alt="Khmer temple tower" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/20.png" alt="Charminar, Hyderabad" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/21.png" alt="Bali split gate" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/22.png" alt="Prambanan temple" loading="lazy">
+      <img class="monu-car" src="images/Travel_pngs/small/23.png" alt="Chichen Itza, Mexico" loading="lazy">
       <svg class="train-svg" viewBox="0 0 260 40" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="trainBody" x1="0" y1="0" x2="0" y2="1">
