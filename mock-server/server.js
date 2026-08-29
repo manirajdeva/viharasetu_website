@@ -105,7 +105,19 @@ function requireSession(token) {
 
 /* ---------------- CRUD ---------------- */
 
+// Computed "Instalment" number per payment group (mirrors backend sheets.js).
+function paymentsView() {
+  const groups = {};
+  db.payments.forEach((r) => { (groups[paymentGroupKey(r)] = groups[paymentGroupKey(r)] || []).push(r); });
+  Object.values(groups).forEach((list) => {
+    list.sort((a, b) => String(a['Timestamp']).localeCompare(String(b['Timestamp'])) || (a.rowIndex - b.rowIndex));
+    list.forEach((r, i) => { r['Instalment'] = i + 1; });
+  });
+  return { headers: [...HEADERS.payments, 'Instalment'], rows: db.payments };
+}
+
 function listRows(key) {
+  if (key === 'payments') return Object.assign({ ok: true }, paymentsView());
   return { ok: true, headers: HEADERS[key], rows: db[key] };
 }
 
@@ -366,7 +378,7 @@ function handlePost(body, res) {
             enquiries: { headers: HEADERS.enquiries, rows: db.enquiries },
             suppliers: { headers: HEADERS.suppliers, rows: db.suppliers },
             bookings: { headers: HEADERS.bookings, rows: db.bookings },
-            payments: { headers: HEADERS.payments, rows: db.payments }
+            payments: paymentsView()
           },
           stats: dashboardStats().data
         }

@@ -15,11 +15,43 @@ const { preparePaymentValues } = require('./payments');
 
 const q = (name) => `\`${name}\``; // identifiers are from our own map, but quote them anyway
 
+/** Group key for payments: by Enquiry ID, or by Customer when the ID is blank. */
+function paymentGroup(row) {
+  const eid = String(row['Enquiry ID'] || '').trim();
+  return eid ? `E:${eid.toLowerCase()}` : `C:${String(row['Customer'] || '').trim().toLowerCase()}`;
+}
+
+/**
+ * Adds a computed "Instalment" number to each payment row: within a group
+ * (same Enquiry ID, or same Customer if the ID is blank) payments are ordered
+ * by Recorded date and numbered 1, 2, 3 … Computed on every read, so it is
+ * always gapless — deleting or reordering payments renumbers the rest for free.
+ */
+function withInstalments(displayRows) {
+  const groups = new Map();
+  displayRows.forEach((r) => {
+    const k = paymentGroup(r);
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(r);
+  });
+  for (const list of groups.values()) {
+    list.sort((a, b) =>
+      String(a['Timestamp']).localeCompare(String(b['Timestamp'])) || (a.rowIndex - b.rowIndex));
+    list.forEach((r, i) => { r['Instalment'] = i + 1; });
+  }
+  return displayRows;
+}
+
 /** All rows for one entity, in insertion order, as display rows. */
 async function listRows(key) {
   const { table } = ENTITIES[key];
   const [rows] = await pool.query(`SELECT * FROM ${q(table)} ORDER BY id ASC`);
-  return { headers: headersFor(key), rows: rows.map((r) => toDisplayRow(key, r)) };
+  const display = rows.map((r) => toDisplayRow(key, r));
+  if (key === 'payments') {
+    withInstalments(display);
+    return { headers: [...headersFor(key), 'Instalment'], rows: display };
+  }
+  return { headers: headersFor(key), rows: display };
 }
 
 async function getRow(key, rowIndex) {
