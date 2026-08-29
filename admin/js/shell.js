@@ -398,13 +398,67 @@ async function ensureEnquiryIds() {
   } catch { /* the field still works as a plain input */ }
 }
 
-/* Live search-select for the Enquiry ID field in the Bookings / Payments modal. */
+/* Live search-select for the Enquiry ID field in the Bookings / Payments modal.
+ * Picking an enquiry (from the dropdown here or the native datalist) copies its
+ * details into the matching form fields — Customer <- Name, Destination <-
+ * Destination, Travel Dates <- Travel. Fields that only exist on the booking /
+ * payment (Pax, Amount, Payment Status, Transaction Ref, Notes) are never
+ * touched. Runs on every change of the Enquiry ID field, so re-picking a
+ * different enquiry refreshes those copied values. */
 function wireEnquiryPicker() {
   const input = document.querySelector('#modalFields [data-field="Enquiry ID"]');
   if (!input) return;
-  const customerInput = document.querySelector('#modalFields [data-field="Customer"]');
+  const host = document.getElementById('modalFields');
   const wrap = input.closest('.field');
   wrap.classList.add('picker-wrap');
+
+  const fieldEl = (k) => host.querySelector(`[data-field="${k}"]`);
+  const setField = (k, val) => {
+    const el = fieldEl(k);
+    if (!el || val == null || val === '') return;
+    el.value = val;
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  };
+
+  // The enquiry's free-text "Travel" seeds the Travel Dates range: a bare
+  // yyyy-mm-dd goes into the start date; an "x – y" range is split; anything
+  // else is kept verbatim in the hidden field so it isn't lost.
+  function fillTravelDates(raw) {
+    const hidden = fieldEl('Travel Dates');
+    if (!hidden || !raw) return;
+    raw = String(raw).trim();
+    const box = hidden.closest('.field');
+    const start = box && box.querySelector('.dr-start');
+    const end = box && box.querySelector('.dr-end');
+    const iso = /^\d{4}-\d{2}-\d{2}/.exec(raw);
+    if (start && iso) {
+      start.value = iso[0].slice(0, 10);
+      start.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (start && /[–—]/.test(raw)) {
+      const [s, e] = Utils.parseDateRange(raw);
+      if (s) {
+        start.value = s;
+        if (end && e) end.value = e;
+        start.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        hidden.value = raw;
+      }
+    } else {
+      hidden.value = raw;
+    }
+  }
+
+  async function autofillFromEnquiry(id) {
+    id = String(id || '').trim();
+    if (!id) return;
+    let rows = [];
+    try { rows = (await Data.fetch('enquiries')).rows; } catch { return; }
+    const e = rows.find(r => String(r['Enquiry ID'] || '').trim() === id);
+    if (!e) return;
+    setField('Customer', e['Name']);
+    setField('Destination', e['Destination']);
+    fillTravelDates(e['Travel']);
+  }
 
   const show = Utils.debounce(async () => {
     const q = input.value.trim().toLowerCase();
@@ -415,28 +469,25 @@ function wireEnquiryPicker() {
     const matches = rows.filter(r =>
       ['Enquiry ID', 'Name', 'Phone', 'Email', 'Destination'].some(k => String(r[k] || '').toLowerCase().includes(q))
     ).slice(0, 8);
-    const box = document.createElement('div');
-    box.className = 'picker-results';
-    box.innerHTML = matches.length
-      ? matches.map(r => `<button type="button" data-id="${Utils.escapeAttr(r['Enquiry ID'])}" data-name="${Utils.escapeAttr(r['Name'] || '')}">
+    const listBox = document.createElement('div');
+    listBox.className = 'picker-results';
+    listBox.innerHTML = matches.length
+      ? matches.map(r => `<button type="button" data-id="${Utils.escapeAttr(r['Enquiry ID'])}">
           <b>${Utils.escapeHtml(r['Enquiry ID'])}</b> — ${Utils.escapeHtml(r['Name'] || '')} <span style="color:var(--ink-soft)">${Utils.escapeHtml(r['Destination'] || '')}</span>
         </button>`).join('')
       : '<div class="muted">No matching enquiry</div>';
-    wrap.appendChild(box);
-    box.querySelectorAll('button[data-id]').forEach(b => b.addEventListener('click', () => {
+    wrap.appendChild(listBox);
+    listBox.querySelectorAll('button[data-id]').forEach(b => b.addEventListener('click', () => {
       input.value = b.dataset.id;
       // 'change' (not 'input') so this doesn't retrigger the search dropdown,
-      // but downstream listeners (e.g. Payments' running-balance) still react.
+      // but the autofill + downstream listeners (Payments' running balance) react.
       input.dispatchEvent(new Event('change', { bubbles: true }));
-      if (customerInput && !customerInput.value) {
-        customerInput.value = b.dataset.name;
-        customerInput.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-      box.remove();
+      listBox.remove();
     }));
   });
 
   input.addEventListener('input', show);
+  input.addEventListener('change', () => autofillFromEnquiry(input.value));
   document.addEventListener('click', (e) => {
     if (!wrap.contains(e.target)) wrap.querySelector('.picker-results')?.remove();
   }, { capture: true });
