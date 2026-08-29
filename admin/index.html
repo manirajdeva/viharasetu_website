@@ -37,6 +37,15 @@
       <div class="auth-error" id="loginError"></div>
     </form>
 
+    <button type="button" id="forgotLink"
+      style="display:block;margin:12px auto 0;background:none;border:0;padding:6px;color:var(--accent,#BB5A34);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;">
+      Forgot password?
+    </button>
+    <p id="forgotNote" style="display:none;font-size:13px;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;">
+      Ask an administrator to reset it for you — they can set a new password from the
+      <b>Users</b> section of the portal.
+    </p>
+
     <p class="auth-foot">&copy; <span id="year"></span> Viharasetu. All rights reserved.</p>
   </div>
 </div>
@@ -89,6 +98,11 @@
       loginBtn.disabled = false;
       loginBtn.textContent = 'Log in';
     }
+  });
+
+  document.getElementById('forgotLink').addEventListener('click', () => {
+    const note = document.getElementById('forgotNote');
+    note.style.display = note.style.display === 'none' ? 'block' : 'none';
   });
 </script>
 </body>
