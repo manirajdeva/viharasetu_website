@@ -28,7 +28,7 @@ const HEADERS = {
   enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'Status', 'Notes'],
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
-  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID']
+  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated']
 };
 
 /* ---------------- in-memory store ---------------- */
@@ -139,7 +139,7 @@ function createRow(p) {
 
   const row = { rowIndex: ++rowSeq[key] };
   HEADERS[key].forEach((h) => {
-    if (h === 'Timestamp') row[h] = nowIso();
+    if (h === 'Timestamp' || h === 'Last Updated') row[h] = nowIso();
     else if (h === 'Enquiry ID' && key === 'enquiries') row[h] = nextEnquiryId();
     else if (h === 'Payment ID' && key === 'payments') row[h] = nextPaymentId();
     else row[h] = values[h] == null ? '' : values[h];
@@ -159,6 +159,7 @@ function updateRow(p) {
 
   HEADERS[key].forEach((h) => {
     if (h === 'Timestamp') return;
+    if (h === 'Last Updated') { existing[h] = nowIso(); return; }
     if (h === 'Enquiry ID' && key === 'enquiries') return;
     if (h === 'Payment ID' && key === 'payments') return;
     existing[h] = values[h] == null ? '' : values[h];
@@ -320,7 +321,8 @@ function seed() {
     push('payments', {
       'Enquiry ID': enq['Enquiry ID'], 'Timestamp': daysAgoIso(30 - i * 4), 'Customer': enq['Name'],
       'Amount Paid': x.paid, 'Payment Mode': x.mode, 'Transaction Ref': 'TXN' + (1001 + i), 'Notes': '',
-      'Total Amount': x.total, 'Pending Amount': round2(x.total - already - x.paid), 'Payment ID': nextPaymentId()
+      'Total Amount': x.total, 'Pending Amount': round2(x.total - already - x.paid), 'Payment ID': nextPaymentId(),
+      'Last Updated': daysAgoIso(30 - i * 4)
     });
   });
 }

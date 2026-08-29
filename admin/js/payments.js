@@ -31,6 +31,7 @@ const Payments = makeSheetModule({
     { key: 'Payment ID', label: 'Payment ID', cls: 'mono' },
     { key: 'Enquiry ID', label: 'Enquiry ID', cls: 'mono' },
     { key: 'Timestamp', label: 'Recorded', type: 'date-dmy' },
+    { key: 'Last Updated', label: 'Updated', type: 'datetime' },
     { key: 'Customer', label: 'Customer', primary: true },
     { key: 'Total Amount', label: 'Total', type: 'currency' },
     { key: 'Amount Paid', label: 'Paid', type: 'currency' },

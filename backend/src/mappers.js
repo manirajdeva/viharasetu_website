@@ -77,6 +77,7 @@ const ENTITIES = {
       ['Total Amount', 'total_amount', 'decimal'],
       ['Pending Amount', 'pending_amount', 'decimal'],
       ['Payment ID', 'payment_id', 'string'],
+      ['Last Updated', 'updated_at', 'datetime'],   // read-only; DB ON UPDATE CURRENT_TIMESTAMP
     ],
   },
 };
@@ -115,7 +116,9 @@ function toDbValues(key, values, { skip = [] } = {}) {
   const skipSet = new Set(skip);
   const res = {};
   for (const [header, col, type] of ENTITIES[key].fields) {
-    if (skipSet.has(col) || !Object.prototype.hasOwnProperty.call(values, header)) continue;
+    // datetime columns are never client-writable: the "Timestamp" column is
+    // stamped in createRow and frozen on update; "Last Updated" is DB-managed.
+    if (type === 'datetime' || skipSet.has(col) || !Object.prototype.hasOwnProperty.call(values, header)) continue;
     let v = values[header];
     if (v === undefined) continue;
 
