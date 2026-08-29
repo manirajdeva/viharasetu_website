@@ -58,4 +58,24 @@ async function preparePaymentValues(conn, values, editingRowIndex) {
   values['Pending Amount'] = pending;
 }
 
-module.exports = { preparePaymentValues, paymentGroupKey, round2 };
+/**
+ * Re-sequence installment_no = 1,2,3… for one payment group (same Enquiry ID,
+ * or same Customer when the ID is blank), ordered by Recorded date. Called
+ * after any create / update / delete of a payment so the numbers stay gapless.
+ * `updated_at = updated_at` keeps the audit column from bumping on a renumber,
+ * and the guard skips rows that are already correct.
+ */
+async function renumberGroup(conn, groupKey) {
+  const [rows] = await conn.query(
+    'SELECT id, enquiry_id, customer FROM payments ORDER BY recorded_at ASC, id ASC',
+  );
+  const inGroup = rows.filter((r) => paymentGroupKey(r) === groupKey);
+  for (let i = 0; i < inGroup.length; i++) {
+    await conn.query(
+      'UPDATE payments SET installment_no = ?, updated_at = updated_at WHERE id = ? AND (installment_no IS NULL OR installment_no <> ?)',
+      [i + 1, inGroup[i].id, i + 1],
+    );
+  }
+}
+
+module.exports = { preparePaymentValues, paymentGroupKey, round2, renumberGroup };

@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS bookings (
 CREATE TABLE IF NOT EXISTS payments (
   id              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   payment_id      VARCHAR(20)  NOT NULL,                                -- "Payment ID"  e.g. PMT-000001
+  installment_no  INT              NULL,                                -- "Instalment" — 1,2,3… within the enquiry/customer group; app-maintained
   enquiry_id      VARCHAR(20)      NULL,                                -- "Enquiry ID" (link, may be blank)
   recorded_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,      -- "Timestamp"
   customer        VARCHAR(160) NOT NULL,                                -- "Customer"

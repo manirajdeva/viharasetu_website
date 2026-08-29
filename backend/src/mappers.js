@@ -65,7 +65,7 @@ const ENTITIES = {
   payments: {
     table: 'payments',
     tsColumn: 'recorded_at',
-    generated: { payment_id: 'paymentId' },
+    generated: { payment_id: 'paymentId', installment_no: 'installmentNo' }, // app-set, never from the client
     fields: [
       ['Enquiry ID', 'enquiry_id', 'string'],
       ['Timestamp', 'recorded_at', 'datetime'],
@@ -77,6 +77,7 @@ const ENTITIES = {
       ['Total Amount', 'total_amount', 'decimal'],
       ['Pending Amount', 'pending_amount', 'decimal'],
       ['Payment ID', 'payment_id', 'string'],
+      ['Instalment', 'installment_no', 'int'],      // maintained by renumberGroup on create/update/delete
       ['Last Updated', 'updated_at', 'datetime'],   // read-only; DB ON UPDATE CURRENT_TIMESTAMP
     ],
   },
