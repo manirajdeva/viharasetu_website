@@ -3,3 +3,9 @@ gas-deploy/
 .clasp.json
 .clasprc.json
 node_modules/
+
+# backend/ — secrets and the one-off Sheets export used for migration
+.env
+.env.*
+!.env.example
+backend/sheets-export/

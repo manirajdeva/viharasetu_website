@@ -1,0 +1,27 @@
+{
+  "name": "viharasetu-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API for the Viharasetu admin portal and public website. MySQL data layer that replaces the Google Apps Script + Google Sheets backend. Speaks the exact same request/response envelope as the old Apps Script web app, so the frontend only needs its API URL changed.",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "schema": "node migrate/run-schema.js",
+    "seed-admin": "node migrate/seed-admin.js",
+    "import": "node migrate/import-from-sheets.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "mysql2": "^3.12.0"
+  }
+}

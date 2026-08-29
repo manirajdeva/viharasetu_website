@@ -5,10 +5,14 @@ brand for India-focused pilgrimage and leisure packages. Live at **[viharasetu.c
 
 ## Tech stack
 
-- Plain HTML/CSS/JavaScript — no framework, no build step, no bundler.
-- Deployed via **GitHub Pages** from the `main` branch (custom domain via the `CNAME` file).
-- Backend for forms and the admin portal is a **Google Apps Script** web app writing to a
-  Google Sheet (see [`google-apps-script/Code.gs`](google-apps-script/Code.gs)).
+- Frontend: plain HTML/CSS/JavaScript — no framework, no build step, no bundler.
+  Deployed via **GitHub Pages** from the `main` branch (custom domain via the `CNAME` file).
+- Backend for the contact form and the admin portal is a **Node.js + Express + MySQL**
+  API in [`backend/`](backend/), deployed to a managed platform (Railway/Render/Fly).
+  It exposes the same `/exec` request/response shape the frontend already used.
+- **Migrated off Google Sheets:** the old Google Apps Script web app + Google Sheet
+  ([`google-apps-script/Code.gs`](google-apps-script/Code.gs)) is retained only as a
+  reference / cold backup. MySQL is the system of record.
 - The admin portal (`admin/`) additionally loads Chart.js, SheetJS (xlsx) and jsPDF from
   CDNs at runtime — still no build step.
 
@@ -25,20 +29,27 @@ admin/                         Admin portal (multi-file, server-side token auth)
   index.html                   Login page (entry point — /admin/ lands here)
   portal.html                  App shell: Dashboard / Enquiries / Suppliers / Bookings / Payments / Reports / Profile
   css/admin.css                Portal design system (Viharasetu brand + reference-portal layout)
-  js/api.js                    Apps Script fetch wrapper (GET reads, POST actions), token injection
+  js/api.js                    Backend API fetch wrapper (GET reads, POST actions), token injection
   js/auth.js                   sessionStorage session, page guard, logout
   js/utils.js                  Toasts, confirm dialog, formatting, pagination, sort, CSV/Excel/PDF export
   js/shell.js                  Sidebar + routing + shared form modal + Profile + makeSheetModule() factory
   js/dashboard.js              Stat cards + Chart.js charts + recent activity
   js/{enquiries,suppliers,bookings,payments,reports}.js   Thin per-view modules over the factory
 
-mock-server/                   Local-dev stand-in for the Apps Script backend (zero-dependency Node)
+backend/                       Node/Express + MySQL API (system of record). See backend/README.md
+  src/                         server, config, db pool, auth, id minting, mappers, validation, services, routes
+  migrate/schema.sql           CREATE TABLE for all tables
+  migrate/run-schema.js        apply the schema
+  migrate/seed-admin.js        create / reset an admin login (bcrypt)
+  migrate/import-from-sheets.js  one-off Google Sheets CSV -> MySQL importer
+
+mock-server/                   Local-dev stand-in for the backend (zero-dependency Node, in-memory)
   server.js                    Mock admin API on :3001 — same envelope + in-memory seed data
   static-server.js             Static file server on :5500 (serves the repo root, incl. /admin/)
 
 images/                        Site imagery, incl. images/Travel_pngs/small/ (nav-bar monument train icons)
 pdf_files/                     Downloadable PDFs (e.g. "About" brochure)
-google-apps-script/Code.gs     Apps Script backend: Enquiries / Suppliers / Bookings / Payments / Admins sheets
+google-apps-script/Code.gs     LEGACY Apps Script backend (Google Sheets) — kept for reference only
 
 destinations/
   destinations-common.css      Shared stylesheet used by most package pages
@@ -97,14 +108,17 @@ sync when changing shared button/header/gallery styling.
   `sessionStorage` (cleared when the tab closes) and sent with every request. No password
   ever lives in the frontend after login.
 
-## Backend (Google Apps Script)
+## Backend (Node API + MySQL)
 
-`google-apps-script/Code.gs` is deployed as a Google Apps Script web app and backs both
-the public contact form (`index.html`) and the admin portal (`admin/`):
+[`backend/`](backend/) is a Node.js + Express + `mysql2` API — the system of record, replacing
+the old Google Apps Script + Google Sheet. Full setup, deploy and security notes are in
+[`backend/README.md`](backend/README.md). It backs both the public contact form (`index.html`)
+and the admin portal (`admin/`), and keeps the **same `/exec` request/response shape** as
+before so the frontend only needed its API URL changed:
 
 - `GET /exec?sheet=enquiries|suppliers|bookings|payments&token=…` → JSON rows (token required).
-- `POST /exec` with no `sheet`/`action` → legacy path, appends a new **Enquiries** row
-  (used by the homepage contact form; still unauthenticated).
+- `POST /exec` with no `sheet`/`action` → legacy path, inserts a new **enquiries** row
+  (used by the homepage contact form; still unauthenticated, rate-limited).
 - `POST /exec` `{action:'login', username, password}` → `{ token, expiresAt, user }`.
 - `POST /exec` `{action:'logout', token}` → invalidates the token.
 - `POST /exec` `{token, sheet, action:'create'|'update'|'delete', values, rowIndex}` → row CRUD.
@@ -119,44 +133,31 @@ the public contact form (`index.html`) and the admin portal (`admin/`):
 - `POST /exec` `{token, action:'reports', data:{filters}}` → one row per enquiry joined to its
   bookings + payments, with the filters applied.
 
-**Admins tab** — add one row per admin: `Username`, `Password`, `CanDelete` (TRUE/FALSE),
-`Mobile`, `Email`. Until at least one row exists, nobody can log in. Passwords are stored
-in plaintext in the sheet, so keep the sheet access-controlled.
+A RESTful surface (`GET/POST/PUT/PATCH/DELETE /api/<entity>`, `/api/dashboard`, `/api/reports`,
+`/api/profile`) sits over the same service layer for future clients; the portal does not use it.
 
-**Schema changes** — `getSheetInfo_` appends any newly-added column to an existing sheet's
-header row automatically, so new columns must be added at the *end* of the `SHEETS.<key>.headers`
-array to stay position-aligned. `resetData()` (run from the Apps Script editor — not web-exposed)
-clears all data rows from Enquiries/Suppliers/Bookings/Payments, leaves Admins alone,
-normalises each header row to the canonical order, and resets the Enquiry ID / Payment ID
-counters so they restart from 1.
+**MySQL schema** — 7 tables in [`backend/migrate/schema.sql`](backend/migrate/schema.sql):
+`enquiries`, `suppliers`, `bookings`, `payments` (one per old sheet tab), `admins`
+(passwords are **bcrypt** hashes now, not plaintext), `sessions` (replaces the Script
+Properties token store), `counters` (replaces `ENQ_COUNTER` / `PMT_COUNTER`).
+`bookings.enquiry_id` and `payments.enquiry_id` are nullable foreign keys to
+`enquiries.enquiry_id` (`ON DELETE SET NULL`).
 
-### Redeploying `Code.gs`
+**Admins** — create with `node backend/migrate/seed-admin.js <username> <password> --can-delete`.
+Until at least one exists, nobody can log in. Admins change their own password from the
+portal's Profile page.
 
-**Via the editor:** open the Sheet → Extensions → Apps Script → paste the file in →
-**Deploy → Manage deployments → edit the existing deployment → New version → Deploy**
-(keep the *same* deployment so the `/exec` URL used by `index.html` and `admin/` doesn't
-change).
+### Legacy Apps Script
 
-**Via `clasp`** (the Sheet-bound script — owner account `viharasetu@gmail.com`, needs the
-Apps Script API enabled at <https://script.google.com/home/usersettings>):
-
-```bash
-clasp login                                             # once, as viharasetu@gmail.com
-mkdir gas-deploy && cd gas-deploy
-clasp clone-script 1cHmRTT6ji_HMuc0QI2WUI7yOFV-NJq9WiOE8Pby002_rxBGaeACEYiXJ
-cp ../google-apps-script/Code.gs Code.js                # google-apps-script/Code.gs is the source of truth
-clasp push -f
-clasp create-version "what changed"
-clasp update-deployment AKfycby16uHDPLkWFMHOQtKH3ggej7MnRNW4Lfrn5RPrLkNpN-6Vj8aFitTBHjgvIqi1qaDQzA --versionNumber <n>
-```
-
-`gas-deploy/` is git-ignored — it's just a local clasp working copy. The project also has a
-separate `@HEAD` deployment used for testing; leave it alone.
+`google-apps-script/Code.gs` and the `gas-deploy/` clasp workflow are retained for
+reference only. After the MySQL cut-over is verified, the Apps Script web app deployment
+can be deleted (or left running, unused, as a cold backup — the Sheet is not modified by
+the migration).
 
 ## Deployment
 
-Pushing to `main` triggers GitHub Pages' `pages build and deployment` workflow
-automatically — no separate build step is needed since this is a plain static site.
+**Frontend (this repo).** Pushing to `main` triggers GitHub Pages' `pages build and
+deployment` workflow automatically — no build step, plain static site.
 
 ```bash
 git add -A
@@ -170,6 +171,17 @@ To check deployment status:
 gh run list --limit 5
 gh api repos/manirajdeva/viharasetu_website/pages/builds/latest
 ```
+
+**Backend (`backend/`).** Deployed separately to a managed Node platform + managed MySQL
+(Railway/Render/Fly). Steps in [`backend/README.md`](backend/README.md). After it is live,
+set the API host in **two** places and push to `main`:
+
+- `admin/js/api.js` → `PRODUCTION_SCRIPT_URL` = `https://<your-api-host>/exec`
+- `index.html` → `scriptUrl` (contact form) = `https://<your-api-host>/exec`
+
+Until those are set they hold a `REPLACE-WITH-YOUR-API-HOST` placeholder and log a console
+error, so do **not** merge the migration to `main` before the backend is deployed and the
+Google Sheets data is imported.
 
 Browser caching: `destinations-common.css` is referenced with a version query string
 (`destinations-common.css?v=N`) from every package page. Bump `N` on every edit to that
@@ -187,10 +199,11 @@ Then open `http://localhost:8000/index.html`.
 
 ### Admin portal with the mock backend
 
-Hitting the live Google Apps Script backend from localhost is slow (a few seconds per
-call). `mock-server/` is a zero-dependency Node stand-in with the **same request/response
-envelope**, the same sheet headers, the same payments math (Pending Amount + overpayment
-guard) and the same auto IDs — backed by an in-memory store seeded with sample data.
+`mock-server/` is a zero-dependency Node stand-in for the API with the **same
+request/response envelope**, the same headers, the same payments math (Pending Amount +
+overpayment guard) and the same auto IDs — backed by an in-memory store seeded with sample
+data, so the portal loads instantly with no database. (To develop against the real API
+locally instead, run `backend/` pointed at a local MySQL — see `backend/README.md`.)
 
 ```bash
 node mock-server/server.js          # mock admin API  → http://localhost:3001/exec
@@ -199,9 +212,9 @@ node mock-server/static-server.js   # site + /admin/   → http://localhost:5500
 
 Open **http://localhost:5500/admin/** and log in with **`admin` / `admin123`**.
 `admin/js/api.js` points at the mock automatically on `localhost` / `127.0.0.1`; a console
-line states which backend is active. To hit the real Google backend from localhost instead,
-load any admin page once with `?api=live` (remembered until `?api=mock`). Mock data lives
-only in the Node process — restart `server.js` to reset to the seed set.
+line states which backend is active. To hit the deployed API from localhost instead, load
+any admin page once with `?api=live` (remembered until `?api=mock`). Mock data lives only
+in the Node process — restart `server.js` to reset to the seed set.
 
 (Any static server works for the frontend — `python -m http.server 8000` is fine too; only
 the `?api` hostname check matters, not the port.)

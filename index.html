@@ -1984,14 +1984,16 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
     //         alert("❌ Failed to send enquiry. Please try again.");
     //     });
     
-    // Send to Google Sheets via Apps Script.
+    // Send to the Viharasetu backend API (backend/ — Node + MySQL). This is the
+    // legacy no-action path: it appends a new "New" enquiry and returns its
+    // auto-generated Enquiry ID.
     // Sent as text/plain on purpose: a JSON Content-Type header triggers a CORS
-    // preflight (OPTIONS) request that Apps Script web apps don't handle, which
-    // silently breaks the request. Apps Script reads the raw body regardless of
-    // the declared content type, so this still parses fine server-side. Using a
-    // real (non "no-cors") request means we can read the response — including
-    // the auto-generated Enquiry ID — and actually detect failures.
-    const scriptUrl = "https://script.google.com/macros/s/AKfycby16uHDPLkWFMHOQtKH3ggej7MnRNW4Lfrn5RPrLkNpN-6Vj8aFitTBHjgvIqi1qaDQzA/exec";
+    // preflight (OPTIONS) request. The API reads the raw body regardless of the
+    // declared content type, so text/plain keeps this a "simple request" that
+    // works from GitHub Pages while still letting us read the response.
+    // Set this to your deployed API host + "/exec", e.g.
+    //   https://viharasetu-api.up.railway.app/exec
+    const scriptUrl = "https://REPLACE-WITH-YOUR-API-HOST/exec";
 
     fetch(scriptUrl, {
         method: 'POST',
@@ -2006,7 +2008,7 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
         alert("✅ Thank you! Your enquiry has been sent successfully."
             + (data.enquiryId ? "\n\nYour enquiry ID: " + data.enquiryId + " — quote this if you follow up with us." : ""));
         document.getElementById("contactForm").reset();
-        console.log("✅ Data saved to Google Sheet", data.enquiryId ? "— Enquiry ID: " + data.enquiryId : "");
+        console.log("✅ Enquiry submitted", data.enquiryId ? "— Enquiry ID: " + data.enquiryId : "");
     })
     .catch(error => {
         console.error("❌ Error:", error);

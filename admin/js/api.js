@@ -1,24 +1,32 @@
 /**
  * api.js
- * Single point of contact with the Viharasetu Google Apps Script web app
- * (google-apps-script/Code.gs), which also backs the public contact form.
+ * Single point of contact with the Viharasetu backend API (backend/ —
+ * Node/Express + MySQL), which also backs the public contact form. This
+ * replaced the old Google Apps Script + Google Sheets backend; the request
+ * and response shapes are unchanged, so only the URL below moved.
  *
- * Reads are GET /exec?sheet=<key>&token=<token>. Writes are POST /exec with
- * a text/plain body containing JSON — text/plain keeps the request a CORS
- * "simple request" so the browser never fires an OPTIONS preflight, which
- * Apps Script web apps cannot answer. The auth token is attached to every
- * call; Code.gs rejects an expired or unknown token with SESSION_EXPIRED,
- * which bounces the user back to the login page.
+ * Reads are GET  <API>/exec?sheet=<key>&token=<token>.
+ * Writes are POST <API>/exec with a text/plain body containing JSON —
+ * text/plain keeps the request a CORS "simple request" so the browser never
+ * fires an OPTIONS preflight, which keeps this working from any static host.
+ * The auth token is attached to every call; the API rejects an expired or
+ * unknown token with SESSION_EXPIRED, which bounces the user back to login.
  *
  * On localhost / 127.0.0.1 this points at the zero-dependency mock backend in
  * mock-server/server.js instead (same envelope, in-memory data) so the portal
- * loads instantly without a round trip to Google. Visit any admin page once
- * with ?api=live to force the real backend from localhost (remembered on this
- * device until ?api=mock); a console line states which backend is active.
+ * loads instantly. Visit any admin page once with ?api=live to force the real
+ * backend from localhost (remembered on this device until ?api=mock); a
+ * console line states which backend is active.
  */
 
-const PRODUCTION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby16uHDPLkWFMHOQtKH3ggej7MnRNW4Lfrn5RPrLkNpN-6Vj8aFitTBHjgvIqi1qaDQzA/exec";
+// The deployed backend's base URL + "/exec". Set this once the API is live,
+// e.g. "https://viharasetu-api.up.railway.app/exec".
+const PRODUCTION_SCRIPT_URL = "https://REPLACE-WITH-YOUR-API-HOST/exec";
 const LOCAL_MOCK_URL = "http://localhost:3001/exec";
+
+if (PRODUCTION_SCRIPT_URL.includes('REPLACE-WITH-YOUR-API-HOST')) {
+  console.error('[Viharasetu admin] PRODUCTION_SCRIPT_URL in admin/js/api.js is still the placeholder — set it to your deployed API host before going live.');
+}
 
 const _forceApiKey = 'vih_force_api';
 const _requestedApi = new URLSearchParams(location.search).get('api');

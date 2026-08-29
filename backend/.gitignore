@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Local copy of the Google Sheets CSV export, used once during migration.
+sheets-export/
