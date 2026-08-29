@@ -222,8 +222,9 @@ const Form = (() => {
 
 /* ============================ Config-driven sheet module ============================ */
 function makeSheetModule(cfg) {
-  const state = { page: 1, pageSize: 10, search: '', sortBy: cfg.defaultSort || 'Timestamp', sortDir: 'desc', badge: '' };
+  const state = { page: 1, pageSize: 10, search: '', sortBy: cfg.defaultSort || 'Timestamp', sortDir: 'desc', badge: '', extra: {}, latestOnly: false };
   const root = () => document.getElementById('view-' + cfg.key);
+  const xfId = (key) => cfg.key + '-xf-' + String(key).replace(/\W+/g, '');
 
   const exportColumns = cfg.columns.map(c => ({ key: c.key, label: c.label }));
 
@@ -234,6 +235,8 @@ function makeSheetModule(cfg) {
           <div class="grp">
             <input type="search" id="${cfg.key}-search" placeholder="Search ${cfg.searchCols.join(', ').toLowerCase()}…" />
             ${cfg.badgeCol ? `<select id="${cfg.key}-badge"><option value="">All ${cfg.badgeCol.toLowerCase()}</option>${cfg.badgeOptions.map(o => `<option>${o}</option>`).join('')}</select>` : ''}
+            ${(cfg.extraFilters || []).map(f => `<input type="text" id="${xfId(f.key)}" placeholder="${Utils.escapeAttr(f.placeholder || f.label)}" style="min-width:170px;" />`).join('')}
+            ${cfg.latestPerGroup ? `<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap;color:var(--ink-soft);cursor:pointer;"><input type="checkbox" id="${cfg.key}-latest" style="width:auto;min-width:0;margin:0;" /> ${Utils.escapeHtml(cfg.latestPerGroup.label)}</label>` : ''}
           </div>
           <div class="grp">
             <button class="btn sm" data-x="csv">CSV</button>
@@ -256,6 +259,15 @@ function makeSheetModule(cfg) {
     }));
     const badge = root().querySelector('#' + cfg.key + '-badge');
     if (badge) badge.addEventListener('change', (e) => { state.badge = e.target.value; state.page = 1; render(); });
+
+    (cfg.extraFilters || []).forEach(f => {
+      const el = root().querySelector('#' + xfId(f.key));
+      if (el) el.addEventListener('input', Utils.debounce((e) => {
+        state.extra[f.key] = e.target.value; state.page = 1; render();
+      }));
+    });
+    const latest = root().querySelector('#' + cfg.key + '-latest');
+    if (latest) latest.addEventListener('change', (e) => { state.latestOnly = e.target.checked; state.page = 1; render(); });
   }
 
   let rows = [];
@@ -276,13 +288,40 @@ function makeSheetModule(cfg) {
   function filtered() {
     let out = rows.slice();
     if (cfg.badgeCol && state.badge) out = out.filter(r => r[cfg.badgeCol] === state.badge);
+    (cfg.extraFilters || []).forEach(f => {
+      const v = String(state.extra[f.key] || '').trim().toLowerCase();
+      if (v) out = out.filter(r => String(r[f.key] || '').toLowerCase().includes(v));
+    });
     const q = state.search.trim().toLowerCase();
     if (q) out = out.filter(r => cfg.searchCols.map(c => String(r[c] || '')).join(' ').toLowerCase().includes(q));
+    if (state.latestOnly && cfg.latestPerGroup) out = keepLatestPerGroup(out, cfg.latestPerGroup);
     out.sort((a, b) => {
       const cmp = Utils.compareValues(a[state.sortBy], b[state.sortBy]);
       return state.sortDir === 'asc' ? cmp : -cmp;
     });
     return out;
+  }
+
+  /* Collapse to one row per group (e.g. per Enquiry ID) — the one with the
+     newest dateKey. groupKeys is tried in order; the first non-empty wins,
+     so a blank Enquiry ID falls back to Customer, matching the payments model. */
+  function keepLatestPerGroup(list, opt) {
+    const groupKeys = opt.groupKeys || ['Enquiry ID'];
+    const dateKey = opt.dateKey || 'Timestamp';
+    const groupId = (r) => {
+      for (const k of groupKeys) {
+        const v = String(r[k] || '').trim();
+        if (v) return k + '::' + v.toLowerCase();
+      }
+      return 'row::' + r.rowIndex;
+    };
+    const best = new Map();
+    list.forEach(r => {
+      const g = groupId(r);
+      const cur = best.get(g);
+      if (!cur || String(r[dateKey] || '').localeCompare(String(cur[dateKey] || '')) > 0) best.set(g, r);
+    });
+    return [...best.values()];
   }
 
   function render() {

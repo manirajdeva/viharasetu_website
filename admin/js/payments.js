@@ -26,6 +26,10 @@ const Payments = makeSheetModule({
   enquiryPicker: true,
   badgeCol: 'Payment Mode',
   badgeOptions: PAY_MODES,
+  // A dedicated Enquiry ID filter (all payments for one enquiry) + a toggle to
+  // collapse the list to the most recent payment per enquiry.
+  extraFilters: [{ key: 'Enquiry ID', label: 'Enquiry ID', placeholder: 'Filter by Enquiry ID…' }],
+  latestPerGroup: { label: 'Latest per enquiry', groupKeys: ['Enquiry ID', 'Customer'], dateKey: 'Timestamp' },
   searchCols: ['Payment ID', 'Enquiry ID', 'Customer', 'Transaction Ref'],
   columns: [
     { key: 'Payment ID', label: 'Payment ID', cls: 'mono' },
