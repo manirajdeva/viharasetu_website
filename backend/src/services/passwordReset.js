@@ -18,7 +18,6 @@ const log = require('../logger');
 const { sendMail } = require('../mailer');
 
 const MAX_ATTEMPTS = 5;
-const OTP_TTL_MIN = Math.max(1, Math.round(config.otpTtlMs / 60000));
 const GENERIC = 'If that email is on an account, a reset code has been sent. It expires shortly.';
 
 const invalid = () => Object.assign(new Error('That code is invalid or has expired. Request a new one.'), { code: 'OTP_INVALID' });
@@ -41,16 +40,15 @@ async function forgotPassword(email) {
   if (user) {
     const otp = String(crypto.randomInt(0, 1_000_000)).padStart(6, '0');
     const otpHash = await bcrypt.hash(otp, 8);
+    const expiresAt = new Date(Date.now() + config.otpTtlMs);
 
     await pool.query('DELETE FROM password_resets WHERE username = ?', [user.username]);
-    // expires_at is set relative to the DB clock, and checked the same way, so a
-    // Node/DB clock skew can't make codes look expired.
     await pool.query(
-      'INSERT INTO password_resets (username, otp_hash, expires_at) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL ? MINUTE))',
-      [user.username, otpHash, OTP_TTL_MIN],
+      'INSERT INTO password_resets (username, otp_hash, expires_at) VALUES (?, ?, ?)',
+      [user.username, otpHash, expiresAt],
     );
 
-    const mins = OTP_TTL_MIN;
+    const mins = Math.max(1, Math.round(config.otpTtlMs / 60000));
     try {
       await sendMail({
         to: user.email,
@@ -81,11 +79,11 @@ async function resetPassword(email, otp, newPassword) {
   if (!user) throw invalid();
 
   const [rows] = await pool.query(
-    'SELECT id, otp_hash, attempts, (expires_at < NOW()) AS expired FROM password_resets WHERE username = ? ORDER BY id DESC LIMIT 1',
+    'SELECT * FROM password_resets WHERE username = ? ORDER BY id DESC LIMIT 1',
     [user.username],
   );
   const row = rows[0];
-  if (!row || row.expired) {
+  if (!row || new Date(row.expires_at).getTime() < Date.now()) {
     if (row) await pool.query('DELETE FROM password_resets WHERE id = ?', [row.id]);
     throw invalid();
   }
