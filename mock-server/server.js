@@ -161,6 +161,44 @@ function deleteUser(p, actor) {
   return { ok: true };
 }
 
+/* ---------------- password reset (email OTP) ---------------- */
+
+const passwordResets = []; // { username, otp, expiresAt, attempts }
+const userByEmail = (email) => {
+  const e = String(email || '').trim().toLowerCase();
+  const m = e ? users.filter((u) => (u.email || '').toLowerCase() === e) : [];
+  return m.length === 1 ? m[0] : null;
+};
+const otpInvalid = { ok: false, error: { code: 'OTP_INVALID', message: 'That code is invalid or has expired. Request a new one.' } };
+
+function forgotPassword(p) {
+  const u = userByEmail(p.email);
+  const out = { ok: true, message: 'If that email is on an account, a reset code has been sent. It expires shortly.' };
+  if (u) {
+    const otp = String(Math.floor(Math.random() * 1e6)).padStart(6, '0');
+    const i = passwordResets.findIndex((r) => r.username === u.username);
+    if (i !== -1) passwordResets.splice(i, 1);
+    passwordResets.push({ username: u.username, otp, expiresAt: Date.now() + 10 * 60 * 1000, attempts: 0 });
+    console.log(`[mock mailer] password reset code for ${u.username} <${u.email}>: ${otp}`);
+    out.devOtp = otp;
+  }
+  return out;
+}
+
+function resetPassword(p) {
+  if (String(p.newPassword || '').length < 6) return { ok: false, error: { code: 'VALIDATION', message: 'New password must be at least 6 characters.' } };
+  const u = userByEmail(p.email);
+  if (!u) return otpInvalid;
+  const r = passwordResets.find((x) => x.username === u.username);
+  if (!r || r.expiresAt < Date.now()) { if (r) passwordResets.splice(passwordResets.indexOf(r), 1); return otpInvalid; }
+  if (r.attempts >= 5) { passwordResets.splice(passwordResets.indexOf(r), 1); return { ok: false, error: { code: 'OTP_LOCKED', message: 'Too many incorrect attempts. Request a new code.' } }; }
+  if (String(p.otp || '') !== r.otp) { r.attempts++; return otpInvalid; }
+  u.password = String(p.newPassword);
+  passwordResets.splice(passwordResets.indexOf(r), 1);
+  for (const [tok, s] of sessions) if (s.username === u.username) sessions.delete(tok);
+  return { ok: true, message: 'Password updated. Please log in with your new password.' };
+}
+
 /* ---------------- CRUD ---------------- */
 
 // Computed "Instalment" number per payment group (mirrors backend sheets.js).
@@ -426,6 +464,8 @@ function handlePost(body, res) {
     }
     if (p.action === 'login') return send(res, login(p));
     if (p.action === 'logout') { sessions.delete(p.token); return send(res, { ok: true }); }
+    if (p.action === 'forgotPassword') return send(res, forgotPassword(p));
+    if (p.action === 'resetPassword') return send(res, resetPassword(p));
 
     const actor = requireSession(p.token);
     const adminsOnly = () => ({ ok: false, error: { code: 'FORBIDDEN', message: 'Only admins can manage users.' } });
