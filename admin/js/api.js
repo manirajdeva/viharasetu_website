@@ -21,7 +21,7 @@
 
 // The deployed backend's base URL + "/exec". Set this once the API is live,
 // e.g. "https://viharasetu-api.up.railway.app/exec".
-const PRODUCTION_SCRIPT_URL = "https://REPLACE-WITH-YOUR-API-HOST/exec";
+const PRODUCTION_SCRIPT_URL = "https://viharasetu-api.onrender.com/exec";
 const LOCAL_MOCK_URL = "http://localhost:3001/exec";
 
 if (PRODUCTION_SCRIPT_URL.includes('REPLACE-WITH-YOUR-API-HOST')) {
