@@ -21,7 +21,6 @@ const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
 const bootstrap = require('../services/bootstrap');
 const users = require('../services/users');
-const passwordReset = require('../services/passwordReset');
 const { updateProfile } = require('../services/profile');
 const { validate } = require('../validation');
 const { ENTITY_KEYS } = require('../mappers');
@@ -39,14 +38,6 @@ const loginLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many login attempts. Try again later.' } },
-});
-
-const resetLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 8,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many reset attempts. Try again later.' } },
 });
 
 function sheetKey(body) {
@@ -76,12 +67,7 @@ router.get('/', async (req, res, next) => {
 
 router.post(
   '/',
-  (req, res, next) => {
-    const a = req.body && req.body.action;
-    if (a === 'login') return loginLimiter(req, res, next);
-    if (a === 'forgotPassword' || a === 'resetPassword') return resetLimiter(req, res, next);
-    return next();
-  },
+  (req, res, next) => (req.body && req.body.action === 'login' ? loginLimiter(req, res, next) : next()),
   async (req, res, next) => {
     const body = req.body && typeof req.body === 'object' ? req.body : {};
 
@@ -113,18 +99,6 @@ router.post(
       if (body.action === 'logout') {
         await auth.deleteSession(body.token);
         return res.json({ ok: true });
-      }
-
-      // Self-service password reset by email OTP (no session).
-      if (body.action === 'forgotPassword') {
-        return res.json(await passwordReset.forgotPassword(body.email));
-      }
-      if (body.action === 'resetPassword') {
-        try {
-          return res.json(await passwordReset.resetPassword(body.email, body.otp, body.newPassword));
-        } catch (err) {
-          return fail(res, err.code || 'ERROR', err.message || 'Could not reset the password.');
-        }
       }
 
       // Everything below needs a valid session.

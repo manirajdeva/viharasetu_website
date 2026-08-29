@@ -104,10 +104,6 @@ const Api = (() => {
       : j),
     logout: () => post({ action: 'logout' }),
 
-    // Self-service password reset by email OTP (no session needed).
-    forgotPassword: (email) => post({ action: 'forgotPassword', email }),
-    resetPassword: (email, otp, newPassword) => post({ action: 'resetPassword', email, otp, newPassword }),
-
     getSheet,
 
     create: (sheet, values) => post({ action: 'create', sheet, values }),

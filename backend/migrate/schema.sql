@@ -154,24 +154,6 @@ CREATE TABLE IF NOT EXISTS sessions (
  *  (running payment number). Bumped with INSERT ... ON DUPLICATE KEY
  *  UPDATE value = value + 1 inside the same transaction as the insert.
  * ------------------------------------------------------------------ */
-/* ------------------------------------------------------------------ *
- *  password_resets — one row per outstanding email-OTP reset request.
- *  Single-use, expires after OTP_TTL_MINUTES, locked after 5 wrong tries.
- * ------------------------------------------------------------------ */
-CREATE TABLE IF NOT EXISTS password_resets (
-  id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  username   VARCHAR(80)  NOT NULL,
-  otp_hash   VARCHAR(255) NOT NULL,                                     -- bcrypt hash of the 6-digit code
-  expires_at DATETIME     NOT NULL,
-  attempts   TINYINT      NOT NULL DEFAULT 0,
-  created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  KEY idx_password_resets_username (username),
-  KEY idx_password_resets_expires (expires_at),
-  CONSTRAINT fk_password_resets_admin FOREIGN KEY (username)
-    REFERENCES admins (username) ON UPDATE CASCADE ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS counters (
   name       VARCHAR(40)     NOT NULL,
   value      BIGINT UNSIGNED NOT NULL DEFAULT 0,

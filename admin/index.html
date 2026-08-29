@@ -8,11 +8,6 @@
 <link rel="icon" type="image/png" href="../images/fevicon.png" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link href="css/admin.css" rel="stylesheet" />
-<style>
-  .link-btn { display:block; margin:12px auto 0; background:none; border:0; padding:6px;
-              color:var(--accent, #BB5A34); font:inherit; font-size:13px; cursor:pointer; text-decoration:underline; }
-  #resetPanel input { margin-bottom:10px; }
-</style>
 </head>
 <body>
 
@@ -41,26 +36,6 @@
       <button type="submit" class="btn-block" id="loginBtn">Log in</button>
       <div class="auth-error" id="loginError"></div>
     </form>
-
-    <button type="button" class="link-btn" id="forgotLink">Forgot password?</button>
-
-    <div id="resetPanel" style="display:none;">
-      <div id="resetStep1">
-        <p class="subtitle" style="margin:4px 0 10px;">Enter your account email — we'll send a 6-digit code.</p>
-        <input type="email" id="resetEmail" placeholder="Email" autocomplete="email" />
-        <button type="button" class="btn-block" id="resetSendBtn">Send code</button>
-      </div>
-      <div id="resetStep2" style="display:none;">
-        <p class="subtitle" style="margin:4px 0 10px;">Enter the code from your email and choose a new password.</p>
-        <input type="text" id="resetOtp" inputmode="numeric" maxlength="6" placeholder="6-digit code" autocomplete="one-time-code" />
-        <input type="password" id="resetPw1" placeholder="New password" autocomplete="new-password" />
-        <input type="password" id="resetPw2" placeholder="Confirm new password" autocomplete="new-password" />
-        <button type="button" class="btn-block" id="resetConfirmBtn">Reset password</button>
-      </div>
-      <div class="auth-error" id="resetError"></div>
-      <div id="resetOk" style="display:none;color:#2A5C45;font-size:13px;margin-top:8px;"></div>
-      <button type="button" class="link-btn" id="backToLogin">Back to login</button>
-    </div>
 
     <p class="auth-foot">&copy; <span id="year"></span> Viharasetu. All rights reserved.</p>
   </div>
@@ -113,60 +88,6 @@
       errorBox.textContent = err.message || 'Login failed. Please try again.';
       loginBtn.disabled = false;
       loginBtn.textContent = 'Log in';
-    }
-  });
-
-  /* ---- Forgot password (email OTP) ---- */
-  const $ = (id) => document.getElementById(id);
-  const resetErr = $('resetError');
-  const setBusy = (btn, busy, label) => { btn.disabled = busy; btn.textContent = busy ? '…' : label; };
-
-  $('forgotLink').addEventListener('click', () => {
-    form.style.display = 'none';
-    $('forgotLink').style.display = 'none';
-    $('resetPanel').style.display = 'block';
-    $('resetEmail').focus();
-  });
-  $('backToLogin').addEventListener('click', () => location.reload());
-
-  $('resetSendBtn').addEventListener('click', async () => {
-    resetErr.textContent = '';
-    const email = $('resetEmail').value.trim();
-    if (!email) { resetErr.textContent = 'Enter your email.'; return; }
-    setBusy($('resetSendBtn'), true, 'Send code');
-    try {
-      await Api.forgotPassword(email);
-      $('resetStep1').style.display = 'none';
-      $('resetStep2').style.display = 'block';
-      $('resetOk').style.display = 'block';
-      $('resetOk').textContent = 'If that email is on an account, a code is on its way. Check your inbox.';
-      $('resetOtp').focus();
-    } catch (err) {
-      resetErr.textContent = err.message || 'Could not send the code.';
-    } finally {
-      setBusy($('resetSendBtn'), false, 'Send code');
-    }
-  });
-
-  $('resetConfirmBtn').addEventListener('click', async () => {
-    resetErr.textContent = '';
-    const email = $('resetEmail').value.trim();
-    const otp = $('resetOtp').value.trim();
-    const p1 = $('resetPw1').value, p2 = $('resetPw2').value;
-    if (!otp) { resetErr.textContent = 'Enter the 6-digit code.'; return; }
-    if (p1.length < 6) { resetErr.textContent = 'New password must be at least 6 characters.'; return; }
-    if (p1 !== p2) { resetErr.textContent = 'Passwords do not match.'; return; }
-    setBusy($('resetConfirmBtn'), true, 'Reset password');
-    try {
-      const res = await Api.resetPassword(email, otp, p1);
-      $('resetPanel').innerHTML =
-        `<div style="color:#2A5C45;font-size:14px;margin:12px 0;">${(res && res.message) || 'Password updated. Please log in.'}</div>` +
-        `<button type="button" class="btn-block" id="resetDone">Go to login</button>`;
-      $('resetDone').addEventListener('click', () => location.reload());
-    } catch (err) {
-      resetErr.textContent = err.message || 'Could not reset the password.';
-    } finally {
-      setBusy($('resetConfirmBtn'), false, 'Reset password');
     }
   });
 </script>

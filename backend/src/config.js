@@ -47,18 +47,4 @@ module.exports = {
   bcryptRounds: int('BCRYPT_ROUNDS', 12),
   corsOrigins: (process.env.CORS_ORIGINS || 'https://viharasetu.co.in,https://www.viharasetu.co.in')
     .split(',').map((s) => s.trim()).filter(Boolean),
-
-  otpTtlMs: int('OTP_TTL_MINUTES', 10) * 60 * 1000,
-  mail: {
-    transport: (process.env.MAIL_TRANSPORT || 'console').toLowerCase(),
-    from: process.env.MAIL_FROM || 'Viharasetu Admin <noreply@viharasetu.co.in>',
-    appName: process.env.APP_NAME || 'Viharasetu Admin',
-    smtp: {
-      host: process.env.SMTP_HOST || '',
-      port: int('SMTP_PORT', 587),
-      user: process.env.SMTP_USER || '',
-      pass: process.env.SMTP_PASS || '',
-    },
-    resendApiKey: process.env.RESEND_API_KEY || '',
-  },
 };
