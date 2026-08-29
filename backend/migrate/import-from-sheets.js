@@ -192,18 +192,20 @@ function ymdKolkata(date) {
   const bookRows = readCsv('bookings.csv');
   let bIns = 0;
   for (const r of bookRows) {
+    // The old Bookings sheet called this column "Package"; it's now "Destination".
+    const destination = strOrNull(r['Destination'] ?? r['Package']);
     let eid = strOrNull(r['Enquiry ID']);
     if (eid && !knownEnquiryIds.has(eid)) {
-      warnings.push(`booking "${r['Customer'] || '?'}" (${r['Package'] || ''}): enquiry ${eid} not found → link cleared`);
+      warnings.push(`booking "${r['Customer'] || '?'}" (${destination || ''}): enquiry ${eid} not found → link cleared`);
       eid = null;
     }
     if (!DRY) {
       await conn.query(
-        `INSERT INTO bookings (enquiry_id, booked_at, customer, package, travel_dates, pax, amount, payment_status, notes)
+        `INSERT INTO bookings (enquiry_id, booked_at, customer, destination, travel_dates, pax, amount, payment_status, notes)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           eid, toDateTime(r['Timestamp']) || new Date(), String(r['Customer'] ?? ''),
-          strOrNull(r['Package']), strOrNull(r['Travel Dates']), intOrNull(r['Pax']), num(r['Amount']),
+          destination, strOrNull(r['Travel Dates']), intOrNull(r['Pax']), num(r['Amount']),
           enumOr(r['Payment Status'], ['Pending', 'Partial', 'Paid'], 'Pending'), strOrNull(r['Notes']),
         ],
       );

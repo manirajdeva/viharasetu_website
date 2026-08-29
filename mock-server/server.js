@@ -27,7 +27,7 @@ const ADMIN = { username: 'admin', password: 'admin123', canDelete: true, mobile
 const HEADERS = {
   enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'Status', 'Notes'],
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
-  bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Package', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
+  bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
   payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID']
 };
 
@@ -199,7 +199,7 @@ function dashboardStats() {
 
   const recent = [];
   enq.forEach((r) => recent.push({ icon: '✉', text: `Enquiry — ${r['Name'] || '—'} (${r['Enquiry ID'] || ''})`, at: r['Timestamp'] }));
-  book.forEach((r) => recent.push({ icon: '🧳', text: `Booking — ${r['Customer'] || '—'} · ${r['Package'] || ''}`, at: r['Timestamp'] }));
+  book.forEach((r) => recent.push({ icon: '🧳', text: `Booking — ${r['Customer'] || '—'} · ${r['Destination'] || ''}`, at: r['Timestamp'] }));
   pay.forEach((r) => recent.push({ icon: '💳', text: `Payment — ₹${r['Amount Paid'] || 0} from ${r['Customer'] || '—'}`, at: r['Timestamp'] }));
   recent.sort((a, b) => String(b.at).localeCompare(String(a.at)));
 
@@ -300,7 +300,7 @@ function seed() {
     const enq = db.enquiries[b.eIdx];
     push('bookings', {
       'Enquiry ID': enq['Enquiry ID'], 'Timestamp': daysAgoIso(40 - i * 6), 'Customer': enq['Name'],
-      'Package': b.pkg, 'Travel Dates': enq['Travel'], 'Pax': b.pax, 'Amount': b.amt,
+      'Destination': b.pkg, 'Travel Dates': enq['Travel'], 'Pax': b.pax, 'Amount': b.amt,
       'Payment Status': b.ps, 'Notes': ''
     });
   });

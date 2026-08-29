@@ -50,7 +50,7 @@ function computeStats({ enquiries: enq, suppliers: sup, bookings: book, payments
 
   const recent = [];
   enq.forEach((r) => recent.push({ icon: '✉', text: `Enquiry — ${r['Name'] || '—'} (${r['Enquiry ID'] || ''})`, at: r['Timestamp'] }));
-  book.forEach((r) => recent.push({ icon: '🧳', text: `Booking — ${r['Customer'] || '—'} · ${r['Package'] || ''}`, at: r['Timestamp'] }));
+  book.forEach((r) => recent.push({ icon: '🧳', text: `Booking — ${r['Customer'] || '—'} · ${r['Destination'] || ''}`, at: r['Timestamp'] }));
   pay.forEach((r) => recent.push({ icon: '💳', text: `Payment — ₹${r['Amount Paid'] || 0} from ${r['Customer'] || '—'}`, at: r['Timestamp'] }));
   recent.sort((a, b) => String(b.at).localeCompare(String(a.at)));
 

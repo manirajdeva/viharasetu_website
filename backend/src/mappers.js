@@ -53,7 +53,7 @@ const ENTITIES = {
       ['Enquiry ID', 'enquiry_id', 'string'],
       ['Timestamp', 'booked_at', 'datetime'],
       ['Customer', 'customer', 'string'],
-      ['Package', 'package', 'string'],
+      ['Destination', 'destination', 'string'],
       ['Travel Dates', 'travel_dates', 'string'],
       ['Pax', 'pax', 'int'],
       ['Amount', 'amount', 'decimal'],

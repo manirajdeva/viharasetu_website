@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   enquiry_id     VARCHAR(20)      NULL,                                 -- "Enquiry ID" (link, may be blank)
   booked_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,       -- "Timestamp"
   customer       VARCHAR(160) NOT NULL,                                 -- "Customer"
-  package        VARCHAR(200)     NULL,                                 -- "Package"
+  destination    VARCHAR(200)     NULL,                                 -- "Destination" (same field name as enquiries)
   travel_dates   VARCHAR(120)     NULL,                                 -- "Travel Dates" (free-text range)
   pax            INT              NULL,                                 -- "Pax"
   amount         DECIMAL(12,2) NOT NULL DEFAULT 0,                      -- "Amount"

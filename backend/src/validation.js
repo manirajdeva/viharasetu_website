@@ -18,7 +18,7 @@ const ENUMS = {
 const MAX_LEN = {
   enquiries: { 'Name': 160, 'Email': 190, 'Phone': 20, 'Destination': 160, 'Travel': 120 },
   suppliers: { 'Supplier Company Name': 200, 'States': 255, 'Supplier Name': 160, 'Supplier ID': 40, 'Contact No': 20 },
-  bookings: { 'Customer': 160, 'Package': 200, 'Travel Dates': 120 },
+  bookings: { 'Customer': 160, 'Destination': 200, 'Travel Dates': 120 },
   payments: { 'Customer': 160, 'Transaction Ref': 120 },
 };
 
@@ -36,7 +36,7 @@ function validate(entity, values) {
     if (has('Contact No') && !MOBILE.test(s('Contact No').replace(/\s+/g, ''))) return 'Enter a valid 10-digit phone number.';
   } else if (entity === 'bookings') {
     if (!s('Customer')) return 'Customer is required.';
-    if (!s('Package')) return 'Package is required.';
+    if (!s('Destination')) return 'Destination is required.';
     if (has('Amount') && Number(v['Amount']) < 0) return 'Amount cannot be negative.';
     if (has('Pax') && Number(v['Pax']) < 0) return 'Pax cannot be negative.';
   } else if (entity === 'payments') {
