@@ -111,6 +111,12 @@ const Api = (() => {
     remove: (sheet, rowIndex) => post({ action: 'delete', sheet, rowIndex }),
 
     updateProfile: (values) => post({ action: 'updateProfile', values }),
+
+    // User management (admin only).
+    listUsers: () => post({ action: 'listUsers' }).then(j => j.users || j.data || []),
+    createUser: (values) => post({ action: 'createUser', values }),
+    updateUser: (username, values) => post({ action: 'updateUser', username, values }),
+    deleteUser: (username) => post({ action: 'deleteUser', username }),
     // One call → every sheet's rows + dashboard stats. Used on portal load so
     // navigating between views costs nothing after the first fetch.
     bootstrap: () => post({ action: 'bootstrap' }).then(j => j.data || j),

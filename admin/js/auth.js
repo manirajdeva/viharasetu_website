@@ -13,10 +13,14 @@ const Auth = (() => {
   const KEY = 'vih_admin_session';
 
   function saveSession(data) {
+    const role = data.role || (data.canDelete ? 'admin' : 'employee');
     sessionStorage.setItem(KEY, JSON.stringify({
       token: data.token,
       username: data.username,
-      canDelete: !!data.canDelete,
+      role,
+      canManageUsers: data.canManageUsers !== undefined ? !!data.canManageUsers : role === 'admin',
+      canEdit: data.canEdit !== undefined ? !!data.canEdit : role === 'admin',
+      canDelete: data.canDelete !== undefined ? !!data.canDelete : role === 'admin',
       mobile: data.mobile || '',
       email: data.email || '',
       expiresAt: data.expiresAt
@@ -29,6 +33,11 @@ const Auth = (() => {
       if (!raw) return null;
       const s = JSON.parse(raw);
       if (!s.expiresAt || s.expiresAt < Date.now()) { clearSession(); return null; }
+      // Backfill fields for sessions saved before roles existed, so nobody is
+      // locked out of Edit until their token expires.
+      if (!s.role) s.role = s.canDelete ? 'admin' : 'employee';
+      if (s.canEdit === undefined) s.canEdit = s.role === 'admin' || !!s.canDelete;
+      if (s.canManageUsers === undefined) s.canManageUsers = s.role === 'admin' || !!s.canDelete;
       return s;
     } catch { return null; }
   }

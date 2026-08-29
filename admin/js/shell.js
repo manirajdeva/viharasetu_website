@@ -19,6 +19,7 @@ const App = (() => {
     bookings: ['Bookings', 'Confirmed trips and their payment status'],
     payments: ['Payments', 'Money received against each booking'],
     reports: ['Reports', 'Filter and export across enquiries, bookings & payments'],
+    users: ['Users', 'Portal accounts and their access level'],
     profile: ['Profile', 'Your contact details and password']
   };
   const hooks = {};
@@ -45,6 +46,11 @@ const App = (() => {
   function closeSidebar() { sidebar().classList.remove('open'); scrim().classList.remove('open'); }
 
   function wireShell() {
+    // Users management is admin-only — drop the nav item for everyone else.
+    if (!Auth.getUser()?.canManageUsers) {
+      document.querySelector('.nav-item[data-view="users"]')?.remove();
+    }
+
     document.querySelectorAll('.nav-item[data-view]').forEach(el =>
       el.addEventListener('click', () => show(el.dataset.view)));
 
@@ -347,7 +353,9 @@ function makeSheetModule(cfg) {
     const { pageRows, meta } = Utils.paginate(all, state.page, state.pageSize);
     state.page = meta.page;
 
-    const thead = cfg.columns.map(c => `<th data-sort="${Utils.escapeAttr(c.key)}">${Utils.escapeHtml(c.label)}</th>`).join('') + '<th>Actions</th>';
+    const me = Auth.getUser() || {};
+    const showActions = !!me.canEdit || !!me.canDelete;
+    const thead = cfg.columns.map(c => `<th data-sort="${Utils.escapeAttr(c.key)}">${Utils.escapeHtml(c.label)}</th>`).join('') + (showActions ? '<th>Actions</th>' : '');
     const body = pageRows.map(r => {
       const tds = cfg.columns.map(c => {
         let v = r[c.key];
@@ -366,10 +374,10 @@ function makeSheetModule(cfg) {
       }).join('');
       return `<tr>
         ${tds}
-        <td class="actions">
-          <button class="btn sm" data-edit="${r.rowIndex}">Edit</button>
-          ${Auth.getUser()?.canDelete ? `<button class="btn sm danger" data-del="${r.rowIndex}">Delete</button>` : ''}
-        </td>
+        ${showActions ? `<td class="actions">
+          ${me.canEdit ? `<button class="btn sm" data-edit="${r.rowIndex}">Edit</button>` : ''}
+          ${me.canDelete ? `<button class="btn sm danger" data-del="${r.rowIndex}">Delete</button>` : ''}
+        </td>` : ''}
       </tr>`;
     }).join('');
 

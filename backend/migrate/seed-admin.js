@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 /**
  * migrate/seed-admin.js
- * Create (or reset) an admin login. Passwords are bcrypt-hashed here; the
+ * Create (or reset) a portal login. Passwords are bcrypt-hashed here; the
  * plaintext is only ever passed on the command line for this one-off.
  *
- *   node migrate/seed-admin.js <username> <password> [--can-delete] \
+ *   node migrate/seed-admin.js <username> <password> [--role admin|employee] \
  *        [--mobile 98XXXXXXXX] [--email name@viharasetu.co.in]
  *
- * Re-running with an existing username RESETS that account's password / flags.
- * After seeding, the admin should log in and change the password via the
- * portal's Profile page.
+ * Defaults to --role admin (this is the bootstrap-admin tool). --can-delete is
+ * accepted as a legacy alias for --role admin. Re-running with an existing
+ * username RESETS that account's password / role. After seeding, log in and
+ * change the password via the portal's Profile page.
  */
 
 require('dotenv').config();
@@ -28,7 +29,7 @@ function flagValue(args, name) {
   const password = args[1];
 
   if (!username || !password || username.startsWith('--')) {
-    console.error('Usage: node migrate/seed-admin.js <username> <password> [--can-delete] [--mobile 98XXXXXXXX] [--email a@b.c]');
+    console.error('Usage: node migrate/seed-admin.js <username> <password> [--role admin|employee] [--mobile 98XXXXXXXX] [--email a@b.c]');
     process.exit(1);
   }
   if (password.length < 6) {
@@ -36,7 +37,9 @@ function flagValue(args, name) {
     process.exit(1);
   }
 
-  const canDelete = args.includes('--can-delete') ? 1 : 0;
+  const roleArg = (flagValue(args, '--role') || '').toLowerCase();
+  const role = roleArg === 'employee' ? 'employee' : 'admin'; // default admin; --can-delete = admin
+  const canDelete = role === 'admin' ? 1 : 0;
   const mobile = flagValue(args, '--mobile');
   const email = flagValue(args, '--email');
   const hash = await bcrypt.hash(password, config.bcryptRounds);
@@ -51,18 +54,19 @@ function flagValue(args, name) {
   });
 
   await conn.query(
-    `INSERT INTO admins (username, password_hash, can_delete, mobile, email)
-     VALUES (?, ?, ?, ?, ?)
+    `INSERT INTO admins (username, password_hash, role, can_delete, mobile, email)
+     VALUES (?, ?, ?, ?, ?, ?)
      ON DUPLICATE KEY UPDATE
        password_hash = VALUES(password_hash),
+       role          = VALUES(role),
        can_delete    = VALUES(can_delete),
        mobile        = VALUES(mobile),
        email         = VALUES(email)`,
-    [username, hash, canDelete, mobile, email],
+    [username, hash, role, canDelete, mobile, email],
   );
   await conn.end();
 
-  console.log(`✓ admin "${username}" ready  (canDelete=${!!canDelete}${mobile ? `, mobile=${mobile}` : ''}${email ? `, email=${email}` : ''})`);
+  console.log(`✓ "${username}" ready  (role=${role}${mobile ? `, mobile=${mobile}` : ''}${email ? `, email=${email}` : ''})`);
   console.log('  Ask them to log in and change this password from the Profile page.');
 })().catch((err) => {
   console.error('✗ seed-admin failed:', err.message);

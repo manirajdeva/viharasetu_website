@@ -20,9 +20,12 @@ const sheets = require('../services/sheets');
 const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
 const bootstrap = require('../services/bootstrap');
+const users = require('../services/users');
 const { updateProfile } = require('../services/profile');
 const { validate } = require('../validation');
 const { ENTITY_KEYS } = require('../mappers');
+
+const isAdmin = (admin) => auth.roleOf(admin) === 'admin';
 
 const router = express.Router();
 
@@ -119,6 +122,22 @@ router.post(
         case 'updateProfile':
           return res.json(await updateProfile(admin, body.values || {}));
 
+        case 'listUsers':
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
+          return res.json({ ok: true, users: await users.listUsers() });
+
+        case 'createUser':
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
+          return res.json(await users.createUser(body.values || {}));
+
+        case 'updateUser':
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
+          return res.json(await users.updateUser(body.username, body.values || {}, admin.username));
+
+        case 'deleteUser':
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
+          return res.json(await users.deleteUser(body.username, admin.username));
+
         case 'create': {
           const key = sheetKey(body);
           if (!key) return fail(res, 'BAD_SHEET', 'Unknown sheet.');
@@ -128,6 +147,7 @@ router.post(
         }
 
         case 'update': {
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Employee accounts cannot edit entries.');
           const key = sheetKey(body);
           if (!key) return fail(res, 'BAD_SHEET', 'Unknown sheet.');
           const vErr = validate(key, body.values || {});

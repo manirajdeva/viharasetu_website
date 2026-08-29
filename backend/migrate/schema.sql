@@ -123,7 +123,8 @@ CREATE TABLE IF NOT EXISTS admins (
   id            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   username      VARCHAR(80)  NOT NULL,                                  -- "Username"
   password_hash VARCHAR(255) NOT NULL,                                  -- was "Password" (plaintext) — now bcrypt
-  can_delete    TINYINT(1)   NOT NULL DEFAULT 0,                        -- "CanDelete"
+  role          ENUM('admin','employee') NOT NULL DEFAULT 'employee',   -- admin = full access; employee = view + add only
+  can_delete    TINYINT(1)   NOT NULL DEFAULT 0,                        -- kept in sync with role (admin = 1)
   mobile        VARCHAR(20)      NULL,                                  -- "Mobile"
   email         VARCHAR(190)     NULL,                                  -- "Email"
   created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -22,13 +22,25 @@ class AuthError extends Error {
   }
 }
 
+/** 'admin' | 'employee', tolerating rows written before the role column existed. */
+function roleOf(a) {
+  if (a.role === 'admin' || a.role === 'employee') return a.role;
+  return a.can_delete ? 'admin' : 'employee';
+}
+
 /** Public view of an admin row — never includes the hash. */
-const publicAdmin = (a) => ({
-  username: a.username,
-  canDelete: !!a.can_delete,
-  mobile: a.mobile || '',
-  email: a.email || '',
-});
+const publicAdmin = (a) => {
+  const role = roleOf(a);
+  return {
+    username: a.username,
+    role,
+    canManageUsers: role === 'admin',
+    canEdit: role === 'admin',
+    canDelete: role === 'admin',
+    mobile: a.mobile || '',
+    email: a.email || '',
+  };
+};
 
 async function findAdmin(username) {
   const [rows] = await pool.query('SELECT * FROM admins WHERE username = ? LIMIT 1', [String(username || '')]);
@@ -91,6 +103,7 @@ async function requireAdmin(body) {
 
 module.exports = {
   AuthError,
+  roleOf,
   publicAdmin,
   findAdmin,
   verifyAdmin,

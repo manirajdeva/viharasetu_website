@@ -61,6 +61,11 @@ function requireEntity(req, res, next) {
   return next();
 }
 
+function requireAdminRole(req, res, next) {
+  if (auth.roleOf(req.admin) !== 'admin') return fail(res, 403, 'FORBIDDEN', 'Employee accounts cannot modify entries.');
+  return next();
+}
+
 const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
 /* ------------------------------- auth ------------------------------- */
@@ -162,10 +167,10 @@ const doUpdate = wrap(async (req, res) => {
     throw err;
   }
 });
-router.put('/:entity/:id', requireSession, requireEntity, doUpdate);
-router.patch('/:entity/:id', requireSession, requireEntity, doUpdate);
+router.put('/:entity/:id', requireSession, requireEntity, requireAdminRole, doUpdate);
+router.patch('/:entity/:id', requireSession, requireEntity, requireAdminRole, doUpdate);
 
-router.delete('/:entity/:id', requireSession, requireEntity, wrap(async (req, res) => {
+router.delete('/:entity/:id', requireSession, requireEntity, requireAdminRole, wrap(async (req, res) => {
   try {
     const result = await sheets.deleteRow(req.entity, req.admin, Number(req.params.id));
     return ok(res, result);

@@ -22,7 +22,20 @@ const crypto = require('crypto');
 const PORT = 3001;
 const SESSION_TTL_MS = 6 * 60 * 60 * 1000;
 
-const ADMIN = { username: 'admin', password: 'admin123', canDelete: true, mobile: '9876543210', email: 'admin@viharasetu.co.in' };
+// Portal accounts. role: 'admin' (full access) | 'employee' (view + add only).
+const users = [
+  { username: 'admin', password: 'admin123', role: 'admin', mobile: '9876543210', email: 'admin@viharasetu.co.in' },
+];
+const findUser = (name) => users.find((u) => u.username === String(name || ''));
+const publicUser = (u) => ({
+  username: u.username,
+  role: u.role,
+  canManageUsers: u.role === 'admin',
+  canEdit: u.role === 'admin',
+  canDelete: u.role === 'admin',
+  mobile: u.mobile || '',
+  email: u.email || '',
+});
 
 const HEADERS = {
   enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'Status', 'Notes'],
@@ -90,17 +103,62 @@ class AppError extends Error {
 /* ---------------- auth ---------------- */
 
 function login(p) {
-  if (String(p.username || '').trim() !== ADMIN.username || String(p.password || '') !== ADMIN.password) {
+  const u = findUser(String(p.username || '').trim());
+  if (!u || String(p.password || '') !== u.password) {
     throw new AppError('BAD_LOGIN', 'Invalid username or password.');
   }
   const token = crypto.randomUUID();
   const expiresAt = Date.now() + SESSION_TTL_MS;
-  sessions.set(token, expiresAt);
-  return { ok: true, token, expiresAt, user: { username: ADMIN.username, canDelete: ADMIN.canDelete, mobile: ADMIN.mobile, email: ADMIN.email } };
+  sessions.set(token, { exp: expiresAt, username: u.username });
+  return { ok: true, token, expiresAt, user: publicUser(u) };
 }
+/** Returns the acting user, or throws SESSION_EXPIRED. */
 function requireSession(token) {
-  const exp = sessions.get(token);
-  if (!exp || exp < Date.now()) { sessions.delete(token); throw new AppError('SESSION_EXPIRED', 'Your session has expired. Please log in again.'); }
+  const s = sessions.get(token);
+  if (!s || s.exp < Date.now()) { sessions.delete(token); throw new AppError('SESSION_EXPIRED', 'Your session has expired. Please log in again.'); }
+  const u = findUser(s.username);
+  if (!u) { sessions.delete(token); throw new AppError('SESSION_EXPIRED', 'Your session has expired. Please log in again.'); }
+  return u;
+}
+
+/* ---------------- users (admin only) ---------------- */
+
+const NAME_RE = /^[A-Za-z0-9._-]{3,80}$/;
+const adminCount = () => users.filter((u) => u.role === 'admin').length;
+
+function listUsers() {
+  return { ok: true, users: users.map((u) => ({ username: u.username, role: u.role, mobile: u.mobile || '', email: u.email || '' })) };
+}
+function createUser(p) {
+  const v = p.values || {};
+  const name = String(v.username || '').trim();
+  if (!NAME_RE.test(name)) return { ok: false, error: { code: 'VALIDATION', message: 'Username must be 3–80 chars: letters, digits, dot, dash or underscore.' } };
+  if (String(v.password || '').length < 6) return { ok: false, error: { code: 'VALIDATION', message: 'Password must be at least 6 characters.' } };
+  if (findUser(name)) return { ok: false, error: { code: 'DUPLICATE', message: 'That username already exists.' } };
+  users.push({ username: name, password: String(v.password), role: v.role === 'admin' ? 'admin' : 'employee', mobile: v.mobile || '', email: v.email || '' });
+  return { ok: true };
+}
+function updateUser(p) {
+  const v = p.values || {};
+  const target = findUser(p.username);
+  if (!target) return { ok: false, error: { code: 'NOT_FOUND', message: 'User not found.' } };
+  const newRole = v.role === undefined ? target.role : (v.role === 'admin' ? 'admin' : 'employee');
+  if (v.password && String(v.password).length < 6) return { ok: false, error: { code: 'VALIDATION', message: 'Password must be at least 6 characters.' } };
+  if (target.role === 'admin' && newRole !== 'admin' && adminCount() <= 1) return { ok: false, error: { code: 'LAST_ADMIN', message: 'At least one admin must remain.' } };
+  target.role = newRole;
+  if (v.password) target.password = String(v.password);
+  if (v.mobile !== undefined) target.mobile = v.mobile;
+  if (v.email !== undefined) target.email = v.email;
+  return { ok: true };
+}
+function deleteUser(p, actor) {
+  if (p.username === actor.username) return { ok: false, error: { code: 'SELF', message: 'You cannot delete your own account.' } };
+  const target = findUser(p.username);
+  if (!target) return { ok: true };
+  if (target.role === 'admin' && adminCount() <= 1) return { ok: false, error: { code: 'LAST_ADMIN', message: 'At least one admin must remain.' } };
+  users.splice(users.indexOf(target), 1);
+  for (const [tok, s] of sessions) if (s.username === p.username) sessions.delete(tok);
+  return { ok: true };
 }
 
 /* ---------------- CRUD ---------------- */
@@ -179,23 +237,23 @@ function updateRow(p) {
   return { ok: true };
 }
 
-function deleteRow(p) {
-  if (!ADMIN.canDelete) return { ok: false, error: { code: 'FORBIDDEN', message: 'This account cannot delete entries.' } };
+function deleteRow(p, actor) {
+  if (!actor || actor.role !== 'admin') return { ok: false, error: { code: 'FORBIDDEN', message: 'Employee accounts cannot delete entries.' } };
   const key = String(p.sheet || 'enquiries').toLowerCase();
   const idx = db[key].findIndex((r) => r.rowIndex === Number(p.rowIndex));
   if (idx !== -1) db[key].splice(idx, 1);
   return { ok: true };
 }
 
-function updateProfile(p) {
-  const u = p.values || {};
-  if (u.password) {
-    if (String(u.currentPassword || '') !== ADMIN.password) return { ok: false, error: { code: 'BAD_PASSWORD', message: 'Current password is incorrect.' } };
-    ADMIN.password = u.password;
+function updateProfile(p, actor) {
+  const v = p.values || {};
+  if (v.password) {
+    if (String(v.currentPassword || '') !== actor.password) return { ok: false, error: { code: 'BAD_PASSWORD', message: 'Current password is incorrect.' } };
+    actor.password = v.password;
   }
-  if (u.mobile !== undefined) ADMIN.mobile = u.mobile;
-  if (u.email !== undefined) ADMIN.email = u.email;
-  return { ok: true, user: { username: ADMIN.username, canDelete: ADMIN.canDelete, mobile: ADMIN.mobile, email: ADMIN.email } };
+  if (v.mobile !== undefined) actor.mobile = v.mobile;
+  if (v.email !== undefined) actor.email = v.email;
+  return { ok: true, user: publicUser(actor) };
 }
 
 /* ---------------- dashboard + reports (mirror Code.gs) ---------------- */
@@ -369,7 +427,8 @@ function handlePost(body, res) {
     if (p.action === 'login') return send(res, login(p));
     if (p.action === 'logout') { sessions.delete(p.token); return send(res, { ok: true }); }
 
-    requireSession(p.token);
+    const actor = requireSession(p.token);
+    const adminsOnly = () => ({ ok: false, error: { code: 'FORBIDDEN', message: 'Only admins can manage users.' } });
     switch (p.action) {
       case 'bootstrap': return send(res, {
         ok: true,
@@ -385,10 +444,14 @@ function handlePost(body, res) {
       });
       case 'dashboardStats': return send(res, dashboardStats());
       case 'reports': return send(res, reports(p.data || {}));
-      case 'updateProfile': return send(res, updateProfile(p));
+      case 'updateProfile': return send(res, updateProfile(p, actor));
+      case 'listUsers': return send(res, actor.role === 'admin' ? listUsers() : adminsOnly());
+      case 'createUser': return send(res, actor.role === 'admin' ? createUser(p) : adminsOnly());
+      case 'updateUser': return send(res, actor.role === 'admin' ? updateUser(p) : adminsOnly());
+      case 'deleteUser': return send(res, actor.role === 'admin' ? deleteUser(p, actor) : adminsOnly());
       case 'create': return send(res, createRow(p));
-      case 'update': return send(res, updateRow(p));
-      case 'delete': return send(res, deleteRow(p));
+      case 'update': return send(res, actor.role === 'admin' ? updateRow(p) : { ok: false, error: { code: 'FORBIDDEN', message: 'Employee accounts cannot edit entries.' } });
+      case 'delete': return send(res, deleteRow(p, actor));
       default: return send(res, { ok: false, error: { code: 'UNKNOWN_ACTION', message: 'Unknown action: ' + p.action } });
     }
   } catch (err) {
@@ -419,6 +482,6 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Viharasetu mock admin API  →  http://localhost:${PORT}/exec`);
-  console.log(`Login:  username "${ADMIN.username}"   password "${ADMIN.password}"`);
+  console.log(`Login:  username "${users[0].username}"   password "${users[0].password}"`);
   console.log(`Seeded: ${db.enquiries.length} enquiries, ${db.suppliers.length} suppliers, ${db.bookings.length} bookings, ${db.payments.length} payments. Restart to reset.`);
 });
