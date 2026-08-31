@@ -22,10 +22,10 @@ function paymentGroupKey(enquiryId, customer) {
 const COMPANY = {
   name: 'Viharasetu',
   tagline: 'Travel & Tourism  |  Domestic • Spiritual Journeys • Adventures • International',
-  address: '',                          // no address on the receipt
   phone: '+91 98851-80515',
   email: 'viharasetu@gmail.com',
   website: 'viharasetu.co.in',
+  instagram: 'instagram.com/viharasetu',   // TODO: confirm the exact handle
   logo: '../images/Logo_hor.png',
 };
 
@@ -78,8 +78,11 @@ async function generateReceipt(rows, enquiryId) {
 
   const doc = new jsPDFCtor({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
   const M = 15;
   let y = 14;
+  const contactLine = [COMPANY.phone, COMPANY.email, COMPANY.website, COMPANY.instagram]
+    .filter(Boolean).join('  |  ');
 
   const total = rows.reduce((m, r) => Math.max(m, Number(r['Total Amount']) || 0), 0);
   const paid = rows.reduce((s, r) => s + (Number(r['Amount Paid']) || 0), 0);
@@ -97,7 +100,7 @@ async function generateReceipt(rows, enquiryId) {
   doc.text(COMPANY.name, W - M, y + 2, { align: 'right' });
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(90);
   doc.text(COMPANY.tagline, W - M, y + 7, { align: 'right' });
-  doc.text([COMPANY.address, COMPANY.phone, COMPANY.email, COMPANY.website].filter(Boolean).join('  |  '), W - M, y + 11, { align: 'right' });
+  doc.text(contactLine, W - M, y + 11, { align: 'right' });
   doc.setTextColor(0);
   y += 17;
   doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 8;
@@ -161,14 +164,23 @@ async function generateReceipt(rows, enquiryId) {
   doc.text(doc.splitTextToSize(`Thank you for choosing ${COMPANY.name}. We look forward to making your journey memorable.`, W - 2 * M), M, y);
   y += 16;
 
-  if (y > 262) { doc.addPage(); y = 24; }
-  doc.setFont('helvetica', 'bold'); doc.text('Authorized Signatory', W - M, y, { align: 'right' }); y += 5;
+  if (y > 240) { doc.addPage(); y = 24; }
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(0);
+  doc.text('Authorized Signatory', W - M, y, { align: 'right' }); y += 5;
   doc.setFont('helvetica', 'normal'); doc.text(COMPANY.name, W - M, y, { align: 'right' }); y += 5;
   doc.setTextColor(120); doc.setFontSize(8);
-  doc.text('Seal & Signature', W - M, y, { align: 'right' }); y += 10;
+  doc.text('Seal & Signature', W - M, y, { align: 'right' });
 
-  doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(120);
-  doc.text('This is a computer-generated receipt and does not require a physical signature unless otherwise specified.', M, y);
+  /* ---- footer (company block + disclaimer), pinned near the page bottom ---- */
+  let fy = H - 24;
+  doc.setDrawColor(200); doc.line(M, fy, W - M, fy); fy += 5;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(30);
+  doc.text(COMPANY.name, W / 2, fy, { align: 'center' }); fy += 4;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(110);
+  doc.text(COMPANY.tagline, W / 2, fy, { align: 'center' }); fy += 3.6;
+  doc.text(contactLine, W / 2, fy, { align: 'center' }); fy += 4.2;
+  doc.setFont('helvetica', 'italic'); doc.setFontSize(6.5); doc.setTextColor(130);
+  doc.text('This is a computer-generated receipt and does not require a physical signature unless otherwise specified.', W / 2, fy, { align: 'center' });
 
   doc.save(`Receipt_${String(enquiryId).replace(/[^\w-]/g, '')}.pdf`);
 }
