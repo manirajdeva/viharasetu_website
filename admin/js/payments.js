@@ -44,6 +44,7 @@ const Payments = makeSheetModule({
     columns: [
       { key: 'Instalment', label: '#' },
       { key: 'Payment ID', label: 'Payment ID' },
+      { key: 'Destination', label: 'Destination' },
       { key: 'Timestamp', label: 'Recorded', type: 'date-dmy' },
       { key: 'Amount Paid', label: 'Paid', type: 'currency' },
       { key: 'Pending Amount', label: 'Pending', type: 'currency' },
@@ -52,7 +53,7 @@ const Payments = makeSheetModule({
       { key: 'Notes', label: 'Notes' },
     ],
   },
-  searchCols: ['Payment ID', 'Enquiry ID', 'Customer', 'Transaction Ref'],
+  searchCols: ['Payment ID', 'Enquiry ID', 'Customer', 'Destination', 'Transaction Ref'],
   columns: [
     { key: 'Payment ID', label: 'Payment ID', cls: 'mono' },
     { key: 'Enquiry ID', label: 'Enquiry ID', cls: 'mono' },
@@ -60,6 +61,7 @@ const Payments = makeSheetModule({
     { key: 'Timestamp', label: 'Recorded', type: 'date-dmy' },
     { key: 'Last Updated', label: 'Updated', type: 'datetime' },
     { key: 'Customer', label: 'Customer', primary: true },
+    { key: 'Destination', label: 'Destination' },
     { key: 'Total Amount', label: 'Total', type: 'currency' },
     { key: 'Amount Paid', label: 'Paid', type: 'currency' },
     { key: 'Pending Amount', label: 'Pending', type: 'currency-pending' },
@@ -70,6 +72,7 @@ const Payments = makeSheetModule({
   formFields: [
     { key: 'Enquiry ID', label: 'Enquiry ID', type: 'picker', list: 'enquiryIdList', placeholder: 'Search by enquiry ID, name, phone or destination…', full: true },
     { key: 'Customer', label: 'Customer', required: true },
+    { key: 'Destination', label: 'Destination' },
     { key: 'Total Amount', label: 'Total amount (₹)', type: 'number', required: true },
     { key: 'Amount Paid', label: 'Amount paid now (₹)', type: 'number', required: true },
     { key: 'Payment Mode', label: 'Payment mode', type: 'select', options: PAY_MODES, default: 'UPI' },

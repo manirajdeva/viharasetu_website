@@ -19,7 +19,7 @@ const MAX_LEN = {
   enquiries: { 'Name': 160, 'Email': 190, 'Phone': 20, 'Destination': 160, 'Travel': 120 },
   suppliers: { 'Supplier Company Name': 200, 'States': 255, 'Supplier Name': 160, 'Supplier ID': 40, 'Contact No': 20 },
   bookings: { 'Customer': 160, 'Destination': 200, 'Travel Dates': 120 },
-  payments: { 'Customer': 160, 'Transaction Ref': 120 },
+  payments: { 'Customer': 160, 'Destination': 200, 'Transaction Ref': 120 },
 };
 
 function validate(entity, values) {

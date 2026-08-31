@@ -70,6 +70,7 @@ const ENTITIES = {
       ['Enquiry ID', 'enquiry_id', 'string'],
       ['Timestamp', 'recorded_at', 'datetime'],
       ['Customer', 'customer', 'string'],
+      ['Destination', 'destination', 'string'],
       ['Amount Paid', 'amount_paid', 'decimal'],
       ['Payment Mode', 'payment_mode', 'string'],
       ['Transaction Ref', 'transaction_ref', 'string'],

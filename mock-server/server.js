@@ -41,7 +41,7 @@ const HEADERS = {
   enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'Status', 'Notes'],
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
-  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated']
+  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated']
 };
 
 /* ---------------- in-memory store ---------------- */
@@ -389,7 +389,7 @@ function seed() {
     const key = 'E:' + enq['Enquiry ID'].toLowerCase();
     const already = db.payments.filter((r) => paymentGroupKey(r) === key).reduce((s, r) => s + Number(r['Amount Paid']), 0);
     push('payments', {
-      'Enquiry ID': enq['Enquiry ID'], 'Timestamp': daysAgoIso(30 - i * 4), 'Customer': enq['Name'],
+      'Enquiry ID': enq['Enquiry ID'], 'Timestamp': daysAgoIso(30 - i * 4), 'Customer': enq['Name'], 'Destination': enq['Destination'],
       'Amount Paid': x.paid, 'Payment Mode': x.mode, 'Transaction Ref': 'TXN' + (1001 + i), 'Notes': '',
       'Total Amount': x.total, 'Pending Amount': round2(x.total - already - x.paid), 'Payment ID': nextPaymentId(),
       'Last Updated': daysAgoIso(30 - i * 4)

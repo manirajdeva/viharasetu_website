@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS payments (
   enquiry_id      VARCHAR(20)      NULL,                                -- "Enquiry ID" (link, may be blank)
   recorded_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,      -- "Timestamp"
   customer        VARCHAR(160) NOT NULL,                                -- "Customer"
+  destination     VARCHAR(200)     NULL,                                -- "Destination" (from the linked enquiry; editable)
   total_amount    DECIMAL(12,2) NOT NULL DEFAULT 0,                     -- "Total Amount"
   amount_paid     DECIMAL(12,2) NOT NULL,                               -- "Amount Paid"
   pending_amount  DECIMAL(12,2) NOT NULL DEFAULT 0,                     -- "Pending Amount" (derived, stored)
