@@ -90,20 +90,22 @@ async function generateReceipt(rows, enquiryId) {
   const customer = (rows[0] && rows[0]['Customer']) || '';
   const destination = (rows.find(r => r['Destination']) || {})['Destination'] || '';
 
-  /* ---- header ---- */
+  /* ---- header (centered logo, no separate name text) ---- */
   const logo = await loadReceiptLogo(COMPANY.logo);
   if (logo && logo.naturalWidth) {
-    const h = 13, w = h * (logo.naturalWidth / logo.naturalHeight);
-    try { doc.addImage(logo, 'PNG', M, y - 3, w, h); } catch (e) { /* skip */ }
+    const h = 24, w = h * (logo.naturalWidth / logo.naturalHeight);
+    try { doc.addImage(logo, 'PNG', (W - w) / 2, y, w, h); } catch (e) { /* skip */ }
+    y += h + 4;
+  } else {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
+    doc.text(COMPANY.name, W / 2, y + 8, { align: 'center' });
+    y += 14;
   }
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(15);
-  doc.text(COMPANY.name, W - M, y + 2, { align: 'right' });
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(90);
-  doc.text(COMPANY.tagline, W - M, y + 7, { align: 'right' });
-  doc.text(contactLine, W - M, y + 11, { align: 'right' });
+  doc.text(COMPANY.tagline, W / 2, y, { align: 'center' }); y += 3.8;
+  doc.text(contactLine, W / 2, y, { align: 'center' }); y += 5;
   doc.setTextColor(0);
-  y += 17;
-  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 8;
+  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 9;
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
   doc.text('PAYMENT RECEIPT', W / 2, y, { align: 'center' }); y += 9;
