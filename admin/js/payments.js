@@ -22,8 +22,8 @@ function paymentGroupKey(enquiryId, customer) {
 const COMPANY = {
   name: 'Viharasetu',
   tagline: 'Travel & Tourism  |  Domestic • Spiritual Journeys • Adventures • International',
-  address: '[Address]',                 // TODO: set your business address
-  phone: '[Phone]',                     // TODO: set your phone number
+  address: '',                          // no address on the receipt
+  phone: '+91 98851-80515',
   email: 'viharasetu@gmail.com',
   website: 'viharasetu.co.in',
   logo: '../images/Logo_hor.png',
