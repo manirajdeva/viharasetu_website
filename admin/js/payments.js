@@ -34,7 +34,7 @@ const Payments = makeSheetModule({
   detailOn: {
     column: 'Enquiry ID',
     groupBy: 'Enquiry ID',
-    title: (id) => `Payments for ${id}`,
+    title: (id, rows) => `Payments for ${(rows[0] && rows[0]['Customer']) || '—'} — ${id}`,
     summary: (rows) => {
       const paid = rows.reduce((s, r) => s + (Number(r['Amount Paid']) || 0), 0);
       const total = rows.reduce((m, r) => Math.max(m, Number(r['Total Amount']) || 0), 0);
