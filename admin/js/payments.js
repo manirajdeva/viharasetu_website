@@ -90,22 +90,18 @@ async function generateReceipt(rows, enquiryId) {
   const customer = (rows[0] && rows[0]['Customer']) || '';
   const destination = (rows.find(r => r['Destination']) || {})['Destination'] || '';
 
-  /* ---- header (left-aligned logo, no separate name text) ---- */
+  /* ---- header: just the logo + a divider (contact details live in the footer) ---- */
   const logo = await loadReceiptLogo(COMPANY.logo);
   if (logo && logo.naturalWidth) {
     const h = 20, w = h * (logo.naturalWidth / logo.naturalHeight);
     try { doc.addImage(logo, 'PNG', M, y, w, h); } catch (e) { /* skip */ }
-    y += h + 2;
+    y += h + 3;
   } else {
     doc.setFont('helvetica', 'bold'); doc.setFontSize(16);
     doc.text(COMPANY.name, M, y + 7);
-    y += 11;
+    y += 12;
   }
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(90);
-  doc.text(COMPANY.tagline, M, y); y += 3.6;
-  doc.text(contactLine, M, y); y += 4;
-  doc.setTextColor(0);
-  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 7;
+  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 8;
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
   doc.text('PAYMENT RECEIPT', W / 2, y, { align: 'center' }); y += 9;
