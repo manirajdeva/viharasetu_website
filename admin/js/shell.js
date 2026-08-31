@@ -369,6 +369,10 @@ function makeSheetModule(cfg) {
         }
         else v = Utils.escapeHtml(v);
         if (c.key === cfg.badgeCol) v = `<span class="badge ${Utils.escapeAttr(String(r[c.key]).split(' ')[0])}">${Utils.escapeHtml(r[c.key])}</span>`;
+        if (cfg.detailOn && c.key === cfg.detailOn.column) {
+          const raw = String(r[c.key] || '').trim();
+          if (raw) v = `<button type="button" class="cell-link" data-detail="${Utils.escapeAttr(raw)}">${v}</button>`;
+        }
         const cls = [c.primary ? 'primary-col' : '', c.cls || ''].filter(Boolean).join(' ');
         return `<td${cls ? ` class="${cls}"` : ''}>${v}</td>`;
       }).join('');
@@ -390,6 +394,59 @@ function makeSheetModule(cfg) {
 
     tw.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => openForm(Number(b.dataset.edit))));
     tw.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => del(Number(b.dataset.del))));
+    if (cfg.detailOn) {
+      tw.querySelectorAll('[data-detail]').forEach(b => b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showDetail(b.dataset.detail);
+      }));
+    }
+  }
+
+  /* Read-only modal: every row in the full dataset whose `groupBy` field
+     matches the clicked cell value. Used by Payments to list all payments for
+     one Enquiry ID. */
+  function showDetail(value) {
+    const d = cfg.detailOn;
+    const groupBy = d.groupBy || d.column;
+    const dateKey = cfg.defaultSort || 'Timestamp';
+    const related = rows
+      .filter(r => String(r[groupBy] || '').trim() === String(value).trim())
+      .sort((a, b) => Utils.compareValues(a[dateKey], b[dateKey]));
+    const cols = d.columns || cfg.columns;
+
+    const fmt = (r, c) => {
+      if (c.type === 'date') return Utils.formatDate(r[c.key]);
+      if (c.type === 'date-dmy') return Utils.formatDateDMY(r[c.key]);
+      if (c.type === 'datetime') return Utils.formatDateTime(r[c.key]);
+      if (c.type === 'currency' || c.type === 'currency-pending') return Utils.formatCurrency(r[c.key]);
+      return Utils.escapeHtml(r[c.key]);
+    };
+
+    const head = cols.map(c => `<th>${Utils.escapeHtml(c.label)}</th>`).join('');
+    const bodyRows = related.map(r => `<tr>${cols.map(c => `<td>${fmt(r, c)}</td>`).join('')}</tr>`).join('');
+    const title = typeof d.title === 'function' ? d.title(value, related) : (d.title || 'Details');
+    const summary = typeof d.summary === 'function' ? d.summary(related, value) : '';
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop visible';
+    backdrop.innerHTML = `
+      <div class="modal" style="max-width:920px;">
+        <h2>${Utils.escapeHtml(title)}</h2>
+        ${summary ? `<div class="section-sub">${Utils.escapeHtml(summary)}</div>` : ''}
+        <div class="table-wrap" style="margin-top:12px;max-height:60vh;overflow:auto;">
+          ${related.length
+            ? `<table class="data-table"><thead><tr>${head}</tr></thead><tbody>${bodyRows}</tbody></table>`
+            : '<div class="empty">Nothing found.</div>'}
+        </div>
+        <div class="modal-actions"><button class="btn" data-close>Close</button></div>
+      </div>`;
+    document.body.appendChild(backdrop);
+    const close = () => backdrop.remove();
+    backdrop.querySelector('[data-close]').addEventListener('click', close);
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) close(); });
+    document.addEventListener('keydown', function esc(e) {
+      if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
+    });
   }
 
   function openForm(rowIndex) {

@@ -30,6 +30,28 @@ const Payments = makeSheetModule({
   // collapse the list to the most recent payment per enquiry.
   extraFilters: [{ key: 'Enquiry ID', label: 'Enquiry ID', placeholder: 'Filter by Enquiry ID…' }],
   latestPerGroup: { label: 'Latest per enquiry', groupKeys: ['Enquiry ID', 'Customer'], dateKey: 'Timestamp' },
+  // Click an Enquiry ID cell -> modal listing every payment for that enquiry.
+  detailOn: {
+    column: 'Enquiry ID',
+    groupBy: 'Enquiry ID',
+    title: (id) => `Payments for ${id}`,
+    summary: (rows) => {
+      const paid = rows.reduce((s, r) => s + (Number(r['Amount Paid']) || 0), 0);
+      const total = rows.reduce((m, r) => Math.max(m, Number(r['Total Amount']) || 0), 0);
+      const pending = Math.max(0, total - paid);
+      return `${rows.length} payment${rows.length === 1 ? '' : 's'} · Total ${Utils.formatCurrency(total)} · Paid ${Utils.formatCurrency(paid)} · Pending ${Utils.formatCurrency(pending)}`;
+    },
+    columns: [
+      { key: 'Instalment', label: '#' },
+      { key: 'Payment ID', label: 'Payment ID' },
+      { key: 'Timestamp', label: 'Recorded', type: 'date-dmy' },
+      { key: 'Amount Paid', label: 'Paid', type: 'currency' },
+      { key: 'Pending Amount', label: 'Pending', type: 'currency' },
+      { key: 'Payment Mode', label: 'Mode' },
+      { key: 'Transaction Ref', label: 'Txn ref' },
+      { key: 'Notes', label: 'Notes' },
+    ],
+  },
   searchCols: ['Payment ID', 'Enquiry ID', 'Customer', 'Transaction Ref'],
   columns: [
     { key: 'Payment ID', label: 'Payment ID', cls: 'mono' },

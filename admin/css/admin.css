@@ -329,6 +329,11 @@ td.primary-col { font-weight: 600; }
 td.actions { white-space: nowrap; }
 td.actions .btn { margin-right: 6px; }
 .mono { font-variant-numeric: tabular-nums; }
+table.data-table .cell-link {
+  background: none; border: 0; padding: 0; font: inherit;
+  color: var(--accent); cursor: pointer; text-decoration: underline;
+}
+table.data-table .cell-link:hover { opacity: .75; }
 
 .badge {
   display: inline-block;
