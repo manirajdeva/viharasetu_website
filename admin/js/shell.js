@@ -438,12 +438,24 @@ function makeSheetModule(cfg) {
             ? `<table class="data-table"><thead><tr>${head}</tr></thead><tbody>${bodyRows}</tbody></table>`
             : '<div class="empty">Nothing found.</div>'}
         </div>
-        <div class="modal-actions"><button class="btn" data-close>Close</button></div>
+        <div class="modal-actions">
+          ${d.onReceipt && related.length ? '<button class="btn" data-receipt>Download receipt (PDF)</button>' : ''}
+          <button class="btn primary" data-close>Close</button>
+        </div>
       </div>`;
     document.body.appendChild(backdrop);
     const close = () => backdrop.remove();
     backdrop.querySelector('[data-close]').addEventListener('click', close);
     backdrop.addEventListener('click', (e) => { if (e.target === backdrop) close(); });
+
+    const rcpt = backdrop.querySelector('[data-receipt]');
+    if (rcpt) rcpt.addEventListener('click', async () => {
+      const label = rcpt.textContent;
+      rcpt.disabled = true; rcpt.textContent = 'Generating…';
+      try { await d.onReceipt(related, value); }
+      catch (err) { Utils.error(err.message || 'Could not generate the receipt.'); }
+      finally { rcpt.disabled = false; rcpt.textContent = label; }
+    });
     document.addEventListener('keydown', function esc(e) {
       if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
     });

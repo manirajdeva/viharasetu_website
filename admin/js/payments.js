@@ -17,6 +17,162 @@ function paymentGroupKey(enquiryId, customer) {
   return eid ? 'E:' + eid.toLowerCase() : 'C:' + String(customer || '').trim().toLowerCase();
 }
 
+/* ============================ Payment receipt PDF ============================ */
+/* Edit these details — they print on the receipt. */
+const COMPANY = {
+  name: 'Viharasetu',
+  tagline: 'Travel & Tourism  |  Domestic • Spiritual Journeys • Adventures • International',
+  address: '[Address]',                 // TODO: set your business address
+  phone: '[Phone]',                     // TODO: set your phone number
+  email: 'viharasetu@gmail.com',
+  website: 'viharasetu.co.in',
+  logo: '../images/Logo_hor.png',
+};
+
+// "Rs." (not ₹) — the rupee glyph is missing from jsPDF's built-in fonts.
+function pdfMoney(n) { return 'Rs. ' + Math.round(Number(n) || 0).toLocaleString('en-IN'); }
+
+function receiptDate(v) {
+  const d = new Date(v);
+  if (isNaN(d.getTime())) return String(v || '');
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+}
+
+/* Indian-system number to words (up to crores). */
+function amountWords(num) {
+  num = Math.round(Number(num) || 0);
+  if (num === 0) return 'Zero';
+  const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+    'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  const two = (x) => x < 20 ? ones[x] : (tens[Math.floor(x / 10)] + (x % 10 ? ' ' + ones[x % 10] : ''));
+  const three = (x) => {
+    const h = Math.floor(x / 100), r = x % 100;
+    return (h ? ones[h] + ' Hundred' + (r ? ' ' : '') : '') + (r ? two(r) : '');
+  };
+  let out = '';
+  const crore = Math.floor(num / 10000000); num %= 10000000;
+  const lakh = Math.floor(num / 100000); num %= 100000;
+  const thou = Math.floor(num / 1000); num %= 1000;
+  if (crore) out += three(crore) + ' Crore ';
+  if (lakh) out += two(lakh) + ' Lakh ';
+  if (thou) out += two(thou) + ' Thousand ';
+  if (num) out += three(num);
+  return out.trim();
+}
+
+function loadReceiptLogo(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+/** Build + save a "PAYMENT RECEIPT" PDF for every payment against one enquiry. */
+async function generateReceipt(rows, enquiryId) {
+  const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
+  if (!jsPDFCtor) throw new Error('PDF library failed to load.');
+
+  const doc = new jsPDFCtor({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  const M = 15;
+  let y = 14;
+
+  const total = rows.reduce((m, r) => Math.max(m, Number(r['Total Amount']) || 0), 0);
+  const paid = rows.reduce((s, r) => s + (Number(r['Amount Paid']) || 0), 0);
+  const outstanding = Math.max(0, total - paid);
+  const customer = (rows[0] && rows[0]['Customer']) || '';
+  const destination = (rows.find(r => r['Destination']) || {})['Destination'] || '';
+
+  /* ---- header ---- */
+  const logo = await loadReceiptLogo(COMPANY.logo);
+  if (logo && logo.naturalWidth) {
+    const h = 13, w = h * (logo.naturalWidth / logo.naturalHeight);
+    try { doc.addImage(logo, 'PNG', M, y - 3, w, h); } catch (e) { /* skip */ }
+  }
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(15);
+  doc.text(COMPANY.name, W - M, y + 2, { align: 'right' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(90);
+  doc.text(COMPANY.tagline, W - M, y + 7, { align: 'right' });
+  doc.text([COMPANY.address, COMPANY.phone, COMPANY.email, COMPANY.website].filter(Boolean).join('  |  '), W - M, y + 11, { align: 'right' });
+  doc.setTextColor(0);
+  y += 17;
+  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 8;
+
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
+  doc.text('PAYMENT RECEIPT', W / 2, y, { align: 'center' }); y += 9;
+
+  /* ---- key / value ---- */
+  doc.setFontSize(10);
+  [
+    ['Receipt / Booking No.', enquiryId],
+    ['Receipt Date', receiptDate(new Date())],
+    ['Customer Name', customer || '—'],
+    ['Destination', destination || '—'],
+  ].forEach(([k, v]) => {
+    doc.setFont('helvetica', 'bold'); doc.text(k + ':', M, y);
+    doc.setFont('helvetica', 'normal'); doc.text(String(v), M + 48, y);
+    y += 6;
+  });
+  y += 3;
+
+  /* ---- acknowledgement ---- */
+  doc.setFont('helvetica', 'bold'); doc.text('Payment Acknowledgement', M, y); y += 5;
+  doc.setFont('helvetica', 'normal');
+  const inst = rows.length === 1 ? 'a single payment' : `${rows.length} installments`;
+  const ack = outstanding <= 0
+    ? `This is to acknowledge that we have received the full payment of ${pdfMoney(paid)} (Rupees ${amountWords(paid)} Only) towards the above-mentioned travel booking. The payment has been received in ${inst}, and there is no outstanding balance as of the receipt date.`
+    : `This is to acknowledge that we have received a payment of ${pdfMoney(paid)} (Rupees ${amountWords(paid)} Only) towards the above-mentioned travel booking, received in ${inst}. An outstanding balance of ${pdfMoney(outstanding)} (Rupees ${amountWords(outstanding)} Only) remains as of the receipt date.`;
+  const ackLines = doc.splitTextToSize(ack, W - 2 * M);
+  doc.text(ackLines, M, y);
+  y += ackLines.length * 5 + 5;
+
+  /* ---- details table ---- */
+  doc.autoTable({
+    startY: y,
+    head: [['#', 'Payment ID', 'Destination', 'Recorded', 'Amount Paid', 'Pending', 'Mode', 'Txn Ref', 'Notes']],
+    body: rows.map((r, i) => [
+      i + 1, r['Payment ID'] || '', r['Destination'] || '—', receiptDate(r['Timestamp']),
+      pdfMoney(r['Amount Paid']), pdfMoney(r['Pending Amount']),
+      r['Payment Mode'] || '', r['Transaction Ref'] || '—', r['Notes'] || '—',
+    ]),
+    foot: [['', 'Total', '', '', pdfMoney(paid), pdfMoney(outstanding), '', '', '']],
+    styles: { fontSize: 8, cellPadding: 1.6 },
+    headStyles: { fillColor: [187, 90, 52] },
+    footStyles: { fillColor: [242, 236, 230], textColor: 20, fontStyle: 'bold' },
+    margin: { left: M, right: M },
+  });
+  y = doc.lastAutoTable.finalY + 9;
+
+  /* ---- summary ---- */
+  if (y > 250) { doc.addPage(); y = 20; }
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.text('Payment Summary', M, y); y += 5;
+  doc.setFont('helvetica', 'normal');
+  [
+    ['Total Amount', pdfMoney(total)],
+    ['Total Paid', pdfMoney(paid)],
+    ['Outstanding Balance', pdfMoney(outstanding)],
+  ].forEach(([k, v]) => { doc.text(k + ':', M, y); doc.text(v, M + 48, y); y += 5.5; });
+  y += 5;
+
+  doc.text(doc.splitTextToSize(`Thank you for choosing ${COMPANY.name}. We look forward to making your journey memorable.`, W - 2 * M), M, y);
+  y += 16;
+
+  if (y > 262) { doc.addPage(); y = 24; }
+  doc.setFont('helvetica', 'bold'); doc.text('Authorized Signatory', W - M, y, { align: 'right' }); y += 5;
+  doc.setFont('helvetica', 'normal'); doc.text(COMPANY.name, W - M, y, { align: 'right' }); y += 5;
+  doc.setTextColor(120); doc.setFontSize(8);
+  doc.text('Seal & Signature', W - M, y, { align: 'right' }); y += 10;
+
+  doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(120);
+  doc.text('This is a computer-generated receipt and does not require a physical signature unless otherwise specified.', M, y);
+
+  doc.save(`Receipt_${String(enquiryId).replace(/[^\w-]/g, '')}.pdf`);
+}
+
 const Payments = makeSheetModule({
   key: 'payments',
   title: 'Payments',
@@ -35,6 +191,7 @@ const Payments = makeSheetModule({
     column: 'Enquiry ID',
     groupBy: 'Enquiry ID',
     title: (id, rows) => `Payments for ${(rows[0] && rows[0]['Customer']) || '—'} — ${id}`,
+    onReceipt: (rows, id) => generateReceipt(rows, id),
     summary: (rows) => {
       const paid = rows.reduce((s, r) => s + (Number(r['Amount Paid']) || 0), 0);
       const total = rows.reduce((m, r) => Math.max(m, Number(r['Total Amount']) || 0), 0);
