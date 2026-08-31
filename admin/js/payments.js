@@ -80,7 +80,7 @@ async function generateReceipt(rows, enquiryId) {
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
   const M = 15;
-  let y = 14;
+  let y = 12;
   const contactLine = [COMPANY.phone, COMPANY.email, COMPANY.website, COMPANY.instagram]
     .filter(Boolean).join('  |  ');
 
@@ -90,22 +90,22 @@ async function generateReceipt(rows, enquiryId) {
   const customer = (rows[0] && rows[0]['Customer']) || '';
   const destination = (rows.find(r => r['Destination']) || {})['Destination'] || '';
 
-  /* ---- header (centered logo, no separate name text) ---- */
+  /* ---- header (left-aligned logo, no separate name text) ---- */
   const logo = await loadReceiptLogo(COMPANY.logo);
   if (logo && logo.naturalWidth) {
-    const h = 24, w = h * (logo.naturalWidth / logo.naturalHeight);
-    try { doc.addImage(logo, 'PNG', (W - w) / 2, y, w, h); } catch (e) { /* skip */ }
-    y += h + 4;
+    const h = 20, w = h * (logo.naturalWidth / logo.naturalHeight);
+    try { doc.addImage(logo, 'PNG', M, y, w, h); } catch (e) { /* skip */ }
+    y += h + 2;
   } else {
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
-    doc.text(COMPANY.name, W / 2, y + 8, { align: 'center' });
-    y += 14;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(16);
+    doc.text(COMPANY.name, M, y + 7);
+    y += 11;
   }
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(90);
-  doc.text(COMPANY.tagline, W / 2, y, { align: 'center' }); y += 3.8;
-  doc.text(contactLine, W / 2, y, { align: 'center' }); y += 5;
+  doc.text(COMPANY.tagline, M, y); y += 3.6;
+  doc.text(contactLine, M, y); y += 4;
   doc.setTextColor(0);
-  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 9;
+  doc.setDrawColor(180); doc.line(M, y, W - M, y); y += 7;
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
   doc.text('PAYMENT RECEIPT', W / 2, y, { align: 'center' }); y += 9;
