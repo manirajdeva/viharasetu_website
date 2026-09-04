@@ -37,11 +37,19 @@ function monthlySeries(rows, dateField, sumField) {
   return months.map((m) => ({ month: m, value: round2(buckets[m]) }));
 }
 
+/** Sort key that orders a plan's payments oldest→newest: Timestamp, then
+ *  instalment no., then Payment ID as tie-breakers. */
+function paymentOrderKey(r) {
+  return `${String(r['Timestamp'] || '')}#${String(Number(r['Instalment']) || 0).padStart(6, '0')}#${String(r['Payment ID'] || '')}`;
+}
+
 /**
  * Roll up the Payments portal per enquiry (falling back to customer name when a
- * payment has no Enquiry ID). `Total Amount` is the contracted trip cost — it's
- * carried forward across a plan's payments, so we take the max seen — and
- * `Amount Paid` is summed. Outstanding is derived per plan and clamped at 0.
+ * payment has no Enquiry ID). `Total Amount` is the contracted trip cost
+ * (carried forward, so we take the max seen) and `Amount Paid` is summed.
+ * Outstanding is taken from the **latest payment** of each plan — its
+ * `Pending Amount` is the live balance the portal already computed — not from
+ * the Bookings sheet.
  */
 function paymentsSummary(pay) {
   const groups = {};
@@ -49,25 +57,28 @@ function paymentsSummary(pay) {
     const eid = String(r['Enquiry ID'] || '').trim();
     const key = eid ? `E:${eid.toLowerCase()}` : `C:${String(r['Customer'] || '').trim().toLowerCase()}`;
     const g = groups[key] || (groups[key] = {
-      total: 0, paid: 0, enquiryId: eid, customer: r['Customer'] || '', destination: '', last: '',
+      total: 0, paid: 0, lastPending: 0, lastKey: '',
+      enquiryId: eid, customer: r['Customer'] || '', destination: '', last: '',
     });
     g.total = Math.max(g.total, parseFloat(r['Total Amount']) || 0);
     g.paid += parseFloat(r['Amount Paid']) || 0;
     if (r['Destination']) g.destination = r['Destination'];
     const ts = dateStr(r['Timestamp']);
     if (ts > g.last) g.last = ts;
+    const k = paymentOrderKey(r);
+    if (k >= g.lastKey) { g.lastKey = k; g.lastPending = Math.max(0, parseFloat(r['Pending Amount']) || 0); }
   });
   const plans = Object.values(groups);
   const contractedValue = plans.reduce((s, g) => s + g.total, 0);
   const collected = plans.reduce((s, g) => s + g.paid, 0);
-  const outstanding = plans.reduce((s, g) => s + Math.max(0, g.total - g.paid), 0);
+  const outstanding = plans.reduce((s, g) => s + g.lastPending, 0);
 
   let fullyPaid = 0;
   let partPaid = 0;
   let notStarted = 0;
   plans.forEach((g) => {
     if (g.paid <= 0) notStarted += 1;
-    else if (g.total - g.paid <= 0.01) fullyPaid += 1;
+    else if (g.lastPending <= 0.01) fullyPaid += 1;
     else partPaid += 1;
   });
 
@@ -98,7 +109,7 @@ function paymentsSummary(pay) {
         destination: g.destination,
         total: round2(g.total),
         paid: round2(g.paid),
-        pending: round2(Math.max(0, g.total - g.paid)),
+        pending: round2(g.lastPending),
         last: g.last,
       }))
       .filter((p) => p.pending > 0.01)
@@ -114,6 +125,7 @@ function computeStats({ enquiries: enq, suppliers: sup, bookings: book, payments
 
   const bookingsValue = book.reduce((s, r) => s + (parseFloat(r['Amount']) || 0), 0);
   const paymentsReceived = pay.reduce((s, r) => s + (parseFloat(r['Amount Paid']) || 0), 0);
+  const paymentsSum = paymentsSummary(pay);
 
   const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0 };
   enq.forEach((r) => { if (r['Status'] in statusBreakdown) statusBreakdown[r['Status']]++; });
@@ -133,11 +145,11 @@ function computeStats({ enquiries: enq, suppliers: sup, bookings: book, payments
     totalBookings: book.length,
     bookingsValue: round2(bookingsValue),
     paymentsReceived: round2(paymentsReceived),
-    outstanding: Math.max(0, round2(bookingsValue - paymentsReceived)),
+    outstanding: round2(paymentsSum.outstanding),
     monthlyEnquiries: monthlySeries(enq, 'Timestamp', null),
     monthlyPayments: monthlySeries(pay, 'Timestamp', 'Amount Paid'),
     statusBreakdown,
-    payments: paymentsSummary(pay),
+    payments: paymentsSum,
     recent: recent.slice(0, 12),
   };
 }

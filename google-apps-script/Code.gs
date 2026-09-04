@@ -503,11 +503,21 @@ function dashboardStats_() {
   );
 }
 
+/** Sort key that orders a plan's payments oldest→newest: Timestamp, then
+ *  instalment no., then Payment ID as tie-breakers. */
+function paymentOrderKey_(r) {
+  var inst = String(Number(r['Instalment']) || 0);
+  while (inst.length < 6) inst = '0' + inst;
+  return String(r['Timestamp'] || '') + '#' + inst + '#' + String(r['Payment ID'] || '');
+}
+
 /**
  * Roll up the Payments portal per enquiry (falling back to customer name when a
- * payment has no Enquiry ID). 'Total Amount' is the contracted trip cost —
- * carried forward across a plan's payments, so take the max seen — and
- * 'Amount Paid' is summed. Outstanding is derived per plan and clamped at 0.
+ * payment has no Enquiry ID). 'Total Amount' is the contracted trip cost
+ * (carried forward, so take the max seen) and 'Amount Paid' is summed.
+ * Outstanding is taken from the *latest payment* of each plan — its
+ * 'Pending Amount' is the live balance the portal already computed — not from
+ * the Bookings sheet.
  */
 function paymentsSummary_(pay) {
   var groups = {};
@@ -515,23 +525,26 @@ function paymentsSummary_(pay) {
     var eid = String(r['Enquiry ID'] || '').trim();
     var key = eid ? 'E:' + eid.toLowerCase() : 'C:' + String(r['Customer'] || '').trim().toLowerCase();
     var g = groups[key] || (groups[key] = {
-      total: 0, paid: 0, enquiryId: eid, customer: r['Customer'] || '', destination: '', last: ''
+      total: 0, paid: 0, lastPending: 0, lastKey: '',
+      enquiryId: eid, customer: r['Customer'] || '', destination: '', last: ''
     });
     g.total = Math.max(g.total, parseFloat(r['Total Amount']) || 0);
     g.paid += parseFloat(r['Amount Paid']) || 0;
     if (r['Destination']) g.destination = r['Destination'];
     var ts = dateStr_(r['Timestamp']);
     if (ts > g.last) g.last = ts;
+    var k = paymentOrderKey_(r);
+    if (k >= g.lastKey) { g.lastKey = k; g.lastPending = Math.max(0, parseFloat(r['Pending Amount']) || 0); }
   });
   var plans = Object.keys(groups).map(function (k) { return groups[k]; });
   var contractedValue = plans.reduce(function (s, g) { return s + g.total; }, 0);
   var collected = plans.reduce(function (s, g) { return s + g.paid; }, 0);
-  var outstanding = plans.reduce(function (s, g) { return s + Math.max(0, g.total - g.paid); }, 0);
+  var outstanding = plans.reduce(function (s, g) { return s + g.lastPending; }, 0);
 
   var fullyPaid = 0, partPaid = 0, notStarted = 0;
   plans.forEach(function (g) {
     if (g.paid <= 0) notStarted++;
-    else if (g.total - g.paid <= 0.01) fullyPaid++;
+    else if (g.lastPending <= 0.01) fullyPaid++;
     else partPaid++;
   });
 
@@ -563,7 +576,7 @@ function paymentsSummary_(pay) {
           destination: g.destination,
           total: round2_(g.total),
           paid: round2_(g.paid),
-          pending: round2_(Math.max(0, g.total - g.paid)),
+          pending: round2_(g.lastPending),
           last: g.last
         };
       })
@@ -579,6 +592,7 @@ function dashboardStatsFrom_(enq, sup, book, pay) {
 
   const bookingsValue = book.reduce(function (s, r) { return s + (parseFloat(r['Amount']) || 0); }, 0);
   const paymentsReceived = pay.reduce(function (s, r) { return s + (parseFloat(r['Amount Paid']) || 0); }, 0);
+  const paymentsSum = paymentsSummary_(pay);
 
   const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0 };
   enq.forEach(function (r) { const k = String(r['Status']); if (statusBreakdown.hasOwnProperty(k)) statusBreakdown[k]++; });
@@ -598,11 +612,11 @@ function dashboardStatsFrom_(enq, sup, book, pay) {
     totalBookings: book.length,
     bookingsValue: round2_(bookingsValue),
     paymentsReceived: round2_(paymentsReceived),
-    outstanding: Math.max(0, round2_(bookingsValue - paymentsReceived)),
+    outstanding: round2_(paymentsSum.outstanding),
     monthlyEnquiries: monthlySeries_(enq, 'Timestamp', null),
     monthlyPayments: monthlySeries_(pay, 'Timestamp', 'Amount Paid'),
     statusBreakdown: statusBreakdown,
-    payments: paymentsSummary_(pay),
+    payments: paymentsSum,
     recent: recent.slice(0, 12)
   };
 }
