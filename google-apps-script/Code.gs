@@ -503,6 +503,76 @@ function dashboardStats_() {
   );
 }
 
+/**
+ * Roll up the Payments portal per enquiry (falling back to customer name when a
+ * payment has no Enquiry ID). 'Total Amount' is the contracted trip cost —
+ * carried forward across a plan's payments, so take the max seen — and
+ * 'Amount Paid' is summed. Outstanding is derived per plan and clamped at 0.
+ */
+function paymentsSummary_(pay) {
+  var groups = {};
+  pay.forEach(function (r) {
+    var eid = String(r['Enquiry ID'] || '').trim();
+    var key = eid ? 'E:' + eid.toLowerCase() : 'C:' + String(r['Customer'] || '').trim().toLowerCase();
+    var g = groups[key] || (groups[key] = {
+      total: 0, paid: 0, enquiryId: eid, customer: r['Customer'] || '', destination: '', last: ''
+    });
+    g.total = Math.max(g.total, parseFloat(r['Total Amount']) || 0);
+    g.paid += parseFloat(r['Amount Paid']) || 0;
+    if (r['Destination']) g.destination = r['Destination'];
+    var ts = dateStr_(r['Timestamp']);
+    if (ts > g.last) g.last = ts;
+  });
+  var plans = Object.keys(groups).map(function (k) { return groups[k]; });
+  var contractedValue = plans.reduce(function (s, g) { return s + g.total; }, 0);
+  var collected = plans.reduce(function (s, g) { return s + g.paid; }, 0);
+  var outstanding = plans.reduce(function (s, g) { return s + Math.max(0, g.total - g.paid); }, 0);
+
+  var fullyPaid = 0, partPaid = 0, notStarted = 0;
+  plans.forEach(function (g) {
+    if (g.paid <= 0) notStarted++;
+    else if (g.total - g.paid <= 0.01) fullyPaid++;
+    else partPaid++;
+  });
+
+  var byMode = {};
+  pay.forEach(function (r) {
+    var m = String(r['Payment Mode'] || '').trim() || 'Other';
+    byMode[m] = round2_((byMode[m] || 0) + (parseFloat(r['Amount Paid']) || 0));
+  });
+
+  return {
+    plans: plans.length,
+    transactions: pay.length,
+    contractedValue: round2_(contractedValue),
+    collected: round2_(collected),
+    outstanding: round2_(outstanding),
+    collectionRate: contractedValue > 0 ? round2_((collected / contractedValue) * 100) : 0,
+    avgPlanValue: plans.length ? round2_(contractedValue / plans.length) : 0,
+    fullyPaid: fullyPaid,
+    partPaid: partPaid,
+    notStarted: notStarted,
+    statusBreakdown: { 'Fully paid': fullyPaid, 'Part paid': partPaid, 'Not started': notStarted },
+    monthlyCollected: monthlySeries_(pay, 'Timestamp', 'Amount Paid'),
+    byMode: byMode,
+    due: plans
+      .map(function (g) {
+        return {
+          enquiryId: g.enquiryId,
+          customer: g.customer,
+          destination: g.destination,
+          total: round2_(g.total),
+          paid: round2_(g.paid),
+          pending: round2_(Math.max(0, g.total - g.paid)),
+          last: g.last
+        };
+      })
+      .filter(function (p) { return p.pending > 0.01; })
+      .sort(function (a, b) { return b.pending - a.pending; })
+      .slice(0, 8)
+  };
+}
+
 function dashboardStatsFrom_(enq, sup, book, pay) {
   const today = Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd');
   const thisMonth = today.slice(0, 7);
@@ -532,6 +602,7 @@ function dashboardStatsFrom_(enq, sup, book, pay) {
     monthlyEnquiries: monthlySeries_(enq, 'Timestamp', null),
     monthlyPayments: monthlySeries_(pay, 'Timestamp', 'Amount Paid'),
     statusBreakdown: statusBreakdown,
+    payments: paymentsSummary_(pay),
     recent: recent.slice(0, 12)
   };
 }
