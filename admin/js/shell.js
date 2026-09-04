@@ -228,7 +228,7 @@ const Form = (() => {
 
 /* ============================ Config-driven sheet module ============================ */
 function makeSheetModule(cfg) {
-  const state = { page: 1, pageSize: 10, search: '', sortBy: cfg.defaultSort || 'Timestamp', sortDir: 'desc', badge: '', extra: {}, latestOnly: false };
+  const state = { page: 1, pageSize: 10, search: '', sortBy: cfg.defaultSort || 'Timestamp', sortDir: cfg.defaultSortDir || 'desc', badge: '', extra: {}, latestOnly: false };
   const root = () => document.getElementById('view-' + cfg.key);
   const xfId = (key) => cfg.key + '-xf-' + String(key).replace(/\W+/g, '');
 
@@ -278,6 +278,17 @@ function makeSheetModule(cfg) {
 
   let rows = [];
 
+  /* Stamp a stable serial number (1, 2, 3 …) onto every row, following
+     insertion order — the DB `id` can jump in large blocks on the managed
+     MySQL host, so we number by the Timestamp column at read time instead.
+     The number stays glued to its row through search, filter and sort. */
+  function stampSerials(list, opt) {
+    const by = opt.by || 'Timestamp';
+    list.slice()
+      .sort((a, b) => Utils.compareValues(a[by], b[by]) || (Number(a.rowIndex) - Number(b.rowIndex)))
+      .forEach((r, i) => { r[opt.key] = i + 1; });
+  }
+
   async function load(force) {
     if (!root().querySelector('.toolbar')) shell();
     const tw = root().querySelector('#' + cfg.key + '-tw');
@@ -285,6 +296,7 @@ function makeSheetModule(cfg) {
     try {
       const data = await Data.fetch(cfg.key, force);
       rows = data.rows || [];
+      if (cfg.serialCol) stampSerials(rows, cfg.serialCol);
       render();
     } catch (err) {
       tw.innerHTML = `<div class="error-msg">Couldn't load ${cfg.title}. ${Utils.escapeHtml(err.message || '')}</div>`;

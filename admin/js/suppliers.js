@@ -8,9 +8,12 @@ const Suppliers = makeSheetModule({
   title: 'Suppliers',
   singular: 'Supplier',
   primaryKey: 'Supplier Company Name',
-  defaultSort: 'Timestamp',
+  defaultSort: '#',
+  defaultSortDir: 'asc',
+  serialCol: { key: '#', by: 'Timestamp' },
   searchCols: ['Supplier Company Name', 'Supplier Name', 'States', 'Contact No', 'Supplier ID'],
   columns: [
+    { key: '#', label: '#', cls: 'mono' },
     { key: 'Supplier ID', label: 'Supplier ID', primary: true, cls: 'mono' },
     { key: 'Timestamp', label: 'Added', type: 'datetime' },
     { key: 'Supplier Company Name', label: 'Company' },
