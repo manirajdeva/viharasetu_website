@@ -154,7 +154,7 @@ const Form = (() => {
 
   function fieldHtml(f, val) {
     val = val == null ? '' : val;
-    const full = ['textarea', 'daterange'].includes(f.type) || f.full ? ' full' : '';
+    const full = ['textarea', 'daterange', 'phone'].includes(f.type) || f.full ? ' full' : '';
     const req = f.required ? ' <span class="req">*</span>' : '';
     const hint = f.hint ? `<div class="hint">${Utils.escapeHtml(f.hint)}</div>` : '';
     let control;

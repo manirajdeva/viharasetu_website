@@ -454,7 +454,7 @@ table.data-table .cell-link:hover { opacity: .75; }
 .date-range-sep { color: var(--ink-soft); font-size: 13px; flex-shrink: 0; }
 
 .phone-wrap { display: flex; gap: 8px; }
-.phone-wrap select { flex: 0 0 128px; width: auto; }
+.phone-wrap select { flex: 0 0 170px; width: auto; }
 .phone-wrap input { flex: 1 1 0; min-width: 0; }
 
 /* ── Toasts ────────────────────────────────────────────────── */
