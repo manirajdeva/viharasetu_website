@@ -321,7 +321,7 @@ table.data-table tbody td {
   border-bottom: 1px solid var(--line);
   font-size: 13.5px;
   vertical-align: top;
-  max-width: 260px;
+  white-space: nowrap;
 }
 table.data-table tbody tr:last-child td { border-bottom: none; }
 table.data-table tbody tr:hover { background: rgba(187, 90, 52, 0.04); }
