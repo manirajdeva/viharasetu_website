@@ -25,12 +25,12 @@ const Suppliers = makeSheetModule({
     { key: 'Supplier Company Name', label: 'Company name', required: true },
     { key: 'Supplier Name', label: 'Contact person' },
     { key: 'States', label: 'Regions / states covered', full: true },
-    { key: 'Contact No', label: 'Phone', type: 'tel' },
+    { key: 'Contact No', label: 'Phone', type: 'phone' },
     { key: 'Supplier ID', label: 'Supplier ID', hint: 'Optional internal code, e.g. SUP-GOA-01' }
   ],
   validate: (v) => {
     if (!v['Supplier Company Name'].trim()) return 'Company name is required.';
-    if (v['Contact No'] && !Utils.isValidMobile(v['Contact No'])) return 'Enter a valid 10-digit phone number.';
+    if (v['Contact No'] && !Utils.isValidMobile(v['Contact No'])) return 'Enter a valid phone number.';
     return null;
   }
 });

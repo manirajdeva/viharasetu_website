@@ -133,7 +133,10 @@ const Form = (() => {
 
   /**
    * fields: [{ key, label, type?, options?, required?, readonly?, hint?, placeholder? }]
-   *   type: text | email | tel | number | date | daterange | select | textarea
+   *   type: text | email | tel | phone | number | date | daterange | select | textarea | picker
+   *   phone: renders a country-code select + local-number input, stored combined
+   *     as "+<code> <number>" in the field's hidden value; `defaultCountry` sets
+   *     the initial code for a blank value (default "+91").
    * values: current values keyed by field key
    * save(values) may return a promise; the Save button shows "Saving…" until it settles.
    */
@@ -142,6 +145,7 @@ const Form = (() => {
     const host = document.getElementById('modalFields');
     host.innerHTML = fields.map(f => fieldHtml(f, values[f.key])).join('');
     wireDateRanges(host);
+    wirePhoneFields(host);
     onSave = save;
     backdrop().classList.add('visible');
     const first = host.querySelector('input:not([readonly]),select,textarea');
@@ -173,6 +177,15 @@ const Form = (() => {
     } else if (f.type === 'picker') {
       control = `<input type="text" list="${f.list || ''}" data-field="${Utils.escapeAttr(f.key)}"
         value="${Utils.escapeAttr(val)}" placeholder="${Utils.escapeAttr(f.placeholder || '')}" autocomplete="off" />`;
+    } else if (f.type === 'phone') {
+      const { cc, num } = Utils.splitPhone(val, f.defaultCountry);
+      control = `
+        <div class="phone-wrap">
+          <select class="phone-cc" ${f.readonly ? 'disabled' : ''}>${Utils.countryCodeOptions(cc)}</select>
+          <input type="tel" class="phone-num" value="${Utils.escapeAttr(num)}"
+            placeholder="${Utils.escapeAttr(f.placeholder || '98765 43210')}" ${f.readonly ? 'readonly' : ''} />
+        </div>
+        <input type="hidden" data-field="${Utils.escapeAttr(f.key)}" value="${Utils.escapeAttr(val)}" />`;
     } else {
       control = `<input type="${f.type || 'text'}" data-field="${Utils.escapeAttr(f.key)}"
         value="${Utils.escapeAttr(val)}" placeholder="${Utils.escapeAttr(f.placeholder || '')}"
@@ -196,6 +209,17 @@ const Form = (() => {
       };
       start.addEventListener('change', sync);
       end.addEventListener('change', sync);
+    });
+  }
+
+  function wirePhoneFields(host) {
+    host.querySelectorAll('.phone-wrap').forEach(wrap => {
+      const cc = wrap.querySelector('.phone-cc');
+      const num = wrap.querySelector('.phone-num');
+      const hidden = wrap.parentElement.querySelector('input[type="hidden"][data-field]');
+      const sync = () => { hidden.value = num.value.trim() ? `${cc.value} ${num.value.trim()}` : ''; };
+      cc.addEventListener('change', sync);
+      num.addEventListener('input', sync);
     });
   }
 

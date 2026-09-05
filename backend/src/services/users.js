@@ -13,10 +13,10 @@ const bcrypt = require('bcryptjs');
 const pool = require('../db');
 const config = require('../config');
 const { roleOf } = require('../auth');
+const { isValidPhone } = require('../phone');
 
 const NAME_RE = /^[A-Za-z0-9._-]{3,80}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MOBILE_RE = /^[6-9]\d{9}$/;
 
 const err = (code, message) => Object.assign(new Error(message), { code });
 const normRole = (v) => (v === 'admin' ? 'admin' : 'employee');
@@ -47,7 +47,7 @@ function validate(v, { isCreate }) {
   const wantsPassword = isCreate || (v.password !== undefined && v.password !== '');
   if (wantsPassword && String(v.password || '').length < 6) return 'Password must be at least 6 characters.';
   if (v.role !== undefined && !['admin', 'employee'].includes(v.role)) return 'Role must be "admin" or "employee".';
-  if (s('mobile') && !MOBILE_RE.test(s('mobile').replace(/\s+/g, ''))) return 'Enter a valid 10-digit mobile number.';
+  if (s('mobile') && !isValidPhone(s('mobile'))) return 'Enter a valid mobile number.';
   if (s('email') && !EMAIL_RE.test(s('email'))) return 'Enter a valid email address.';
   return null;
 }

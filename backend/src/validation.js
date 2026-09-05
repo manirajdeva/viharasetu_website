@@ -6,8 +6,9 @@
  * Returns an error string, or null when the values are acceptable.
  */
 
+const { isValidPhone } = require('./phone');
+
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MOBILE = /^[6-9]\d{9}$/;
 
 const ENUMS = {
   enquiries: { 'Status': ['New', 'Contacted', 'Booked', 'Closed'] },
@@ -30,10 +31,10 @@ function validate(entity, values) {
   if (entity === 'enquiries') {
     if (!s('Name')) return 'Name is required.';
     if (!EMAIL.test(s('Email'))) return 'Enter a valid email address.';
-    if (has('Phone') && !MOBILE.test(s('Phone').replace(/\s+/g, ''))) return 'Enter a valid 10-digit phone number.';
+    if (has('Phone') && !isValidPhone(s('Phone'))) return 'Enter a valid phone number.';
   } else if (entity === 'suppliers') {
     if (!s('Supplier Company Name')) return 'Company name is required.';
-    if (has('Contact No') && !MOBILE.test(s('Contact No').replace(/\s+/g, ''))) return 'Enter a valid 10-digit phone number.';
+    if (has('Contact No') && !isValidPhone(s('Contact No'))) return 'Enter a valid phone number.';
   } else if (entity === 'bookings') {
     if (!s('Customer')) return 'Customer is required.';
     if (!s('Destination')) return 'Destination is required.';

@@ -27,7 +27,7 @@ const Enquiries = makeSheetModule({
   formFields: [
     { key: 'Name', label: 'Name', required: true },
     { key: 'Email', label: 'Email', type: 'email', required: true },
-    { key: 'Phone', label: 'Phone', type: 'tel' },
+    { key: 'Phone', label: 'Phone', type: 'phone' },
     { key: 'Destination', label: 'Destination' },
     { key: 'Travel', label: 'Travel date', type: 'date' },
     { key: 'Status', label: 'Status', type: 'select', options: ['New', 'Contacted', 'Booked', 'Closed'], default: 'New' },
@@ -36,7 +36,7 @@ const Enquiries = makeSheetModule({
   validate: (v) => {
     if (!v.Name.trim()) return 'Name is required.';
     if (!Utils.isValidEmail(v.Email)) return 'Enter a valid email address.';
-    if (v.Phone && !Utils.isValidMobile(v.Phone)) return 'Enter a valid 10-digit phone number.';
+    if (v.Phone && !Utils.isValidMobile(v.Phone)) return 'Enter a valid phone number.';
     return null;
   }
 });

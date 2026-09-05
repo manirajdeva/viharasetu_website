@@ -117,7 +117,45 @@ const Utils = (() => {
 
   /* ---------------- Validation ---------------- */
   const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e || '').trim());
-  const isValidMobile = (m) => /^[6-9]\d{9}$/.test(String(m || '').replace(/\s+/g, ''));
+
+  // Accepts a bare 10-digit Indian mobile (legacy rows) or a "+<country
+  // code> <local number>" value from the phone field below. Mirrored
+  // server-side in backend/src/phone.js.
+  function isValidMobile(m) {
+    const s = String(m || '').trim();
+    const cc = /^\+(\d{1,4})\s*(.*)$/.exec(s);
+    if (cc) {
+      const local = cc[2].replace(/\s+/g, '');
+      return cc[1] === '91' ? /^[6-9]\d{9}$/.test(local) : /^\d{6,14}$/.test(local);
+    }
+    return /^[6-9]\d{9}$/.test(s.replace(/\s+/g, ''));
+  }
+
+  /* ---------------- Phone field (country code + local number) ---------------- */
+  const COUNTRY_CODES = [
+    { code: '+91', label: 'India (+91)' },
+    { code: '+1', label: 'USA/Canada (+1)' },
+    { code: '+44', label: 'UK (+44)' },
+    { code: '+61', label: 'Australia (+61)' },
+    { code: '+65', label: 'Singapore (+65)' },
+    { code: '+971', label: 'UAE (+971)' },
+    { code: '+49', label: 'Germany (+49)' },
+    { code: '+33', label: 'France (+33)' },
+    { code: '+81', label: 'Japan (+81)' },
+    { code: '+86', label: 'China (+86)' },
+  ];
+
+  /** Splits a stored phone value ("+91 8142980110" or a bare legacy number) into { cc, num }. */
+  function splitPhone(value, defaultCc) {
+    const s = String(value == null ? '' : value).trim();
+    const m = /^\+(\d{1,4})\s*(.*)$/.exec(s);
+    if (m) return { cc: '+' + m[1], num: m[2] };
+    return { cc: defaultCc || '+91', num: s };
+  }
+
+  function countryCodeOptions(selectedCc) {
+    return COUNTRY_CODES.map(c => `<option value="${c.code}" ${c.code === selectedCc ? 'selected' : ''}>${escapeHtml(c.label)}</option>`).join('');
+  }
 
   function escapeHtml(s) {
     return String(s == null ? '' : s)
@@ -259,6 +297,7 @@ const Utils = (() => {
     toast, success, error, info, confirmDialog, showLoading, hideLoading,
     todayISO, formatDate, formatDateDMY, formatDateTime, formatCurrency, timeAgo, debounce,
     isValidEmail, isValidMobile, escapeHtml, escapeAttr,
+    COUNTRY_CODES, splitPhone, countryCodeOptions,
     renderPagination, paginate, wireSortableHeaders, compareValues,
     formatDateInput, parseDateRange,
     exportCSV, exportExcel, exportPDF

@@ -80,7 +80,7 @@ const Users = (() => {
         hint: 'admin = full access · employee = view & add only' },
       { key: 'password', label: u ? 'New password' : 'Password', type: 'password', required: !u,
         placeholder: u ? 'leave blank to keep current' : '', hint: 'At least 6 characters' },
-      { key: 'mobile', label: 'Mobile', type: 'tel' },
+      { key: 'mobile', label: 'Mobile', type: 'phone' },
       { key: 'email', label: 'Email', type: 'email', full: true },
     ];
     const values = u
@@ -95,7 +95,7 @@ const Users = (() => {
         const name = String(vals.username || '').trim();
         if (!u && !/^[A-Za-z0-9._-]{3,80}$/.test(name)) throw new Error('Username must be 3–80 chars: letters, digits, dot, dash or underscore.');
         if ((!u || vals.password) && String(vals.password || '').length < 6) throw new Error('Password must be at least 6 characters.');
-        if (vals.mobile && !Utils.isValidMobile(vals.mobile)) throw new Error('Enter a valid 10-digit mobile number.');
+        if (vals.mobile && !Utils.isValidMobile(vals.mobile)) throw new Error('Enter a valid mobile number.');
         if (vals.email && !Utils.isValidEmail(vals.email)) throw new Error('Enter a valid email address.');
 
         if (u) {
