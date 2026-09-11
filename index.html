@@ -2200,5 +2200,111 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
   </a>
 </div>
 
+<!-- Winter promo popup — shown once per browser session when the homepage opens.
+     To retire it after the season, delete this block (style + markup + script)
+     and images/winter.webp / images/winter.jpg. -->
+<style>
+  .promo-popup {
+    position: fixed; inset: 0; z-index: 1100;            /* above the mobile contact bar (999) */
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+    background: rgba(26, 22, 15, 0.72);
+    opacity: 0; transition: opacity .3s ease;
+  }
+  .promo-popup[hidden] { display: none; }
+  .promo-popup.is-open { opacity: 1; }
+  .promo-popup__box {
+    position: relative;
+    /* widest that still fits the viewport height at the image's 1672×941 ratio */
+    width: min(960px, 100%, calc((100vh - 32px) * 1.777));
+    transform: translateY(12px) scale(.98); transition: transform .3s ease;
+  }
+  .promo-popup.is-open .promo-popup__box { transform: none; }
+  .promo-popup__img {
+    display: block; width: 100%; height: auto;
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .promo-popup__close {
+    position: absolute; top: -14px; right: -14px;
+    width: 40px; height: 40px; border-radius: 50%; border: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white); color: var(--ink);
+    font: 400 26px/1 'Jost', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  }
+  .promo-popup__close:hover,
+  .promo-popup__close:focus-visible { background: var(--saffron); color: var(--white); outline: none; }
+  @media (max-width: 600px) {
+    .promo-popup__close { top: -12px; right: -6px; width: 36px; height: 36px; font-size: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .promo-popup, .promo-popup__box { transition: none; }
+  }
+</style>
+
+<div class="promo-popup" id="promoPopup" role="dialog" aria-modal="true" aria-label="Winter getaways with Viharasetu" hidden>
+  <div class="promo-popup__box">
+    <button type="button" class="promo-popup__close" aria-label="Close">&times;</button>
+    <picture>
+      <source data-srcset="images/winter.webp" type="image/webp">
+      <img class="promo-popup__img" data-src="images/winter.jpg" width="1672" height="941" decoding="async"
+           alt="Winter getaways with Viharasetu: Kashmir, Ladakh, Himachal Pradesh, Uttarakhand, Sikkim, North East, Darjeeling, Auli, Ooty, Coorg and Munnar. Your winter story begins here.">
+    </picture>
+  </div>
+</div>
+
+<script>
+(function () {
+  const SEEN_KEY = 'vih_promo_winter_seen';
+  const popup = document.getElementById('promoPopup');
+  if (!popup) return;
+  try { if (sessionStorage.getItem(SEEN_KEY)) return; } catch (e) { /* storage blocked: just show it */ }
+
+  const img = popup.querySelector('.promo-popup__img');
+  const source = popup.querySelector('source');
+  const closeBtn = popup.querySelector('.promo-popup__close');
+  const startedAt = Date.now();
+  let lastFocus = null;
+  let prevOverflow = '';
+
+  function onKey(e) {
+    if (e.key === 'Escape') close();
+    else if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); } // the only control in the dialog
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    prevOverflow = document.body.style.overflow;
+    popup.hidden = false;
+    void popup.offsetWidth;               // commit the hidden→shown change so the fade runs
+    popup.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKey);
+    closeBtn.focus({ preventScroll: true });
+    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* ignore */ }
+  }
+
+  function close() {
+    popup.classList.remove('is-open');
+    document.body.style.overflow = prevOverflow;
+    document.removeEventListener('keydown', onKey);
+    setTimeout(() => { popup.hidden = true; }, 300);
+    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
+  }
+
+  closeBtn.addEventListener('click', close);
+  popup.addEventListener('click', (e) => { if (e.target === popup) close(); });
+
+  // The image is only fetched now (not with the page's own images), and the
+  // popup opens once it has loaded — never as an empty frame — and no sooner
+  // than ~1s after the page appears.
+  img.addEventListener('load', () => setTimeout(open, Math.max(0, 1000 - (Date.now() - startedAt))), { once: true });
+  source.srcset = source.dataset.srcset;
+  img.src = img.dataset.src;
+})();
+</script>
+
 </body>
 </html>
