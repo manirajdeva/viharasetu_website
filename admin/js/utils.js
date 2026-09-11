@@ -134,15 +134,7 @@ const Utils = (() => {
   /* ---------------- Phone field (country code + local number) ---------------- */
   const COUNTRY_CODES = [
     { code: '+91', label: 'India (+91)' },
-    { code: '+1', label: 'USA/Canada (+1)' },
-    { code: '+44', label: 'UK (+44)' },
-    { code: '+61', label: 'Australia (+61)' },
-    { code: '+65', label: 'Singapore (+65)' },
-    { code: '+971', label: 'UAE (+971)' },
-    { code: '+49', label: 'Germany (+49)' },
-    { code: '+33', label: 'France (+33)' },
-    { code: '+81', label: 'Japan (+81)' },
-    { code: '+86', label: 'China (+86)' },
+    { code: '+977', label: 'Nepal (+977)' },
   ];
 
   /** Splits a stored phone value ("+91 8142980110" or a bare legacy number) into { cc, num }. */
@@ -154,7 +146,12 @@ const Utils = (() => {
   }
 
   function countryCodeOptions(selectedCc) {
-    return COUNTRY_CODES.map(c => `<option value="${c.code}" ${c.code === selectedCc ? 'selected' : ''}>${escapeHtml(c.label)}</option>`).join('');
+    // A record saved with a code no longer in the list keeps it as an extra
+    // option, so editing that record doesn't silently rewrite its number.
+    const codes = COUNTRY_CODES.some(c => c.code === selectedCc) || !selectedCc
+      ? COUNTRY_CODES
+      : [...COUNTRY_CODES, { code: selectedCc, label: selectedCc }];
+    return codes.map(c => `<option value="${escapeAttr(c.code)}" ${c.code === selectedCc ? 'selected' : ''}>${escapeHtml(c.label)}</option>`).join('');
   }
 
   function escapeHtml(s) {

@@ -196,8 +196,10 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
   within its enquiry. It works out *Pending Amount* as Total − Σ Amount Paid (grouped by Enquiry ID,
   or by Customer when the ID is blank) and rejects overpayments. The toolbar can filter by Enquiry ID
   and can show only the latest payment per enquiry.
-- **Phone fields** take a country code plus a number and are stored as `"+91 9876543210"`. For `+91`,
-  the number must be a 10-digit Indian mobile. Other codes accept 6–14 digits.
+- **Phone fields** take a country code (India `+91` or Nepal `+977`) plus a number, and are stored as
+  `"+91 9876543210"`. The same two codes are offered on the public contact form. For `+91`, the number
+  must be a 10-digit Indian mobile. Other codes accept 6–14 digits. Older records saved with a
+  different code keep it when edited.
 
 ### Roles
 
