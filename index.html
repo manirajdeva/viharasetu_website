@@ -1451,7 +1451,7 @@
   </div>
 
   <div class="tours-grid">
-    <div class="tour-card">
+    <div class="tour-card" data-journey="varanasi">
       <img class="tour-img" src="images/Varanasi/v8.jpg" alt="Varanasi journey" loading="lazy" />
       <div class="tour-body">
         <div class="tour-meta">
@@ -1462,12 +1462,16 @@
         <p class="tour-desc">From Ganga Aarti at dawn to Buddhist ruins at Sarnath — a full immersion in civilisation's oldest living city.</p>
         <div class="tour-footer">
           <div class="tour-price">₹ xxxxx <span>/ person</span></div>
-          <button class="tour-btn">Enquire</button>
+          <div class="tour-actions">
+            <button type="button" class="tour-btn tour-btn--peace" data-action="story">Get Peace</button>
+            <button type="button" class="tour-btn" data-action="enquire">Enquire</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="tour-card">
+    <!-- Ladakh journey hidden for now; uncomment to bring it back.
+    <div class="tour-card" data-journey="ladakh">
       <img class="tour-img" src="images/ladak/ladakh.jpg" alt="Ladakh journey" loading="lazy" />
       <div class="tour-body">
         <div class="tour-meta">
@@ -1478,12 +1482,35 @@
         <p class="tour-desc">Thiksey, Hemis, Diskit — ancient gompas perched between earth and sky, where Buddhism breathes in thin mountain air.</p>
         <div class="tour-footer">
           <div class="tour-price">₹ xxxxx <span>/ person</span></div>
-          <button class="tour-btn">Enquire</button>
+          <div class="tour-actions">
+            <button type="button" class="tour-btn tour-btn--peace" data-action="story">Get Peace</button>
+            <button type="button" class="tour-btn" data-action="enquire">Enquire</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+
+    <div class="tour-card" data-journey="himachal">
+      <img class="tour-img" src="images/Himachal/Himachal.jpg" alt="Snow-capped peaks above Manali, Himachal Pradesh" loading="lazy" />
+      <div class="tour-body">
+        <div class="tour-meta">
+          <span class="tour-meta-item">8 Nights</span>
+          <span class="tour-meta-item">Himachal</span>
+        </div>
+        <h3 class="tour-name">Snow &amp; Pine — The Himachal Hill Trail</h3>
+        <p class="tour-desc">Colonial Shimla, the snow valleys of Manali, and riverside Kasol in the Parvati Valley — pine forests and slow mountain mornings.</p>
+        <div class="tour-footer">
+          <div class="tour-price">₹ xxxxx <span>/ person</span></div>
+          <div class="tour-actions">
+            <button type="button" class="tour-btn tour-btn--peace" data-action="story">Get Peace</button>
+            <button type="button" class="tour-btn" data-action="enquire">Enquire</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="tour-card">
+    <div class="tour-card" data-journey="kerala">
       <img class="tour-img" src="images/kerala/kerala.jpg" alt="Kerala retreat" loading="lazy" />
       <div class="tour-body">
         <div class="tour-meta">
@@ -1494,7 +1521,10 @@
         <p class="tour-desc">Backwaters, Kathakali, and Panchakarma. A journey for the body and spirit along India's emerald coast.</p>
         <div class="tour-footer">
           <div class="tour-price">₹ xxxxx <span>/ person</span></div>
-          <button class="tour-btn">Enquire</button>
+          <div class="tour-actions">
+            <button type="button" class="tour-btn tour-btn--peace" data-action="story">Get Peace</button>
+            <button type="button" class="tour-btn" data-action="enquire">Enquire</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1760,7 +1790,7 @@
       body: `<p>Multi-day, hand-paced itineraries built around each region's own rhythm — no rushed checklists, just enough time to actually arrive.</p>
         <div class="footer-popup-list">
           <div><p class="fp-item-title">The Eternal City — Varanasi &amp; Sarnath</p><p class="fp-item-text">7 nights. Ganga Aarti at dawn to Buddhist ruins at Sarnath.</p></div>
-          <div><p class="fp-item-title">Sky High — Monasteries of the Himalayas</p><p class="fp-item-text">10 nights. Thiksey, Hemis, Diskit — gompas between earth and sky.</p></div>
+          <div><p class="fp-item-title">Snow &amp; Pine — The Himachal Hill Trail</p><p class="fp-item-text">8 nights. Shimla, Manali, and Kasol — pine forests and snow valleys.</p></div>
           <div><p class="fp-item-title">Kerala Backwater Retreat</p><p class="fp-item-text">Houseboats, spice gardens, and slow mornings on the water.</p></div>
         </div>`
     },
@@ -1996,27 +2026,8 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
     //         alert("❌ Failed to send enquiry. Please try again.");
     //     });
     
-    // Send to the Viharasetu backend API (backend/ — Node + MySQL). This is the
-    // legacy no-action path: it appends a new "New" enquiry and returns its
-    // auto-generated Enquiry ID.
-    // Sent as text/plain on purpose: a JSON Content-Type header triggers a CORS
-    // preflight (OPTIONS) request. The API reads the raw body regardless of the
-    // declared content type, so text/plain keeps this a "simple request" that
-    // works from GitHub Pages while still letting us read the response.
-    // Set this to your deployed API host + "/exec", e.g.
-    //   https://viharasetu-api.up.railway.app/exec
-    const scriptUrl = "https://viharasetu-api.onrender.com/exec";
-
-    fetch(scriptUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(res => res.json())
+    sendEnquiry(formData)
     .then(data => {
-        if (!data.ok) throw new Error(data.error || 'Unknown error');
         alert("✅ Thank you! Your enquiry has been sent successfully."
             + (data.enquiryId ? "\n\nYour enquiry ID: " + data.enquiryId + " — quote this if you follow up with us." : ""));
         document.getElementById("contactForm").reset();
@@ -2027,6 +2038,302 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
         alert("❌ Failed to send enquiry. Please try again.");
     });
 });
+
+// Send an enquiry to the Viharasetu backend API (backend/ — Node + MySQL).
+// Shared by the contact form above and the Signature Journeys "Enquire" popup.
+// This is the legacy no-action path: it appends a new "New" enquiry and
+// resolves with the response, which carries its auto-generated Enquiry ID.
+// Sent as text/plain on purpose: a JSON Content-Type header triggers a CORS
+// preflight (OPTIONS) request. The API reads the raw body regardless of the
+// declared content type, so text/plain keeps this a "simple request" that
+// works from GitHub Pages while still letting us read the response.
+function sendEnquiry(formData) {
+    // Set this to your deployed API host + "/exec", e.g.
+    //   https://viharasetu-api.up.railway.app/exec
+    const scriptUrl = "https://viharasetu-api.onrender.com/exec";
+
+    return fetch(scriptUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.ok) throw new Error(data.error || 'Unknown error');
+        return data;
+    });
+}
+</script>
+
+<!-- Signature Journeys popups: "Get Peace" opens a travel story about the place,
+     "Enquire" opens an enquiry form pre-filled with that journey. Both reuse the
+     footer popup shell (.footer-popup-backdrop / .footer-popup). -->
+<style>
+  /* Card buttons — the footer sits at the bottom of every card so the button
+     rows line up, and the two buttons stack when they can't fit side by side. */
+  .tour-card { display: flex; flex-direction: column; }
+  .tour-body { flex: 1; display: flex; flex-direction: column; }
+  .tour-footer { flex-wrap: wrap; gap: 0.9rem; margin-top: auto; }
+  .tour-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; flex: 1 1 100%; }
+  .tour-actions .tour-btn { flex: 1 1 0; min-width: max-content; padding: 0.65rem 0.8rem; white-space: nowrap; }
+  .tour-btn--peace { color: var(--gold); border-color: rgba(184,145,63,0.55); }
+  .tour-btn--peace:hover { color: var(--ink); background: var(--gold); border-color: var(--gold); }
+  .tour-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* Travel story */
+  .jm-hero {
+    display: block; width: calc(100% + 4.4rem); max-width: none; height: 210px;
+    object-fit: cover; margin: -2.2rem -2.2rem 1.5rem; border-radius: 20px 20px 0 0;
+  }
+  .jm-vibes { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.1rem; }
+  .jm-vibes span {
+    font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem; border-radius: 999px;
+    background: var(--saffron-light); color: var(--saffron-dark);
+  }
+  .jm-moments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin: 0.3rem 0 1.3rem; }
+  .jm-moment { background: var(--white); border: 1px solid rgba(184,145,63,0.25); border-radius: 12px; padding: 0.8rem 0.9rem; }
+  .footer-popup .jm-moment-label {
+    font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin: 0 0 0.3rem;
+  }
+  .footer-popup .jm-moment-text { font-size: 0.82rem; line-height: 1.55; margin: 0; }
+  .footer-popup .jm-leave {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.25rem; line-height: 1.45; color: var(--ink);
+    border-left: 3px solid var(--gold); padding-left: 1rem; margin: 0 0 1.4rem;
+  }
+  .jm-btn { border: none; cursor: pointer; font-family: inherit; }
+
+  /* Enquiry form */
+  .jm-form { display: grid; gap: 0.75rem; }
+  .jm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .jm-row--phone { grid-template-columns: 9.5rem 1fr; }
+  .jm-field { display: grid; gap: 0.3rem; }
+  .jm-field span { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
+  .jm-form input, .jm-form select {
+    width: 100%; padding: 0.7rem 0.85rem; font: inherit; font-size: 0.9rem;
+    color: var(--ink); background: var(--white);
+    border: 1px solid rgba(26,22,15,0.15); border-radius: 10px;
+  }
+  .jm-form input:focus, .jm-form select:focus {
+    outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,145,63,0.2);
+  }
+  .jm-form .footer-popup-cta { justify-self: start; margin-top: 0.3rem; }
+  .jm-form .footer-popup-cta:disabled { opacity: 0.6; cursor: progress; }
+  .footer-popup .jm-status { font-size: 0.85rem; margin: 0; }
+  .footer-popup .jm-status:empty { display: none; }
+  .footer-popup .jm-status.is-error { color: #b3261e; }
+
+  @media (max-width: 600px) {
+    .jm-hero { width: calc(100% + 2.8rem); height: 170px; margin: -1.6rem -1.4rem 1.2rem; border-radius: 16px 16px 0 0; }
+    .jm-moments { grid-template-columns: 1fr; }
+    .jm-row { grid-template-columns: 1fr; }
+    .jm-row--phone { grid-template-columns: 8.5rem 1fr; }
+  }
+</style>
+
+<script>
+(function () {
+  const grid = document.querySelector('.tours-grid');
+  if (!grid) return;
+
+  // Keyed by each card's data-journey attribute.
+  const stories = {
+    varanasi: {
+      place: "Varanasi & Sarnath",
+      title: "Where Time Moves Like the River",
+      vibes: ["Devotional", "Timeless", "Soulful", "Alive"],
+      story: [
+        "You wake before the city does. By five, a boatman is rowing you out onto the Ganga, and the ghats slowly turn gold — pilgrims waist-deep in the river, bells from a hundred temples, marigolds drifting past the bow. Nothing here is staged; you are simply let in on a ritual that has repeated for three thousand years.",
+        "Afternoons are for getting lost in the galis — narrow lanes of silk weavers, chai in clay cups, and a cow that politely refuses to move. A short drive away in Sarnath, the noise falls away completely: the deer park where the Buddha first taught is quiet enough to hear the leaves."
+      ],
+      moments: [
+        ["Dawn", "A slow boat ride as the ghats wake up in prayer."],
+        ["Midday", "Silk lanes, street food, and the stillness of Sarnath."],
+        ["Dusk", "Ganga Aarti — fire, conch shells, and chanting on the water."]
+      ],
+      leave: "You leave lighter. Varanasi has a way of putting everything else in perspective."
+    },
+    himachal: {
+      place: "Shimla · Manali · Kasol",
+      title: "Pine Air and Slow Mountain Mornings",
+      vibes: ["Fresh", "Cosy", "Adventurous", "Unhurried"],
+      story: [
+        "The first thing you notice is the air — cold, clean, and smelling of deodar and woodsmoke. In Shimla you stroll the Mall Road wrapped in a shawl, stopping for hot jalebis while the Ridge lights up at dusk and the toy train whistles somewhere below.",
+        "Manali turns up the drama: snowfields at Solang, apple orchards, and rivers loud with meltwater. Then Kasol slows everything back down — riverside cafés in the Parvati Valley, long breakfasts, and afternoons that dissolve into the sound of water over stones."
+      ],
+      moments: [
+        ["Dawn", "Mist lifting off the snow peaks, chai steaming on the balcony."],
+        ["Midday", "Snow at Solang, or a walk through the orchards of Naggar."],
+        ["Dusk", "A bonfire, a Himachali dham, and more stars than you remember."]
+      ],
+      leave: "You leave recharged — the good kind of tired that comes from mountain air, not screens."
+    },
+    kerala: {
+      place: "Kerala Backwaters",
+      title: "A Coast That Asks You to Slow Down",
+      vibes: ["Healing", "Green", "Serene", "Nourishing"],
+      story: [
+        "Kerala never rushes you. Your houseboat drifts through the backwaters at walking pace, past paddy fields, white church spires, and children waving from the banks. Lunch is karimeen fried in banana leaf; the afternoon is a hammock and the soft sound of paddles.",
+        "Mornings begin with warm oils and an Ayurvedic doctor who asks how you sleep, what you eat, how you feel. By the end of the week the Panchakarma rituals, the yoga, and the simple food add up to something you can feel. Evenings bring Kathakali — painted faces telling ancient epics without a single word."
+      ],
+      moments: [
+        ["Dawn", "Yoga by the lagoon as the morning mist lifts."],
+        ["Midday", "A lazy houseboat drift through palm-lined canals."],
+        ["Dusk", "Kathakali, oil lamps, and temple drums in the distance."]
+      ],
+      leave: "You leave restored — body, mind, and a calm that follows you home."
+    },
+    ladakh: {
+      place: "Leh Ladakh",
+      title: "Silence at 4,000 Metres",
+      vibes: ["Spiritual", "Vast", "Still", "Raw"],
+      story: [
+        "Ladakh humbles you from the first breath. The air is thin, the sky is enormous, and the mountains are bare enough to show their bones. You spend your first day simply acclimatising — and discover that doing nothing here is its own kind of meditation.",
+        "At Thiksey, the monastery horns sound over the valley at dawn. At Hemis, prayer wheels spin beneath your palm. In Nubra you cross silver dunes between snow peaks, and at Pangong the lake changes colour every hour."
+      ],
+      moments: [
+        ["Dawn", "Morning prayers with the monks at Thiksey."],
+        ["Midday", "High passes, prayer flags, and endless sky."],
+        ["Dusk", "Butter tea and stories in a Ladakhi home."]
+      ],
+      leave: "You leave quiet inside — and it lasts longer than you expect."
+    }
+  };
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'footer-popup-backdrop';
+  backdrop.style.zIndex = '1000'; // above the mobile contact bar (999), below the promo popup (1100)
+  backdrop.innerHTML = '<div class="footer-popup" role="dialog" aria-modal="true" aria-labelledby="jmTitle"><button type="button" class="footer-popup-close" aria-label="Close">✕</button><div class="jm-content"></div></div>';
+  document.body.appendChild(backdrop);
+  const box = backdrop.querySelector('.footer-popup');
+  const content = backdrop.querySelector('.jm-content');
+  const closeBtn = backdrop.querySelector('.footer-popup-close');
+  let lastTrigger = null;
+
+  function openPopup(html) {
+    content.innerHTML = html;
+    backdrop.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    box.scrollTop = 0;
+    closeBtn.focus();
+  }
+  function closePopup() {
+    if (!backdrop.classList.contains('visible')) return;
+    backdrop.classList.remove('visible');
+    document.body.style.overflow = '';
+    if (lastTrigger) lastTrigger.focus();
+  }
+  closeBtn.addEventListener('click', closePopup);
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closePopup(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
+
+  function cardInfo(card) {
+    const meta = [...card.querySelectorAll('.tour-meta-item')].map((m) => m.textContent.trim());
+    return {
+      story: stories[card.dataset.journey],
+      name: card.querySelector('.tour-name').textContent.trim(),
+      meta: meta.join(' · '),
+      image: card.querySelector('.tour-img').getAttribute('src')
+    };
+  }
+
+  function showStory(card) {
+    const info = cardInfo(card);
+    const s = info.story;
+    if (!s) { showEnquiry(card); return; }
+    openPopup(`
+      <img class="jm-hero" src="${esc(info.image)}" alt="">
+      <p class="footer-popup-tag">Travel Story · ${esc(s.place)}</p>
+      <h2 id="jmTitle">${esc(s.title)}</h2>
+      <div class="jm-vibes">${s.vibes.map((v) => `<span>${esc(v)}</span>`).join('')}</div>
+      ${s.story.map((p) => `<p>${esc(p)}</p>`).join('')}
+      <div class="jm-moments">
+        ${s.moments.map(([when, what]) => `<div class="jm-moment"><p class="jm-moment-label">${esc(when)}</p><p class="jm-moment-text">${esc(what)}</p></div>`).join('')}
+      </div>
+      <p class="jm-leave">${esc(s.leave)}</p>
+      <button type="button" class="footer-popup-cta jm-btn" data-jm="enquire">Plan this journey →</button>`);
+    content.querySelector('[data-jm="enquire"]').addEventListener('click', () => showEnquiry(card));
+  }
+
+  function showEnquiry(card) {
+    const info = cardInfo(card);
+    openPopup(`
+      <p class="footer-popup-tag">Plan This Journey</p>
+      <h2 id="jmTitle">${esc(info.name)}</h2>
+      <p>${esc(info.meta)} · Share a few details and we'll reply within 24 hours with a tailored itinerary and quote.</p>
+      <form class="jm-form">
+        <div class="jm-row">
+          <label class="jm-field"><span>Your name</span><input name="name" type="text" autocomplete="name" required></label>
+          <label class="jm-field"><span>Email address</span><input name="email" type="email" autocomplete="email" required></label>
+        </div>
+        <div class="jm-row jm-row--phone">
+          <label class="jm-field"><span>Code</span><select name="phoneCc"><option value="+91" selected>India (+91)</option><option value="+977">Nepal (+977)</option></select></label>
+          <label class="jm-field"><span>Contact number</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel-national" required></label>
+        </div>
+        <label class="jm-field"><span>Journey</span><input name="destination" type="text" required></label>
+        <label class="jm-field"><span>Travel dates / duration</span><input name="travel" type="text" placeholder="e.g. 10–18 Dec, 2 adults" required></label>
+        <button type="submit" class="footer-popup-cta jm-btn">Send Enquiry →</button>
+        <p class="jm-status" role="status" aria-live="polite"></p>
+      </form>`);
+
+    const form = content.querySelector('.jm-form');
+    const field = (n) => form.querySelector(`[name="${n}"]`);
+    field('destination').value = `${info.name} (${info.meta})`;
+    field('name').focus();
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const status = form.querySelector('.jm-status');
+      const phone = field('phone').value.trim();
+      const formData = {
+        name: field('name').value.trim(),
+        email: field('email').value.trim(),
+        phone: phone ? `${field('phoneCc').value} ${phone}` : '',
+        destination: field('destination').value.trim(),
+        travel: field('travel').value.trim()
+      };
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      status.textContent = '';
+      status.classList.remove('is-error');
+
+      sendEnquiry(formData)
+        .then((data) => {
+          content.innerHTML = `
+            <p class="footer-popup-tag">Enquiry Sent</p>
+            <h2 id="jmTitle">Thank you, ${esc(formData.name)}</h2>
+            <p>We've received your enquiry for <strong>${esc(info.name)}</strong> and will get back to you within 24 hours.</p>
+            ${data.enquiryId ? `<p>Your enquiry ID: <strong>${esc(data.enquiryId)}</strong> — quote this if you follow up with us.</p>` : ''}
+            <button type="button" class="footer-popup-cta jm-btn" data-jm="close">Close</button>`;
+          content.querySelector('[data-jm="close"]').addEventListener('click', closePopup);
+          closeBtn.focus();
+        })
+        .catch((err) => {
+          console.error('❌ Error:', err);
+          btn.disabled = false;
+          btn.textContent = 'Send Enquiry →';
+          status.textContent = "Sorry, we couldn't send your enquiry. Please try again, or email viharasetu@gmail.com.";
+          status.classList.add('is-error');
+        });
+    });
+  }
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tour-btn[data-action]');
+    if (!btn) return;
+    lastTrigger = btn;
+    const card = btn.closest('.tour-card');
+    if (btn.dataset.action === 'story') showStory(card);
+    else showEnquiry(card);
+  });
+})();
 </script>
 
 <script>
