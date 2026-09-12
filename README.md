@@ -79,7 +79,8 @@ fails. That is expected.
 ## Repository layout
 
 ```
-index.html                     Homepage: hero slideshow, journeys, packages, testimonials, contact form
+index.html                     Homepage: hero slideshow, Signature Journeys (story + enquiry popups),
+                               packages, testimonials, contact form, winter promo popup
 feedback.html                  Traveler feedback page (mailto + WhatsApp links, no backend)
 admin.html                     Redirect stub → admin/ (so old bookmarks keep working)
 CNAME                          GitHub Pages custom domain (viharasetu.co.in)
@@ -136,12 +137,31 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
 - **Liquid-glass buttons**: the "Home" and "Back to Destinations" buttons on package pages use
   `backdrop-filter: blur()` with a translucent gradient.
 - **Gallery lightbox** and **itinerary modal** on package pages (`destinations/*.js`).
-- **Contact form**: creates a `New` enquiry through the API and shows the visitor their Enquiry ID
-  (e.g. `VH-20260911-01`). The phone number is sent as `"+<country code> <number>"`. Both website
-  forms also ask for the number of people, a hotel preference (3 / 4 / 5 Star), and optional special
-  requests (flights, celebrations, meals…). These show in the portal's Enquiries table. Every website
-  submission (this form and the Signature Journeys "Enquire" popup) is also logged, with its
-  timestamp and `source`, in the `site_enquirys` table.
+- **Signature Journeys** (homepage): journey cards for Varanasi & Sarnath, the Himachal Hill Trail,
+  and the Kerala Ayurveda Retreat. A Ladakh card is commented out in `index.html`, ready to bring
+  back. Each card has two buttons:
+  - **Get Peace** opens a travel-story popup. The stories live in the `stories` object in
+    `index.html`, keyed by the card's `data-journey`. A card with no story opens the enquiry form
+    instead.
+  - **Enquire** opens an enquiry form pre-filled with that journey.
+- **Enquiry forms**: the homepage contact form and the journey "Enquire" popup both ask for the
+  following:
+  - name and email
+  - phone: a `+91` / `+977` code plus the number, sent as `"+<code> <number>"`
+  - destination and travel dates
+  - number of people (1–999)
+  - hotel preference (3 / 4 / 5 Star)
+  - optional special requests (flights, celebrations, meals…)
+
+  Both forms submit through `sendEnquiry()` in `index.html`. The API creates a `New` enquiry, and the
+  visitor sees their Enquiry ID (e.g. `VH-20260911-01`). Each submission is also logged in the
+  `site_enquirys` table with its timestamp and `source`. If the API rejects a field, the visitor sees
+  the reason (for example "Enter a valid phone number.").
+- **Winter promo popup**: the winter getaways banner opens once per browser session when the
+  homepage loads (`sessionStorage` key `vih_promo_winter_seen`). It closes with ×, a click outside,
+  or Esc. The image (`images/winter.webp`, with `images/winter.jpg` as a fallback) is fetched only by
+  the popup script, and the popup waits until the image has loaded. To run a different promo, swap
+  those two images and update the `alt` text.
 
 ### Destination packages
 
@@ -196,6 +216,8 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
   Moving between sections makes no further requests.
 - Picking an **Enquiry ID** in Bookings or Payments fills in Customer, Destination, and Travel Dates
   from that enquiry (and, in Bookings, Pax from its number of people).
+- **Enquiries** include the website forms' No. of People, Hotel Preference, and Special Requests.
+  All three are optional when an enquiry is added in the portal (for example, one taken by phone).
 - **Payments:** the server assigns each payment a `PMT-000001`-style ID and an instalment number
   within its enquiry. It works out *Pending Amount* as Total − Σ Amount Paid (grouped by Enquiry ID,
   or by Customer when the ID is blank) and rejects overpayments. The toolbar can filter by Enquiry ID
@@ -260,6 +282,29 @@ At least one admin must always exist, and no one can delete their own account.
 
 The API URL is set in two places. If the backend ever moves, update both:
 `PRODUCTION_SCRIPT_URL` in `admin/js/api.js` and `scriptUrl` in `index.html`.
+
+## Releases
+
+Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
+[GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
+added and changed. The current release is **v3.2.0** (2026-09-12).
+
+- **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
+- **MINOR**: new features, such as new form fields or homepage sections.
+- **PATCH**: fixes only.
+
+To cut a release once the changes are on `main`:
+
+1. Update the "current release" line above as part of the final commit.
+2. Tag `main` and publish the release:
+
+   ```bash
+   git checkout main && git pull
+   git tag -a v3.2.1 -m "v3.2.1 — Short title"
+   git push origin v3.2.1
+   gh release create v3.2.1 --title "v3.2.1 — Short title" --notes-file notes.md
+   git checkout viharasetu
+   ```
 
 ## Operations notes
 
