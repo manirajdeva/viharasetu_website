@@ -21,6 +21,9 @@ const Enquiries = makeSheetModule({
     { key: 'Phone', label: 'Phone' },
     { key: 'Destination', label: 'Destination' },
     { key: 'Travel', label: 'Travel date', type: 'date-dmy' },
+    { key: 'No. of People', label: 'People' },
+    { key: 'Hotel Preference', label: 'Hotel' },
+    { key: 'Special Requests', label: 'Special requests' },
     { key: 'Status', label: 'Status' },
     { key: 'Notes', label: 'Notes' }
   ],
@@ -30,6 +33,9 @@ const Enquiries = makeSheetModule({
     { key: 'Phone', label: 'Phone', type: 'phone' },
     { key: 'Destination', label: 'Destination' },
     { key: 'Travel', label: 'Travel date', type: 'date' },
+    { key: 'No. of People', label: 'No. of people', type: 'number', step: '1', min: '1' },
+    { key: 'Hotel Preference', label: 'Hotel preference', type: 'select', options: ['', '3 Star', '4 Star', '5 Star'] },
+    { key: 'Special Requests', label: 'Special requests', type: 'textarea' },
     { key: 'Status', label: 'Status', type: 'select', options: ['New', 'Contacted', 'Booked', 'Closed'], default: 'New' },
     { key: 'Notes', label: 'Notes', type: 'textarea' }
   ],
@@ -37,6 +43,8 @@ const Enquiries = makeSheetModule({
     if (!v.Name.trim()) return 'Name is required.';
     if (!Utils.isValidEmail(v.Email)) return 'Enter a valid email address.';
     if (v.Phone && !Utils.isValidMobile(v.Phone)) return 'Enter a valid phone number.';
+    const people = String(v['No. of People'] || '').trim();
+    if (people && !/^[1-9]\d{0,2}$/.test(people)) return 'Number of people must be a whole number from 1 to 999.';
     return null;
   }
 });

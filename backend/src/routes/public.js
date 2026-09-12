@@ -3,7 +3,8 @@
  * Unauthenticated, read-only-ish endpoints for the public website.
  *
  *   GET  /api/public/health            -> { ok, time }
- *   POST /api/public/enquiries         { name, email, phone, destination, travel, notes? }
+ *   POST /api/public/enquiries         { name, email, phone, destination, travel,
+ *                                        no_of_people?, hotel_preference?, special_req?, notes? }
  *                                      -> { ok, enquiryId }   (rate limited)
  *
  * The homepage contact form currently posts to /exec (legacy path); this
@@ -14,8 +15,7 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 
-const sheets = require('../services/sheets');
-const { validate } = require('../validation');
+const siteEnquiries = require('../services/siteEnquiries');
 
 const router = express.Router();
 
@@ -31,21 +31,12 @@ router.get('/public/health', (req, res) => res.json({ ok: true, time: new Date()
 
 router.post('/public/enquiries', enquiryLimiter, async (req, res, next) => {
   try {
-    const b = req.body && typeof req.body === 'object' ? req.body : {};
-    const values = {
-      'Name': b.name || '',
-      'Email': b.email || '',
-      'Phone': b.phone || '',
-      'Destination': b.destination || '',
-      'Travel': b.travel || '',
-      'Status': 'New',
-      'Notes': b.notes || b.message || '',
-    };
-    const vErr = validate('enquiries', values);
-    if (vErr) return res.status(422).json({ ok: false, error: { code: 'VALIDATION', message: vErr } });
-    const result = await sheets.createRow('enquiries', values);
+    const result = await siteEnquiries.submit(req.body);
     return res.status(201).json({ ok: true, enquiryId: result.enquiryId });
   } catch (err) {
+    if (err && err.code === 'VALIDATION') {
+      return res.status(422).json({ ok: false, error: { code: 'VALIDATION', message: err.message } });
+    }
     return next(err);
   }
 });

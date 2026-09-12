@@ -873,13 +873,17 @@
     color: var(--white);
     outline: none;
     transition: border-color 0.3s;
+    min-width: 0;
   }
 
   .nl-input::placeholder { color: rgba(255,255,255,0.4); }
   .nl-input:focus { border-color: var(--gold); }
 
-  select.nl-input { flex: 0 0 140px; }
+  #phoneCc { flex: 0 0 140px; }
+  /* A required select still on its blank first option reads as a placeholder. */
+  select.nl-input:invalid { color: rgba(255,255,255,0.4); }
   select.nl-input option { color: var(--ink); background: var(--white); }
+  textarea.nl-input { resize: vertical; min-height: 5.5rem; line-height: 1.6; }
 
   .nl-btn {
     background: var(--gold);
@@ -894,6 +898,7 @@
     font-weight: 500;
     transition: background 0.3s;
     white-space: nowrap;
+    align-self: flex-start;
   }
 
   .nl-btn:hover { background: #d4a84d; }
@@ -1582,17 +1587,40 @@
          placeholder="Dream Destination (e.g. Varanasi, Ladakh, Kerala...)"
          required>
 
+  <input id="travel"
+         class="nl-input"
+         type="text"
+         placeholder="Travel Dates / Duration"
+         required>
+
   <div class="form-row">
-    <input id="travel"
+    <input id="noOfPeople"
            class="nl-input"
-           type="text"
-           placeholder="Travel Dates / Duration"
+           type="number"
+           min="1"
+           max="999"
+           step="1"
+           inputmode="numeric"
+           placeholder="No. of People"
            required>
 
-    <button type="submit" class="nl-btn">
-      Send Enquiry →
-    </button>
+    <select id="hotelPreference" class="nl-input" required>
+      <option value="" disabled selected hidden>Hotel Preference</option>
+      <option value="3 Star">3 Star</option>
+      <option value="4 Star">4 Star</option>
+      <option value="5 Star">5 Star</option>
+    </select>
   </div>
+
+  <textarea id="specialReq"
+            class="nl-input"
+            rows="3"
+            maxlength="1000"
+            placeholder="Special Requests — flights, celebrations, meals… (optional)"></textarea>
+
+  <button type="submit" class="nl-btn">
+    Send Enquiry →
+  </button>
 
   <p class="nl-note">
       We respond within 24 hours. No spam, ever.
@@ -2012,7 +2040,11 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
             ? `${document.getElementById("phoneCc").value} ${document.getElementById("phone").value.trim()}`
             : "",
         destination: document.getElementById("destination").value,
-        travel: document.getElementById("travel").value
+        travel: document.getElementById("travel").value,
+        no_of_people: document.getElementById("noOfPeople").value,
+        hotel_preference: document.getElementById("hotelPreference").value,
+        special_req: document.getElementById("specialReq").value.trim(),
+        source: "contact_form"
     };
     
     // Send email via EmailJS
@@ -2035,7 +2067,7 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
     })
     .catch(error => {
         console.error("❌ Error:", error);
-        alert("❌ Failed to send enquiry. Please try again.");
+        alert("❌ " + (error.userMessage || "Failed to send enquiry. Please try again."));
     });
 });
 
@@ -2061,7 +2093,13 @@ function sendEnquiry(formData) {
     })
     .then(res => res.json())
     .then(data => {
-        if (!data.ok) throw new Error(data.error || 'Unknown error');
+        if (!data.ok) {
+            // The API explains rejections ("Enter a valid phone number.");
+            // keep that text so the forms can show it to the visitor.
+            const err = new Error((data.error && data.error.message) || 'Unknown error');
+            err.userMessage = data.error && data.error.message;
+            throw err;
+        }
         return data;
     });
 }
@@ -2113,14 +2151,16 @@ function sendEnquiry(formData) {
   .jm-row--phone { grid-template-columns: 9.5rem 1fr; }
   .jm-field { display: grid; gap: 0.3rem; }
   .jm-field span { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
-  .jm-form input, .jm-form select {
+  .jm-form input, .jm-form select, .jm-form textarea {
     width: 100%; padding: 0.7rem 0.85rem; font: inherit; font-size: 0.9rem;
     color: var(--ink); background: var(--white);
     border: 1px solid rgba(26,22,15,0.15); border-radius: 10px;
   }
-  .jm-form input:focus, .jm-form select:focus {
+  .jm-form input:focus, .jm-form select:focus, .jm-form textarea:focus {
     outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,145,63,0.2);
   }
+  .jm-form select:invalid { color: var(--ink-muted); }
+  .jm-form textarea { resize: vertical; min-height: 4.5rem; line-height: 1.5; }
   .jm-form .footer-popup-cta { justify-self: start; margin-top: 0.3rem; }
   .jm-form .footer-popup-cta:disabled { opacity: 0.6; cursor: progress; }
   .footer-popup .jm-status { font-size: 0.85rem; margin: 0; }
@@ -2277,7 +2317,12 @@ function sendEnquiry(formData) {
           <label class="jm-field"><span>Contact number</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel-national" required></label>
         </div>
         <label class="jm-field"><span>Journey</span><input name="destination" type="text" required></label>
-        <label class="jm-field"><span>Travel dates / duration</span><input name="travel" type="text" placeholder="e.g. 10–18 Dec, 2 adults" required></label>
+        <label class="jm-field"><span>Travel dates / duration</span><input name="travel" type="text" placeholder="e.g. 10–18 Dec" required></label>
+        <div class="jm-row">
+          <label class="jm-field"><span>No. of people</span><input name="no_of_people" type="number" min="1" max="999" step="1" inputmode="numeric" required></label>
+          <label class="jm-field"><span>Hotel preference</span><select name="hotel_preference" required><option value="" disabled selected hidden>Select</option><option value="3 Star">3 Star</option><option value="4 Star">4 Star</option><option value="5 Star">5 Star</option></select></label>
+        </div>
+        <label class="jm-field"><span>Special requests (optional)</span><textarea name="special_req" rows="3" maxlength="1000" placeholder="Flights, celebrations, meals…"></textarea></label>
         <button type="submit" class="footer-popup-cta jm-btn">Send Enquiry →</button>
         <p class="jm-status" role="status" aria-live="polite"></p>
       </form>`);
@@ -2297,7 +2342,11 @@ function sendEnquiry(formData) {
         email: field('email').value.trim(),
         phone: phone ? `${field('phoneCc').value} ${phone}` : '',
         destination: field('destination').value.trim(),
-        travel: field('travel').value.trim()
+        travel: field('travel').value.trim(),
+        no_of_people: field('no_of_people').value,
+        hotel_preference: field('hotel_preference').value,
+        special_req: field('special_req').value.trim(),
+        source: 'journey_popup'
       };
       btn.disabled = true;
       btn.textContent = 'Sending…';
@@ -2319,7 +2368,8 @@ function sendEnquiry(formData) {
           console.error('❌ Error:', err);
           btn.disabled = false;
           btn.textContent = 'Send Enquiry →';
-          status.textContent = "Sorry, we couldn't send your enquiry. Please try again, or email viharasetu@gmail.com.";
+          status.textContent = err.userMessage
+            || "Sorry, we couldn't send your enquiry. Please try again, or email viharasetu@gmail.com.";
           status.classList.add('is-error');
         });
     });

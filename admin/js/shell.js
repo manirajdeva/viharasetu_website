@@ -189,7 +189,8 @@ const Form = (() => {
     } else {
       control = `<input type="${f.type || 'text'}" data-field="${Utils.escapeAttr(f.key)}"
         value="${Utils.escapeAttr(val)}" placeholder="${Utils.escapeAttr(f.placeholder || '')}"
-        ${f.readonly ? 'readonly' : ''} ${f.type === 'number' ? 'step="0.01"' : ''} />`;
+        ${f.readonly ? 'readonly' : ''} ${f.type === 'number' ? `step="${f.step || '0.01'}"` : ''}
+        ${f.min != null ? `min="${Utils.escapeAttr(f.min)}"` : ''} />`;
     }
     return `<div class="field${full}"><label>${Utils.escapeHtml(f.label)}${req}</label>${control}${hint}</div>`;
   }
@@ -609,6 +610,7 @@ function wireEnquiryPicker() {
     if (!e) return;
     setField('Customer', e['Name']);
     setField('Destination', e['Destination']);
+    setField('Pax', e['No. of People']);
     fillTravelDates(e['Travel']);
   }
 

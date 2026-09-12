@@ -137,7 +137,11 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
   `backdrop-filter: blur()` with a translucent gradient.
 - **Gallery lightbox** and **itinerary modal** on package pages (`destinations/*.js`).
 - **Contact form**: creates a `New` enquiry through the API and shows the visitor their Enquiry ID
-  (e.g. `VH-20260911-01`). The phone number is sent as `"+<country code> <number>"`.
+  (e.g. `VH-20260911-01`). The phone number is sent as `"+<country code> <number>"`. Both website
+  forms also ask for the number of people, a hotel preference (3 / 4 / 5 Star), and optional special
+  requests (flights, celebrations, meals…). These show in the portal's Enquiries table. Every website
+  submission (this form and the Signature Journeys "Enquire" popup) is also logged, with its
+  timestamp and `source`, in the `site_enquirys` table.
 
 ### Destination packages
 
@@ -191,7 +195,7 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
 - The portal loads all its data with a single `bootstrap` call on open, and **Refresh** reloads it.
   Moving between sections makes no further requests.
 - Picking an **Enquiry ID** in Bookings or Payments fills in Customer, Destination, and Travel Dates
-  from that enquiry.
+  from that enquiry (and, in Bookings, Pax from its number of people).
 - **Payments:** the server assigns each payment a `PMT-000001`-style ID and an instalment number
   within its enquiry. It works out *Pending Amount* as Total − Σ Amount Paid (grouped by Enquiry ID,
   or by Customer when the ID is blank) and rejects overpayments. The toolbar can filter by Enquiry ID
@@ -199,7 +203,8 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
 - **Phone fields** take a country code (India `+91` or Nepal `+977`) plus a number, and are stored as
   `"+91 9876543210"`. The same two codes are offered on the public contact form. For `+91`, the number
   must be a 10-digit Indian mobile. Other codes accept 6–14 digits. Older records saved with a
-  different code keep it when edited.
+  different code keep it when edited. On the public website forms, the API drops a leading `0` or
+  `91` that visitors type before an Indian mobile (`+91 06363895647` → `+91 6363895647`).
 
 ### Roles
 

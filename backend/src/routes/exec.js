@@ -21,6 +21,7 @@ const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
 const bootstrap = require('../services/bootstrap');
 const users = require('../services/users');
+const siteEnquiries = require('../services/siteEnquiries');
 const { updateProfile } = require('../services/profile');
 const { validate } = require('../validation');
 const { ENTITY_KEYS } = require('../mappers');
@@ -72,20 +73,10 @@ router.post(
     const body = req.body && typeof req.body === 'object' ? req.body : {};
 
     try {
-      // Legacy public contact form: no sheet, no action -> append an enquiry.
+      // Public website forms: no sheet, no action -> append an enquiry and its
+      // site_enquirys log row. A VALIDATION error is surfaced by the catch below.
       if (!body.sheet && !body.action) {
-        const values = {
-          'Name': body.name || '',
-          'Email': body.email || '',
-          'Phone': body.phone || '',
-          'Destination': body.destination || '',
-          'Travel': body.travel || '',
-          'Status': 'New',
-          'Notes': body.notes || body.message || '',
-        };
-        const vErr = validate('enquiries', values);
-        if (vErr) return fail(res, 'VALIDATION', vErr);
-        const result = await sheets.createRow('enquiries', values);
+        const result = await siteEnquiries.submit(body);
         return res.json({ ok: true, enquiryId: result.enquiryId });
       }
 

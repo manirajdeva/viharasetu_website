@@ -38,7 +38,7 @@ const publicUser = (u) => ({
 });
 
 const HEADERS = {
-  enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'Status', 'Notes'],
+  enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'No. of People', 'Hotel Preference', 'Special Requests', 'Status', 'Notes'],
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
   payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated']
@@ -501,6 +501,8 @@ function handlePost(body, res) {
       push('enquiries', {
         'Enquiry ID': id, 'Timestamp': nowIso(), 'Name': p.name || '', 'Email': p.email || '',
         'Phone': p.phone || '', 'Destination': p.destination || '', 'Travel': p.travel || '',
+        'No. of People': p.no_of_people || '', 'Hotel Preference': p.hotel_preference || '',
+        'Special Requests': p.special_req || '',
         'Status': 'New', 'Notes': p.notes || p.message || ''
       });
       return send(res, { ok: true, enquiryId: id });

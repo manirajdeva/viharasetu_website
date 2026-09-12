@@ -26,6 +26,9 @@ const ENTITIES = {
       ['Phone', 'phone', 'string'],
       ['Destination', 'destination', 'string'],
       ['Travel', 'travel', 'string'],
+      ['No. of People', 'no_of_people', 'int'],
+      ['Hotel Preference', 'hotel_preference', 'string'],
+      ['Special Requests', 'special_req', 'string'],
       ['Status', 'status', 'string'],
       ['Notes', 'notes', 'string'],
     ],
@@ -87,8 +90,9 @@ const ENTITIES = {
 const ENTITY_KEYS = Object.keys(ENTITIES);
 
 // Columns where an empty submitted value must become SQL NULL rather than ''.
-// enquiry_id feeds a foreign key, so '' would break the constraint.
-const EMPTY_TO_NULL = new Set(['enquiry_id', 'supplier_code', 'transaction_ref']);
+// enquiry_id feeds a foreign key, and hotel_preference is an ENUM without '',
+// so '' would be rejected in either.
+const EMPTY_TO_NULL = new Set(['enquiry_id', 'supplier_code', 'transaction_ref', 'hotel_preference']);
 
 function headersFor(key) {
   return ENTITIES[key].fields.map((f) => f[0]);

@@ -11,13 +11,16 @@ const { isValidPhone } = require('./phone');
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const ENUMS = {
-  enquiries: { 'Status': ['New', 'Contacted', 'Booked', 'Closed'] },
+  enquiries: {
+    'Status': ['New', 'Contacted', 'Booked', 'Closed'],
+    'Hotel Preference': ['3 Star', '4 Star', '5 Star'],
+  },
   bookings: { 'Payment Status': ['Pending', 'Partial', 'Paid'] },
   payments: { 'Payment Mode': ['Cash', 'UPI', 'Card', 'Bank Transfer'] },
 };
 
 const MAX_LEN = {
-  enquiries: { 'Name': 160, 'Email': 190, 'Phone': 20, 'Destination': 160, 'Travel': 120 },
+  enquiries: { 'Name': 160, 'Email': 190, 'Phone': 20, 'Destination': 160, 'Travel': 120, 'Special Requests': 1000 },
   suppliers: { 'Supplier Company Name': 200, 'States': 255, 'Supplier Name': 160, 'Supplier ID': 40, 'Contact No': 20 },
   bookings: { 'Customer': 160, 'Destination': 200, 'Travel Dates': 120 },
   payments: { 'Customer': 160, 'Destination': 200, 'Transaction Ref': 120 },
@@ -32,6 +35,9 @@ function validate(entity, values) {
     if (!s('Name')) return 'Name is required.';
     if (!EMAIL.test(s('Email'))) return 'Enter a valid email address.';
     if (has('Phone') && !isValidPhone(s('Phone'))) return 'Enter a valid phone number.';
+    if (has('No. of People') && !/^[1-9]\d{0,2}$/.test(s('No. of People'))) {
+      return 'Number of people must be a whole number from 1 to 999.';
+    }
   } else if (entity === 'suppliers') {
     if (!s('Supplier Company Name')) return 'Company name is required.';
     if (has('Contact No') && !isValidPhone(s('Contact No'))) return 'Enter a valid phone number.';

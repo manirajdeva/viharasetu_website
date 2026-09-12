@@ -33,7 +33,7 @@ from sending a CORS preflight (OPTIONS) first. Real `application/json` also work
 | Request | Auth | Result |
 |---|---|---|
 | `GET /exec?sheet=enquiries\|suppliers\|bookings\|payments&token=…` | token | `{ headers, rows }` |
-| `POST` with no `sheet`/`action`, `{ name, email, phone, destination, travel, notes? }` | none (rate-limited) | Creates a `New` enquiry, returns `{ enquiryId }`. This is the contact form. |
+| `POST` with no `sheet`/`action`, `{ name, email, phone, destination, travel, no_of_people?, hotel_preference?, special_req?, notes? }` | none (rate-limited) | Creates a `New` enquiry, returns `{ enquiryId }`. `no_of_people` must be a whole number from 1 to 999. `hotel_preference` must be `3 Star`, `4 Star`, or `5 Star`. This is the contact form (and the journey "Enquire" popup). The submission is also logged in `site_enquirys` with its timestamp and optional `source` (`contact_form` / `journey_popup`), in the same transaction. |
 | `{ action:'login', username, password }` | none | `{ token, expiresAt, user }` |
 | `{ action:'logout', token }` | token | Invalidates the token |
 | `{ token, action:'bootstrap' }` | token | All four tables plus dashboard stats, in one call. The portal uses this on load. |
@@ -142,13 +142,16 @@ npm run seed-admin -- <username> <password> [--role admin|employee] [--mobile 98
 ## Database migrations
 
 - **Fresh database:** run `npm run schema`. `migrate/schema.sql` always describes the current full
-  schema: `enquiries`, `suppliers`, `bookings`, `payments`, `admins`, `sessions`, and `counters`.
+  schema: `enquiries`, `site_enquirys`, `suppliers`, `bookings`, `payments`, `admins`, `sessions`,
+  and `counters`.
   `bookings.enquiry_id` and `payments.enquiry_id` are nullable foreign keys to `enquiries`
   (`ON DELETE SET NULL`).
 - **Existing database:** apply the dated scripts in `migrate/` that it hasn't had yet, oldest first:
 
   ```bash
   node migrate/2026-09-05-backfill-phone-country-code.js
+  node migrate/2026-09-12-create-site-enquirys.js
+  node migrate/2026-09-12-add-enquiry-trip-details.js
   ```
 
   Every dated script is idempotent: it checks before altering, so running it twice does nothing.

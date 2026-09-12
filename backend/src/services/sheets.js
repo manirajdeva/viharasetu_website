@@ -31,8 +31,12 @@ async function getRow(key, rowIndex) {
  * Insert a row. Timestamp is stamped now; Enquiry ID / Payment ID are minted;
  * Pending Amount is derived for payments. Returns { ok:true } plus the minted
  * id(s) so the public contact form can echo the Enquiry ID back.
+ *
+ * opts.afterInsert(conn, generated), if given, runs inside the same
+ * transaction after the insert, for extra writes that must commit or roll
+ * back together with this row (e.g. the site_enquirys log).
  */
-async function createRow(key, values) {
+async function createRow(key, values, { afterInsert } = {}) {
   const spec = ENTITIES[key];
   const conn = await pool.getConnection();
   try {
@@ -61,6 +65,7 @@ async function createRow(key, values) {
     );
 
     if (key === 'payments') await renumberGroup(conn, paymentGroupKey(vals));
+    if (afterInsert) await afterInsert(conn, generatedOut);
 
     await conn.commit();
     return Object.assign({ ok: true }, generatedOut);

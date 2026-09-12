@@ -25,7 +25,10 @@ CREATE TABLE IF NOT EXISTS enquiries (
   phone        VARCHAR(20)      NULL,                                   -- "Phone"
   destination  VARCHAR(160)     NULL,                                   -- "Destination"
   travel       VARCHAR(120)     NULL,                                   -- "Travel" (free text: a date OR "10 days / March")
-  status       ENUM('New','Contacted','Booked','Closed') NOT NULL DEFAULT 'New',  -- "Status"
+  no_of_people INT              NULL,                                   -- "No. of People"
+  hotel_preference ENUM('3 Star','4 Star','5 Star') NULL,               -- "Hotel Preference"
+  special_req  TEXT             NULL,                                   -- "Special Requests" (flights, celebrations, meals…)
+  status      ENUM('New','Contacted','Booked','Closed') NOT NULL DEFAULT 'New',  -- "Status"
   notes        TEXT             NULL,                                   -- "Notes"
   created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -35,6 +38,36 @@ CREATE TABLE IF NOT EXISTS enquiries (
   KEY idx_enquiries_received_at (received_at),
   KEY idx_enquiries_email (email),
   KEY idx_enquiries_phone (phone)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/* ------------------------------------------------------------------ *
+ *  site_enquirys
+ *  A log of every enquiry submitted on the public website (homepage
+ *  contact form and the Signature Journeys "Enquire" popup), exactly
+ *  as the visitor sent it. Each submission also creates the working
+ *  `enquiries` row the admin portal uses, in the same transaction;
+ *  enquiry_id links the two. Not a foreign key, so the log keeps its
+ *  rows even if an enquiry is later deleted in the portal.
+ *  submitted_at is written by the API (UTC) rather than left to the
+ *  DEFAULT, because TiDB Serverless's NOW() runs hours behind real UTC.
+ * ------------------------------------------------------------------ */
+CREATE TABLE IF NOT EXISTS site_enquirys (
+  id           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  enquiry_id   VARCHAR(20)      NULL,                                   -- the matching enquiries.enquiry_id
+  submitted_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,         -- when the form was submitted (UTC)
+  source       VARCHAR(40)      NULL,                                   -- 'contact_form' | 'journey_popup'
+  name         VARCHAR(160) NOT NULL,
+  email        VARCHAR(190) NOT NULL,
+  phone        VARCHAR(20)      NULL,
+  destination  VARCHAR(160)     NULL,
+  travel       VARCHAR(120)     NULL,
+  no_of_people INT              NULL,
+  hotel_preference ENUM('3 Star','4 Star','5 Star') NULL,
+  special_req  TEXT             NULL,                                   -- flights, celebrations, meals…
+  notes        TEXT             NULL,
+  PRIMARY KEY (id),
+  KEY idx_site_enquirys_submitted_at (submitted_at),
+  KEY idx_site_enquirys_enquiry_id (enquiry_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* ------------------------------------------------------------------ *
