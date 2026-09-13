@@ -1113,7 +1113,7 @@
       padding: 0.9rem 0;
       border-bottom: 1px solid var(--border);
     }
-    section, .exp-section, .newsletter-section, footer { padding: 4rem 2rem; }
+    section, .exp-section, .tours-section, .testimonial-section, .newsletter-section, footer { padding: 4rem 2rem; }
     .hero { grid-template-columns: 1fr; min-height: auto; }
     .hero-right { height: 60vh; }
     .hero-badge { display: none; }
@@ -1124,7 +1124,10 @@
     .exp-section { grid-template-columns: 1fr; }
     .exp-img-secondary { display: none; }
     .tours-grid { grid-template-columns: 1fr; }
-    .newsletter-section { grid-template-columns: 1fr; gap: 2rem; }
+    /* Let the "View All" / "All Journeys" button drop below the title on narrow phones */
+    .dest-header, .tours-header { flex-wrap: wrap; gap: 1.5rem; }
+    /* minmax(0, 1fr) lets the column shrink below the form's min-content width */
+    .newsletter-section { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
     .footer-top { grid-template-columns: 1fr 1fr; }
   }
 
@@ -1135,16 +1138,29 @@
 
   @media (max-width: 480px) {
     nav { padding: 0.9rem 1rem; }
-    .nav-logo-mark { width: 44px; height: 44px; }
-    .nav-logo { font-size: 1.15rem; }
+    .nav-brand { gap: 0.6rem; }
+    .nav-logo-mark { width: 40px; height: 40px; }
+    .nav-logo { font-size: 1.05rem; }
     .nav-logo-sub { display: none; }
-    .nav-cta { padding: 0.6rem 1.1rem; font-size: 0.68rem; }
+    /* Keep "Plan My Journey" on one line with the full-size menu button beside it */
+    .nav-right { gap: 0.75rem; }
+    .nav-cta { padding: 0.55rem 0.8rem; font-size: 0.68rem; letter-spacing: 0.08em; white-space: nowrap; }
+    .nav-toggle { flex-shrink: 0; }
     .hero-title { font-size: clamp(2.2rem, 9vw, 3rem); }
     .hero-actions .btn-primary,
     .hero-actions .btn-ghost { flex: 1 1 auto; text-align: center; }
     .hero-stats { gap: 1rem 1.5rem; }
-    section, .exp-section, .newsletter-section, footer { padding: 3rem 1.25rem; }
+    section, .exp-section, .tours-section, .testimonial-section, .newsletter-section, footer { padding: 3rem 1.25rem; }
     .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+    .newsletter-title { font-size: 2.3rem; }
+    /* Stack the paired enquiry fields; the country code stays beside the number */
+    .form-row:not(.form-row--phone) { flex-direction: column; }
+    .nl-input { padding-left: 0.9rem; padding-right: 0.9rem; }
+  }
+
+  /* Smallest phones: no room for the wordmark beside the CTA and menu, so keep just the round logo */
+  @media (max-width: 350px) {
+    .nav-logo-text { display: none; }
   }
 </style>
 
@@ -1554,7 +1570,7 @@
 </section>
 
 <!-- NEWSLETTER -->
-<section id="contact" class="newsletter-section" style="padding:5rem;">
+<section id="contact" class="newsletter-section">
   <div>
     <p class="section-tag" style="color:rgba(255,255,255,0.5);">Stay Connected</p>
     <h2 class="newsletter-title">Begin Your Sacred<br><em>Journey Today</em></h2>
@@ -1570,7 +1586,7 @@
     <input id="email" class="nl-input" type="email" placeholder="Email Address" required>
   </div>
 
-  <div class="form-row">
+  <div class="form-row form-row--phone">
     <select id="phoneCc" class="nl-input">
       <option value="+91" selected>India (+91)</option>
       <option value="+977">Nepal (+977)</option>
