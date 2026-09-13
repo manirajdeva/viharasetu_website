@@ -130,7 +130,10 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
 
 - **Explore India hub** (`Explore_Destination.html`): every package as a card. On load, a script sorts
   the cards alphabetically by their `data-state` and computes the "N destinations found" count, so the
-  order in the HTML doesn't matter. Cards also carry `data-seasons`, which no script reads yet.
+  order in the HTML doesn't matter. Visitors can narrow the grid with a search box and the **Season** /
+  **State** filters. Every word typed must appear in a card's name, tagline, state, or the stops in its
+  page name. The filters read each card's `data-seasons` and `data-state`. "Clear filters" resets all
+  three.
 - **Animated monument-train nav strip**: a scrolling row of monument icons plus an inline SVG train in
   the sticky header of the homepage and the hub. It animates with `transform: translateX()` rather
   than `left` so it stays smooth on mobile.
@@ -139,7 +142,8 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
 - **Video banner** on package pages: the Viharasetu launch video (`images/viharasetu_logo_launch.MP4`)
   plays muted and looped behind the Home/Back buttons, title and intro. Its first frame
   (`images/viharasetu_logo_launch_poster.jpg`) shows while it loads and for visitors who prefer reduced
-  motion. Varanasi plays its own `images/Varanasi/varanasi.mp4` instead.
+  motion. Two pages play their own video instead: Varanasi (`images/Varanasi/varanasi.mp4`) and Spiti
+  Valley (`images/bannervideos/spiti-720p.mp4`, a trimmed 720p/30 fps silent web copy of the footage).
 - **Gallery lightbox** and **itinerary modal** on package pages (`destinations/*.js`).
 - **Signature Journeys** (homepage): journey cards for Varanasi & Sarnath, the Himachal Hill Trail,
   and the Kerala Ayurveda Retreat. A Ladakh card is commented out in `index.html`, ready to bring
