@@ -15,7 +15,7 @@
 <title>Leh Ladakh — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=11">
+<link rel="stylesheet" href="../../destinations-common.css?v=12">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   /* Leh-Ladakh specific styles */
@@ -39,18 +39,29 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="logo-header">
-      <img src="../../../images/Logo_hor.png" alt="Viharasetu logo" />
-    </div>
-    <div class="top-actions">
-      <a class="back-link" href="../../../index.html">Home</a>
-      <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
-    </div>
-
-    <h1>Leh Ladakh</h1>
-    <p class="intro">
-      Leh Ladakh — high-altitude deserts, turquoise lakes, and centuries-old monasteries cradled in the Himalayas. Our circuit covers Leh, Alchi, Lamayuru, Nubra Valley, Pangong Lake, and Tso Moriri, with acclimatised itineraries, monastery visits, and drives across the high passes.
-    </p>
+    <header class="hero">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+        <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
+      </video>
+      <script>
+        // Respect reduced-motion: keep the poster frame instead of playing the video
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const heroVideo = document.querySelector('.hero-video');
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.pause();
+        }
+      </script>
+      <div class="top-actions">
+        <a class="back-link" href="../../../index.html">Home</a>
+        <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
+      </div>
+      <div class="hero-text">
+        <h1>Leh Ladakh</h1>
+        <p class="intro">
+          Leh Ladakh — high-altitude deserts, turquoise lakes, and centuries-old monasteries cradled in the Himalayas. Our circuit covers Leh, Alchi, Lamayuru, Nubra Valley, Pangong Lake, and Tso Moriri, with acclimatised itineraries, monastery visits, and drives across the high passes.
+        </p>
+      </div>
+    </header>
 
     <!-- Photo gallery: 10 images -->
     <div class="gallery">

@@ -15,23 +15,34 @@
 <title>Grand Kerala Circuit — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=11">
+<link rel="stylesheet" href="../../destinations-common.css?v=12">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 </head>
 <body>
   <div class="wrap">
-    <div class="logo-header">
-      <img src="../../../images/Logo_hor.png" alt="Viharasetu logo" />
-    </div>
-    <div class="top-actions">
-      <a class="back-link" href="../../../index.html">Home</a>
-      <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
-    </div>
-
-    <h1>Kochi, Munnar, Thekkady, Alleppey, Kovalam &amp; Thiruvananthapuram</h1>
-    <p class="intro">
-      The complete Kerala circuit — colonial Fort Kochi, the tea hills of Munnar, Thekkady's wildlife-rich forests, a houseboat night on the Alleppey backwaters, sun and sand at Kovalam, and the temple heritage of the state capital, Thiruvananthapuram. Best travelled September through March, when the monsoon has cleared and every stop along the way is at its most comfortable.
-    </p>
+    <header class="hero">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+        <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
+      </video>
+      <script>
+        // Respect reduced-motion: keep the poster frame instead of playing the video
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const heroVideo = document.querySelector('.hero-video');
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.pause();
+        }
+      </script>
+      <div class="top-actions">
+        <a class="back-link" href="../../../index.html">Home</a>
+        <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
+      </div>
+      <div class="hero-text">
+        <h1>Kochi, Munnar, Thekkady, Alleppey, Kovalam &amp; Thiruvananthapuram</h1>
+        <p class="intro">
+          The complete Kerala circuit — colonial Fort Kochi, the tea hills of Munnar, Thekkady's wildlife-rich forests, a houseboat night on the Alleppey backwaters, sun and sand at Kovalam, and the temple heritage of the state capital, Thiruvananthapuram. Best travelled September through March, when the monsoon has cleared and every stop along the way is at its most comfortable.
+        </p>
+      </div>
+    </header>
 
     <!-- Photo gallery: across all six stops -->
     <div class="gallery">

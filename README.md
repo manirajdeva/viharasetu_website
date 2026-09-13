@@ -136,6 +136,10 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
   than `left` so it stays smooth on mobile.
 - **Liquid-glass buttons**: the "Home" and "Back to Destinations" buttons on package pages use
   `backdrop-filter: blur()` with a translucent gradient.
+- **Video banner** on package pages: the Viharasetu launch video (`images/viharasetu_logo_launch.MP4`)
+  plays muted and looped behind the Home/Back buttons, title and intro. Its first frame
+  (`images/viharasetu_logo_launch_poster.jpg`) shows while it loads and for visitors who prefer reduced
+  motion. Varanasi plays its own `images/Varanasi/varanasi.mp4` instead.
 - **Gallery lightbox** and **itinerary modal** on package pages (`destinations/*.js`).
 - **Signature Journeys** (homepage): journey cards for Varanasi & Sarnath, the Himachal Hill Trail,
   and the Kerala Ayurveda Retreat. A Ladakh card is commented out in `index.html`, ready to bring
@@ -190,7 +194,7 @@ Package pages are grouped by state under `destinations/All_packages/`:
 1. Copy a page that uses the shared stylesheet (for example `KARNATAKA/hampi.html`) to
    `destinations/All_packages/<STATE_NAME>/<slug>.html`, and replace its content. Put its photos
    under `images/<Place>/`.
-2. Keep its `<link … destinations-common.css?v=N>` at the **same `N`** as the other pages (currently `11`).
+2. Keep its `<link … destinations-common.css?v=N>` at the **same `N`** as the other pages (currently `12`).
 3. Add a card to `Explore_Destination.html`:
    `<a class="dest-card" href="<STATE_NAME>/<slug>.html" data-state="…" data-seasons="Winter,Summer">`.
    It can go anywhere in the grid, because the sort and the count are handled automatically.

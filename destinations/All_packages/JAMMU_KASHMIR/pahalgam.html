@@ -41,26 +41,53 @@
     padding:32px 24px 80px;
     position:relative;
   }
-  .logo-header{
-    position:absolute;
-    top:20px;
-    right:24px;
-    z-index:100;
+  /* Hero: launch video playing behind the Home/Back buttons, title and intro */
+  .hero{
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 460px;
+    margin-bottom: 36px;
+    padding: 28px 32px 40px;
+    border-radius: 20px;
+    background: var(--ink);
   }
-  .logo-header img{
-    height:80px;
-    width:auto;
-    filter: drop-shadow(0 6px 14px rgba(38,34,28,0.18));
+  .hero-video{
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(38,34,28,0.35) 0%, rgba(38,34,28,0.1) 40%, rgba(38,34,28,0.78) 100%);
+  }
+  .hero h1{
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+  }
+  .hero .intro{
+    color: rgba(255,255,255,0.92);
+    max-width: 760px;
+    margin-bottom: 0;
+  }
+  .hero .back-link{
+    color: #fff;
   }
   @media (max-width: 640px){
-    .logo-header{
-      position:static;
-      display:flex;
-      justify-content:center;
-      margin-bottom:12px;
-    }
-    .logo-header img{
-      height:48px;
+    .hero{
+      min-height: 380px;
+      padding: 20px 18px 26px;
+      border-radius: 14px;
     }
   }
   .back-link{
@@ -497,18 +524,29 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="logo-header">
-      <img src="../../../images/Logo_hor.png" alt="Viharasetu logo" />
-    </div>
-    <div class="top-actions">
-      <a class="back-link" href="../../../index.html">Home</a>
-      <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
-    </div>
-
-    <h1>Pahalgam</h1>
-    <p class="intro">
-      Pahalgam — the 'Valley of Shepherds', where the Lidder River winds through pine forests, meadows, and the dramatic Betaab Valley. We arrange valley drives, pony treks, and riverside stays.
-    </p>
+    <header class="hero">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+        <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
+      </video>
+      <script>
+        // Respect reduced-motion: keep the poster frame instead of playing the video
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const heroVideo = document.querySelector('.hero-video');
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.pause();
+        }
+      </script>
+      <div class="top-actions">
+        <a class="back-link" href="../../../index.html">Home</a>
+        <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
+      </div>
+      <div class="hero-text">
+        <h1>Pahalgam</h1>
+        <p class="intro">
+          Pahalgam — the 'Valley of Shepherds', where the Lidder River winds through pine forests, meadows, and the dramatic Betaab Valley. We arrange valley drives, pony treks, and riverside stays.
+        </p>
+      </div>
+    </header>
 
     <!-- Photo gallery: 10 images -->
     <div class="gallery">
