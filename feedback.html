@@ -36,7 +36,6 @@
     overflow-x:hidden;
     cursor: url('images/cursor.png') 10 10, auto;
   }
-  a, button{ cursor:none; }
 
  
 
@@ -506,42 +505,6 @@
     }, { threshold: 0.15 });
 
     cards.forEach(card => observer.observe(card));
-
-    // Custom airplane cursor — follows the mouse with a slight trailing lag
-    // and banks (rotates) to face the direction it's travelling in.
-    const planeCursor = document.getElementById('plane-cursor');
-    const planeIcon = planeCursor.querySelector('.plane-icon');
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let curX = mouseX;
-    let curY = mouseY;
-    let angle = -45; // ✈️ glyph points up-right by default
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      planeCursor.style.opacity = '1';
-    });
-    document.addEventListener('mouseleave', () => {
-      planeCursor.style.opacity = '0';
-    });
-
-    function animatePlaneCursor() {
-      const dx = mouseX - curX;
-      const dy = mouseY - curY;
-      curX += dx * 0.18;
-      curY += dy * 0.18;
-
-      if (Math.hypot(dx, dy) > 1) {
-        angle = Math.atan2(dy, dx) * (180 / Math.PI) - 45;
-      }
-
-      planeCursor.style.transform = `translate(${curX}px, ${curY}px)`;
-      planeIcon.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-
-      requestAnimationFrame(animatePlaneCursor);
-    }
-    animatePlaneCursor();
   </script>
 
 <div class="mobile-contact-bar" aria-label="Quick contact" role="navigation">
