@@ -305,6 +305,110 @@
   }
   .result-count b{ color:var(--ink); }
 
+  /* Title row with the season / state filters on the right */
+  .explore-head{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px 32px;
+    margin-bottom:34px;
+  }
+  .explore-head .intro{ margin-bottom:0; }
+  .filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
+  }
+  .filter{ position:relative; }
+  .filter-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:10px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    transition: border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .filter-btn:hover,
+  .filter.open .filter-btn{ border-color:var(--accent); }
+  .filter-btn .filter-value{ color:var(--accent-dark); }
+  .filter-btn .chevron{
+    font-size:10px;
+    transition: transform .2s ease;
+  }
+  .filter.open .filter-btn .chevron{ transform: rotate(180deg); }
+  .filter.active .filter-btn{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  .filter.active .filter-btn .filter-value{ color:#fff; }
+  .filter-menu{
+    position:absolute;
+    top:calc(100% + 8px);
+    right:0;
+    z-index:50;
+    display:none;
+    min-width:210px;
+    max-height:320px;
+    overflow-y:auto;
+    margin:0;
+    padding:8px;
+    list-style:none;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    box-shadow: 0 16px 34px rgba(38,34,28,0.16);
+  }
+  .filter.open .filter-menu{ display:block; }
+  .filter-option{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .filter-option:hover{ background:#F4F1EA; }
+  .filter-option.selected{
+    background:var(--accent);
+    color:#fff;
+    font-weight:600;
+  }
+  .filter-reset{
+    background:none;
+    border:none;
+    color:var(--ink-soft);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    text-decoration:underline;
+    padding:8px 4px;
+    cursor:pointer;
+  }
+  .filter-reset:hover{ color:var(--ink); }
+  @media (max-width: 620px){
+    .filter-menu{
+      left:0;
+      right:auto;
+      max-width:calc(100vw - 32px);
+    }
+  }
+
   /* Destination grid */
   .grid{
     display:grid;
@@ -579,10 +683,31 @@
   </div>
 
   <div class="wrap">
-    <h1>Explore India</h1>
-    <p class="intro">
-      Browse every destination by season or by state — find the right trip for whenever you're travelling, wherever you want to go.
-    </p>
+    <div class="explore-head">
+      <div>
+        <h1>Explore India</h1>
+        <p class="intro">
+          Browse every destination by season or by state — find the right trip for whenever you're travelling, wherever you want to go.
+        </p>
+      </div>
+
+      <!-- Options are filled in from the cards by the script below -->
+      <div class="filter-bar">
+        <div class="filter" data-filter="season">
+          <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
+            Season: <span class="filter-value">All</span> <span class="chevron">▾</span>
+          </button>
+          <ul class="filter-menu"></ul>
+        </div>
+        <div class="filter" data-filter="state">
+          <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
+            State: <span class="filter-value">All</span> <span class="chevron">▾</span>
+          </button>
+          <ul class="filter-menu"></ul>
+        </div>
+        <button type="button" class="filter-reset" id="filter-reset" hidden>Clear filters</button>
+      </div>
+    </div>
 
     <p class="result-count"><b id="result-num">12</b> destinations found</p>
 
@@ -1051,8 +1176,96 @@
       .sort((a, b) => a.dataset.state.localeCompare(b.dataset.state))
       .forEach(card => destGrid.appendChild(card));
 
-    // Compute the real count on load instead of relying on a hardcoded number in the HTML.
-    resultNum.textContent = cards.length;
+    // Season / state filters. Options come from the cards themselves, so a state
+    // only shows up once it has at least one destination.
+    const emptyState = document.getElementById('empty-state');
+    const resetBtn = document.getElementById('filter-reset');
+    const filters = Array.from(document.querySelectorAll('.filter'));
+    const active = { season: 'all', state: 'all' };
+    const options = {
+      season: ['Summer', 'Monsoon', 'Winter']
+        .filter(s => cards.some(card => card.dataset.seasons.split(',').includes(s))),
+      state: [...new Set(cards.map(card => card.dataset.state))]
+        .sort((a, b) => a.localeCompare(b))
+    };
+
+    function applyFilters(){
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const seasonMatch = active.season === 'all' || card.dataset.seasons.split(',').includes(active.season);
+        const stateMatch = active.state === 'all' || card.dataset.state === active.state;
+        const visible = seasonMatch && stateMatch;
+        card.classList.toggle('hidden', !visible);
+        if (visible) visibleCount++;
+      });
+      // Compute the real count instead of relying on a hardcoded number in the HTML.
+      resultNum.textContent = visibleCount;
+      emptyState.classList.toggle('show', visibleCount === 0);
+      resetBtn.hidden = active.season === 'all' && active.state === 'all';
+    }
+
+    function closeFilters(except){
+      filters.forEach(filter => {
+        if (filter === except) return;
+        filter.classList.remove('open');
+        filter.querySelector('.filter-btn').setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    function selectOption(filter, value){
+      active[filter.dataset.filter] = value;
+      filter.classList.toggle('active', value !== 'all');
+      filter.querySelector('.filter-value').textContent = value === 'all' ? 'All' : value;
+      filter.querySelectorAll('.filter-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.dataset.value === value);
+      });
+    }
+
+    filters.forEach(filter => {
+      const key = filter.dataset.filter;
+      const btn = filter.querySelector('.filter-btn');
+      const menu = filter.querySelector('.filter-menu');
+
+      ['all', ...options[key]].forEach(value => {
+        const li = document.createElement('li');
+        const opt = document.createElement('button');
+        opt.type = 'button';
+        opt.className = 'filter-option' + (value === 'all' ? ' selected' : '');
+        opt.dataset.value = value;
+        opt.textContent = value === 'all' ? (key === 'season' ? 'All Seasons' : 'All States') : value;
+        li.appendChild(opt);
+        menu.appendChild(li);
+      });
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = filter.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+        closeFilters(filter);
+      });
+
+      menu.addEventListener('click', (e) => {
+        const opt = e.target.closest('.filter-option');
+        if (!opt) return;
+        selectOption(filter, opt.dataset.value);
+        closeFilters();
+        applyFilters();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.filter')) closeFilters();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeFilters();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      filters.forEach(filter => selectOption(filter, 'all'));
+      applyFilters();
+    });
+
+    applyFilters();
   </script>
 
   <script>
