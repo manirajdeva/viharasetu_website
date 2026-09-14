@@ -12,22 +12,10 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Hampi Tour Package (3 &amp; 5 Nights) | Viharasetu</title>
-<meta name="description" content="Hampi tour packages for 3 or 5 nights: Vittala Temple's stone chariot, Virupaksha Temple, Hemakuta Hill sunsets and a Tungabhadra coracle ride.">
-<link rel="canonical" href="https://viharasetu.co.in/destinations/All_packages/KARNATAKA/hampi.html">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Viharasetu">
-<meta property="og:locale" content="en_IN">
-<meta property="og:title" content="Hampi Tour Package (3 &amp; 5 Nights)">
-<meta property="og:description" content="Hampi tour packages for 3 or 5 nights: Vittala Temple's stone chariot, Virupaksha Temple, Hemakuta Hill sunsets and a Tungabhadra coracle ride.">
-<meta property="og:url" content="https://viharasetu.co.in/destinations/All_packages/KARNATAKA/hampi.html">
-<meta property="og:image" content="https://viharasetu.co.in/images/og/hampi.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<title>Hampi — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=13">
+<link rel="stylesheet" href="../../destinations-common.css?v=12">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   body {
@@ -52,22 +40,16 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <video class="hero-video" muted loop playsinline preload="none" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
         <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
       </video>
       <script>
-        // Play the banner video only on wider screens, without data-saver or reduced
-        // motion. Everyone else keeps the poster frame, which saves phones 1-3 MB.
-        (function () {
-          var v = document.querySelector('.hero-video');
-          var c = navigator.connection;
-          if (matchMedia('(min-width: 768px)').matches &&
-              !matchMedia('(prefers-reduced-motion: reduce)').matches &&
-              !(c && c.saveData)) {
-            v.preload = 'auto';
-            v.play().catch(function () {});
-          }
-        })();
+        // Respect reduced-motion: keep the poster frame instead of playing the video
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const heroVideo = document.querySelector('.hero-video');
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.pause();
+        }
       </script>
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -130,42 +112,16 @@
           <h3>Ruins &amp; Riverside — 3 Nights</h3>
           <p class="desc">Virupaksha Temple, Hampi Bazaar, and a coracle ride on the Tungabhadra.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-3-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-3-nights.html">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Vijayanagara Explorer — 5 Nights</h3>
           <p class="desc">The full royal &amp; sacred centres, Vittala Temple, and cycling trails through the ruins.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-5-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-5-nights.html">View Itinerary</a>
         </div>
 
-      </div>
-
-      <!-- Day-by-day plans: the same itineraries as the popups, readable without JavaScript -->
-      <div class="itinerary-plans">
-        <details class="itinerary-plan" id="itinerary-3-nights">
-          <summary>Ruins &amp; Riverside — 3 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">Virupaksha Temple, Hampi Bazaar, and a coracle ride on the Tungabhadra.</p>
-          <ol>
-            <li><strong>Day 1: Arrival in Hampi.</strong> Arrive in Hampi, check-in and freshen up. Evening at Hampi Bazaar. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Virupaksha &amp; Riverside.</strong> Virupaksha Temple. Coracle ride on the Tungabhadra River. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Royal Centre.</strong> Lotus Mahal, Elephant Stables, and Hazara Rama Temple. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Departure.</strong> Sunrise at Hemakuta Hill, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
-        <details class="itinerary-plan" id="itinerary-5-nights">
-          <summary>Vijayanagara Explorer — 5 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">The full royal &amp; sacred centres, Vittala Temple, and cycling trails through the ruins.</p>
-          <ol>
-            <li><strong>Day 1: Arrival in Hampi.</strong> Arrive in Hampi, check-in and freshen up. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Sacred Centre.</strong> Virupaksha Temple and Hampi Bazaar. Coracle ride on the Tungabhadra. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Vittala Temple.</strong> Vittala Temple and its iconic stone chariot. Musical pillars. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Royal Centre.</strong> Lotus Mahal, Elephant Stables, Hazara Rama Temple. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 5: Cycling the Ruins.</strong> Cycling trail through the boulder-strewn ruins. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 6: Departure.</strong> Sunset at Hemakuta Hill the evening before, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
       </div>
     </div>
 

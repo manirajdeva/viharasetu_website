@@ -12,22 +12,10 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Coorg Tour Package (3–7 Nights) | Viharasetu</title>
-<meta name="description" content="Coorg tour packages for 3, 5 or 7 nights: coffee estates, Abbey Falls, Raja's Seat, Omkareshwara Temple and misty Madikeri stays. Free quote in 24 hours.">
-<link rel="canonical" href="https://viharasetu.co.in/destinations/All_packages/KARNATAKA/coorg.html">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Viharasetu">
-<meta property="og:locale" content="en_IN">
-<meta property="og:title" content="Coorg Tour Package (3–7 Nights)">
-<meta property="og:description" content="Coorg tour packages for 3, 5 or 7 nights: coffee estates, Abbey Falls, Raja's Seat, Omkareshwara Temple and misty Madikeri stays. Free quote in 24 hours.">
-<meta property="og:url" content="https://viharasetu.co.in/destinations/All_packages/KARNATAKA/coorg.html">
-<meta property="og:image" content="https://viharasetu.co.in/images/og/viharasetu.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<title>Coorg — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=13">
+<link rel="stylesheet" href="../../destinations-common.css?v=12">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -37,22 +25,16 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <video class="hero-video" muted loop playsinline preload="none" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
         <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
       </video>
       <script>
-        // Play the banner video only on wider screens, without data-saver or reduced
-        // motion. Everyone else keeps the poster frame, which saves phones 1-3 MB.
-        (function () {
-          var v = document.querySelector('.hero-video');
-          var c = navigator.connection;
-          if (matchMedia('(min-width: 768px)').matches &&
-              !matchMedia('(prefers-reduced-motion: reduce)').matches &&
-              !(c && c.saveData)) {
-            v.preload = 'auto';
-            v.play().catch(function () {});
-          }
-        })();
+        // Respect reduced-motion: keep the poster frame instead of playing the video
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const heroVideo = document.querySelector('.hero-video');
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.pause();
+        }
       </script>
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -118,63 +100,23 @@
           <h3>Coffee Country — 3 Nights</h3>
           <p class="desc">Plantation walks, cupping sessions, and Abbey Falls.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-3-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-3-nights.html">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Kodagu Explorer — 5 Nights</h3>
           <p class="desc">Talacauvery, river activities, and the Kodava heartland.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-5-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-5-nights.html">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Western Ghats Wild — 7 Nights</h3>
           <p class="desc">An unhurried circuit through Coorg's valleys, falls, and forests.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-7-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-7-nights.html">View Itinerary</a>
         </div>
 
-      </div>
-
-      <!-- Day-by-day plans: the same itineraries as the popups, readable without JavaScript -->
-      <div class="itinerary-plans">
-        <details class="itinerary-plan" id="itinerary-3-nights">
-          <summary>Coffee Country — 3 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">Plantation walks, cupping sessions, and Abbey Falls.</p>
-          <ol>
-            <li><strong>Day 1: Arrival in Coorg.</strong> Arrive in Coorg, check-in at a plantation stay. Evening coffee cupping session. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Plantation &amp; Abbey Falls.</strong> Guided coffee plantation walk. Abbey Falls in the afternoon. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Raja's Seat &amp; Local Market.</strong> Sunset at Raja's Seat. Madikeri local market. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Departure.</strong> Morning at leisure, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
-        <details class="itinerary-plan" id="itinerary-5-nights">
-          <summary>Kodagu Explorer — 5 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">Talacauvery, river activities, and the Kodava heartland.</p>
-          <ol>
-            <li><strong>Day 1: Arrival in Coorg.</strong> Arrive in Coorg, check-in at a plantation stay. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Plantation Walk.</strong> Guided coffee plantation walk and cupping session. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Abbey Falls &amp; Raja's Seat.</strong> Abbey Falls. Sunset at Raja's Seat. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Talacauvery.</strong> Day trip to Talacauvery, source of the Cauvery river. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 5: River Activities.</strong> River rafting or kayaking near Kushalnagar. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 6: Departure.</strong> Morning at leisure, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
-        <details class="itinerary-plan" id="itinerary-7-nights">
-          <summary>Western Ghats Wild — 7 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">An unhurried circuit through Coorg's valleys, falls, and forests.</p>
-          <ol>
-            <li><strong>Day 1: Arrival in Coorg.</strong> Arrive in Coorg, check-in at a plantation stay. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Plantation Walk.</strong> Guided coffee plantation walk and cupping session. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Abbey Falls &amp; Raja's Seat.</strong> Abbey Falls. Sunset at Raja's Seat. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Talacauvery.</strong> Day trip to Talacauvery. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 5: River Activities.</strong> River rafting or kayaking near Kushalnagar. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 6: Nagarhole Forest.</strong> Day safari towards Nagarhole National Park. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 7: Kodava Heartland.</strong> Visit a traditional Kodava homestead. Local cuisine tasting. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 8: Departure.</strong> Morning at leisure, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
       </div>
     </div>
 

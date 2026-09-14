@@ -12,22 +12,10 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Leh Ladakh Tour Package (5–12 Nights) | Viharasetu</title>
-<meta name="description" content="Leh Ladakh tour packages for 5, 8 or 12 nights: Pangong Lake, Nubra Valley, Khardung La, and Thiksey and Hemis monasteries, with permits handled.">
-<link rel="canonical" href="https://viharasetu.co.in/destinations/All_packages/LADAKH/leh-ladakh.html">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Viharasetu">
-<meta property="og:locale" content="en_IN">
-<meta property="og:title" content="Leh Ladakh Tour Package (5–12 Nights)">
-<meta property="og:description" content="Leh Ladakh tour packages for 5, 8 or 12 nights: Pangong Lake, Nubra Valley, Khardung La, and Thiksey and Hemis monasteries, with permits handled.">
-<meta property="og:url" content="https://viharasetu.co.in/destinations/All_packages/LADAKH/leh-ladakh.html">
-<meta property="og:image" content="https://viharasetu.co.in/images/og/ladakh.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<title>Leh Ladakh — Destinations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=13">
+<link rel="stylesheet" href="../../destinations-common.css?v=12">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   /* Leh-Ladakh specific styles */
@@ -52,22 +40,16 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <video class="hero-video" muted loop playsinline preload="none" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
         <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
       </video>
       <script>
-        // Play the banner video only on wider screens, without data-saver or reduced
-        // motion. Everyone else keeps the poster frame, which saves phones 1-3 MB.
-        (function () {
-          var v = document.querySelector('.hero-video');
-          var c = navigator.connection;
-          if (matchMedia('(min-width: 768px)').matches &&
-              !matchMedia('(prefers-reduced-motion: reduce)').matches &&
-              !(c && c.saveData)) {
-            v.preload = 'auto';
-            v.play().catch(function () {});
-          }
-        })();
+        // Respect reduced-motion: keep the poster frame instead of playing the video
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const heroVideo = document.querySelector('.hero-video');
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.pause();
+        }
       </script>
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -133,73 +115,23 @@
           <h3>Leh Explorer — 5 Nights</h3>
           <p class="desc">Acclimatisation in Leh, monastery circuit, and the Indus Valley.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-5-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-5-nights.html">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Pangong &amp; Nubra Circuit — 8 Nights</h3>
           <p class="desc">Overnight at Pangong Tso, Khardung La crossing, and Nubra Valley camel dunes.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-8-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-8-nights.html">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Full Ladakh Expedition — 12 Nights</h3>
           <p class="desc">The complete high-altitude circuit — monasteries, lakes, valleys, and remote villages.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="#itinerary-12-nights">View Itinerary</a>
+          <a class="btn" href="itinerary-12-nights.html">View Itinerary</a>
         </div>
 
-      </div>
-
-      <!-- Day-by-day plans: the same itineraries as the popups, readable without JavaScript -->
-      <div class="itinerary-plans">
-        <details class="itinerary-plan" id="itinerary-5-nights">
-          <summary>Leh Explorer — 5 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">Acclimatisation in Leh, monastery circuit, and the Indus Valley.</p>
-          <ol>
-            <li><strong>Day 1: Arrival &amp; Acclimatisation.</strong> Arrive in Leh, complete rest for acclimatisation. Gentle evening walk in the market. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Leh Local Sightseeing.</strong> Leh Palace, Shanti Stupa. Easy walk, continued acclimatisation. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Monastery Circuit.</strong> Thiksey Monastery, Shey Palace. Hemis Monastery. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Indus Valley.</strong> Sangam (Indus &amp; Zanskar confluence). Magnetic Hill. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 5: Leisure &amp; Local Markets.</strong> Free morning, Leh market for souvenirs. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 6: Departure.</strong> Check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
-        <details class="itinerary-plan" id="itinerary-8-nights">
-          <summary>Pangong &amp; Nubra Circuit — 8 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">Overnight at Pangong Tso, Khardung La crossing, and Nubra Valley camel dunes.</p>
-          <ol>
-            <li><strong>Day 1: Arrival &amp; Acclimatisation.</strong> Arrive in Leh, complete rest for acclimatisation. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Leh Local Sightseeing.</strong> Leh Palace, Shanti Stupa. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Monastery Circuit.</strong> Thiksey Monastery, Shey Palace, Hemis Monastery. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Khardung La to Nubra.</strong> Crossing Khardung La Pass into Nubra Valley. Camel safari on the sand dunes. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 5: Nubra Valley.</strong> Diskit Monastery. Hunder village. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 6: Nubra to Pangong Tso.</strong> Drive to Pangong Lake via Shyok route. Overnight by the lake. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 7: Pangong Tso Sunrise.</strong> Sunrise at Pangong Lake. Drive back to Leh. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 8: Leisure Day.</strong> Free morning in Leh, local market. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 9: Departure.</strong> Check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
-        <details class="itinerary-plan" id="itinerary-12-nights">
-          <summary>Full Ladakh Expedition — 12 Nights: day-by-day plan</summary>
-          <p class="itinerary-plan-sub">The complete high-altitude circuit — monasteries, lakes, valleys, and remote villages.</p>
-          <ol>
-            <li><strong>Day 1: Arrival &amp; Acclimatisation.</strong> Arrive in Leh, complete rest for acclimatisation. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
-            <li><strong>Day 2: Leh Local Sightseeing.</strong> Leh Palace, Shanti Stupa. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 3: Monastery Circuit.</strong> Thiksey, Shey, Hemis monasteries. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 4: Alchi &amp; Likir.</strong> Alchi Monastery's ancient murals. Likir Monastery. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 5: Lamayuru.</strong> Lamayuru Monastery and its moonscape terrain. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 6: Khardung La to Nubra.</strong> Crossing Khardung La into Nubra Valley. Camel safari on the dunes. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 7: Nubra Valley.</strong> Diskit Monastery, Hunder village. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 8: Nubra to Pangong Tso.</strong> Drive to Pangong Lake via Shyok route. Overnight by the lake. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 9: Pangong to Tso Moriri.</strong> Drive towards Tso Moriri Lake. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 10: Tso Moriri.</strong> Morning at Tso Moriri, remote village visit. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 11: Return to Leh.</strong> Scenic drive back to Leh. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 12: Leisure Day.</strong> Free morning in Leh, local market. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
-            <li><strong>Day 13: Departure.</strong> Check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
-          </ol>
-        </details>
       </div>
     </div>
 

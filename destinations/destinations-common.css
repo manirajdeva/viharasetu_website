@@ -347,53 +347,6 @@ h2 {
   font-weight: 500;
 }
 
-/* Day-by-day plans: the same itineraries as the popups, readable without JavaScript */
-.itinerary-plans {
-  display: grid;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.itinerary-plan {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0 20px;
-}
-
-.itinerary-plan summary {
-  cursor: pointer;
-  padding: 14px 0;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.itinerary-plan summary:hover {
-  color: var(--accent);
-}
-
-.itinerary-plan-sub {
-  color: var(--ink-soft);
-  font-size: 14px;
-  margin: 0 0 10px;
-}
-
-.itinerary-plan ol {
-  margin: 0 0 16px;
-  padding-left: 20px;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.itinerary-plan li {
-  margin-bottom: 8px;
-}
-
-.itinerary-plan-meals {
-  color: var(--ink-soft);
-  font-style: italic;
-}
-
 /* Buttons */
 .btn {
   display: inline-block;
