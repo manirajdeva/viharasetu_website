@@ -12,10 +12,22 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Pondicherry — Destinations</title>
+<title>Pondicherry Tour Package (2–6 Nights) | Viharasetu</title>
+<meta name="description" content="Pondicherry tour packages for 2, 4 or 6 nights: the French Quarter, Promenade Beach, Auroville and Paradise Beach. Heritage stays and cab arranged.">
+<link rel="canonical" href="https://viharasetu.co.in/destinations/All_packages/PUDUCHERRY/pondicherry.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Viharasetu">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Pondicherry Tour Package (2–6 Nights)">
+<meta property="og:description" content="Pondicherry tour packages for 2, 4 or 6 nights: the French Quarter, Promenade Beach, Auroville and Paradise Beach. Heritage stays and cab arranged.">
+<meta property="og:url" content="https://viharasetu.co.in/destinations/All_packages/PUDUCHERRY/pondicherry.html">
+<meta property="og:image" content="https://viharasetu.co.in/images/og/viharasetu.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=12">
+<link rel="stylesheet" href="../../destinations-common.css?v=13">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -25,16 +37,22 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+      <video class="hero-video" muted loop playsinline preload="none" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
         <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
       </video>
       <script>
-        // Respect reduced-motion: keep the poster frame instead of playing the video
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          const heroVideo = document.querySelector('.hero-video');
-          heroVideo.removeAttribute('autoplay');
-          heroVideo.pause();
-        }
+        // Play the banner video only on wider screens, without data-saver or reduced
+        // motion. Everyone else keeps the poster frame, which saves phones 1-3 MB.
+        (function () {
+          var v = document.querySelector('.hero-video');
+          var c = navigator.connection;
+          if (matchMedia('(min-width: 768px)').matches &&
+              !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+              !(c && c.saveData)) {
+            v.preload = 'auto';
+            v.play().catch(function () {});
+          }
+        })();
       </script>
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -100,23 +118,60 @@
           <h3>French Quarter Weekend — 2 Nights</h3>
           <p class="desc">White Town heritage walk, Promenade Beach, and local cafes.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-2-nights.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-2-nights">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Pondy &amp; Auroville — 4 Nights</h3>
           <p class="desc">Heritage town plus a day exploring Auroville and the ashram.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-4-nights.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-4-nights">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Coastal Retreat — 6 Nights</h3>
           <p class="desc">An unhurried stay combining the French Quarter with nearby beaches.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-6-nights.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-6-nights">View Itinerary</a>
         </div>
 
+      </div>
+
+      <!-- Day-by-day plans: the same itineraries as the popups, readable without JavaScript -->
+      <div class="itinerary-plans">
+        <details class="itinerary-plan" id="itinerary-2-nights">
+          <summary>French Quarter Weekend — 2 Nights: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">White Town heritage walk, Promenade Beach, and local cafes.</p>
+          <ol>
+            <li><strong>Day 1: Arrival &amp; White Town.</strong> Arrive in Pondicherry, check-in. Evening walk through White Town's French Quarter. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Promenade &amp; Cafes.</strong> Morning at Promenade Beach. Afternoon at local French cafes. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Departure.</strong> Morning at leisure, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
+        <details class="itinerary-plan" id="itinerary-4-nights">
+          <summary>Pondy &amp; Auroville — 4 Nights: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">Heritage town plus a day exploring Auroville and the ashram.</p>
+          <ol>
+            <li><strong>Day 1: Arrival &amp; White Town.</strong> Arrive, check-in. Evening walk through White Town. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Promenade &amp; Cafes.</strong> Promenade Beach. French Quarter cafes and boutiques. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Sri Aurobindo Ashram.</strong> Visit to Sri Aurobindo Ashram. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Auroville.</strong> Full day at Auroville, including the Matrimandir viewpoint. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 5: Departure.</strong> Morning at leisure, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
+        <details class="itinerary-plan" id="itinerary-6-nights">
+          <summary>Coastal Retreat — 6 Nights: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">An unhurried stay combining the French Quarter with nearby beaches.</p>
+          <ol>
+            <li><strong>Day 1: Arrival &amp; White Town.</strong> Arrive, check-in. Evening walk through White Town. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Promenade &amp; Cafes.</strong> Promenade Beach. French Quarter cafes. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Sri Aurobindo Ashram.</strong> Visit to Sri Aurobindo Ashram. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Auroville.</strong> Full day at Auroville and the Matrimandir viewpoint. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 5: Paradise Beach.</strong> Boat ride to Paradise Beach. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 6: Leisure Day.</strong> Free day for cycling around White Town. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 7: Departure.</strong> Morning at leisure, check-out and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
       </div>
     </div>
 

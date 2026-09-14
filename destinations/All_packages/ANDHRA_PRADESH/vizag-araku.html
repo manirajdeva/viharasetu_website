@@ -12,10 +12,22 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Vizag &amp; Araku Valley — Destinations</title>
+<title>Vizag Araku Valley Tour Package (4 &amp; 6 Days) | Viharasetu</title>
+<meta name="description" content="Vizag and Araku Valley in 4 or 6 days: RK Beach, Kailasagiri, Borra Caves and Araku's coffee hills. Hotels and cab arranged; free quote in 24 hours.">
+<link rel="canonical" href="https://viharasetu.co.in/destinations/All_packages/ANDHRA_PRADESH/vizag-araku.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Viharasetu">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Vizag Araku Valley Tour Package (4 &amp; 6 Days)">
+<meta property="og:description" content="Vizag and Araku Valley in 4 or 6 days: RK Beach, Kailasagiri, Borra Caves and Araku's coffee hills. Hotels and cab arranged; free quote in 24 hours.">
+<meta property="og:url" content="https://viharasetu.co.in/destinations/All_packages/ANDHRA_PRADESH/vizag-araku.html">
+<meta property="og:image" content="https://viharasetu.co.in/images/og/viharasetu.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=12">
+<link rel="stylesheet" href="../../destinations-common.css?v=13">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 <style>
   /* Premium social section */
@@ -89,16 +101,22 @@
 <body>
   <div class="wrap">
     <header class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+      <video class="hero-video" muted loop playsinline preload="none" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
         <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
       </video>
       <script>
-        // Respect reduced-motion: keep the poster frame instead of playing the video
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          const heroVideo = document.querySelector('.hero-video');
-          heroVideo.removeAttribute('autoplay');
-          heroVideo.pause();
-        }
+        // Play the banner video only on wider screens, without data-saver or reduced
+        // motion. Everyone else keeps the poster frame, which saves phones 1-3 MB.
+        (function () {
+          var v = document.querySelector('.hero-video');
+          var c = navigator.connection;
+          if (matchMedia('(min-width: 768px)').matches &&
+              !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+              !(c && c.saveData)) {
+            v.preload = 'auto';
+            v.play().catch(function () {});
+          }
+        })();
       </script>
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -189,16 +207,42 @@
           <h3>Vizag City Break — 4 Days</h3>
           <p class="desc">Beaches, hilltop viewpoints and temples of Visakhapatnam, with a day trip out to Araku Valley.</p>
           <div class="price"><span class="sym">Starting from:  ₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-4-days.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-4-days">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Vizag &amp; Araku Valley — 6 Days</h3>
           <p class="desc">Full Vizag sightseeing, then two unhurried days in Araku — Borra Caves, coffee plantations and the tribal museum.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-6-days.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-6-days">View Itinerary</a>
         </div>
 
+      </div>
+
+      <!-- Day-by-day plans: the same itineraries as the popups, readable without JavaScript -->
+      <div class="itinerary-plans">
+        <details class="itinerary-plan" id="itinerary-4-days">
+          <summary>Vizag City Break — 4 Days: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">Beaches, hilltop viewpoints and temples of Visakhapatnam, with a day trip out to Araku Valley.</p>
+          <ol>
+            <li><strong>Day 1: Arrival &amp; Beach Road.</strong> Arrive in Visakhapatnam, check in. Evening stroll along RK Beach and the Beach Road promenade. Overnight stay in Visakhapatnam. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Vizag City Sightseeing.</strong> Kailasagiri hilltop park and ropeway. Simhachalam Temple and INS Kursura Submarine Museum. Sunset at Rushikonda Beach. Overnight stay in Visakhapatnam. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Day Trip to Araku Valley.</strong> Early drive to Araku via the Borra Caves. Visit the Tribal Museum and a local coffee plantation. Return to Visakhapatnam by evening. Overnight stay in Visakhapatnam. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Departure.</strong> Visit Bheemili Beach or the Etikoppaka toy workshops en route. Transfer to airport/station for departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
+        <details class="itinerary-plan" id="itinerary-6-days">
+          <summary>Vizag &amp; Araku Valley — 6 Days: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">Full Vizag sightseeing, then two unhurried days in Araku — Borra Caves, coffee plantations and the tribal museum.</p>
+          <ol>
+            <li><strong>Day 1: Arrival &amp; Beach Road.</strong> Arrive in Visakhapatnam, check in. Evening stroll along RK Beach and the Beach Road promenade. Overnight stay in Visakhapatnam. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Vizag City Sightseeing.</strong> Kailasagiri hilltop park and ropeway. Simhachalam Temple and Visakha Museum. Overnight stay in Visakhapatnam. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Beaches of Vizag.</strong> Rushikonda and Yarada Beaches. INS Kursura Submarine Museum. Overnight stay in Visakhapatnam. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Drive to Araku via Borra Caves.</strong> Scenic drive through the Eastern Ghats. Explore the Borra Caves and Katiki Waterfalls. Arrive Araku, overnight stay. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 5: Araku Valley.</strong> Tribal Museum and a local coffee plantation tour. Padmapuram Gardens and the Araku viewpoint. Try Araku's signature bamboo chicken. Overnight stay in Araku. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 6: Return &amp; Departure.</strong> Drive back to Visakhapatnam. Transfer to airport/station for departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
       </div>
     </div>
 

@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /admin.html
+Disallow: /backend/
+Disallow: /mock-server/
+Disallow: /google-apps-script/
+Disallow: /README.md
+Disallow: /*.py$
+
+Sitemap: https://viharasetu.co.in/sitemap.xml

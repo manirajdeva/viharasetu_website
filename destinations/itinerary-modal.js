@@ -1,7 +1,8 @@
 /**
  * Turns each "View Itinerary" button on a destination page into a popup
- * showing a day-wise plan, instead of navigating to a (non-existent)
- * itinerary-N-days.html page.
+ * showing a day-wise plan. Each button links to #itinerary-N-nights, the id of
+ * a <details> block on the page with the same plan, so visitors without
+ * JavaScript and search crawlers can still read it.
  *
  * Usage: call initItineraryModals(itineraries) after the DOM is ready, where
  * `itineraries` is an array in the same order as the .itineraries .card
@@ -52,7 +53,6 @@ function initItineraryModals(itineraries) {
     const link = card.querySelector('a.btn');
     const data = itineraries[idx];
     if (!link || !data) return;
-    link.setAttribute('href', '#');
     link.addEventListener('click', (e) => {
       e.preventDefault();
       renderItinerary(data);

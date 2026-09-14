@@ -12,25 +12,43 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Kochi, Munnar, Thekkady &amp; Alleppey — Destinations</title>
+<title>Munnar Thekkady Alleppey Tour Package from Kochi | Viharasetu</title>
+<meta name="description" content="Kerala tour from Kochi for 5, 7 or 10 nights: Fort Kochi, Munnar tea hills, Periyar in Thekkady and an Alleppey houseboat. Free quote in 24 hours.">
+<link rel="canonical" href="https://viharasetu.co.in/destinations/All_packages/KERALA/kochi-munnar-thekkady-alleppey.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Viharasetu">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Munnar Thekkady Alleppey Tour Package from Kochi">
+<meta property="og:description" content="Kerala tour from Kochi for 5, 7 or 10 nights: Fort Kochi, Munnar tea hills, Periyar in Thekkady and an Alleppey houseboat. Free quote in 24 hours.">
+<meta property="og:url" content="https://viharasetu.co.in/destinations/All_packages/KERALA/kochi-munnar-thekkady-alleppey.html">
+<meta property="og:image" content="https://viharasetu.co.in/images/og/kerala.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=12">
+<link rel="stylesheet" href="../../destinations-common.css?v=13">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 </head>
 <body>
   <div class="wrap">
     <header class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
+      <video class="hero-video" muted loop playsinline preload="none" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
         <source src="../../../images/viharasetu_logo_launch.MP4" type="video/mp4">
       </video>
       <script>
-        // Respect reduced-motion: keep the poster frame instead of playing the video
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          const heroVideo = document.querySelector('.hero-video');
-          heroVideo.removeAttribute('autoplay');
-          heroVideo.pause();
-        }
+        // Play the banner video only on wider screens, without data-saver or reduced
+        // motion. Everyone else keeps the poster frame, which saves phones 1-3 MB.
+        (function () {
+          var v = document.querySelector('.hero-video');
+          var c = navigator.connection;
+          if (matchMedia('(min-width: 768px)').matches &&
+              !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+              !(c && c.saveData)) {
+            v.preload = 'auto';
+            v.play().catch(function () {});
+          }
+        })();
       </script>
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -177,23 +195,70 @@
           <h3>Kerala Highlights — 5 Nights</h3>
           <p class="desc">Fort Kochi heritage, Munnar's tea hills, and a night aboard an Alleppey houseboat.</p>
           <div class="price"><span class="sym">Starting from: ₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-5-nights.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-5-nights">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Backwaters &amp; Hills Circuit — 7 Nights</h3>
           <p class="desc">Kochi, Munnar, Thekkady's wildlife sanctuary, and the Alleppey backwaters — all four in one seamless trail.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-7-nights.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-7-nights">View Itinerary</a>
         </div>
 
         <div class="card">
           <h3>Slow Kerala — 10 Nights</h3>
           <p class="desc">A relaxed pace through all four towns, with extra time for tea trails, a spice plantation stay, and two backwater nights.</p>
           <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-10-nights.html">View Itinerary</a>
+          <a class="btn" href="#itinerary-10-nights">View Itinerary</a>
         </div>
 
+      </div>
+
+      <!-- Day-by-day plans: the same itineraries as the popups, readable without JavaScript -->
+      <div class="itinerary-plans">
+        <details class="itinerary-plan" id="itinerary-5-nights">
+          <summary>Kerala Highlights — 5 Nights: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">Fort Kochi heritage, Munnar's tea hills, and a night aboard an Alleppey houseboat.</p>
+          <ol>
+            <li><strong>Day 1: Arrival in Kochi.</strong> Arrive in Kochi, check-in and freshen up. Evening Chinese fishing nets at sunset. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Fort Kochi Heritage.</strong> Jew Town, Mattancherry Palace, St. Francis Church. Evening Kathakali performance. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Kochi to Munnar.</strong> Scenic drive to Munnar. Evening amid the tea gardens. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Munnar Tea Trails.</strong> Tea plantation walk and factory visit. Eravikulam National Park. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 5: Munnar to Alleppey.</strong> Drive to Alleppey, board your houseboat. Overnight backwater cruise. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 6: Departure.</strong> Morning backwater views, disembark and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
+        <details class="itinerary-plan" id="itinerary-7-nights">
+          <summary>Backwaters &amp; Hills Circuit — 7 Nights: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">Kochi, Munnar, Thekkady's wildlife sanctuary, and the Alleppey backwaters — all four in one seamless trail.</p>
+          <ol>
+            <li><strong>Day 1: Arrival in Kochi.</strong> Arrive in Kochi, check-in and freshen up. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Fort Kochi Heritage.</strong> Chinese fishing nets, Jew Town, Mattancherry Palace. Evening Kathakali performance. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Kochi to Munnar.</strong> Scenic drive to Munnar. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Munnar Tea Trails.</strong> Tea plantation walk, factory visit, Eravikulam National Park. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 5: Munnar to Thekkady.</strong> Drive to Thekkady. Evening spice plantation walk. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 6: Periyar Wildlife Sanctuary.</strong> Periyar Lake boat safari. Bamboo rafting. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 7: Thekkady to Alleppey.</strong> Drive to Alleppey, board your houseboat. Overnight backwater cruise. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 8: Departure.</strong> Morning backwater views, disembark and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
+        <details class="itinerary-plan" id="itinerary-10-nights">
+          <summary>Slow Kerala — 10 Nights: day-by-day plan</summary>
+          <p class="itinerary-plan-sub">A relaxed pace through all four towns, with extra time for tea trails, a spice plantation stay, and two backwater nights.</p>
+          <ol>
+            <li><strong>Day 1: Arrival in Kochi.</strong> Arrive in Kochi, check-in and freshen up. <span class="itinerary-plan-meals">Includes: Dinner</span></li>
+            <li><strong>Day 2: Fort Kochi Heritage.</strong> Chinese fishing nets, Jew Town, Mattancherry Palace. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 3: Kathakali &amp; Old City.</strong> Evening Kathakali performance. St. Francis Church walk. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 4: Kochi to Munnar.</strong> Scenic drive to Munnar. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 5: Munnar Tea Trails.</strong> Tea plantation walk, factory visit. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 6: Munnar Wildlife &amp; Views.</strong> Eravikulam National Park. Top Station viewpoint. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 7: Munnar to Thekkady.</strong> Drive to Thekkady, spice plantation stay. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 8: Periyar Wildlife Sanctuary.</strong> Periyar Lake boat safari, bamboo rafting. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 9: Thekkady to Alleppey.</strong> Drive to Alleppey, board your houseboat. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 10: Backwater Cruise.</strong> Second day cruising the backwaters and Kuttanad canals. <span class="itinerary-plan-meals">Includes: Breakfast, Dinner</span></li>
+            <li><strong>Day 11: Departure.</strong> Morning at leisure, disembark and departure. <span class="itinerary-plan-meals">Includes: Breakfast</span></li>
+          </ol>
+        </details>
       </div>
     </div>
 

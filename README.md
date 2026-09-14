@@ -84,6 +84,7 @@ index.html                     Homepage: hero slideshow, Signature Journeys (sto
 feedback.html                  Traveler feedback page (mailto + WhatsApp links, no backend)
 admin.html                     Redirect stub → admin/ (so old bookmarks keep working)
 CNAME                          GitHub Pages custom domain (viharasetu.co.in)
+robots.txt, sitemap.xml        Crawl rules and the list of pages for search engines (see SEO basics)
 .nojekyll                      Disables Jekyll processing on GitHub Pages
 
 admin/                         Admin portal
@@ -112,13 +113,15 @@ mock-server/                   Local-dev only, not deployed
 destinations/
   destinations-common.css      Shared stylesheet for most package pages
   gallery-lightbox.js          Opens gallery photos in an in-page popup
-  itinerary-modal.js           "View itinerary" modal on package pages
+  itinerary-modal.js           "View itinerary" modal on package pages (the same plans are also in each
+                               page as <details> blocks, so crawlers can read them)
   All_packages/
     Explore_Destination.html   Destinations hub: every package as a filterable card grid
     All_packages.html          Older copy of the hub; no page links to it
     <STATE_NAME>/*.html        One detail page per package
 
-images/                        Site imagery (images/Travel_pngs/small/ = nav-strip monument icons)
+images/                        Site imagery (images/Travel_pngs/small/ = nav-strip monument icons,
+                               images/og/ = 1200x630 link-preview images for og:image)
 pdf_files/                     Downloadable PDFs (the "About" brochure)
 google-apps-script/Code.gs     LEGACY Apps Script backend, reference only
 refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see below)
@@ -140,11 +143,14 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
 - **Liquid-glass buttons**: the "Home" and "Back to Destinations" buttons on package pages use
   `backdrop-filter: blur()` with a translucent gradient.
 - **Video banner** on package pages: the Viharasetu launch video (`images/viharasetu_logo_launch.MP4`)
-  plays muted and looped behind the Home/Back buttons, title and intro. Its first frame
-  (`images/viharasetu_logo_launch_poster.jpg`) shows while it loads and for visitors who prefer reduced
-  motion. Two pages play their own video instead: Varanasi (`images/Varanasi/varanasi.mp4`) and Spiti
+  plays muted and looped behind the Home/Back buttons, title and intro. It has `preload="none"` and a
+  small inline script starts it only on screens 768 px and wider, without data-saver or reduced motion.
+  Everyone else, including all phones, sees its first frame (`images/viharasetu_logo_launch_poster.jpg`).
+  Keep banner videos silent, 720p and around 3 MB or less. Two pages play their own video instead: Varanasi (`images/Varanasi/varanasi.mp4`) and Spiti
   Valley (`images/bannervideos/spiti-720p.mp4`, a trimmed 720p/30 fps silent web copy of the footage).
-- **Gallery lightbox** and **itinerary modal** on package pages (`destinations/*.js`).
+- **Gallery lightbox** and **itinerary modal** on package pages (`destinations/*.js`). Each "View
+  Itinerary" button links to `#itinerary-N-nights`, the id of a `<details>` block under the cards with
+  the same day-by-day plan; the modal opens on click and the block is what crawlers and no-JS visitors read.
 - **Signature Journeys** (homepage): journey cards for Varanasi & Sarnath, the Himachal Hill Trail,
   and the Kerala Ayurveda Retreat. A Ladakh card is commented out in `index.html`, ready to bring
   back. Each card has two buttons:
@@ -170,6 +176,16 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
   or Esc. The image (`images/winter.webp`, with `images/winter.jpg` as a fallback) is fetched only by
   the popup script, and the popup waits until the image has loaded. To run a different promo, swap
   those two images and update the `alt` text.
+
+### SEO basics
+
+- Every public page has a `<title>`, meta description, `rel="canonical"`, Open Graph and Twitter tags.
+  `feedback.html` is `noindex`. `All_packages.html` stays a redirect stub to the hub.
+- `robots.txt` keeps crawlers out of `/admin/`, `/backend/`, `/mock-server/`, `/google-apps-script/`,
+  `README.md` and the `.py` scripts, and points to `sitemap.xml`. GitHub Pages still serves those files,
+  because it publishes the whole repository.
+- `sitemap.xml` lists the homepage, the hub and every package page. Bump a page's `<lastmod>` when its
+  content changes, and add new pages to it.
 
 ### Destination packages
 
@@ -198,11 +214,18 @@ Package pages are grouped by state under `destinations/All_packages/`:
 1. Copy a page that uses the shared stylesheet (for example `KARNATAKA/hampi.html`) to
    `destinations/All_packages/<STATE_NAME>/<slug>.html`, and replace its content. Put its photos
    under `images/<Place>/`.
-2. Keep its `<link … destinations-common.css?v=N>` at the **same `N`** as the other pages (currently `12`).
+2. Keep its `<link … destinations-common.css?v=N>` at the **same `N`** as the other pages (currently `13`).
+   Update the SEO tags in `<head>`: `<title>` ("… Tour Package (N–N Nights) | Viharasetu"), meta description
+   (~150 characters), `rel="canonical"` with the page's full URL, and the Open Graph / Twitter tags (copy
+   the block from any package page; `og:image` points to `images/og/`, or `viharasetu.jpg` if the place has
+   no photo of its own).
+   Keep each itinerary in two places that must match: the `initItineraryModals([...])` data (for the
+   popup) and the `<details class="itinerary-plan" id="itinerary-N-nights">` blocks under the cards, with
+   each card's button linking to its `#itinerary-N-nights`.
 3. Add a card to `Explore_Destination.html`:
    `<a class="dest-card" href="<STATE_NAME>/<slug>.html" data-state="…" data-seasons="Winter,Summer">`.
    It can go anywhere in the grid, because the sort and the count are handled automatically.
-4. Add it to the table above.
+4. Add it to the table above, and add its URL to `sitemap.xml`.
 
 ### Shared styles and caching
 
