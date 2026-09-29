@@ -139,7 +139,7 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
   than `left` so it stays smooth on mobile.
 - **Liquid-glass buttons**: the "Home" and "Back to Destinations" buttons on package pages use
   `backdrop-filter: blur()` with a translucent gradient.
-- **Video banner** on package pages: the Viharasetu launch video (`images/viharasetu_logo_launch.MP4`)
+- **Video banner** on package pages: the Viharasetu launch video (`images/viharasetu_logo_launch_new.MP4`)
   plays muted and looped behind the Home/Back buttons, title and intro. Its first frame
   (`images/viharasetu_logo_launch_poster.jpg`) shows while it loads and for visitors who prefer reduced
   motion. Two pages play their own video instead: Varanasi (`images/Varanasi/varanasi.mp4`) and Spiti

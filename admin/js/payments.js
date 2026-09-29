@@ -26,7 +26,7 @@ const COMPANY = {
   email: 'viharasetu@gmail.com',
   website: 'viharasetu.co.in',
   instagram: 'instagram.com/viharasetu',   // TODO: confirm the exact handle
-  logo: '../images/Logo_hor.png',
+  logo: '../images/new_llogo.jpg',
 };
 
 // "Rs." (not ₹) — the rupee glyph is missing from jsPDF's built-in fonts.
