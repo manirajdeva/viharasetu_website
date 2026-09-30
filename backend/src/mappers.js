@@ -86,6 +86,22 @@ const ENTITIES = {
       ['Last Updated', 'updated_at', 'datetime'],   // read-only; DB ON UPDATE CURRENT_TIMESTAMP
     ],
   },
+
+  supplier_ments: {
+    table: 'supplier_ments',
+    tsColumn: 'created_at',               // "Created Date" - set once at creation
+    generated: {},
+    fields: [
+      ['Enquiry ID', 'enquiry_id', 'string'],
+      ['Customer Name', 'customer_name', 'string'],
+      ['Supplier Name', 'supplier_name', 'string'],
+      ['Total Amount', 'total_amount', 'decimal'],
+      ['Package Cost', 'package_cost', 'decimal'],
+      ['Profit', 'profit', 'decimal'],            // derived by the API: Total Amount - Package Cost
+      ['Created Date', 'created_at', 'datetime'],
+      ['Updated Date', 'updated_at', 'datetime'], // read-only; DB ON UPDATE CURRENT_TIMESTAMP
+    ],
+  },
 };
 
 const ENTITY_KEYS = Object.keys(ENTITIES);

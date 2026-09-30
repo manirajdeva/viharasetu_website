@@ -18,6 +18,7 @@ const App = (() => {
     suppliers: ['Suppliers', 'Local partners, DMCs and vendors by region'],
     bookings: ['Bookings', 'Confirmed trips and their payment status'],
     payments: ['Payments', 'Money received against each booking'],
+    supplier_ments: ['Supplier Payments', 'Package cost per enquiry and the profit on each trip'],
     reports: ['Reports', 'Filter and export across enquiries, bookings & payments'],
     users: ['Users', 'Portal accounts and their access level'],
     profile: ['Profile', 'Your contact details and password']
@@ -674,6 +675,7 @@ function wireEnquiryPicker() {
     const e = rows.find(r => String(r['Enquiry ID'] || '').trim() === id);
     if (!e) return;
     setField('Customer', e['Name']);
+    setField('Customer Name', e['Name']);
     setField('Destination', e['Destination']);
     setField('Pax', e['No. of People']);
     fillTravelDates(e['Travel']);

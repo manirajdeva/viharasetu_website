@@ -13,6 +13,26 @@ const { ENTITIES, headersFor, toDisplayRow, toDbValues } = require('../mappers')
 const { nextEnquiryId, nextPaymentId } = require('../ids');
 const { preparePaymentValues, paymentGroupKey, renumberGroup } = require('./payments');
 
+const num = (x) => Number(String(x == null ? '' : x).replace(/[₹,\s]/g, '')) || 0;
+
+/** supplier_ments: Profit is always Total Amount - Package Cost, never client-supplied. */
+async function prepareSupplierValues(conn, vals, cur) {
+  const has = (k) => Object.prototype.hasOwnProperty.call(vals, k);
+  const total = has('Total Amount') ? num(vals['Total Amount']) : num(cur && cur.total_amount);
+  const cost = has('Package Cost') ? num(vals['Package Cost']) : num(cur && cur.package_cost);
+  vals['Profit'] = Math.round((total - cost) * 100) / 100;
+
+  const eid = has('Enquiry ID') ? String(vals['Enquiry ID']).trim() : (cur && cur.enquiry_id);
+  if (has('Enquiry ID') || !cur) {
+    const [dup] = await conn.query('SELECT id FROM supplier_ments WHERE enquiry_id = ? AND id <> ? LIMIT 1', [eid, cur ? cur.id : 0]);
+    if (dup.length) {
+      const e = new Error(`A supplier payment already exists for ${eid}. Edit that row instead.`);
+      e.code = 'DUPLICATE';
+      throw e;
+    }
+  }
+}
+
 const q = (name) => `\`${name}\``; // identifiers are from our own map, but quote them anyway
 
 /** All rows for one entity, in insertion order, as display rows. */
@@ -44,6 +64,7 @@ async function createRow(key, values, { afterInsert } = {}) {
 
     const vals = Object.assign({}, values);
     if (key === 'payments') await preparePaymentValues(conn, vals, null);
+    if (key === 'supplier_ments') await prepareSupplierValues(conn, vals, null);
 
     const db = toDbValues(key, vals, { skip: Object.keys(spec.generated) });
     db[spec.tsColumn] = new Date();
@@ -101,6 +122,7 @@ async function updateRow(key, rowIndex, values) {
 
     const vals = Object.assign({}, values);
     if (key === 'payments') await preparePaymentValues(conn, vals, rowIndex);
+    if (key === 'supplier_ments') await prepareSupplierValues(conn, vals, cur[0]);
 
     const skip = [spec.tsColumn, ...Object.keys(spec.generated)];
     const db = toDbValues(key, vals, { skip });

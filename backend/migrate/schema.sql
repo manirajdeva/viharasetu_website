@@ -195,3 +195,26 @@ CREATE TABLE IF NOT EXISTS counters (
   updated_at DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/* ------------------------------------------------------------------ *
+ *  supplier_ments
+ *  What each enquiry's trip costs from the supplier versus what the
+ *  customer pays. One row per enquiry (enquiry_id is unique). profit is
+ *  derived on every write by the API: total_amount - package_cost.
+ * ------------------------------------------------------------------ */
+CREATE TABLE IF NOT EXISTS supplier_ments (
+  id            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,               -- internal row id used by the portal
+  enquiry_id    VARCHAR(20)  NOT NULL,                                 -- "Enquiry ID" — the key: one row per enquiry
+  customer_name VARCHAR(160)     NULL,                                 -- "Customer Name"
+  supplier_name VARCHAR(200)     NULL,                                 -- "Supplier Name"
+  total_amount  DECIMAL(12,2) NOT NULL DEFAULT 0,                      -- "Total Amount" (what the customer pays)
+  package_cost  DECIMAL(12,2) NOT NULL DEFAULT 0,                      -- "Package Cost" (what the supplier charges)
+  profit        DECIMAL(12,2) NOT NULL DEFAULT 0,                      -- "Profit" = total_amount - package_cost (derived, stored)
+  created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,       -- "Created Date"
+  updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- "Updated Date"
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_supplier_ments_enquiry_id (enquiry_id),
+  KEY idx_supplier_ments_supplier (supplier_name),
+  CONSTRAINT fk_supplier_ments_enquiry FOREIGN KEY (enquiry_id)
+    REFERENCES enquiries (enquiry_id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

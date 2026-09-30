@@ -24,6 +24,7 @@ const MAX_LEN = {
   suppliers: { 'Supplier Company Name': 200, 'States': 255, 'Supplier Name': 160, 'Supplier ID': 40, 'Contact No': 20 },
   bookings: { 'Customer': 160, 'Destination': 200, 'Travel Dates': 120 },
   payments: { 'Customer': 160, 'Destination': 200, 'Transaction Ref': 120 },
+  supplier_ments: { 'Customer Name': 160, 'Supplier Name': 200 },
 };
 
 function validate(entity, values) {
@@ -50,6 +51,10 @@ function validate(entity, values) {
     if (!s('Customer')) return 'Customer is required.';
     if (!(Number(v['Total Amount']) >= 0)) return 'Total amount must be a number of 0 or more.';
     if (!(Number(v['Amount Paid']) > 0)) return 'Amount paid must be greater than zero.';
+  } else if (entity === 'supplier_ments') {
+    if (!s('Enquiry ID')) return 'Enquiry ID is required.';
+    if (has('Total Amount') && !(Number(v['Total Amount']) >= 0)) return 'Total amount must be a number of 0 or more.';
+    if (has('Package Cost') && !(Number(v['Package Cost']) >= 0)) return 'Package cost must be a number of 0 or more.';
   } else {
     return 'Unknown entity.';
   }

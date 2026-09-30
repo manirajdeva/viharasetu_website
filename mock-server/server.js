@@ -41,13 +41,14 @@ const HEADERS = {
   enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'No. of People', 'Hotel Preference', 'Special Requests', 'Referred By', 'Status', 'Notes'],
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
-  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated']
+  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated'],
+  supplier_ments: ['Enquiry ID', 'Customer Name', 'Supplier Name', 'Total Amount', 'Package Cost', 'Profit', 'Created Date', 'Updated Date']
 };
 
 /* ---------------- in-memory store ---------------- */
 
-const db = { enquiries: [], suppliers: [], bookings: [], payments: [] };
-const rowSeq = { enquiries: 1, suppliers: 1, bookings: 1, payments: 1 }; // next rowIndex is ++seq (starts at 2)
+const db = { enquiries: [], suppliers: [], bookings: [], payments: [], supplier_ments: [] };
+const rowSeq = { enquiries: 1, suppliers: 1, bookings: 1, payments: 1, supplier_ments: 1 }; // next rowIndex is ++seq (starts at 2)
 const counters = { enq: {}, pmt: 0 };
 const sessions = new Map();
 
@@ -201,15 +202,25 @@ function preparePaymentValues(values, editingRowIndex) {
   values['Pending Amount'] = pending;
 }
 
+function prepareSupplierValues(values, editingRowIndex) {
+  const eid = String(values['Enquiry ID'] || '').trim();
+  if (!eid) throw new AppError('ERROR', 'Enquiry ID is required.');
+  if (db.supplier_ments.some((r) => r['Enquiry ID'] === eid && r.rowIndex !== Number(editingRowIndex))) {
+    throw new AppError('DUPLICATE', `A supplier payment already exists for ${eid}. Edit that row instead.`);
+  }
+  values['Profit'] = round2((Number(values['Total Amount']) || 0) - (Number(values['Package Cost']) || 0));
+}
+
 function createRow(p) {
   const key = String(p.sheet || 'enquiries').toLowerCase();
   if (!HEADERS[key]) throw new AppError('BAD_SHEET', 'Unknown sheet.');
   const values = p.values || {};
   if (key === 'payments') preparePaymentValues(values, null);
+  if (key === 'supplier_ments') prepareSupplierValues(values, null);
 
   const row = { rowIndex: ++rowSeq[key] };
   HEADERS[key].forEach((h) => {
-    if (h === 'Timestamp' || h === 'Last Updated') row[h] = nowIso();
+    if (h === 'Timestamp' || h === 'Last Updated' || h === 'Created Date' || h === 'Updated Date') row[h] = nowIso();
     else if (h === 'Enquiry ID' && key === 'enquiries') row[h] = nextEnquiryId();
     else if (h === 'Payment ID' && key === 'payments') row[h] = nextPaymentId();
     else row[h] = values[h] == null ? '' : values[h];
@@ -226,10 +237,11 @@ function updateRow(p) {
   if (!existing) throw new AppError('NOT_FOUND', 'Row not found.');
   const values = p.values || {};
   if (key === 'payments') preparePaymentValues(values, p.rowIndex);
+  if (key === 'supplier_ments') prepareSupplierValues(values, p.rowIndex);
 
   HEADERS[key].forEach((h) => {
-    if (h === 'Timestamp') return;
-    if (h === 'Last Updated') { existing[h] = nowIso(); return; }
+    if (h === 'Timestamp' || h === 'Created Date') return;
+    if (h === 'Last Updated' || h === 'Updated Date') { existing[h] = nowIso(); return; }
     if (h === 'Enquiry ID' && key === 'enquiries') return;
     if (h === 'Payment ID' && key === 'payments') return;
     existing[h] = values[h] == null ? '' : values[h];
