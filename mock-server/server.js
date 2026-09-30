@@ -38,7 +38,7 @@ const publicUser = (u) => ({
 });
 
 const HEADERS = {
-  enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'No. of People', 'Hotel Preference', 'Special Requests', 'Status', 'Notes'],
+  enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'No. of People', 'Hotel Preference', 'Special Requests', 'Referred By', 'Status', 'Notes'],
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
   payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated']
@@ -345,7 +345,7 @@ function dashboardStats() {
   const paymentsReceived = pay.reduce((s, r) => s + (parseFloat(r['Amount Paid']) || 0), 0);
   const paymentsSum = paymentsSummary(pay);
 
-  const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0 };
+  const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0, Confirmed: 0 };
   enq.forEach((r) => { if (r['Status'] in statusBreakdown) statusBreakdown[r['Status']]++; });
 
   const recent = [];

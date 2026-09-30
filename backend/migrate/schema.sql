@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS enquiries (
   no_of_people INT              NULL,                                   -- "No. of People"
   hotel_preference ENUM('3 Star','4 Star','5 Star') NULL,               -- "Hotel Preference"
   special_req  TEXT             NULL,                                   -- "Special Requests" (flights, celebrations, meals…)
-  status      ENUM('New','Contacted','Booked','Closed') NOT NULL DEFAULT 'New',  -- "Status"
+  referred_by  VARCHAR(160)     NULL,                                   -- "Referred By"
+  status      ENUM('New','Contacted','Booked','Closed','Confirmed') NOT NULL DEFAULT 'New',  -- "Status"
   notes        TEXT             NULL,                                   -- "Notes"
   created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

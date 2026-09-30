@@ -29,6 +29,7 @@ const ENTITIES = {
       ['No. of People', 'no_of_people', 'int'],
       ['Hotel Preference', 'hotel_preference', 'string'],
       ['Special Requests', 'special_req', 'string'],
+      ['Referred By', 'referred_by', 'string'],
       ['Status', 'status', 'string'],
       ['Notes', 'notes', 'string'],
     ],

@@ -154,7 +154,7 @@ function ymdKolkata(date) {
         [
           id, ts, String(r['Name'] ?? ''), String(r['Email'] ?? ''), strOrNull(r['Phone']),
           strOrNull(r['Destination']), strOrNull(r['Travel']),
-          enumOr(r['Status'], ['New', 'Contacted', 'Booked', 'Closed'], 'New'), strOrNull(r['Notes']),
+          enumOr(r['Status'], ['New', 'Contacted', 'Booked', 'Closed', 'Confirmed'], 'New'), strOrNull(r['Notes']),
         ],
       );
     }

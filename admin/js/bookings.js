@@ -13,6 +13,7 @@ const Bookings = makeSheetModule({
   primaryKey: 'Customer',
   defaultSort: 'Timestamp',
   enquiryPicker: true,
+  enquiryLink: true,
   badgeCol: 'Payment Status',
   badgeOptions: ['Pending', 'Partial', 'Paid'],
   searchCols: ['Enquiry ID', 'Customer', 'Destination', 'Travel Dates'],

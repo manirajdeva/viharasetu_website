@@ -410,6 +410,10 @@ function makeSheetModule(cfg) {
           const raw = String(r[c.key] || '').trim();
           if (raw) v = `<button type="button" class="cell-link" data-detail="${Utils.escapeAttr(raw)}">${v}</button>`;
         }
+        if (cfg.enquiryLink && c.key === 'Enquiry ID') {
+          const raw = String(r[c.key] || '').trim();
+          if (raw) v = `<button type="button" class="cell-link" data-enquiry="${Utils.escapeAttr(raw)}">${v}</button>`;
+        }
         const cls = [c.primary ? 'primary-col' : '', c.cls || ''].filter(Boolean).join(' ');
         return `<td${cls ? ` class="${cls}"` : ''}>${v}</td>`;
       }).join('');
@@ -431,6 +435,12 @@ function makeSheetModule(cfg) {
 
     tw.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => openForm(Number(b.dataset.edit))));
     tw.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => del(Number(b.dataset.del))));
+    if (cfg.enquiryLink) {
+      tw.querySelectorAll('[data-enquiry]').forEach(b => b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showEnquiryDetails(b.dataset.enquiry);
+      }));
+    }
     if (cfg.detailOn) {
       tw.querySelectorAll('[data-detail]').forEach(b => b.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -498,10 +508,12 @@ function makeSheetModule(cfg) {
     });
   }
 
-  function openForm(rowIndex) {
+  function openForm(rowIndex, prefill) {
     const row = rowIndex ? rows.find(r => r.rowIndex === rowIndex) : null;
     const values = {};
     (cfg.formFields).forEach(f => { values[f.key] = row ? (row[f.key] || '') : (f.default || ''); });
+    if (!row && prefill) Object.assign(values, prefill);
+    const prev = row ? { ...row } : null;
 
     if (cfg.enquiryPicker) ensureEnquiryIds();
 
@@ -518,6 +530,7 @@ function makeSheetModule(cfg) {
         else await Api.create(cfg.key, vals);
         Utils.success(cfg.singular + (row ? ' updated.' : ' added.'));
         await load(true);
+        if (cfg.afterSave) setTimeout(() => cfg.afterSave({ prev, vals, row }), 50);
       }
     });
 
@@ -538,7 +551,59 @@ function makeSheetModule(cfg) {
     } catch (err) { Utils.error(err.message); }
   }
 
-  return { load, get state() { return state; } };
+  return { load, openForm, get state() { return state; } };
+}
+
+/* Read-only popup with everything on file for one Enquiry ID: the enquiry
+   itself plus its bookings and payments. */
+async function showEnquiryDetails(id) {
+  const key = String(id).trim();
+  const same = (r) => String(r['Enquiry ID'] || '').trim() === key;
+  const load = async (k) => { try { return (await Data.fetch(k)).rows.filter(same); } catch { return []; } };
+  const [enq, bookings, payments] = await Promise.all([load('enquiries'), load('bookings'), load('payments')]);
+  const e = enq[0];
+  const esc = Utils.escapeHtml;
+
+  const fmt = (k, v) => {
+    if (v == null || v === '') return '—';
+    if (k === 'Timestamp') return Utils.formatDateTime(v);
+    if (k === 'Travel') return Utils.formatDateDMY(v);
+    return esc(v);
+  };
+  const money = (v) => Utils.formatCurrency(v);
+  const table = (cols, list) => list.length
+    ? `<div class="table-wrap" style="overflow:auto;"><table class="data-table"><thead><tr>${cols.map(c => `<th>${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${
+        list.map(r => `<tr>${cols.map(c => `<td>${c[2] ? c[2](r[c[0]]) : esc(r[c[0]] == null ? '' : r[c[0]])}</td>`).join('')}</tr>`).join('')
+      }</tbody></table></div>`
+    : '<div class="section-sub">None recorded.</div>';
+
+  const enqFields = [
+    ['Name', 'Name'], ['Email', 'Email'], ['Phone', 'Phone'], ['Destination', 'Destination'],
+    ['Travel', 'Travel date'], ['No. of People', 'People'], ['Hotel Preference', 'Hotel'],
+    ['Status', 'Status'], ['Timestamp', 'Received'], ['Special Requests', 'Special requests'], ['Referred By', 'Referred by'], ['Notes', 'Notes']
+  ];
+  const enqHtml = e
+    ? `<div class="form-grid">${enqFields.map(([k, l]) => `<div><div class="section-sub" style="margin:0">${l}</div><div>${fmt(k, e[k])}</div></div>`).join('')}</div>`
+    : '<div class="section-sub">No enquiry found for this ID.</div>';
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop visible';
+  backdrop.innerHTML = `
+    <div class="modal" style="max-width:920px;">
+      <h2>Enquiry ${esc(key)}</h2>
+      <div style="max-height:70vh;overflow:auto;">
+        <div class="section-title" style="margin-top:8px">Enquiry</div>${enqHtml}
+        <div class="section-title" style="margin-top:18px">Bookings</div>
+        ${table([['Customer','Customer'],['Destination','Destination'],['Travel Dates','Travel dates'],['Pax','Pax'],['Amount','Amount',money],['Payment Status','Payment'],['Notes','Notes']], bookings)}
+        <div class="section-title" style="margin-top:18px">Payments</div>
+        ${table([['Payment ID','Payment ID'],['Timestamp','Recorded',Utils.formatDateDMY],['Total Amount','Total',money],['Amount Paid','Paid',money],['Pending Amount','Pending',money],['Payment Mode','Mode'],['Transaction Ref','Txn ref'],['Notes','Notes']], payments)}
+      </div>
+      <div class="modal-actions"><button class="btn primary" data-close>Close</button></div>
+    </div>`;
+  document.body.appendChild(backdrop);
+  const close = () => backdrop.remove();
+  backdrop.querySelector('[data-close]').addEventListener('click', close);
+  backdrop.addEventListener('click', (ev) => { if (ev.target === backdrop) close(); });
 }
 
 /* Fills #enquiryIdList so Bookings / Payments can pick an existing Enquiry ID. */

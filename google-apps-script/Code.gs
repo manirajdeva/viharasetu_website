@@ -594,7 +594,7 @@ function dashboardStatsFrom_(enq, sup, book, pay) {
   const paymentsReceived = pay.reduce(function (s, r) { return s + (parseFloat(r['Amount Paid']) || 0); }, 0);
   const paymentsSum = paymentsSummary_(pay);
 
-  const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0 };
+  const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0, Confirmed: 0 };
   enq.forEach(function (r) { const k = String(r['Status']); if (statusBreakdown.hasOwnProperty(k)) statusBreakdown[k]++; });
 
   const recent = [];

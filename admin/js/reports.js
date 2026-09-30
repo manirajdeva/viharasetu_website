@@ -32,7 +32,7 @@ const Reports = (() => {
           <div class="field"><label>To date</label><input type="date" id="rpt-to" /></div>
           <div class="field"><label>Destination</label><input type="text" id="rpt-dest" placeholder="e.g. Kerala" /></div>
           <div class="field"><label>Enquiry status</label>
-            <select id="rpt-status"><option value="">All</option><option>New</option><option>Contacted</option><option>Booked</option><option>Closed</option></select>
+            <select id="rpt-status"><option value="">All</option><option>New</option><option>Contacted</option><option>Booked</option><option>Closed</option><option>Confirmed</option></select>
           </div>
           <div class="field"><label>Payment status</label>
             <select id="rpt-pay"><option value="">All</option><option>Paid</option><option>Partial</option><option>Pending</option><option>No Booking</option></select>

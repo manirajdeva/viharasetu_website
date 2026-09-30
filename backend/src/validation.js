@@ -12,7 +12,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const ENUMS = {
   enquiries: {
-    'Status': ['New', 'Contacted', 'Booked', 'Closed'],
+    'Status': ['New', 'Contacted', 'Booked', 'Closed', 'Confirmed'],
     'Hotel Preference': ['3 Star', '4 Star', '5 Star'],
   },
   bookings: { 'Payment Status': ['Pending', 'Partial', 'Paid'] },
@@ -20,7 +20,7 @@ const ENUMS = {
 };
 
 const MAX_LEN = {
-  enquiries: { 'Name': 160, 'Email': 190, 'Phone': 20, 'Destination': 160, 'Travel': 120, 'Special Requests': 1000 },
+  enquiries: { 'Name': 160, 'Email': 190, 'Phone': 20, 'Destination': 160, 'Travel': 120, 'Special Requests': 1000, 'Referred By': 160 },
   suppliers: { 'Supplier Company Name': 200, 'States': 255, 'Supplier Name': 160, 'Supplier ID': 40, 'Contact No': 20 },
   bookings: { 'Customer': 160, 'Destination': 200, 'Travel Dates': 120 },
   payments: { 'Customer': 160, 'Destination': 200, 'Transaction Ref': 120 },

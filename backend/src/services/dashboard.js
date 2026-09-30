@@ -127,7 +127,7 @@ function computeStats({ enquiries: enq, suppliers: sup, bookings: book, payments
   const paymentsReceived = pay.reduce((s, r) => s + (parseFloat(r['Amount Paid']) || 0), 0);
   const paymentsSum = paymentsSummary(pay);
 
-  const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0 };
+  const statusBreakdown = { New: 0, Contacted: 0, Booked: 0, Closed: 0, Confirmed: 0 };
   enq.forEach((r) => { if (r['Status'] in statusBreakdown) statusBreakdown[r['Status']]++; });
 
   const recent = [];
