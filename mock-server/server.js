@@ -42,13 +42,15 @@ const HEADERS = {
   suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
   payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated'],
-  supplier_ments: ['Enquiry ID', 'Customer Name', 'Supplier Name', 'Total Amount', 'Package Cost', 'Profit', 'Created Date', 'Updated Date']
+  supplier_ments: ['Enquiry ID', 'Customer Name', 'Supplier Name', 'Total Amount', 'Package Cost', 'Profit', 'Created Date', 'Updated Date'],
+  expenses: ['Expense Date', 'Category', 'Description', 'Amount', 'Paid By', 'Notes', 'Created Date', 'Updated Date'],
+  partner_transactions: ['Date', 'Partner', 'Type', 'Amount', 'Notes', 'Created Date', 'Updated Date']
 };
 
 /* ---------------- in-memory store ---------------- */
 
-const db = { enquiries: [], suppliers: [], bookings: [], payments: [], supplier_ments: [] };
-const rowSeq = { enquiries: 1, suppliers: 1, bookings: 1, payments: 1, supplier_ments: 1 }; // next rowIndex is ++seq (starts at 2)
+const db = { enquiries: [], suppliers: [], bookings: [], payments: [], supplier_ments: [], expenses: [], partner_transactions: [] };
+const rowSeq = { enquiries: 1, suppliers: 1, bookings: 1, payments: 1, supplier_ments: 1, expenses: 1, partner_transactions: 1 }; // next rowIndex is ++seq (starts at 2)
 const counters = { enq: {}, pmt: 0 };
 const sessions = new Map();
 

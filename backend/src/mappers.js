@@ -102,6 +102,37 @@ const ENTITIES = {
       ['Updated Date', 'updated_at', 'datetime'], // read-only; DB ON UPDATE CURRENT_TIMESTAMP
     ],
   },
+
+  expenses: {
+    table: 'expenses',
+    tsColumn: 'created_at',
+    generated: {},
+    fields: [
+      ['Expense Date', 'expense_date', 'string'],
+      ['Category', 'category', 'string'],
+      ['Description', 'description', 'string'],
+      ['Amount', 'amount', 'decimal'],
+      ['Paid By', 'paid_by', 'string'],
+      ['Notes', 'notes', 'string'],
+      ['Created Date', 'created_at', 'datetime'],
+      ['Updated Date', 'updated_at', 'datetime'],
+    ],
+  },
+
+  partner_transactions: {
+    table: 'partner_transactions',
+    tsColumn: 'created_at',
+    generated: {},
+    fields: [
+      ['Date', 'txn_date', 'string'],
+      ['Partner', 'partner', 'string'],
+      ['Type', 'txn_type', 'string'],
+      ['Amount', 'amount', 'decimal'],
+      ['Notes', 'notes', 'string'],
+      ['Created Date', 'created_at', 'datetime'],
+      ['Updated Date', 'updated_at', 'datetime'],
+    ],
+  },
 };
 
 const ENTITY_KEYS = Object.keys(ENTITIES);

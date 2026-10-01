@@ -19,6 +19,8 @@ const App = (() => {
     bookings: ['Bookings', 'Confirmed trips and their payment status'],
     payments: ['Payments', 'Money received against each booking'],
     supplier_ments: ['Supplier Payments', 'Package cost per enquiry and the profit on each trip'],
+    expenses: ['Expenses', 'What the business and partners have spent'],
+    account: ['Account Statement', 'Profit, investments, expenses and withdrawals with a running balance'],
     reports: ['Reports', 'Filter and export across enquiries, bookings & payments'],
     users: ['Users', 'Portal accounts and their access level'],
     profile: ['Profile', 'Your contact details and password']
@@ -270,6 +272,7 @@ function makeSheetModule(cfg) {
             ${(cfg.extraFilters || []).map(f => `<input type="text" id="${xfId(f.key)}" placeholder="${Utils.escapeAttr(f.placeholder || f.label)}" style="min-width:170px;" />`).join('')}
             ${cfg.latestPerGroup ? `<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap;color:var(--ink-soft);cursor:pointer;"><input type="checkbox" id="${cfg.key}-latest" style="width:auto;min-width:0;margin:0;" /> ${Utils.escapeHtml(cfg.latestPerGroup.label)}</label>` : ''}
           </div>
+          ${cfg.totalBox ? `<div class="total-box"><span class="label">${Utils.escapeHtml(cfg.totalBox.label)}</span><b id="${cfg.key}-total">₹0</b></div>` : ''}
           <div class="grp">
             <button class="btn sm" data-x="csv">CSV</button>
             <button class="btn sm" data-x="xlsx">Excel</button>
@@ -372,6 +375,11 @@ function makeSheetModule(cfg) {
     if (App.currentView() !== cfg.key) return;
     const all = filtered();
     const tw = root().querySelector('#' + cfg.key + '-tw');
+
+    if (cfg.totalBox) {
+      const el = root().querySelector('#' + cfg.key + '-total');
+      if (el) el.textContent = Utils.formatCurrency(all.reduce((s, r) => s + (Number(r[cfg.totalBox.key]) || 0), 0));
+    }
 
     if (cfg.badgeCol) {
       const pills = root().querySelector('#' + cfg.key + '-pills');

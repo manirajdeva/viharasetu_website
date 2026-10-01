@@ -218,3 +218,35 @@ CREATE TABLE IF NOT EXISTS supplier_ments (
   CONSTRAINT fk_supplier_ments_enquiry FOREIGN KEY (enquiry_id)
     REFERENCES enquiries (enquiry_id) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/* expenses: money spent by the business / partners (Expenses page). */
+CREATE TABLE IF NOT EXISTS expenses (
+  id           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  expense_date VARCHAR(10)  NOT NULL,                                  -- "Expense Date" (yyyy-mm-dd)
+  category     VARCHAR(80)      NULL,                                  -- "Category"
+  description  VARCHAR(255) NOT NULL,                                  -- "Description"
+  amount       DECIMAL(12,2) NOT NULL DEFAULT 0,                       -- "Amount"
+  paid_by      VARCHAR(80)      NULL,                                  -- "Paid By" (partner name or Business)
+  notes        TEXT             NULL,                                  -- "Notes"
+  created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,        -- "Created Date"
+  updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- "Updated Date"
+  PRIMARY KEY (id),
+  KEY idx_expenses_date (expense_date),
+  KEY idx_expenses_category (category)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/* partner_transactions: money partners put in (Investment) or take out (Withdrawal).
+ * The Account Statement page combines these with profit and expenses. */
+CREATE TABLE IF NOT EXISTS partner_transactions (
+  id        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  txn_date  VARCHAR(10)  NOT NULL,                                     -- "Date" (yyyy-mm-dd)
+  partner   VARCHAR(80)  NOT NULL,                                     -- "Partner"
+  txn_type  ENUM('Investment','Withdrawal') NOT NULL,                  -- "Type"
+  amount    DECIMAL(12,2) NOT NULL DEFAULT 0,                          -- "Amount"
+  notes     TEXT             NULL,                                     -- "Notes"
+  created_at DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,           -- "Created Date"
+  updated_at DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- "Updated Date"
+  PRIMARY KEY (id),
+  KEY idx_ptx_date (txn_date),
+  KEY idx_ptx_partner (partner)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

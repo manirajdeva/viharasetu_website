@@ -17,6 +17,7 @@ const ENUMS = {
   },
   bookings: { 'Payment Status': ['Pending', 'Partial', 'Paid'] },
   payments: { 'Payment Mode': ['Cash', 'UPI', 'Card', 'Bank Transfer'] },
+  partner_transactions: { 'Type': ['Investment', 'Withdrawal'] },
 };
 
 const MAX_LEN = {
@@ -25,6 +26,8 @@ const MAX_LEN = {
   bookings: { 'Customer': 160, 'Destination': 200, 'Travel Dates': 120 },
   payments: { 'Customer': 160, 'Destination': 200, 'Transaction Ref': 120 },
   supplier_ments: { 'Customer Name': 160, 'Supplier Name': 200 },
+  expenses: { 'Category': 80, 'Description': 255, 'Paid By': 80 },
+  partner_transactions: { 'Partner': 80 },
 };
 
 function validate(entity, values) {
@@ -55,6 +58,14 @@ function validate(entity, values) {
     if (!s('Enquiry ID')) return 'Enquiry ID is required.';
     if (has('Total Amount') && !(Number(v['Total Amount']) >= 0)) return 'Total amount must be a number of 0 or more.';
     if (has('Package Cost') && !(Number(v['Package Cost']) >= 0)) return 'Package cost must be a number of 0 or more.';
+  } else if (entity === 'expenses') {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s('Expense Date'))) return 'Expense date is required.';
+    if (!s('Description')) return 'Description is required.';
+    if (!(Number(v['Amount']) > 0)) return 'Amount must be greater than zero.';
+  } else if (entity === 'partner_transactions') {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s('Date'))) return 'Date is required.';
+    if (!s('Partner')) return 'Partner is required.';
+    if (!(Number(v['Amount']) > 0)) return 'Amount must be greater than zero.';
   } else {
     return 'Unknown entity.';
   }
