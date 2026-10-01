@@ -48,7 +48,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     min-height: 460px;
     margin-bottom: 36px;
     padding: 28px 32px 40px;
@@ -352,6 +352,42 @@
     .social-buttons{ gap:10px; }
     .social-btn{ padding:10px 16px; font-size:13px; }
   }
+
+/* Fixed top bar: Home, Back to Destinations and the state name */
+body { padding-top: 66px; }
+.site-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px max(24px, calc((100% - 1180px) / 2 + 24px));
+  background: rgba(244,241,235,0.82);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid rgba(38,34,28,0.08);
+  box-shadow: 0 4px 18px rgba(38,34,28,0.06);
+}
+.site-bar .state-badge {
+  padding: 8px 18px;
+  border: 1px solid rgba(187,90,52,0.35);
+  border-radius: 999px;
+  background: rgba(187,90,52,0.1);
+  color: var(--accent-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  body { padding-top: 98px; }
+  .site-bar { flex-wrap: wrap; row-gap: 6px; padding: 8px 16px; }
+  .site-bar .back-link { padding: 8px 14px 8px 12px; font-size: 13px; }
+  .site-bar .state-badge { flex: 1 0 100%; text-align: center; padding: 0; border: 0; background: none; font-size: 11px; }
+}
 </style>
 
 <style>
@@ -523,6 +559,13 @@
 </style>
 </head>
 <body>
+  <div class="site-bar">
+      <div class="top-actions">
+        <a class="back-link" href="../../../index.html">Home</a>
+        <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
+      </div>
+    <span class="state-badge">Jammu &amp; Kashmir</span>
+  </div>
   <div class="wrap">
     <header class="hero">
       <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
@@ -536,10 +579,6 @@
           heroVideo.pause();
         }
       </script>
-      <div class="top-actions">
-        <a class="back-link" href="../../../index.html">Home</a>
-        <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
-      </div>
       <div class="hero-text">
         <h1>Srinagar</h1>
         <p class="intro">

@@ -199,7 +199,7 @@ Package pages are grouped by state under `destinations/All_packages/`:
 1. Copy a page that uses the shared stylesheet (for example `KARNATAKA/hampi.html`) to
    `destinations/All_packages/<STATE_NAME>/<slug>.html`, and replace its content. Put its photos
    under `images/<Place>/`.
-2. Keep its `<link … destinations-common.css?v=N>` at the **same `N`** as the other pages (currently `12`).
+2. Keep its `<link … destinations-common.css?v=N>` at the **same `N`** as the other pages (currently `14`).
 3. Add a card to `Explore_Destination.html`:
    `<a class="dest-card" href="<STATE_NAME>/<slug>.html" data-state="…" data-seasons="Winter,Summer">`.
    It can go anywhere in the grid, because the sort and the count are handled automatically.
@@ -314,7 +314,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.4.0** (2026-10-01).
+added and changed. The current release is **v3.4.1** (2026-10-01).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.
