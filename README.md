@@ -44,7 +44,7 @@ server, because both have zero dependencies.
 
 ```bash
 node mock-server/server.js          # mock API  → http://localhost:3001/exec
-node mock-server/static-server.js   # site      → http://localhost:5500
+node mock-server/static-server.js   # site      → http://localhost:5500  (PORT=5501 node … to change it)
 ```
 
 Open **http://localhost:5500/admin/** and log in as **`admin` / `admin123`**.
@@ -95,7 +95,8 @@ admin/                         Admin portal
   js/utils.js                  Toasts, confirm dialog, formatting, phone validation, pagination, CSV/Excel/PDF export
   js/shell.js                  Sidebar, routing, shared form modal, Profile, makeSheetModule() table factory
   js/dashboard.js              Bookings / Payments dashboards (stat cards + Chart.js)
-  js/{enquiries,suppliers,bookings,payments,reports}.js   Per-view modules built on the factory
+  js/{enquiries,suppliers,bookings,payments,supplier_ments,expenses,reports}.js   Per-view modules built on the factory
+  js/account.js                Account Statement: a ledger computed from profit, investments, expenses, withdrawals
   js/users.js                  User management (admins only)
 
 backend/                       Node/Express + MySQL API. See backend/README.md
@@ -107,7 +108,7 @@ backend/                       Node/Express + MySQL API. See backend/README.md
 
 mock-server/                   Local-dev only, not deployed
   server.js                    In-memory mock of the API on :3001
-  static-server.js             Static file server for the repo root on :5500
+  static-server.js             Static file server for the repo root on :5500 (override with PORT)
 
 destinations/
   destinations-common.css      Shared stylesheet for most package pages
@@ -216,8 +217,8 @@ Package pages are grouped by state under `destinations/All_packages/`:
 ## Admin portal
 
 Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Payments dashboards),
-**Enquiries**, **Suppliers**, **Bookings**, **Payments**, **Reports**, **Users** (admins only), and
-**Profile**.
+**Enquiries**, **Suppliers**, **Bookings**, **Payments**, **Supplier Payments**, **Expenses**,
+**Account Statement**, **Reports**, **Users** (admins only), and **Profile**.
 
 - Every table has search, sort, and pagination, plus CSV / Excel / PDF export.
 - The portal loads all its data with a single `bootstrap` call on open, and **Refresh** reloads it.
@@ -230,6 +231,24 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
   within its enquiry. It works out *Pending Amount* as Total − Σ Amount Paid (grouped by Enquiry ID,
   or by Customer when the ID is blank) and rejects overpayments. The toolbar can filter by Enquiry ID
   and can show only the latest payment per enquiry.
+- **Enquiries** also have a **Confirmed** status and a **Referred by** field. Saving an existing enquiry
+  with its status changed to **Booked** opens the Add Booking form pre-filled from it (Enquiry ID,
+  customer, destination, travel dates, pax), unless a booking already exists for that Enquiry ID.
+- **Enquiry ID popup:** on Bookings and Supplier Payments, the Enquiry ID is a link that opens
+  everything on file for it: the enquiry, its bookings, and its payments.
+- **Supplier Payments** (`supplier_ments` table): one row per enquiry holding Customer Name, Supplier
+  Name, Total Amount and Package Cost. The API derives **Profit = Total Amount − Package Cost** on
+  every save. A second row for the same Enquiry ID is rejected. Created and Updated dates are set by
+  the server.
+- **Expenses:** date, category (Website, Travel, Cards & Posters, Others), description, amount, paid
+  by (Devamani Raju, Satya, Sirisha) and notes, with a Total expenses box that follows the search.
+- **Account Statement:** a ledger computed from other sheets; no balance is typed in. Credits are
+  profit from Supplier Payments (counted once the Payments for that Enquiry ID add up to its Total
+  Amount) and partner investments. Debits are expenses and partner withdrawals. The cards show My
+  balance, Profit earned, Invested, Expenses, Withdrawn and Pending profit (profit on trips not yet
+  fully paid, kept out of the balance). Investments and withdrawals are added on this page
+  (`partner_transactions` table). A By partner table shows invested, expenses paid and withdrawn.
+  Partner names come from the lists in `admin/js/expenses.js` (`PARTNERS`).
 - **Phone fields** take a country code (India `+91` or Nepal `+977`) plus a number, and are stored as
   `"+91 9876543210"`. The same two codes are offered on the public contact form. For `+91`, the number
   must be a 10-digit Indian mobile. Other codes accept 6–14 digits. Older records saved with a
@@ -295,7 +314,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.3.0** (2026-09-14).
+added and changed. The current release is **v3.4.0** (2026-10-01).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.
