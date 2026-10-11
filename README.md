@@ -82,6 +82,7 @@ fails. That is expected.
 index.html                     Homepage: hero slideshow, Signature Journeys (story + enquiry popups),
                                packages, testimonials, contact form, winter promo popup
 feedback.html                  Traveler feedback page (mailto + WhatsApp links, no backend)
+js/airplane-loader.js          Blueprint airplane loading overlay (window.AirplaneLoader), used by every page
 admin.html                     Redirect stub → admin/ (so old bookmarks keep working)
 CNAME                          GitHub Pages custom domain (viharasetu.co.in)
 .nojekyll                      Disables Jekyll processing on GitHub Pages
@@ -131,6 +132,11 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
 
 ### Features
 
+- **Page loader:** every public page includes `js/airplane-loader.js` with `data-page-load` as the
+  first element in `<body>`. The blueprint airplane covers the page until the browser's `load` event:
+  at once on the first page of a visit, on later pages only if loading takes over 0.8 s. A
+  "Continue to site" button appears after 7 s, and it always closes by 15 s. It honours
+  `prefers-reduced-motion`. New pages need the same `<script … data-page-load>` line.
 - **Explore India hub** (`Explore_Destination.html`): every package as a card. On load, a script sorts
   the cards alphabetically by their `data-state` and computes the "N destinations found" count, so the
   order in the HTML doesn't matter. Visitors can narrow the grid with a search box and the **Season** /
@@ -223,6 +229,11 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
 **Account Statement**, **Reports**, **Itinerary Preparation**, **Users** (admins only), and **Profile**.
 
 - Every table has search, sort, and pagination, plus CSV / Excel / PDF export.
+- The open page is kept in the address (`portal.html#itinerary`), so a reload reopens it.
+- **Loading:** `Utils.showLoading()` / `hideLoading()` show the blueprint airplane loader
+  (`js/airplane-loader.js`) while the portal fetches its data — only if that takes over 0.3 s. After
+  8 s it explains that the server may be waking up; if loading fails it shows the error with
+  **Try again** / **Continue**.
 - The portal loads all its data with a single `bootstrap` call on open, and **Refresh** reloads it.
   Moving between sections makes no further requests.
 - Picking an **Enquiry ID** in Bookings or Payments fills in Customer, Destination, and Travel Dates
@@ -329,7 +340,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.7.0** (2026-10-11).
+added and changed. The current release is **v3.8.0** (2026-10-11).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.
