@@ -41,8 +41,18 @@ const App = (() => {
     const [t, s] = titles[name] || ['', ''];
     document.getElementById('pageTitle').textContent = t;
     document.getElementById('pageSubtitle').textContent = s;
+    // Remember the open page in the address (portal.html#itinerary) so a reload reopens it.
+    if (location.hash.slice(1) !== name) history.replaceState(null, '', '#' + name);
     closeSidebar();
     if (hooks[name]) hooks[name]();
+  }
+
+  /** The page named in the address if this user can open it, otherwise Dashboard. */
+  function initialView() {
+    const name = decodeURIComponent(location.hash.slice(1));
+    const allowed = name && titles[name] && document.getElementById('view-' + name) &&
+      document.querySelector(`.nav-item[data-view="${CSS.escape(name)}"]`); // e.g. Users only for admins
+    return allowed ? name : 'dashboard';
   }
 
   const sidebar = () => document.getElementById('sidebar');
@@ -79,7 +89,7 @@ const App = (() => {
     });
   }
 
-  return { onView, currentView, show, wireShell };
+  return { onView, currentView, show, wireShell, initialView };
 })();
 
 /* ============================ Data cache ============================ */
@@ -795,12 +805,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   Form.wire();
   App.onView('profile', Profile.render);
 
+  // Reopen the page that was open before a reload (portal.html#itinerary), else Dashboard.
+  const startView = App.initialView();
+
   // Stale-while-revalidate: if this tab already bootstrapped once, paint the
-  // dashboard from that snapshot immediately, then refresh in the background.
+  // page from that snapshot immediately, then refresh in the background.
   const cached = Data.cachedBootstrap();
   if (cached) {
     Data.prime(cached);
-    App.show('dashboard');
+    App.show(startView);
     // Refresh in the background, then repaint whichever view is open.
     Data.bootstrap().then(() => App.show(App.currentView())).catch(() => {});
     return;
@@ -815,5 +828,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   } finally {
     Utils.hideLoading();
   }
-  App.show('dashboard');
+  App.show(startView);
 });
