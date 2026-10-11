@@ -252,7 +252,8 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
   (`partner_transactions` table). A By partner table shows invested, expenses paid and withdrawn.
   Partner names come from the lists in `admin/js/expenses.js` (`PARTNERS`).
 - **Itinerary Preparation:** paste up to 500 lines of itinerary text and preview or download it as an
-  A4 PDF with the logo top-left on every page, "Page X of Y" and the Viharasetu contact footer. It only
+  A4 PDF with the logo top-left on every page, an optional faint logo watermark (10% opacity, behind the
+  text, on by default), "Page X of Y" and the Viharasetu contact footer. It only
   formats; it never rewrites. Day headings in any common form (`Day 1`, `DAY 01`, `Day-1:`,
   `1st Day (Mon, 11 Jan)`, `## Day 1 – …`) become bold bands; known sections (Stay Distribution,
   Inclusions, Terms and Conditions, …) become headings; bullets from Word, WhatsApp, PDFs and Markdown
@@ -326,7 +327,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.5.0** (2026-10-11).
+added and changed. The current release is **v3.6.0** (2026-10-11).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.
