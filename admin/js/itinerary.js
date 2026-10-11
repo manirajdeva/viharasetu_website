@@ -500,8 +500,25 @@ const ItineraryPdf = (() => {
 
   /* ---------- page chrome ---------- */
 
+  const WATERMARK_OPACITY = 0.1, WATERMARK_W = 120; // mm, centred on the page
+
+  /**
+   * The logo, large and faint in the middle of the page. Drawn first on every
+   * page (from drawHeader, before any text), so it always sits behind the content.
+   */
+  function drawWatermark(doc, logo) {
+    let w = WATERMARK_W, h = w * (logo.h / logo.w);
+    const maxH = PAGE_H * 0.5;
+    if (h > maxH) { h = maxH; w = h * (logo.w / logo.h); }
+    doc.saveGraphicsState();
+    doc.setGState(new doc.GState({ opacity: WATERMARK_OPACITY }));
+    doc.addImage(logo.dataUrl, logo.format, (PAGE_W - w) / 2, (PAGE_H - h) / 2, w, h, 'logo' + (logo.id || 0), 'FAST');
+    doc.restoreGraphicsState();
+  }
+
   function drawHeader(doc, opts) {
     const { logo } = opts;
+    if (logo && opts.watermark) drawWatermark(doc, logo);
     if (logo) {
       let h = LOGO_MAX_H, w = h * (logo.w / logo.h);
       if (w > LOGO_MAX_W) { w = LOGO_MAX_W; h = w * (logo.h / logo.w); }
@@ -668,7 +685,11 @@ const ItineraryPdf = (() => {
         const bandH = (lines ? lines.length * lineH : rasterLines(b.text, contentW - 8, pt, true, NAVY).reduce((s, l) => s + l.h, 0)) + padY * 2;
         if (y > CONTENT_TOP) y += 3;
         ensure(bandH + LINE_H * 2 + 2); // never strand a day heading at the foot of a page
+        // Slightly see-through so a watermark behind the band stays continuous.
+        doc.saveGraphicsState();
+        doc.setGState(new doc.GState({ opacity: 0.65 }));
         doc.setFillColor(...TINT); doc.rect(M_X, y, contentW, bandH, 'F');
+        doc.restoreGraphicsState();
         doc.setFillColor(...SAFFRON); doc.rect(M_X, y, 1.4, bandH, 'F');
         const top = y;
         y += padY;
@@ -895,6 +916,7 @@ const Itinerary = (() => {
     text: text(),
     customer: $('#it-customer').value.trim(),
     footer: $('#it-footer').value.trim(),
+    watermark: $('#it-watermark').checked,
     logo: state.logo
   });
 
@@ -1036,6 +1058,7 @@ const Itinerary = (() => {
     $('#it-enquiry-hint').textContent = '';
     state.lastLookup = '';
     $('#it-footer').value = DEFAULTS.footer;
+    $('#it-watermark').checked = true;
     state.logo = state.defaultLogo || null;
     drawLogo();
     hidePreview();
@@ -1089,6 +1112,7 @@ const Itinerary = (() => {
               <input id="it-logo-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
               <button class="btn sm" id="it-logo-default" hidden>Use Viharasetu logo</button>
             </div>
+            <label class="itin-check"><input type="checkbox" id="it-watermark" checked /> Logo watermark in the middle of every page (10% opacity, behind the text)</label>
             <div class="field" style="margin-top:14px;">
               <label for="it-footer">Footer (every page)</label>
               <textarea id="it-footer" rows="3" maxlength="400">${Utils.escapeHtml(DEFAULTS.footer)}</textarea>
@@ -1125,6 +1149,7 @@ const Itinerary = (() => {
 
     $('#it-text').addEventListener('input', contentChanged);
     ['#it-customer', '#it-footer'].forEach((s) => $(s).addEventListener('input', contentChanged));
+    $('#it-watermark').addEventListener('change', contentChanged);
     // Look the enquiry up when an ID is picked from the list, typed and left, or Enter is pressed.
     const lookupSoon = Utils.debounce(lookupEnquiry, 600);
     $('#it-enquiry').addEventListener('input', () => { state.lastLookup = ''; lookupSoon(); contentChanged(); });
