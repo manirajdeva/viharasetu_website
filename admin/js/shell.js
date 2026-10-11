@@ -22,6 +22,7 @@ const App = (() => {
     expenses: ['Expenses', 'What the business and partners have spent'],
     account: ['Account Statement', 'Profit, investments, expenses and withdrawals with a running balance'],
     reports: ['Reports', 'Filter and export across enquiries, bookings & payments'],
+    itinerary: ['Itinerary Preparation', 'Create and export professional travel itineraries as PDF.'],
     users: ['Users', 'Portal accounts and their access level'],
     profile: ['Profile', 'Your contact details and password']
   };

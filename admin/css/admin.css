@@ -503,6 +503,35 @@ table.data-table .cell-link:hover { opacity: .75; }
 
 .report-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; align-items: end; }
 
+/* ── Itinerary Preparation ─────────────────────────────────── */
+#view-itinerary [hidden] { display: none !important; }
+.itin-meta { margin-bottom: 14px; }
+.field textarea.itin-text {
+  min-height: 420px; resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 13.5px; line-height: 1.55; tab-size: 4; white-space: pre-wrap;
+}
+.itin-foot { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+.itin-counts { display: flex; gap: 16px; font-size: 12px; color: var(--ink-soft); }
+.itin-counts .over { color: var(--red); font-weight: 600; }
+.itin-msg { font-size: 12.5px; color: var(--red); }
+#view-itinerary .field .hint.err { color: var(--red); }
+.itin-brand { display: flex; gap: 22px; align-items: flex-start; flex-wrap: wrap; }
+.itin-logo {
+  width: 160px; height: 120px; flex: 0 0 auto;
+  border: 1px dashed var(--line); border-radius: var(--radius-sm); background: #fff;
+  display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center;
+}
+.itin-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.itin-logo .muted, .itin-logo-name { font-size: 12.5px; color: var(--ink-soft); }
+.itin-logo-name { margin-bottom: 10px; }
+.itin-brand-side { flex: 1 1 260px; min-width: 0; }
+.itin-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.itin-actions .grp { display: flex; gap: 10px; flex-wrap: wrap; }
+.itin-status { font-size: 13px; color: var(--ink-soft); }
+.itin-stale { color: var(--gold); }
+.itin-frame { width: 100%; height: 80vh; min-height: 520px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #525659; }
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .sidebar { transform: translateX(-100%); }
