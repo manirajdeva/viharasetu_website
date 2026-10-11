@@ -258,9 +258,11 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
   `1st Day (Mon, 11 Jan)`, `## Day 1 – …`) become bold bands; known sections (Stay Distribution,
   Inclusions, Terms and Conditions, …) become headings; bullets from Word, WhatsApp, PDFs and Markdown
   are unified; `**bold**` is honoured and hard-wrapped lines are rejoined. The first line becomes the
-  title when it reads like one. Before every preview or download, the words and numbers of the PDF are
+  title when it reads like one. **Customer name** is required; the download is named
+  `Itinerary_<Customer_Name>.pdf`. The footer is centred and its phone, email, website, Instagram and
+  LinkedIn entries are clickable. Before every preview or download, the words and numbers of the PDF are
   checked against the input in order, and nothing is generated if they differ. An optional **Enquiry
-  ID** looks up the enquiry and fills **Customer name** (capitalised) for "Prepared for"; the ID itself
+  ID** looks up the enquiry and fills **Customer name** (first letters capitalised) for "Prepared for"; the ID itself
   is not printed. Runs entirely in the browser (jsPDF + bundled Noto Sans); no API calls.
 - **Phone fields** take a country code (India `+91` or Nepal `+977`) plus a number, and are stored as
   `"+91 9876543210"`. The same two codes are offered on the public contact form. For `+91`, the number
@@ -327,7 +329,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.6.0** (2026-10-11).
+added and changed. The current release is **v3.7.0** (2026-10-11).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.
