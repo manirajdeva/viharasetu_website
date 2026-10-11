@@ -825,6 +825,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await Data.bootstrap();
   } catch (err) {
     Utils.error(err.message || 'Could not load the portal.');
+    // Keep the loader up in an error state with a retry instead of an empty portal.
+    if (window.AirplaneLoader) {
+      AirplaneLoader.fail({ message: err.message || 'Could not load the portal.', onRetry: () => location.reload() });
+    }
   } finally {
     Utils.hideLoading();
   }

@@ -54,7 +54,17 @@ const Utils = (() => {
   }
 
   /* ---------------- Loading overlay ---------------- */
+  // Uses the site-wide airplane loader (js/airplane-loader.js) when it is on the
+  // page; the plain spinner below remains as a fallback.
   function showLoading() {
+    if (window.AirplaneLoader) {
+      return window.AirplaneLoader.show({
+        delay: 300,          // a fast load finishes before the loader ever appears
+        slowAfter: 8000,
+        slowMessage: 'Waking up the server — the first load of the day can take up to a minute.',
+        maxWait: 90000
+      });
+    }
     let o = document.getElementById('loadingOverlay');
     if (!o) {
       o = document.createElement('div');
@@ -66,6 +76,7 @@ const Utils = (() => {
     o.style.display = 'flex';
   }
   function hideLoading() {
+    if (window.AirplaneLoader) return window.AirplaneLoader.hide();
     const o = document.getElementById('loadingOverlay');
     if (o) o.style.display = 'none';
   }
