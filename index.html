@@ -1963,9 +1963,11 @@
       title: 'Contact Us',
       body: `<p>Have a question before you enquire? Reach us directly:</p>
         <div class="footer-popup-list">
-          <div><p class="fp-item-title">Call / WhatsApp</p><p class="fp-item-text"><a href="tel:+919885180515">+91 98851 80515</a></p></div>
-          <div><p class="fp-item-title">Email</p><p class="fp-item-text"><a href="mailto:viharasetu@gmail.com">viharasetu@gmail.com</a></p></div>
+          <div><p class="fp-item-title">Call / WhatsApp</p><p class="fp-item-text"><a href="tel:+919885180515">+91 98851 80515</a> · <a href="https://wa.me/919885180515" target="_blank" rel="noopener">Chat on WhatsApp</a></p></div>
+          <div><p class="fp-item-title">Email</p><p class="fp-item-text"><a href="mailto:info@viharasetu.co.in">info@viharasetu.co.in</a></p></div>
+          <div><p class="fp-item-title">Website</p><p class="fp-item-text"><a href="https://www.viharasetu.co.in/" target="_blank" rel="noopener">www.viharasetu.co.in</a></p></div>
           <div><p class="fp-item-title">Instagram</p><p class="fp-item-text"><a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">@viharasetu</a></p></div>
+          <div><p class="fp-item-title">LinkedIn</p><p class="fp-item-text"><a href="https://www.linkedin.com/company/viharasetu/" target="_blank" rel="noopener">@viharasetu</a></p></div>
         </div>
         <a class="footer-popup-cta" href="#contact">Fill the enquiry form →</a>`
     },
@@ -1976,7 +1978,7 @@
           <div><p class="fp-item-title">What we collect</p><p class="fp-item-text">Only what you share via our enquiry form — name, email, phone, destination, and travel dates — to plan and respond to your trip request.</p></div>
           <div><p class="fp-item-title">How it's used</p><p class="fp-item-text">Solely to get in touch about your journey. We don't sell or share your details with third parties.</p></div>
           <div><p class="fp-item-title">Analytics</p><p class="fp-item-text">We use standard website analytics to understand traffic; this doesn't identify you personally.</p></div>
-          <div><p class="fp-item-title">Questions or deletion requests</p><p class="fp-item-text">Email <a href="mailto:viharasetu@gmail.com">viharasetu@gmail.com</a> any time.</p></div>
+          <div><p class="fp-item-title">Questions or deletion requests</p><p class="fp-item-text">Email <a href="mailto:info@viharasetu.co.in">info@viharasetu.co.in</a> any time.</p></div>
         </div>`
     }
   };
@@ -2388,7 +2390,7 @@ function sendEnquiry(formData) {
           btn.disabled = false;
           btn.textContent = 'Send Enquiry →';
           status.textContent = err.userMessage
-            || "Sorry, we couldn't send your enquiry. Please try again, or email viharasetu@gmail.com.";
+            || "Sorry, we couldn't send your enquiry. Please try again, or email info@viharasetu.co.in.";
           status.classList.add('is-error');
         });
     });

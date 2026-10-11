@@ -23,7 +23,7 @@ const COMPANY = {
   name: 'Viharasetu',
   tagline: 'Travel & Tourism  |  Domestic • Spiritual Journeys • Adventures • International',
   phone: '+91 98851-80515',
-  email: 'viharasetu@gmail.com',
+  email: 'info@viharasetu.co.in',
   website: 'viharasetu.co.in',
   instagram: 'instagram.com/viharasetu',   // TODO: confirm the exact handle
   logo: '../images/new_llogo.jpg',
