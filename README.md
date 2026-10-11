@@ -97,6 +97,8 @@ admin/                         Admin portal
   js/dashboard.js              Bookings / Payments dashboards (stat cards + Chart.js)
   js/{enquiries,suppliers,bookings,payments,supplier_ments,expenses,reports}.js   Per-view modules built on the factory
   js/account.js                Account Statement: a ledger computed from profit, investments, expenses, withdrawals
+  js/itinerary.js              Itinerary Preparation: pasted itinerary text → branded A4 PDF (jsPDF, in the browser)
+  fonts/                       Noto Sans Regular/Bold TTF (+ OFL licence) embedded in itinerary PDFs for ₹ and accents
   js/users.js                  User management (admins only)
 
 backend/                       Node/Express + MySQL API. See backend/README.md
@@ -218,7 +220,7 @@ Package pages are grouped by state under `destinations/All_packages/`:
 
 Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Payments dashboards),
 **Enquiries**, **Suppliers**, **Bookings**, **Payments**, **Supplier Payments**, **Expenses**,
-**Account Statement**, **Reports**, **Users** (admins only), and **Profile**.
+**Account Statement**, **Reports**, **Itinerary Preparation**, **Users** (admins only), and **Profile**.
 
 - Every table has search, sort, and pagination, plus CSV / Excel / PDF export.
 - The portal loads all its data with a single `bootstrap` call on open, and **Refresh** reloads it.
@@ -249,6 +251,16 @@ Sidebar sections: **Dashboard** (a dropdown switches between the Bookings and Pa
   fully paid, kept out of the balance). Investments and withdrawals are added on this page
   (`partner_transactions` table). A By partner table shows invested, expenses paid and withdrawn.
   Partner names come from the lists in `admin/js/expenses.js` (`PARTNERS`).
+- **Itinerary Preparation:** paste up to 500 lines of itinerary text and preview or download it as an
+  A4 PDF with the logo top-left on every page, "Page X of Y" and the Viharasetu contact footer. It only
+  formats; it never rewrites. Day headings in any common form (`Day 1`, `DAY 01`, `Day-1:`,
+  `1st Day (Mon, 11 Jan)`, `## Day 1 – …`) become bold bands; known sections (Stay Distribution,
+  Inclusions, Terms and Conditions, …) become headings; bullets from Word, WhatsApp, PDFs and Markdown
+  are unified; `**bold**` is honoured and hard-wrapped lines are rejoined. The first line becomes the
+  title when it reads like one. Before every preview or download, the words and numbers of the PDF are
+  checked against the input in order, and nothing is generated if they differ. An optional **Enquiry
+  ID** looks up the enquiry and fills **Customer name** (capitalised) for "Prepared for"; the ID itself
+  is not printed. Runs entirely in the browser (jsPDF + bundled Noto Sans); no API calls.
 - **Phone fields** take a country code (India `+91` or Nepal `+977`) plus a number, and are stored as
   `"+91 9876543210"`. The same two codes are offered on the public contact form. For `+91`, the number
   must be a 10-digit Indian mobile. Other codes accept 6–14 digits. Older records saved with a
@@ -314,7 +326,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.4.1** (2026-10-01).
+added and changed. The current release is **v3.5.0** (2026-10-11).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.
