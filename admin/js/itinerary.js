@@ -535,6 +535,16 @@ const ItineraryPdf = (() => {
   const FOOT_BOTTOM = PAGE_H - 9, FOOT_LH = 3.9, PAGENO_W = 26;
   // Phone numbers, e-mail addresses and web links in the footer become clickable.
   const LINK_RE = /(\+?\d[\d -]{8,}\d)|([\w.+-]+@[\w-]+(?:\.[\w-]+)+)|((?:https?:\/\/|www\.)[^\s·|,]+|(?:linkedin|instagram|facebook|youtube)\.com\/[^\s·|,]+)/gi;
+  // "Instagram: @viharasetu" → the handle links to that profile.
+  const SOCIAL_RE = /\b(instagram|linkedin|facebook|youtube|twitter|x)\s*:\s*@([\w.]+)/gi;
+  const SOCIAL_URL = {
+    instagram: (h) => `https://www.instagram.com/${h}/`,
+    linkedin: (h) => `https://www.linkedin.com/company/${h}/`,
+    facebook: (h) => `https://www.facebook.com/${h}`,
+    youtube: (h) => `https://www.youtube.com/@${h}`,
+    twitter: (h) => `https://x.com/${h}`,
+    x: (h) => `https://x.com/${h}`
+  };
 
   /**
    * Lay out the footer once: the first line (business name) bold, the rest as
@@ -546,7 +556,9 @@ const ItineraryPdf = (() => {
     const lines = [];
     src.forEach((text, i) => {
       const bold = i === 0, pt = bold ? 8.5 : 8;
-      const maxW = PAGE_W - 2 * M_X - (lines.length === 0 ? PAGENO_W : 0);
+      // Lines are centred; the first one shares its row with "Page X of Y" on the
+      // right, so it is kept clear of that on both sides.
+      const maxW = PAGE_W - 2 * M_X - (lines.length === 0 ? 2 * PAGENO_W : 0);
       if (!covered(text)) { lines.push({ text, bold, pt, raster: true, maxW }); return; }
       doc.setFont(FONT, bold ? 'bold' : 'normal'); doc.setFontSize(pt);
       doc.splitTextToSize(text, maxW).forEach((t) => lines.push({ text: t, bold, pt, maxW }));
@@ -567,16 +579,23 @@ const ItineraryPdf = (() => {
         const color = l.bold ? NAVY : SOFT;
         if (l.raster) {
           const img = rasterLines(l.text, l.maxW, l.pt, l.bold, color)[0];
-          if (img) doc.addImage(img.data, 'PNG', M_X, y - img.h * 0.68, img.w, img.h);
+          if (img) doc.addImage(img.data, 'PNG', (PAGE_W - img.w) / 2, y - img.h * 0.68, img.w, img.h);
           return;
         }
         doc.setFont(FONT, l.bold ? 'bold' : 'normal'); doc.setFontSize(l.pt); doc.setTextColor(...color);
-        doc.text(l.text, M_X, y);
+        const left = (PAGE_W - widthOf(doc, l.text, l.bold, l.pt)) / 2; // centred
+        doc.text(l.text, left, y);
         for (const m of l.text.matchAll(LINK_RE)) {
           const v = m[0];
           const url = m[1] ? 'tel:' + v.replace(/[^\d+]/g, '') : m[2] ? 'mailto:' + v : (/^https?:/i.test(v) ? v : 'https://' + v);
-          const x = M_X + widthOf(doc, l.text.slice(0, m.index), l.bold, l.pt);
+          const x = left + widthOf(doc, l.text.slice(0, m.index), l.bold, l.pt);
           doc.link(x, y - l.pt * PT, widthOf(doc, v, l.bold, l.pt), l.pt * PT * 1.3, { url });
+        }
+        for (const m of l.text.matchAll(SOCIAL_RE)) {
+          const handle = '@' + m[2];
+          const at = m.index + m[0].length - handle.length;
+          const x = left + widthOf(doc, l.text.slice(0, at), l.bold, l.pt);
+          doc.link(x, y - l.pt * PT, widthOf(doc, handle, l.bold, l.pt), l.pt * PT * 1.3, { url: SOCIAL_URL[m[1].toLowerCase()](m[2]) });
         }
       });
       doc.setFont(FONT, 'normal'); doc.setFontSize(8.5); doc.setTextColor(...SOFT);
@@ -756,8 +775,8 @@ const Itinerary = (() => {
   const DEFAULTS = {
     footer: [
       'Viharasetu  ·  From Aastha to Eternal Anubhav',
-      'Call / WhatsApp: +91 98851 80515  ·  Email: viharasetu@gmail.com  ·  Web: www.viharasetu.co.in',
-      'Instagram: instagram.com/viharasetu  ·  LinkedIn: linkedin.com/company/viharasetu'
+      'Call / WhatsApp: +91 98851 80515  ·  Email: info@viharasetu.co.in  ·  Website: www.viharasetu.co.in',
+      'Instagram: @viharasetu  ·  LinkedIn: @viharasetu'
     ].join('\n')
   };
 
@@ -893,6 +912,7 @@ const Itinerary = (() => {
     if (!t.trim()) return 'Paste an itinerary to get started.';
     if (lineCount(t) > MAX_LINES) return `The itinerary has more than ${MAX_LINES} lines. Please shorten it.`;
     if (t.length > MAX_CHARS) return `The itinerary is longer than ${MAX_CHARS.toLocaleString('en-IN')} characters. Please shorten it.`;
+    if (!$('#it-customer').value.trim()) return 'Enter the customer name (or an Enquiry ID) before creating the PDF.';
     return '';
   }
 
@@ -921,12 +941,14 @@ const Itinerary = (() => {
   });
 
   /** "goa-5-days-4-nights-travel-itinerary-satya-kumar.pdf" from the itinerary's title and the customer. */
+  /** "Satya Kumar Reddy" → "Itinerary_Satya_Kumar_Reddy.pdf" */
   function fileName() {
-    const slug = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').trim().replace(/[\s_-]+/g, '-');
-    const title = slug(ItineraryParser.parse(text()).title).slice(0, 60);
-    const who = slug($('#it-customer').value).slice(0, 30) || slug($('#it-enquiry').value);
-    const base = [title, who].filter(Boolean).join('-') || 'itinerary';
-    return (base.includes('itinerary') ? base : 'itinerary-' + base) + '.pdf';
+    const name = $('#it-customer').value.trim()
+      .replace(/[\\/:*?"<>|\u0000-\u001F]/g, '')   // characters not allowed in file names
+      .replace(/\s+/g, '_')
+      .replace(/_+/g, '_')
+      .slice(0, 80);
+    return 'Itinerary_' + (name || 'Customer') + '.pdf';
   }
 
   /* ---------- enquiry lookup ---------- */
@@ -1084,9 +1106,9 @@ const Itinerary = (() => {
             <div class="hint">For your reference only — fills the customer name; not printed on the PDF.</div>
           </div>
           <div class="field">
-            <label for="it-customer">Customer name</label>
-            <input id="it-customer" type="text" maxlength="120" placeholder="Filled from the enquiry, or type it" />
-            <div class="hint">Shown on the PDF as “Prepared for”.</div>
+            <label for="it-customer">Customer name <span class="req">*</span></label>
+            <input id="it-customer" type="text" maxlength="120" required placeholder="Filled from the enquiry, or type it" />
+            <div class="hint">Required. Shown on the PDF as “Prepared for” and used in the file name (Itinerary_&lt;name&gt;.pdf).</div>
           </div>
         </div>
         <div class="field">
