@@ -276,7 +276,9 @@ const ItineraryParser = (() => {
       if (b.type !== 'section' && b.type !== 'day') return;
       let start = i + 1;
       if (blocks[start] && blocks[start].type === 'blank') start++;
-      const isItem = (x) => x && x.type === 'text' && !x.indent && !x.runs[0].bold &&
+      // Under a section ("Inclusions") a "Meals: …" label line is a list item too;
+      // under a day it stays a plain "Hotel: …" / "Meals: …" detail line.
+      const isItem = (x) => x && x.type === 'text' && !x.indent && (b.type === 'section' || !x.runs[0].bold) &&
         x.runs.map((r) => r.text).join('').length <= 300;
       let j = start;
       while (isItem(blocks[j])) j++;
