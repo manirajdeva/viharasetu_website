@@ -59,13 +59,13 @@ const Users = (() => {
         <tr>
           <td class="primary-col mono">${Utils.escapeHtml(u.username)}${u.username === me ? ' <span style="color:var(--ink-soft)">(you)</span>' : ''}</td>
           <td><b>${Utils.escapeHtml(u.role)}</b></td>
-          <td><span class="user-status ${u.active ? 'on' : 'off'}">${u.active ? 'Active' : 'Inactive'}</span></td>
+          <td><span class="user-status ${u.active !== false ? 'on' : 'off'}">${u.active !== false ? 'Active' : 'Inactive'}</span></td>
           <td>${u.role === 'admin' ? 'Everything, incl. Users' : 'Everything except Users'}</td>
           <td>${Utils.escapeHtml(u.mobile || '-')}</td>
           <td>${Utils.escapeHtml(u.email || '-')}</td>
           <td class="actions">
             <button class="btn sm" data-edit="${Utils.escapeAttr(u.username)}">Edit</button>
-            ${u.username === me ? '' : `<button class="btn sm" data-toggle="${Utils.escapeAttr(u.username)}">${u.active ? 'Deactivate' : 'Activate'}</button>`}
+            ${u.username === me ? '' : `<button class="btn sm" data-toggle="${Utils.escapeAttr(u.username)}">${u.active !== false ? 'Deactivate' : 'Activate'}</button>`}
             ${u.username === me ? '' : `<button class="btn sm danger" data-del="${Utils.escapeAttr(u.username)}">Delete</button>`}
           </td>
         </tr>`).join('')}</tbody></table>`;
@@ -78,7 +78,7 @@ const Users = (() => {
   async function toggleActive(username) {
     const u = rows.find(r => r.username === username);
     if (!u) return;
-    const turningOff = u.active;
+    const turningOff = u.active !== false;
     const ok = await Utils.confirmDialog({
       title: turningOff ? 'Deactivate user?' : 'Activate user?',
       text: turningOff
