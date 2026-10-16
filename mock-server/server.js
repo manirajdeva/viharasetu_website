@@ -22,7 +22,7 @@ const crypto = require('crypto');
 const PORT = 3001;
 const SESSION_TTL_MS = 6 * 60 * 60 * 1000;
 
-// Portal accounts. role: 'admin' (full access) | 'employee' (view + add only).
+// Portal accounts. role: 'admin' (everything) | 'employee' (everything except the Users page). active: false = cannot log in.
 const users = [
   { username: 'admin', password: 'admin123', role: 'admin', mobile: '9876543210', email: 'admin@viharasetu.co.in' },
 ];
@@ -31,8 +31,8 @@ const publicUser = (u) => ({
   username: u.username,
   role: u.role,
   canManageUsers: u.role === 'admin',
-  canEdit: u.role === 'admin',
-  canDelete: u.role === 'admin',
+  canEdit: true,
+  canDelete: true,
   mobile: u.mobile || '',
   email: u.email || '',
 });
@@ -110,6 +110,7 @@ function login(p) {
   if (!u || String(p.password || '') !== u.password) {
     throw new AppError('BAD_LOGIN', 'Invalid username or password.');
   }
+  if (!isActive(u)) throw new AppError('INACTIVE', 'This account is inactive. Please contact an administrator.');
   const token = crypto.randomUUID();
   const expiresAt = Date.now() + SESSION_TTL_MS;
   sessions.set(token, { exp: expiresAt, username: u.username });
@@ -120,17 +121,18 @@ function requireSession(token) {
   const s = sessions.get(token);
   if (!s || s.exp < Date.now()) { sessions.delete(token); throw new AppError('SESSION_EXPIRED', 'Your session has expired. Please log in again.'); }
   const u = findUser(s.username);
-  if (!u) { sessions.delete(token); throw new AppError('SESSION_EXPIRED', 'Your session has expired. Please log in again.'); }
+  if (!u || !isActive(u)) { sessions.delete(token); throw new AppError('SESSION_EXPIRED', 'Your session has expired. Please log in again.'); }
   return u;
 }
 
 /* ---------------- users (admin only) ---------------- */
 
 const NAME_RE = /^[A-Za-z0-9._-]{3,80}$/;
-const adminCount = () => users.filter((u) => u.role === 'admin').length;
+const isActive = (u) => u.active !== false;
+const adminCount = () => users.filter((u) => u.role === 'admin' && isActive(u)).length;
 
 function listUsers() {
-  return { ok: true, users: users.map((u) => ({ username: u.username, role: u.role, mobile: u.mobile || '', email: u.email || '' })) };
+  return { ok: true, users: users.map((u) => ({ username: u.username, role: u.role, active: isActive(u), mobile: u.mobile || '', email: u.email || '' })) };
 }
 function createUser(p) {
   const v = p.values || {};
@@ -146,9 +148,13 @@ function updateUser(p) {
   const target = findUser(p.username);
   if (!target) return { ok: false, error: { code: 'NOT_FOUND', message: 'User not found.' } };
   const newRole = v.role === undefined ? target.role : (v.role === 'admin' ? 'admin' : 'employee');
+  const nowActive = v.active === undefined ? isActive(target) : !!v.active;
+  if (!nowActive && target.username === p.actor) return { ok: false, error: { code: 'SELF', message: 'You cannot deactivate your own account.' } };
   if (v.password && String(v.password).length < 6) return { ok: false, error: { code: 'VALIDATION', message: 'Password must be at least 6 characters.' } };
-  if (target.role === 'admin' && newRole !== 'admin' && adminCount() <= 1) return { ok: false, error: { code: 'LAST_ADMIN', message: 'At least one admin must remain.' } };
+  if (target.role === 'admin' && isActive(target) && (newRole !== 'admin' || !nowActive) && adminCount() <= 1) return { ok: false, error: { code: 'LAST_ADMIN', message: 'At least one active admin must remain — promote or activate another account first.' } };
   target.role = newRole;
+  if (isActive(target) && !nowActive) { for (const [tok, s] of sessions) if (s.username === target.username) sessions.delete(tok); }
+  target.active = nowActive;
   if (v.password) target.password = String(v.password);
   if (v.mobile !== undefined) target.mobile = v.mobile;
   if (v.email !== undefined) target.email = v.email;
@@ -158,7 +164,7 @@ function deleteUser(p, actor) {
   if (p.username === actor.username) return { ok: false, error: { code: 'SELF', message: 'You cannot delete your own account.' } };
   const target = findUser(p.username);
   if (!target) return { ok: true };
-  if (target.role === 'admin' && adminCount() <= 1) return { ok: false, error: { code: 'LAST_ADMIN', message: 'At least one admin must remain.' } };
+  if (target.role === 'admin' && isActive(target) && adminCount() <= 1) return { ok: false, error: { code: 'LAST_ADMIN', message: 'At least one admin must remain.' } };
   users.splice(users.indexOf(target), 1);
   for (const [tok, s] of sessions) if (s.username === p.username) sessions.delete(tok);
   return { ok: true };
@@ -252,7 +258,6 @@ function updateRow(p) {
 }
 
 function deleteRow(p, actor) {
-  if (!actor || actor.role !== 'admin') return { ok: false, error: { code: 'FORBIDDEN', message: 'Employee accounts cannot delete entries.' } };
   const key = String(p.sheet || 'enquiries').toLowerCase();
   const idx = db[key].findIndex((r) => r.rowIndex === Number(p.rowIndex));
   if (idx !== -1) db[key].splice(idx, 1);
@@ -544,10 +549,10 @@ function handlePost(body, res) {
       case 'updateProfile': return send(res, updateProfile(p, actor));
       case 'listUsers': return send(res, actor.role === 'admin' ? listUsers() : adminsOnly());
       case 'createUser': return send(res, actor.role === 'admin' ? createUser(p) : adminsOnly());
-      case 'updateUser': return send(res, actor.role === 'admin' ? updateUser(p) : adminsOnly());
+      case 'updateUser': return send(res, actor.role === 'admin' ? updateUser(Object.assign({ actor: actor.username }, p)) : adminsOnly());
       case 'deleteUser': return send(res, actor.role === 'admin' ? deleteUser(p, actor) : adminsOnly());
       case 'create': return send(res, createRow(p));
-      case 'update': return send(res, actor.role === 'admin' ? updateRow(p) : { ok: false, error: { code: 'FORBIDDEN', message: 'Employee accounts cannot edit entries.' } });
+      case 'update': return send(res, updateRow(p));
       case 'delete': return send(res, deleteRow(p, actor));
       default: return send(res, { ok: false, error: { code: 'UNKNOWN_ACTION', message: 'Unknown action: ' + p.action } });
     }

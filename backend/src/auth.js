@@ -28,15 +28,28 @@ function roleOf(a) {
   return a.can_delete ? 'admin' : 'employee';
 }
 
+/** Accounts can be switched off (admins.active = 0); rows from before the column count as active. */
+const isActive = (a) => !(a && (a.active === 0 || a.active === false || a.active === '0'));
+
+/** Adds admins.active when the database predates it. Safe to run on every start. */
+async function ensureSchema() {
+  const [cols] = await pool.query(
+    "SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'admins' AND COLUMN_NAME = 'active'",
+  );
+  if (!cols.length) {
+    await pool.query('ALTER TABLE admins ADD COLUMN active TINYINT(1) NOT NULL DEFAULT 1 AFTER email');
+  }
+}
+
 /** Public view of an admin row — never includes the hash. */
 const publicAdmin = (a) => {
   const role = roleOf(a);
   return {
     username: a.username,
     role,
-    canManageUsers: role === 'admin',
-    canEdit: role === 'admin',
-    canDelete: role === 'admin',
+    canManageUsers: role === 'admin',   // Users page: admins only
+    canEdit: true,                      // admin and employee both edit / delete records
+    canDelete: true,
     mobile: a.mobile || '',
     email: a.email || '',
   };
@@ -92,11 +105,11 @@ async function requireAdmin(body) {
   const username = await sessionUsername(body && body.token);
   if (username) {
     const admin = await findAdmin(username);
-    if (admin) return admin;
+    if (admin && isActive(admin)) return admin;
   }
   if (body && body.username && body.password) {
     const admin = await verifyAdmin(body.username, body.password);
-    if (admin) return admin;
+    if (admin && isActive(admin)) return admin;
   }
   throw new AuthError('SESSION_EXPIRED', 'Your session has expired. Please log in again.');
 }
@@ -104,6 +117,8 @@ async function requireAdmin(body) {
 module.exports = {
   AuthError,
   roleOf,
+  isActive,
+  ensureSchema,
   publicAdmin,
   findAdmin,
   verifyAdmin,

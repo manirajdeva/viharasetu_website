@@ -113,6 +113,13 @@ async function start() {
     process.exit(1);
   }
 
+  try {
+    await auth.ensureSchema();
+  } catch (err) {
+    log.error('Could not add the admins.active column', err);
+    process.exit(1);
+  }
+
   await auth.purgeExpiredSessions().catch(() => {});
   setInterval(() => auth.purgeExpiredSessions().catch(() => {}), 30 * 60 * 1000).unref();
 

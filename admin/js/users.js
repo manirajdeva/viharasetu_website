@@ -1,8 +1,9 @@
 /**
  * users.js — Users view (admin only).
- * Manage portal accounts: username, role, mobile, email, password.
- *   admin    — full access: add / edit / delete + manage users
- *   employee — can view and add records, but not edit or delete
+ * Manage portal accounts: username, role, mobile, email, password, active / inactive.
+ *   admin    — full access, including this Users page
+ *   employee — full access to all data, but no Users page
+ * An inactive account cannot log in and is signed out immediately.
  * Backed by the /exec actions listUsers / createUser / updateUser / deleteUser.
  */
 
@@ -53,22 +54,46 @@ const Users = (() => {
     if (!list.length) { tw.innerHTML = '<div class="empty">No users match.</div>'; return; }
 
     tw.innerHTML = `<table class="data-table">
-      <thead><tr><th>Username</th><th>Role</th><th>Access</th><th>Mobile</th><th>Email</th><th>Actions</th></tr></thead>
+      <thead><tr><th>Username</th><th>Role</th><th>Status</th><th>Access</th><th>Mobile</th><th>Email</th><th>Actions</th></tr></thead>
       <tbody>${list.map(u => `
         <tr>
           <td class="primary-col mono">${Utils.escapeHtml(u.username)}${u.username === me ? ' <span style="color:var(--ink-soft)">(you)</span>' : ''}</td>
           <td><b>${Utils.escapeHtml(u.role)}</b></td>
-          <td>${u.role === 'admin' ? 'Add, edit, delete, manage users' : 'View &amp; add only'}</td>
+          <td><span class="user-status ${u.active ? 'on' : 'off'}">${u.active ? 'Active' : 'Inactive'}</span></td>
+          <td>${u.role === 'admin' ? 'Everything, incl. Users' : 'Everything except Users'}</td>
           <td>${Utils.escapeHtml(u.mobile || '-')}</td>
           <td>${Utils.escapeHtml(u.email || '-')}</td>
           <td class="actions">
             <button class="btn sm" data-edit="${Utils.escapeAttr(u.username)}">Edit</button>
+            ${u.username === me ? '' : `<button class="btn sm" data-toggle="${Utils.escapeAttr(u.username)}">${u.active ? 'Deactivate' : 'Activate'}</button>`}
             ${u.username === me ? '' : `<button class="btn sm danger" data-del="${Utils.escapeAttr(u.username)}">Delete</button>`}
           </td>
         </tr>`).join('')}</tbody></table>`;
 
     tw.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => openForm(b.dataset.edit)));
     tw.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => del(b.dataset.del)));
+    tw.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => toggleActive(b.dataset.toggle)));
+  }
+
+  async function toggleActive(username) {
+    const u = rows.find(r => r.username === username);
+    if (!u) return;
+    const turningOff = u.active;
+    const ok = await Utils.confirmDialog({
+      title: turningOff ? 'Deactivate user?' : 'Activate user?',
+      text: turningOff
+        ? `"${username}" will be signed out now and cannot log in until you activate the account again.`
+        : `"${username}" will be able to log in again.`,
+      confirmText: turningOff ? 'Deactivate' : 'Activate', danger: turningOff
+    });
+    if (!ok) return;
+    try {
+      await Api.updateUser(username, { active: !turningOff });
+      Utils.success(turningOff ? 'User deactivated.' : 'User activated.');
+      await load();
+    } catch (err) {
+      Utils.error(err.message || 'Could not change the status.');
+    }
   }
 
   function openForm(username) {
@@ -77,7 +102,7 @@ const Users = (() => {
       { key: 'username', label: 'Username', required: !u, readonly: !!u,
         hint: u ? '' : '3–80 characters: letters, digits, dot, dash or underscore' },
       { key: 'role', label: 'Role', type: 'select', options: ['employee', 'admin'], default: 'employee',
-        hint: 'admin = full access · employee = view & add only' },
+        hint: 'admin = everything · employee = everything except the Users page' },
       { key: 'password', label: u ? 'New password' : 'Password', type: 'password', required: !u,
         placeholder: u ? 'leave blank to keep current' : '', hint: 'At least 6 characters' },
       { key: 'mobile', label: 'Mobile', type: 'phone' },

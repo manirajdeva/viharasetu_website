@@ -292,12 +292,17 @@ buttons.
 
 | | admin | employee |
 |---|:-:|:-:|
-| View every section, add entries | ✓ | ✓ |
-| Edit / delete entries | ✓ | — |
+| View every section, add / edit / delete entries | ✓ | ✓ |
 | Manage users (Users section) | ✓ | — |
 | Edit own profile / password | ✓ | ✓ |
 
-At least one admin must always exist, and no one can delete their own account.
+Employees see no Users page, and the server refuses the user-management actions for them.
+
+**Active / inactive:** under **Users**, an admin can **Deactivate** an account. It is signed out at
+once and cannot log in ("This account is inactive") until it is activated again. The state lives in
+`admins.active` (added automatically on API start-up; `backend/migrate/2026-10-16-add-admins-active.js`
+does the same by hand). At least one **active** admin must always exist, and no one can deactivate
+or delete their own account.
 
 ### Logins and sessions
 
@@ -347,7 +352,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.9.0** (2026-10-16).
+added and changed. The current release is **v3.10.0** (2026-10-16).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.

@@ -73,8 +73,9 @@ Rows use the display headers (`"Enquiry ID"`, `"Amount Paid"`, …) and a `rowIn
 - **Passwords:** bcrypt (`BCRYPT_ROUNDS`, default 12). Plaintext is never stored or logged.
 - **Sessions:** opaque 32-hex tokens with a server-side TTL (`SESSION_TTL_HOURS`, default 6). Expired
   tokens are swept every 30 minutes.
-- **Roles:** `admins.role` is `admin` or `employee`. Employees can read and create but cannot edit,
-  delete, or manage users. The server enforces this on both `/exec` and `/api`.
+- **Roles:** `admins.role` is `admin` or `employee`. Both can read, create, edit and delete records;
+  only admins can manage users (`listUsers` / `createUser` / `updateUser` / `deleteUser`). The server
+  enforces this on `/exec`. `admins.active = 0` blocks login and drops the account's sessions.
 - **CORS:** only origins in `CORS_ORIGINS` are allowed. Other browser origins get `403 CORS`.
 - **Rate limits:** 600 requests / 15 min per IP overall, 20 failed logins / 15 min, and 30 public
   enquiry submissions / hour on `/api/public/enquiries`.

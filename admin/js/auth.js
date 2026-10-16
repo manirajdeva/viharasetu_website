@@ -19,8 +19,8 @@ const Auth = (() => {
       username: data.username,
       role,
       canManageUsers: data.canManageUsers !== undefined ? !!data.canManageUsers : role === 'admin',
-      canEdit: data.canEdit !== undefined ? !!data.canEdit : role === 'admin',
-      canDelete: data.canDelete !== undefined ? !!data.canDelete : role === 'admin',
+      canEdit: true,      // admin and employee both edit / delete records
+      canDelete: true,
       mobile: data.mobile || '',
       email: data.email || '',
       expiresAt: data.expiresAt
@@ -36,7 +36,8 @@ const Auth = (() => {
       // Backfill fields for sessions saved before roles existed, so nobody is
       // locked out of Edit until their token expires.
       if (!s.role) s.role = s.canDelete ? 'admin' : 'employee';
-      if (s.canEdit === undefined) s.canEdit = s.role === 'admin' || !!s.canDelete;
+      s.canEdit = true;     // sessions saved before employees got full data access
+      s.canDelete = true;
       if (s.canManageUsers === undefined) s.canManageUsers = s.role === 'admin' || !!s.canDelete;
       return s;
     } catch { return null; }

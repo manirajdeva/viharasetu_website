@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS admins (
   can_delete    TINYINT(1)   NOT NULL DEFAULT 0,                        -- kept in sync with role (admin = 1)
   mobile        VARCHAR(20)      NULL,                                  -- "Mobile"
   email         VARCHAR(190)     NULL,                                  -- "Email"
+  active        TINYINT(1)   NOT NULL DEFAULT 1,                        -- 0 = inactive: cannot log in, sessions are dropped
   created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

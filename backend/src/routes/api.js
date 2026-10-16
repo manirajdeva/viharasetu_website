@@ -48,7 +48,7 @@ async function requireSession(req, res, next) {
     const username = await auth.sessionUsername(bearer(req));
     if (!username) return fail(res, 401, 'SESSION_EXPIRED', 'Your session has expired. Please log in again.');
     req.admin = await auth.findAdmin(username);
-    if (!req.admin) return fail(res, 401, 'SESSION_EXPIRED', 'Your session has expired. Please log in again.');
+    if (!req.admin || !auth.isActive(req.admin)) return fail(res, 401, 'SESSION_EXPIRED', 'Your session has expired. Please log in again.');
     return next();
   } catch (err) {
     return next(err);
@@ -61,8 +61,8 @@ function requireEntity(req, res, next) {
   return next();
 }
 
+// Admins and employees may both edit and delete records; only user management is admin-only.
 function requireAdminRole(req, res, next) {
-  if (auth.roleOf(req.admin) !== 'admin') return fail(res, 403, 'FORBIDDEN', 'Employee accounts cannot modify entries.');
   return next();
 }
 
@@ -82,6 +82,7 @@ const loginLimiter = rateLimit({
 router.post('/auth/login', loginLimiter, wrap(async (req, res) => {
   const admin = await auth.verifyAdmin(req.body.username, req.body.password);
   if (!admin) return fail(res, 401, 'BAD_LOGIN', 'Invalid username or password.');
+  if (!auth.isActive(admin)) return fail(res, 403, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
   const sess = await auth.createSession(admin.username);
   return ok(res, { token: sess.token, expiresAt: sess.expiresAt, user: auth.publicAdmin(admin) });
 }));

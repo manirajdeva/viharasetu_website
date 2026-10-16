@@ -2,7 +2,7 @@
  * services/users.js
  * Portal account management (admins only). Roles:
  *   admin    — full access: add / edit / delete + manage users
- *   employee — view + add records; cannot edit or delete
+ *   employee — everything except this Users page
  *
  * `can_delete` is kept in sync with the role so older frontend checks still
  * work. Guards: at least one admin must always remain; you cannot delete your
@@ -12,7 +12,7 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../db');
 const config = require('../config');
-const { roleOf } = require('../auth');
+const { roleOf, isActive } = require('../auth');
 const { isValidPhone } = require('../phone');
 
 const NAME_RE = /^[A-Za-z0-9._-]{3,80}$/;
@@ -21,18 +21,20 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const err = (code, message) => Object.assign(new Error(message), { code });
 const normRole = (v) => (v === 'admin' ? 'admin' : 'employee');
 
+/** Admins who can still log in — the count that must never reach zero. */
 async function adminCount() {
-  const [[row]] = await pool.query("SELECT COUNT(*) AS n FROM admins WHERE role = 'admin'");
+  const [[row]] = await pool.query("SELECT COUNT(*) AS n FROM admins WHERE role = 'admin' AND active = 1");
   return Number(row.n);
 }
 
 async function listUsers() {
   const [rows] = await pool.query(
-    'SELECT username, role, can_delete, mobile, email, created_at FROM admins ORDER BY role ASC, username ASC',
+    'SELECT username, role, can_delete, active, mobile, email, created_at FROM admins ORDER BY role ASC, username ASC',
   );
   return rows.map((r) => ({
     username: r.username,
     role: roleOf(r),
+    active: isActive(r),
     mobile: r.mobile || '',
     email: r.email || '',
     createdAt: r.created_at instanceof Date ? r.created_at.toISOString() : (r.created_at || ''),
@@ -65,7 +67,7 @@ async function createUser(values) {
   const hash = await bcrypt.hash(String(v.password), config.bcryptRounds);
   await pool.query(
     'INSERT INTO admins (username, password_hash, role, can_delete, mobile, email) VALUES (?, ?, ?, ?, ?, ?)',
-    [username, hash, role, role === 'admin' ? 1 : 0, String(v.mobile || '').trim() || null, String(v.email || '').trim() || null],
+    [username, hash, role, 1, String(v.mobile || '').trim() || null, String(v.email || '').trim() || null],
   );
   return { ok: true };
 }
@@ -82,19 +84,29 @@ async function updateUser(targetUsername, values, actingUsername) {
   const currentRole = roleOf(target);
   const newRole = v.role !== undefined ? normRole(v.role) : currentRole;
 
-  if (currentRole === 'admin' && newRole !== 'admin' && (await adminCount()) <= 1) {
-    throw err('LAST_ADMIN', 'At least one admin must remain — promote another account first.');
+  const wasActive = isActive(target);
+  const nowActive = v.active === undefined ? wasActive : !!v.active;
+
+  if (!nowActive && target.username === actingUsername) {
+    throw err('SELF', 'You cannot deactivate your own account.');
+  }
+  // The last active admin can be neither demoted nor deactivated.
+  const losesAdmin = currentRole === 'admin' && wasActive && (newRole !== 'admin' || !nowActive);
+  if (losesAdmin && (await adminCount()) <= 1) {
+    throw err('LAST_ADMIN', 'At least one active admin must remain — promote or activate another account first.');
   }
 
   const sets = [];
   const args = [];
-  if (v.role !== undefined) { sets.push('role = ?', 'can_delete = ?'); args.push(newRole, newRole === 'admin' ? 1 : 0); }
+  if (v.role !== undefined) { sets.push('role = ?'); args.push(newRole); }
+  if (v.active !== undefined) { sets.push('active = ?'); args.push(nowActive ? 1 : 0); }
   if (v.mobile !== undefined) { sets.push('mobile = ?'); args.push(String(v.mobile).trim() || null); }
   if (v.email !== undefined) { sets.push('email = ?'); args.push(String(v.email).trim() || null); }
   if (v.password) { sets.push('password_hash = ?'); args.push(await bcrypt.hash(String(v.password), config.bcryptRounds)); }
   if (!sets.length) return { ok: true };
   args.push(target.username);
   await pool.query(`UPDATE admins SET ${sets.join(', ')} WHERE username = ?`, args);
+  if (wasActive && !nowActive) await pool.query('DELETE FROM sessions WHERE username = ?', [target.username]); // sign them out now
   return { ok: true };
 }
 
@@ -106,8 +118,8 @@ async function deleteUser(targetUsername, actingUsername) {
   const target = rows[0];
   if (!target) return { ok: true };
 
-  if (roleOf(target) === 'admin' && (await adminCount()) <= 1) {
-    throw err('LAST_ADMIN', 'At least one admin must remain.');
+  if (roleOf(target) === 'admin' && isActive(target) && (await adminCount()) <= 1) {
+    throw err('LAST_ADMIN', 'At least one active admin must remain.');
   }
   await pool.query('DELETE FROM admins WHERE username = ?', [targetUsername]);
   await pool.query('DELETE FROM sessions WHERE username = ?', [targetUsername]);

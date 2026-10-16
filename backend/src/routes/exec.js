@@ -83,6 +83,7 @@ router.post(
       if (body.action === 'login') {
         const admin = await auth.verifyAdmin(body.username, body.password);
         if (!admin) return fail(res, 'BAD_LOGIN', 'Invalid username or password.');
+        if (!auth.isActive(admin)) return fail(res, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
         const sess = await auth.createSession(admin.username);
         return res.json({ ok: true, token: sess.token, expiresAt: sess.expiresAt, user: auth.publicAdmin(admin) });
       }
@@ -138,7 +139,6 @@ router.post(
         }
 
         case 'update': {
-          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Employee accounts cannot edit entries.');
           const key = sheetKey(body);
           if (!key) return fail(res, 'BAD_SHEET', 'Unknown sheet.');
           const vErr = validate(key, body.values || {});

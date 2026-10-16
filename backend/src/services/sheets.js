@@ -154,8 +154,8 @@ async function updateRow(key, rowIndex, values) {
 }
 
 async function deleteRow(key, admin, rowIndex) {
-  if (!admin || !admin.can_delete) {
-    const e = new Error('This account cannot delete entries.');
+  if (!admin) {
+    const e = new Error('Not signed in.');
     e.code = 'FORBIDDEN';
     throw e;
   }
