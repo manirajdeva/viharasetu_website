@@ -12,630 +12,164 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Explore India — By Season &amp; State</title>
+<title>Explore India — By Season &amp; State | Vihara Setu</title>
+<meta name="description" content="Browse every Vihara Setu destination by season or by state, from the Himalayas and Kerala backwaters to Rajasthan's palaces and Varanasi's ghats.">
+<meta name="theme-color" content="#2a0f12">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../../images/fevicon.png" type="image/png">
 <style>
-  :root{
-    --bg: #F4F1EA;
-    --ink: #26221C;
-    --ink-soft: #5C554A;
-    --accent: #BB5A34;
-    --accent-dark: #9C4826;
-    --card: #FFFFFF;
-    --line: #E4DECF;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.55;
-  }
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:url('../../images/new_llogo.jpg') center center no-repeat;
-    background-size:900px auto;
-    opacity:0.5;
-    z-index:-1;
-    pointer-events:none;
-  }
-  .wrap{
-    max-width:1440px;
-    margin:0 auto;
-    padding:32px 24px 80px;
-  }
+:root{
+  --ink:#1c1410; --ink-soft:#3b2e26; --muted:#76695b;
+  --ivory:#faf6ee; --sand:#f2e9d8; --line:#e3d6bd;
+  --maroon:#4a141b; --maroon-deep:#2a0f12;
+  --gold:#b98a3e; --gold-light:#e0bf80;
+  --radius:18px;
+  --shadow:0 24px 60px -28px rgba(42,15,18,.45);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--ivory);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.container{width:calc(100% - 72px);max-width:none;margin-inline:auto}
+.eyebrow{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
 
-  /* ── HEADER ── */
-  .page-header{
-    position:sticky;
-    top:0;
-    z-index:60;
-    width:100%;
-    background:var(--card);
-    border-bottom:1px solid var(--line);
-    box-shadow:0 8px 24px rgba(38,34,28,0.06);
-  }
-  .page-header-inner{
-    max-width:1440px;
-    margin:0 auto;
-    padding:18px 24px 10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    position:relative;
-  }
-  .nav-brand{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    text-decoration:none;
-  }
-  .nav-logo-mark{
-    width:52px;
-    height:52px;
-    object-fit:contain;
-    border-radius:50%;
-    padding:4px;
-    background:linear-gradient(135deg, #FFF3E6, #FFFFFF);
-    box-shadow:0 8px 20px rgba(200,97,26,0.15);
-  }
-  .nav-logo-text{
-    display:flex;
-    flex-direction:column;
-    line-height:1.05;
-    gap:2px;
-  }
-  .nav-logo{
-    font-family:'Playfair Display', serif;
-    font-size:19px;
-    font-weight:700;
-    letter-spacing:.02em;
-    color:var(--accent-dark);
-  }
-  .nav-logo-sub{
-    font-size:10px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-  }
-  .nav-right{
-    display:flex;
-    align-items:center;
-    gap:2rem;
-    margin-left:auto;
-  }
-  .nav-links{
-    display:flex;
-    gap:2rem;
-    list-style:none;
-    margin:0;
-    padding:0;
-  }
-  .nav-links a{
-    text-decoration:none;
-    font-size:12px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    transition: color .3s;
-  }
-  .nav-links a:hover{ color:var(--accent); }
-  .nav-cta{
-    font-size:12px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    background:linear-gradient(135deg, var(--accent-dark), var(--accent));
-    color:#fff;
-    padding:0.65rem 1.4rem;
-    border:none;
-    cursor:pointer;
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    border-radius:999px;
-    transition: transform .3s, box-shadow .3s;
-    text-decoration:none;
-    box-shadow:0 8px 18px rgba(187,90,52,0.22);
-    white-space:nowrap;
-  }
-  .nav-cta:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 24px rgba(187,90,52,0.28);
-  }
-  .nav-toggle{
-    display:none;
-    flex-direction:column;
-    justify-content:space-between;
-    width:22px;
-    height:16px;
-    background:none;
-    border:none;
-    cursor:pointer;
-    padding:0;
-  }
-  .nav-toggle span{
-    display:block;
-    height:2px;
-    width:100%;
-    background:var(--ink);
-    border-radius:2px;
-    transition: transform .3s ease, opacity .3s ease;
-  }
-  .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-  .nav-toggle.active span:nth-child(2){ opacity:0; }
-  .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+/* ---------- Header ---------- */
+.page-header{position:sticky;top:0;z-index:60;background:rgba(42,15,18,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(224,191,128,.22)}
+.page-header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:76px}
+.nav-brand{display:flex;align-items:center;gap:14px}
+.nav-logo-mark{width:46px;height:46px;object-fit:contain;border-radius:50%;padding:3px;background:#fff;border:1px solid rgba(224,191,128,.6)}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.1;gap:3px}
+.nav-logo{font-family:var(--serif);font-size:1.3rem;font-weight:600;letter-spacing:.02em;color:#fff}
+.nav-logo-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-light)}
+.nav-right{display:flex;align-items:center;gap:22px;margin-left:auto}
+.nav-links{display:flex;gap:6px}
+.nav-links a{display:inline-flex;align-items:center;gap:8px;color:#f6ecd8;font-size:.86rem;padding:8px 14px;border-radius:999px;transition:background .2s}
+.nav-links a:hover{background:rgba(255,255,255,.12)}
+.nav-links svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--gold-light);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.nav-cta{font:600 .86rem var(--sans);color:var(--maroon-deep);background:linear-gradient(135deg,var(--gold-light),var(--gold));padding:11px 24px;border-radius:999px;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 22px -10px rgba(185,138,62,.8)}
+.nav-cta:hover{transform:translateY(-2px)}
+.nav-toggle{display:none;flex-direction:column;justify-content:space-between;width:26px;height:18px;background:none;border:0;cursor:pointer;padding:0}
+.nav-toggle span{display:block;height:2px;border-radius:2px;background:var(--gold-light);transition:transform .25s,opacity .25s}
+.nav-toggle.active span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.nav-toggle.active span:nth-child(2){opacity:0}
+.nav-toggle.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
 
-  @media (max-width: 900px){
-    .page-header-inner{
-      padding:14px 16px 8px;
-      gap:10px;
-      flex-wrap:nowrap;
-    }
-    .nav-brand{ gap:10px; min-width:0; }
-    .nav-logo-mark{ width:40px; height:40px; flex-shrink:0; }
-    .nav-logo-text{ min-width:0; }
-    .nav-logo{ font-size:15px; }
-    .nav-logo-sub{ font-size:8px; letter-spacing:.08em; white-space:nowrap; }
-    .nav-right{ gap:10px; flex-shrink:0; }
-    .nav-cta{
-      padding:0.55rem 1rem;
-      font-size:10px;
-    }
-    .nav-toggle{ display:flex; }
-    .nav-links{
-      position:absolute;
-      top:100%;
-      left:0;
-      right:0;
-      flex-direction:column;
-      gap:0;
-      background:var(--card);
-      box-shadow:0 16px 30px rgba(26,22,15,0.1);
-      max-height:0;
-      overflow:hidden;
-      transition:max-height .35s ease;
-      padding:0 24px;
-    }
-    .nav-links.open{
-      max-height:320px;
-      padding:8px 24px 16px;
-    }
-    .nav-links li{ width:100%; }
-    .nav-links a{
-      display:block;
-      padding:.85rem 0;
-      border-bottom:1px solid var(--line);
-    }
-  }
-  @media (max-width: 480px){
-    .nav-logo-sub{ display:none; }
-    .nav-cta{
-      padding:0.5rem 0.8rem;
-      font-size:9px;
-    }
-  }
+/* ---------- Hero ---------- */
+.hero{position:relative;color:#fff;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));overflow:hidden;padding:clamp(40px,5vw,64px) 0 clamp(40px,5vw,60px)}
+.hero::before{content:"";position:absolute;width:620px;height:620px;right:-180px;top:-280px;border-radius:50%;background:radial-gradient(circle,rgba(224,191,128,.24),transparent 70%)}
+.hero .container{position:relative}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.08;margin:14px 0 18px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold-light);font-weight:500}
+.hero .intro{max-width:640px;font-size:clamp(1rem,1.5vw,1.15rem);color:#eadfca}
+.rule{width:56px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:26px}
 
-  /* ── NAV TRAIN ── */
-  .nav-rail-track {
-    position: relative;
-    height: 34px;
-    overflow: hidden;
-    margin: 16px 0 0;
-    pointer-events: none;
-  }
-  .nav-rail-track::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 5px;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, var(--accent) 0 14px, transparent 14px 26px);
-    opacity: 0.45;
-  }
-  .nav-train {
-    position: absolute;
-    bottom: 6px;
-    left: 0;
-    width: max-content;
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    will-change: transform;
-    animation: train-ride 34s linear infinite;
-  }
-  .nav-train .train-svg {
-    width: 150px;
-    flex-shrink: 0;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 6px 10px rgba(26,22,15,0.28));
-  }
-  .nav-train .monu-car {
-    height: 24px;
-    width: auto;
-    display: block;
-    flex-shrink: 0;
-    filter: drop-shadow(0 4px 6px rgba(26,22,15,0.25));
-  }
-  .nav-train .smoke {
-    position: absolute;
-    top: -3px;
-    right: 9px;
-    width: 7px;
-    height: 7px;
-    background: radial-gradient(circle, rgba(92,81,67,0.55), transparent 70%);
-    border-radius: 50%;
-    animation: smoke-puff 2.2s ease-out infinite;
-  }
-  .nav-train .smoke.s2 { animation-delay: 0.7s; right: 11px; }
-  .nav-train .smoke.s3 { animation-delay: 1.4s; right: 7px; }
-  @keyframes train-ride {
-    0% { transform: translateX(-1000px); }
-    100% { transform: translateX(100vw); }
-  }
-  @keyframes smoke-puff {
-    0% { transform: translateY(0) scale(0.6); opacity: 0.55; }
-    100% { transform: translateY(-24px) scale(1.7); opacity: 0; }
-  }
-  @media (max-width: 620px) {
-    .nav-train .monu-car { height: 18px; }
-    .nav-train .train-svg { width: 120px; }
-  }
-  h1{
-    font-family:'Playfair Display', serif;
-    font-weight:800;
-    font-size:44px;
-    margin:20px 0 12px;
-  }
-  .intro{
-    max-width:640px;
-    color:var(--ink-soft);
-    font-size:16px;
-    margin-bottom:34px;
-  }
+/* ---------- Hero layout + filters (right side) ---------- */
+.hero-grid{display:grid;grid-template-columns:1fr minmax(340px,480px);gap:56px;align-items:center}
+.filter-bar{display:flex;flex-direction:column;gap:16px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 24px 60px -24px rgba(0,0,0,.55);padding:22px}
+.search-box{position:relative}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:18px;height:18px;fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;pointer-events:none}
+.search-input{width:100%;font:500 .95rem var(--sans);color:var(--ink);background:var(--ivory);border:1px solid var(--line);border-radius:999px;padding:13px 20px 13px 46px;transition:border-color .2s,box-shadow .2s}
+.search-input::placeholder{color:var(--muted)}
+.search-input:hover{border-color:var(--gold)}
+.search-input:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 4px rgba(185,138,62,.18)}
+.f-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.f-label{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;min-width:58px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:8px;font:500 .9rem var(--sans);color:var(--ink-soft);background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 18px;cursor:pointer;transition:border-color .2s,background .2s,color .2s,transform .2s}
+.pill:hover{border-color:var(--gold);transform:translateY(-1px)}
+.pill .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.pill.active{background:var(--maroon-deep);border-color:var(--maroon-deep);color:#fff;font-weight:600}
+.select-wrap{position:relative;flex:1 1 180px}
+.select-wrap::after{content:"";position:absolute;right:18px;top:50%;width:7px;height:7px;border-right:1.6px solid var(--gold);border-bottom:1.6px solid var(--gold);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.state-select{appearance:none;-webkit-appearance:none;width:100%;font:500 .92rem var(--sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:11px 40px 11px 18px;cursor:pointer;transition:border-color .2s}
+.state-select:hover,.state-select:focus{outline:0;border-color:var(--gold)}
+.filter-reset{align-self:center;font:600 .85rem var(--sans);color:var(--gold);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:4px}
+.filter-reset:hover{color:var(--maroon)}
+.filter-reset[hidden]{display:none}
 
-  .result-count{
-    color:var(--ink-soft);
-    font-size:14px;
-    margin-bottom:18px;
-  }
-  .result-count b{ color:var(--ink); }
+/* ---------- Hero stats ---------- */
+.hero-stats{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(36px,5vw,56px);border-top:1px solid rgba(224,191,128,.28)}
+.stat{padding:22px 0 0 28px;border-left:1px solid rgba(224,191,128,.28)}
+.stat:first-child{padding-left:0;border-left:0}
+.stat b{display:block;font:600 clamp(1.8rem,3vw,2.4rem) var(--serif);color:#fff;line-height:1.1}
+.stat span{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-light)}
 
-  /* Title row with the season / state filters on the right */
-  .explore-head{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:20px 32px;
-    margin-bottom:34px;
-  }
-  .explore-head .intro{ margin-bottom:0; }
-  .filter-bar{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:10px;
-  }
-  .filter{ position:relative; }
-  .filter-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    background:var(--card);
-    border:1px solid var(--line);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:14px;
-    padding:10px 16px;
-    border-radius:999px;
-    cursor:pointer;
-    transition: border-color .15s ease, background .15s ease, color .15s ease;
-  }
-  .filter-btn:hover,
-  .filter.open .filter-btn{ border-color:var(--accent); }
-  .filter-btn .filter-value{ color:var(--accent-dark); }
-  .filter-btn .chevron{
-    font-size:10px;
-    transition: transform .2s ease;
-  }
-  .filter.open .filter-btn .chevron{ transform: rotate(180deg); }
-  .filter.active .filter-btn{
-    background:var(--accent);
-    border-color:var(--accent);
-    color:#fff;
-  }
-  .filter.active .filter-btn .filter-value{ color:#fff; }
-  .filter-menu{
-    position:absolute;
-    top:calc(100% + 8px);
-    right:0;
-    z-index:50;
-    display:none;
-    min-width:210px;
-    max-height:320px;
-    overflow-y:auto;
-    margin:0;
-    padding:8px;
-    list-style:none;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    box-shadow: 0 16px 34px rgba(38,34,28,0.16);
-  }
-  .filter.open .filter-menu{ display:block; }
-  .filter-option{
-    display:block;
-    width:100%;
-    text-align:left;
-    background:none;
-    border:none;
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    font-size:14px;
-    padding:8px 12px;
-    border-radius:8px;
-    cursor:pointer;
-    transition: background .15s ease, color .15s ease;
-  }
-  .filter-option:hover{ background:#F4F1EA; }
-  .filter-option.selected{
-    background:var(--accent);
-    color:#fff;
-    font-weight:600;
-  }
-  .filter-reset{
-    background:none;
-    border:none;
-    color:var(--ink-soft);
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:13px;
-    text-decoration:underline;
-    padding:8px 4px;
-    cursor:pointer;
-  }
-  .filter-reset:hover{ color:var(--ink); }
-  .search-box{
-    position:relative;
-    width:270px;
-  }
-  .search-icon{
-    position:absolute;
-    left:14px;
-    top:50%;
-    transform:translateY(-50%);
-    width:16px;
-    height:16px;
-    fill:none;
-    stroke:var(--ink-soft);
-    stroke-width:2;
-    stroke-linecap:round;
-    pointer-events:none;
-  }
-  .search-input{
-    width:100%;
-    -webkit-appearance:none;
-    appearance:none;
-    background:var(--card);
-    border:1px solid var(--line);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    font-size:14px;
-    padding:10px 16px 10px 38px;
-    border-radius:999px;
-    transition: border-color .15s ease, box-shadow .15s ease;
-  }
-  .search-input::placeholder{ color:var(--ink-soft); }
-  .search-input:hover{ border-color:var(--accent); }
-  .search-input:focus{
-    outline:none;
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(187,90,52,0.12);
-  }
-  @media (max-width: 620px){
-    .filter-menu{
-      left:0;
-      right:auto;
-      max-width:calc(100vw - 32px);
-    }
-    .search-box{ flex:1 1 100%; width:auto; }
-  }
+/* ---------- Results ---------- */
+.results{padding:36px 0 clamp(64px,9vw,110px)}
+.result-count{color:var(--muted);font-size:.88rem;margin-bottom:20px}
+.result-count b{font:600 1.5rem var(--serif);color:var(--maroon);margin-right:4px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.dest-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.dest-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--gold)}
+.dest-card.hidden{display:none}
+.dest-card .thumb{position:relative;aspect-ratio:4/3.1;overflow:hidden;background:var(--sand)}
+.dest-card .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,15,18,.28) 0%,rgba(42,15,18,0) 38%,rgba(42,15,18,.55) 100%);pointer-events:none}
+.dest-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.dest-card:hover .thumb img{transform:scale(1.07)}
+.dest-card .thumb .tag{position:absolute;z-index:2;left:10px;top:10px;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gold-light);background:rgba(42,15,18,.78);border:1px solid rgba(224,191,128,.5);backdrop-filter:blur(6px);padding:4px 9px;border-radius:999px}
+.dest-card .thumb .season-tags{position:absolute;z-index:2;left:10px;bottom:9px;display:flex;flex-wrap:wrap;gap:4px}
+.dest-card .thumb .season-tags span{font-size:.6rem;letter-spacing:.06em;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);padding:2px 8px;border-radius:999px}
+.dest-card .body{display:flex;flex-direction:column;flex:1;padding:14px 15px 15px}
+.dest-card h3{font-family:var(--serif);font-weight:600;font-size:1.02rem;line-height:1.25;color:var(--maroon-deep);margin-bottom:6px}
+.dest-card p.tagline{color:var(--muted);font-size:.78rem;line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.dest-card .meta{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line)}
+.dest-card .meta .explore{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.78rem;color:var(--gold);letter-spacing:.02em;transition:gap .25s,color .25s}
+.dest-card:hover .meta .explore{gap:12px;color:var(--maroon)}
+.empty-state{display:none;text-align:center;color:var(--muted);padding:70px 20px;border:1px dashed var(--line);border-radius:var(--radius);background:#fff}
+.empty-state.show{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
-  /* Destination grid */
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap:22px;
-  }
-  .dest-card{
-    background:transparent;
-    border:1px solid var(--line);
-    border-radius:16px;
-    overflow:hidden;
-    text-decoration:none;
-    color:var(--ink);
-    display:flex;
-    flex-direction:column;
-    transition: transform .3s ease, box-shadow .3s ease, opacity .25s ease;
-  }
-  .dest-card:hover{
-    transform:translateY(-6px);
-    box-shadow: 0 14px 30px rgba(38,34,28,0.12);
-  }
-  .dest-card.hidden{
-    display:none;
-  }
-  .dest-card .thumb{
-    position:relative;
-    height:180px;
-    overflow:hidden;
-  }
-  .dest-card .thumb img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition: transform .5s cubic-bezier(.22,.61,.36,1);
-  }
-  .dest-card:hover .thumb img{
-    transform: scale(1.09);
-  }
-  .dest-card .thumb .tag{
-    position:absolute;
-    top:12px;
-    left:12px;
-    background:rgba(38,34,28,0.72);
-    color:#fff;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    padding:5px 10px;
-    border-radius:999px;
-  }
-  .dest-card .thumb .season-tags{
-    position:absolute;
-    bottom:12px;
-    left:12px;
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
-  }
-  .dest-card .thumb .season-tags span{
-    background:rgba(255,255,255,0.92);
-    color:var(--ink);
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:.04em;
-    text-transform:uppercase;
-    padding:4px 9px;
-    border-radius:999px;
-  }
-  .dest-card .body{
-    padding:18px 20px 20px;
-    display:flex;
-    flex-direction:column;
-    flex-grow:1;
-    background:rgba(255,255,255,0.45);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    transition: background .35s ease;
-  }
-  .dest-card:hover .body{
-    background:rgba(255,255,255,1);
-  }
-  .dest-card h3{
-    font-family:'Playfair Display', serif;
-    font-size:21px;
-    font-weight:700;
-    margin:0 0 8px;
-  }
-  .dest-card p.tagline{
-    color:var(--ink-soft);
-    font-size:14px;
-    margin:0 0 16px;
-    flex-grow:1;
-  }
-  .dest-card .meta{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:13px;
-    color:var(--ink-soft);
-    border-top:1px solid var(--line);
-    padding-top:14px;
-  }
-  .dest-card .meta .from{
-    font-weight:700;
-    color:var(--ink);
-  }
-  .dest-card .meta .explore{
-    color:var(--accent);
-    font-weight:600;
-  }
-  .dest-card:hover .meta .explore{
-    color:var(--accent-dark);
-  }
+/* ---------- Footer ---------- */
+footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;padding:28px 0}
+footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset:3px}
 
-  .empty-state{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--ink-soft);
-    font-size:15px;
-    display:none;
-  }
-  .empty-state.show{ display:block; }
+/* ---------- Mobile bar ---------- */
+.mobile-contact-bar{display:none}
 
-  @media (max-width: 900px){
-    .grid{ grid-template-columns: repeat(2, 1fr); }
-    body::before{
-      background-size:560px auto;
-    }
-  }
-
-  @media (max-width: 620px){
-    .grid{ grid-template-columns: 1fr; }
-    h1{ font-size:32px; }
-    body::before{
-      background-size:300px auto;
-    }
-  }
-
-</style>
-
-<style>
-    body { cursor: url('../../images/cursor.png') 10 10, auto; }
-  </style>
-
-<style>
-/* Mobile quick-contact bar */
-.mobile-contact-bar { display: none; }
-@media (max-width: 768px) {
-  .mobile-contact-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    position: fixed;
-    top: auto;
-    right: auto;
-    margin: 0;
-    left: 50%;
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    z-index: 999;
-    width: calc(100% - 32px);
-    max-width: 420px;
-    background: #363330;
-    border-radius: 999px;
-    padding: 12px 6px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-  }
-  .mobile-contact-bar a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .mobile-contact-bar svg { width: 24px; height: 24px; }
-  body { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+}
+@media (max-width:1180px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:940px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:14px}}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .page-header-inner{height:68px}
+  .nav-logo{font-size:1.1rem}.nav-logo-sub{font-size:.52rem;letter-spacing:.14em}
+  .nav-toggle{display:flex}
+  .nav-right{gap:14px}
+  .nav-cta{padding:9px 16px;font-size:.78rem;white-space:nowrap}
+  .nav-links{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;background:rgba(42,15,18,.98);border-bottom:1px solid rgba(224,191,128,.25);padding:10px 24px 16px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 4px;border-radius:0;border-bottom:1px solid rgba(255,255,255,.08)}
+}
+@media (max-width:620px){
+  .container{width:calc(100% - 32px)}
+  .nav-logo-sub{display:none}
+  .filter-bar{padding:16px}
+  .stat{padding-left:14px}.stat span{letter-spacing:.1em;font-size:.62rem}
+}
+@media (max-width:768px){
+  .mobile-contact-bar{display:flex;position:fixed;inset:auto 0 0 0;z-index:70;background:rgba(42,15,18,.96);backdrop-filter:blur(10px);justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(224,191,128,.3)}
+  .mobile-contact-bar a{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+  .mobile-contact-bar svg{width:22px;height:22px;fill:#fff}
+  footer{padding-bottom:96px}
 }
 </style>
-
 </head>
 <body>
-  <div class="page-header">
-    <div class="page-header-inner">
+  <header class="page-header">
+    <div class="container page-header-inner">
       <a class="nav-brand" href="../../index.html">
-        <img class="nav-logo-mark" src="../../images/new_Logo.jpg" alt="Viharasetu logo" />
+        <img class="nav-logo-mark" src="../../images/new_Logo.jpg" alt="Viharasetu logo" width="46" height="46" />
         <span class="nav-logo-text">
           <span class="nav-logo">Viharasetu</span>
           <span class="nav-logo-sub">From Aastha to Eternal Anubhav</span>
@@ -643,9 +177,10 @@
       </a>
       <div class="nav-right">
         <ul class="nav-links">
-          <li><a href="../../index.html#journeys">Journeys</a></li>
-          <li><a href="../../feedback.html">Feedback</a></li>
-          <li><a href="../../pdf_files/Viharasetu_about.pdf" target="_blank" rel="noopener">About</a></li>
+          <li><a href="../../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.8l9 7.4M5.5 9.6V20h4.8v-5.6h3.4V20h4.8V9.6"/></svg> Home</a></li>
+          <li><a href="../../index.html#journeys"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.8 8.2-2.1 5.5-5.5 2.1 2.1-5.5Z"/></svg> Journeys</a></li>
+          <li><a href="../../feedback.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1Z"/></svg> Feedback</a></li>
+          <li><a href="../../pdf_files/Viharasetu_about.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> About</a></li>
         </ul>
         <a href="../../index.html#contact" class="nav-cta">Plan My Journey</a>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -655,103 +190,43 @@
         </button>
       </div>
     </div>
+  </header>
 
-    <div class="nav-rail-track" aria-hidden="true">
-      <div class="nav-train">
-        <img class="monu-car" src="../../images/Travel_pngs/small/1.png" alt="Red Fort, Delhi" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/2.png" alt="Red Fort, Delhi" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/3.png" alt="Jagannath Temple, Puri" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/4.png" alt="Taj Mahal & India Gate" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/5.png" alt="Jagannath Temple, Puri" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/6.png" alt="South Indian temple gopuram" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/7.png" alt="Konark Sun Temple wheel" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/8.png" alt="Gurudwara" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/9.png" alt="Golden Temple, Amritsar" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/10.png" alt="Ornate temple gateway" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/11.png" alt="Camel safari, Rajasthan" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/12.png" alt="Hawa Mahal, Jaipur" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/13.png" alt="Indian fort" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/14.png" alt="Himalayan peaks" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/15.png" alt="Qutub Minar, Delhi" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/16.png" alt="Temple tower" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/17.png" alt="Thai-style temple" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/18.png" alt="Buddhist pagoda" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/19.png" alt="Khmer temple tower" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/20.png" alt="Charminar, Hyderabad" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/21.png" alt="Bali split gate" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/22.png" alt="Prambanan temple" loading="lazy">
-        <img class="monu-car" src="../../images/Travel_pngs/small/23.png" alt="Chichen Itza, Mexico" loading="lazy">
-        <svg class="train-svg" viewBox="0 0 260 40" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="trainBody" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#D97A3A"/>
-              <stop offset="1" stop-color="#8B3E0D"/>
-            </linearGradient>
-          </defs>
-          <line x1="70" y1="24" x2="78" y2="24" stroke="#5C5143" stroke-width="2"/>
-          <line x1="145" y1="24" x2="153" y2="24" stroke="#5C5143" stroke-width="2"/>
-          <line x1="220" y1="24" x2="228" y2="24" stroke="#5C5143" stroke-width="2"/>
-          <rect x="4" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
-          <rect x="12" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <rect x="38" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <circle cx="18" cy="32" r="5" fill="#1A160F"/>
-          <circle cx="56" cy="32" r="5" fill="#1A160F"/>
-          <rect x="78" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
-          <rect x="86" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <rect x="112" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <circle cx="92" cy="32" r="5" fill="#1A160F"/>
-          <circle cx="130" cy="32" r="5" fill="#1A160F"/>
-          <rect x="153" y="10" width="66" height="20" rx="5" fill="url(#trainBody)"/>
-          <rect x="161" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <rect x="187" y="15" width="18" height="10" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <circle cx="167" cy="32" r="5" fill="#1A160F"/>
-          <circle cx="205" cy="32" r="5" fill="#1A160F"/>
-          <rect x="228" y="6" width="30" height="24" rx="6" fill="url(#trainBody)"/>
-          <rect x="234" y="0" width="10" height="10" rx="2" fill="#8B3E0D"/>
-          <circle cx="252" cy="12" r="3" fill="#F7EDD5"/>
-          <rect x="233" y="12" width="16" height="9" rx="2" fill="#F7EDD5" opacity="0.9"/>
-          <circle cx="236" cy="32" r="5" fill="#1A160F"/>
-          <circle cx="250" cy="32" r="5" fill="#1A160F"/>
-        </svg>
-        <span class="smoke s1"></span>
-        <span class="smoke s2"></span>
-        <span class="smoke s3"></span>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow">Destinations</span>
+        <h1>Explore <em>India</em></h1>
+        <p class="intro">Browse every destination by season or by state — find the right trip for whenever you're travelling, wherever you want to go.</p>
+        <div class="rule"></div>
       </div>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="explore-head">
-      <div>
-        <h1>Explore India</h1>
-        <p class="intro">
-          Browse every destination by season or by state — find the right trip for whenever you're travelling, wherever you want to go.
-        </p>
-      </div>
-
       <!-- Options are filled in from the cards by the script below -->
       <div class="filter-bar">
         <label class="search-box">
           <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input type="search" id="search-input" class="search-input" placeholder="Search destination or state" aria-label="Search destinations" autocomplete="off">
         </label>
-        <div class="filter" data-filter="season">
-          <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
-            Season: <span class="filter-value">All</span> <span class="chevron">▾</span>
-          </button>
-          <ul class="filter-menu"></ul>
+        <div class="f-row">
+          <span class="f-label" id="season-label">Season</span>
+          <div class="pills" id="season-pills" role="group" aria-labelledby="season-label"></div>
         </div>
-        <div class="filter" data-filter="state">
-          <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
-            State: <span class="filter-value">All</span> <span class="chevron">▾</span>
-          </button>
-          <ul class="filter-menu"></ul>
+        <div class="f-row">
+          <label class="f-label" for="state-select">State</label>
+          <div class="select-wrap"><select id="state-select" class="state-select"></select></div>
         </div>
         <button type="button" class="filter-reset" id="filter-reset" hidden>Clear filters</button>
       </div>
     </div>
+    <div class="container hero-stats" aria-label="At a glance">
+      <div class="stat"><b id="stat-journeys">35</b><span>Journeys</span></div>
+      <div class="stat"><b id="stat-states">15</b><span>States &amp; Territories</span></div>
+      <div class="stat"><b id="stat-seasons">3</b><span>Seasons covered</span></div>
+    </div>
+  </section>
 
-    <p class="result-count"><b id="result-num">12</b> destinations found</p>
+  <main class="results">
+    <div class="container">
+      <p class="result-count"><b id="result-num">12</b> destinations found</p>
 
     <div class="grid" id="dest-grid">
 
@@ -768,7 +243,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="/destinations/All_packages/UTTAR_PRADESH/varanasi.html" data-state="Uttar Pradesh" data-seasons="Winter">
+      <a class="dest-card" href="UTTAR_PRADESH/varanasi.html" data-state="Uttar Pradesh" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Uttar Pradesh</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -807,7 +282,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="/destinations/All_packages/KARNATAKA/hampi.html" data-state="Karnataka" data-seasons="Winter">
+      <a class="dest-card" href="KARNATAKA/hampi.html" data-state="Karnataka" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Karnataka</span>
           <div class="season-tags"><span>Winter</span></div>
@@ -1002,6 +477,20 @@
         </div>
       </a>
 
+      <a class="dest-card" href="KARNATAKA/gokarna-murudeshwar.html" data-state="Karnataka" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Karnataka</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="../../images/Gokarna/g1.jpg" alt="Gokarna &amp; Murudeshwar" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Gokarna &amp; Murudeshwar</h3>
+          <p class="tagline">Mahabaleshwar Temple, Om and Kudle beaches, and Murudeshwar's giant Shiva statue on Karnataka's coast.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+
       <a class="dest-card" href="TAMIL_NADU/ooty.html" data-state="Tamil Nadu" data-seasons="Summer,Winter">
         <div class="thumb">
           <span class="tag">Tamil Nadu</span>
@@ -1080,7 +569,7 @@
         </div>
       </a>
 
-      <a class="dest-card" href="/destinations/All_packages/UTTARAKHAND/valley-of-flowers.html" data-state="Uttarakhand" data-seasons="Monsoon">
+      <a class="dest-card" href="UTTARAKHAND/valley-of-flowers.html" data-state="Uttarakhand" data-seasons="Monsoon">
   <div class="thumb">
     <span class="tag">Uttarakhand</span>
     <div class="season-tags"><span>Monsoon</span></div>
@@ -1202,9 +691,11 @@
 
     </div>
 
-    <p class="empty-state" id="empty-state">No destinations match your search and filters — try another name, season or state.</p>
+      <p class="empty-state" id="empty-state">No destinations match your search and filters — try another name, season or state.</p>
+    </div>
+  </main>
 
-  </div>
+  <footer><div class="container">© Vihara Setu · <a href="../../index.html">Back to Home</a></div></footer>
 
   <script>
     const cards = Array.from(document.querySelectorAll('.dest-card'));
@@ -1218,13 +709,42 @@
       .sort((a, b) => a.dataset.state.localeCompare(b.dataset.state))
       .forEach(card => destGrid.appendChild(card));
 
-    // Season / state filters. Options come from the cards themselves, so a state
-    // only shows up once it has at least one destination.
     const emptyState = document.getElementById('empty-state');
     const resetBtn = document.getElementById('filter-reset');
-    const filters = Array.from(document.querySelectorAll('.filter'));
-    const active = { season: 'all', state: 'all' };
     const searchInput = document.getElementById('search-input');
+    const pillsBox = document.getElementById('season-pills');
+    const stateSelect = document.getElementById('state-select');
+    const active = { season: 'all', state: 'all' };
+
+    // Everything below is built from the cards, so a state or season only appears
+    // once at least one destination uses it.
+    const seasons = ['Winter', 'Summer', 'Monsoon']
+      .filter(s => cards.some(card => card.dataset.seasons.split(',').includes(s)));
+    const states = [...new Set(cards.map(card => card.dataset.state))].sort((a, b) => a.localeCompare(b));
+    const dotColour = { Winter: '#7fb2d6', Summer: '#e6a93a', Monsoon: '#3fa795' };
+
+    document.getElementById('stat-journeys').textContent = cards.length;
+    document.getElementById('stat-states').textContent = states.length;
+    document.getElementById('stat-seasons').textContent = seasons.length;
+
+    function addPill(value, label, colour) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pill' + (value === 'all' ? ' active' : '');
+      b.dataset.value = value;
+      b.setAttribute('aria-pressed', value === 'all' ? 'true' : 'false');
+      b.innerHTML = (colour ? '<span class="dot" style="background:' + colour + '"></span>' : '') + label;
+      pillsBox.appendChild(b);
+    }
+    addPill('all', 'All');
+    seasons.forEach(s => addPill(s, s, dotColour[s]));
+
+    [['all', 'All States'], ...states.map(s => [s, s])].forEach(([v, t]) => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = t;
+      stateSelect.appendChild(o);
+    });
+
     // Text each card can be found by: its name, tagline and state, plus the stops in its page
     // name (kochi-munnar-...-thiruvananthapuram), which short names like "Grand Kerala Circuit" leave out
     const searchText = new Map(cards.map(card => [card, [
@@ -1233,12 +753,6 @@
       card.dataset.state,
       card.getAttribute('href').split('/').pop().replace('.html', '').replaceAll('-', ' ')
     ].join(' ').toLowerCase()]));
-    const options = {
-      season: ['Summer', 'Monsoon', 'Winter']
-        .filter(s => cards.some(card => card.dataset.seasons.split(',').includes(s))),
-      state: [...new Set(cards.map(card => card.dataset.state))]
-        .sort((a, b) => a.localeCompare(b))
-    };
 
     function applyFilters(){
       // Every word typed must appear somewhere in the card's name, tagline or state
@@ -1252,72 +766,31 @@
         card.classList.toggle('hidden', !visible);
         if (visible) visibleCount++;
       });
-      // Compute the real count instead of relying on a hardcoded number in the HTML.
       resultNum.textContent = visibleCount;
       emptyState.classList.toggle('show', visibleCount === 0);
       resetBtn.hidden = active.season === 'all' && active.state === 'all' && words.length === 0;
     }
 
-    function closeFilters(except){
-      filters.forEach(filter => {
-        if (filter === except) return;
-        filter.classList.remove('open');
-        filter.querySelector('.filter-btn').setAttribute('aria-expanded', 'false');
+    function setSeason(value){
+      active.season = value;
+      pillsBox.querySelectorAll('.pill').forEach(p => {
+        const on = p.dataset.value === value;
+        p.classList.toggle('active', on);
+        p.setAttribute('aria-pressed', String(on));
       });
     }
 
-    function selectOption(filter, value){
-      active[filter.dataset.filter] = value;
-      filter.classList.toggle('active', value !== 'all');
-      filter.querySelector('.filter-value').textContent = value === 'all' ? 'All' : value;
-      filter.querySelectorAll('.filter-option').forEach(opt => {
-        opt.classList.toggle('selected', opt.dataset.value === value);
-      });
-    }
-
-    filters.forEach(filter => {
-      const key = filter.dataset.filter;
-      const btn = filter.querySelector('.filter-btn');
-      const menu = filter.querySelector('.filter-menu');
-
-      ['all', ...options[key]].forEach(value => {
-        const li = document.createElement('li');
-        const opt = document.createElement('button');
-        opt.type = 'button';
-        opt.className = 'filter-option' + (value === 'all' ? ' selected' : '');
-        opt.dataset.value = value;
-        opt.textContent = value === 'all' ? (key === 'season' ? 'All Seasons' : 'All States') : value;
-        li.appendChild(opt);
-        menu.appendChild(li);
-      });
-
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = filter.classList.toggle('open');
-        btn.setAttribute('aria-expanded', String(isOpen));
-        closeFilters(filter);
-      });
-
-      menu.addEventListener('click', (e) => {
-        const opt = e.target.closest('.filter-option');
-        if (!opt) return;
-        selectOption(filter, opt.dataset.value);
-        closeFilters();
-        applyFilters();
-      });
+    pillsBox.addEventListener('click', (e) => {
+      const pill = e.target.closest('.pill');
+      if (!pill) return;
+      setSeason(pill.dataset.value);
+      applyFilters();
     });
-
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.filter')) closeFilters();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeFilters();
-    });
-
+    stateSelect.addEventListener('change', () => { active.state = stateSelect.value; applyFilters(); });
     searchInput.addEventListener('input', applyFilters);
-
     resetBtn.addEventListener('click', () => {
-      filters.forEach(filter => selectOption(filter, 'all'));
+      setSeason('all');
+      active.state = 'all'; stateSelect.value = 'all';
       searchInput.value = '';
       applyFilters();
     });
@@ -1353,7 +826,6 @@
     });
   })();
   </script>
-
 
 <div class="mobile-contact-bar" aria-label="Quick contact" role="navigation">
   <a href="../../index.html" aria-label="Home">

@@ -12,216 +12,455 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Agra — Destinations</title>
+<title>Agra — Destinations | Vihara Setu</title>
+<meta name="description" content="Agra — home to the Taj Mahal and centuries of Mughal grandeur along the Yamuna. We craft heritage walks, sunrise viewings, and guided explorations of…">
+<meta name="theme-color" content="#2a0f12">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agra — Vihara Setu">
+<meta property="og:description" content="Agra — home to the Taj Mahal and centuries of Mughal grandeur along the Yamuna. We craft heritage walks, sunrise viewings, and guided explorations of…">
+<meta property="og:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../destinations-common.css?v=16">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
+
 <style>
-  /* Agra-specific styles */
-  .highlights {
-    margin: 56px 0;
-  }
-  .highlights h2 {
-    margin-bottom: 32px;
-  }
-  .highlights-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-  }
-  .highlight-block {
-    opacity: 1;
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-  .highlight-block li {
-    opacity: 1;
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
+:root{
+  --ink:#1c1410; --ink-soft:#3b2e26; --muted:#76695b;
+  --ivory:#faf6ee; --sand:#f2e9d8; --line:#e3d6bd;
+  --maroon:#4a141b; --maroon-deep:#2a0f12;
+  --gold:#b98a3e; --gold-light:#e0bf80;
+  --radius:18px;
+  --shadow:0 24px 60px -28px rgba(42,15,18,.45);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--sans);color:var(--ink);background:var(--ivory);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+.container{width:calc(100% - 72px);max-width:none;margin-inline:auto}
+.eyebrow{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.section{padding:clamp(64px,9vw,120px) 0}
+.section-head{max-width:640px;margin-bottom:48px}
+.section-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.15;margin:12px 0 14px;color:var(--maroon-deep)}
+.section-head p{color:var(--muted);font-size:1.02rem}
+.rule{width:56px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:18px}
+
+/* ---------- Nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,backdrop-filter .3s,box-shadow .3s}
+.nav.scrolled{background:rgba(42,15,18,.88);backdrop-filter:blur(14px);box-shadow:0 8px 30px -12px rgba(0,0,0,.5)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{color:#f6ecd8;font-size:.86rem;padding:8px 14px;border-radius:999px;transition:background .2s}
+.nav-links a:hover{background:rgba(255,255,255,.12)}
+.badge{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(224,191,128,.5);padding:6px 14px;border-radius:999px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 .92rem var(--sans);padding:14px 28px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,#d8b061,#b98a3e);color:#2a0f12;box-shadow:0 12px 30px -12px rgba(185,138,62,.9)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4);backdrop-filter:blur(6px)}
+.btn-ghost:hover{background:rgba(255,255,255,.18)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:min(94vh,860px);display:flex;align-items:flex-end;color:#fff;background:var(--maroon-deep);overflow:hidden}
+.hero-video,.hero::after{position:absolute;inset:0;width:100%;height:100%}
+.hero-video{object-fit:cover}
+.hero::after{content:"";background:linear-gradient(180deg,rgba(42,15,18,.55) 0%,rgba(42,15,18,.15) 35%,rgba(42,15,18,.88) 100%)}
+.hero-content{position:relative;z-index:2;padding:150px 0 150px;max-width:860px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,5.6vw,4.4rem);line-height:1.08;margin:18px 0 22px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold-light);font-weight:500}
+.hero .intro{font-size:clamp(1rem,1.5vw,1.15rem);color:#eadfca;max-width:640px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.facts{position:relative;z-index:3;margin-top:-70px}
+.facts-grid{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden}
+.fact{padding:26px 28px;border-right:1px solid var(--line)}
+.fact:last-child{border-right:0}
+.fact b{display:block;font-family:var(--serif);font-size:1.7rem;color:var(--maroon);line-height:1.1}
+.fact span{font-size:.82rem;color:var(--muted);letter-spacing:.04em}
+
+/* ---------- Route ---------- */
+.route{overflow-x:auto;padding:8px 0 20px;scrollbar-width:thin}
+.route ol{display:flex;min-width:860px;position:relative}
+.route ol::before{content:"";position:absolute;left:6%;right:6%;top:19px;height:1px;background:repeating-linear-gradient(90deg,var(--gold) 0 6px,transparent 6px 12px)}
+.route li{flex:1;text-align:center;position:relative}
+.route .dot{width:38px;height:38px;border-radius:50%;margin:0 auto 14px;background:var(--ivory);border:1.5px solid var(--gold);display:grid;place-items:center;font:600 .82rem var(--serif);color:var(--maroon)}
+.route strong{display:block;font-family:var(--serif);font-size:1.08rem;color:var(--maroon-deep)}
+.route small{color:var(--muted);font-size:.8rem}
+
+/* ---------- Gallery ---------- */
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:14px}
+.mosaic a{position:relative;overflow:hidden;border-radius:14px;background:var(--sand);cursor:zoom-in}
+.mosaic a:first-child{grid-column:span 2;grid-row:span 2}
+.mosaic img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.mosaic a:hover img{transform:scale(1.07)}
+.mosaic figcaption,.mosaic .cap{position:absolute;inset:auto 0 0 0;padding:34px 16px 14px;color:#fff;font-size:.84rem;background:linear-gradient(transparent,rgba(20,8,8,.8));opacity:0;transition:opacity .3s}
+.mosaic a:hover .cap,.mosaic a:focus-visible .cap{opacity:1}
+
+/* ---------- Experiences ---------- */
+.exp-wrap{background:var(--maroon-deep);color:#f4e9d3;position:relative;overflow:hidden}
+.exp-wrap::before{content:"";position:absolute;width:620px;height:620px;right:-200px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(185,138,62,.22),transparent 70%)}
+.exp-wrap .section-head h2{color:#fff}
+.exp-wrap .section-head p{color:#cdbfa6}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;position:relative}
+.exp{padding:34px 30px;border:1px solid rgba(224,191,128,.28);border-radius:var(--radius);background:rgba(255,255,255,.03);transition:transform .3s,background .3s}
+.exp:hover{transform:translateY(-6px);background:rgba(255,255,255,.07)}
+.exp .n{font:italic 500 2.6rem var(--serif);color:var(--gold-light);line-height:1}
+.exp p{margin-top:16px;font-size:1.04rem;color:#f4e9d3}
+
+/* ---------- Itineraries ---------- */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tier{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;align-self:stretch;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;cursor:pointer;font:inherit;color:inherit;position:relative;transition:transform .3s,box-shadow .3s,border-color .3s}
+.tier:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.tier .nights{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--maroon)}
+.tier .nights small{font:500 .78rem var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.tier h3{font-family:var(--serif);font-size:1.35rem;margin:16px 0 8px;color:var(--maroon-deep)}
+.tier p{color:var(--muted);font-size:.94rem}
+.tier p{margin-bottom:22px}
+.tier .price{width:100%;margin-top:auto;padding-top:18px;border-top:1px dashed var(--line);font-size:.88rem;color:var(--ink-soft)}
+.tier .price b{font:600 1.25rem var(--serif);color:var(--maroon)}
+.tier .more{display:block;margin-top:14px;font-weight:600;font-size:.88rem;color:var(--gold)}
+
+/* Itinerary popup */
+.itin-bd{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px 16px;background:rgba(42,15,18,.72);backdrop-filter:blur(3px)}
+.itin-bd.open{display:flex}
+.itin-dialog{position:relative;width:min(860px,100%);max-height:calc(100vh - 48px);overflow:auto;background:#fff;border-radius:var(--radius);padding:clamp(24px,4vw,48px);box-shadow:var(--shadow);animation:tlIn .35s ease}
+.itin-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--maroon);font-size:1.1rem;cursor:pointer;line-height:1}
+.itin-x:hover{background:var(--sand)}
+.itin-x:focus-visible,.tier:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.itin-dialog .tl-head{padding-right:40px}
+
+.timeline-card{margin-top:30px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,4vw,52px);box-shadow:var(--shadow)}
+.timeline-card.flash{animation:tlIn .55s ease}
+@keyframes tlIn{from{opacity:.0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.tl-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:34px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.tl-head h3{font-family:var(--serif);font-size:clamp(1.4rem,2.6vw,2rem);color:var(--maroon-deep)}
+.tl-head p{color:var(--muted);max-width:560px;margin-top:6px}
+.tl-note{font-size:.8rem;color:var(--muted);letter-spacing:.04em}
+.days{position:relative}
+.day{display:grid;grid-template-columns:86px 1fr;gap:10px 26px;padding-bottom:30px;position:relative}
+.day:last-child{padding-bottom:0}
+.day::before{content:"";position:absolute;left:42px;top:54px;bottom:-4px;width:1px;background:var(--line)}
+.day:last-child::before{display:none}
+.day-n{width:84px;text-align:center}
+.day-n span{display:block;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.day-n b{display:grid;place-items:center;width:52px;height:52px;margin:4px auto 0;border-radius:50%;background:var(--maroon);color:var(--gold-light);font:600 1.15rem var(--serif);box-shadow:0 0 0 6px #fff}
+.day h4{font-family:var(--serif);font-size:1.22rem;color:var(--maroon-deep);margin:6px 0 8px}
+.day li{position:relative;padding-left:18px;color:var(--ink-soft);font-size:.96rem}
+.day li::before{content:"";position:absolute;left:0;top:.72em;width:7px;height:1px;background:var(--gold)}
+.meals{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.meals span{font-size:.72rem;letter-spacing:.06em;padding:4px 12px;border-radius:999px;background:var(--sand);color:var(--maroon)}
+.notes{margin-top:22px;font-size:.84rem;color:var(--muted);text-align:center}
+
+/* ---------- Destination guide ---------- */
+.guide{background:var(--sand)}
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dest{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;transition:transform .3s,box-shadow .3s}
+.dest:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.dest .no{font:italic 500 .95rem var(--serif);color:var(--gold)}
+.dest h3{font-family:var(--serif);font-size:1.55rem;color:var(--maroon-deep);margin:4px 0 14px}
+.dest li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #efe5d1;font-size:.95rem;color:var(--ink-soft)}
+.dest li:first-child{border-top:0}
+.must{flex:none;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#8a6420;background:#f7ebcf;border-radius:999px;padding:3px 10px;align-self:center;white-space:nowrap}
+.dest.food{background:var(--maroon-deep);border-color:var(--maroon-deep)}
+.dest.food h3{color:#fff}
+.dest.food li{border-color:rgba(255,255,255,.12);color:#eadfca}
+.dest.food .no{color:var(--gold-light)}
+.dest.food .must{background:rgba(224,191,128,.18);color:var(--gold-light)}
+
+/* ---------- Contact ---------- */
+.cta{background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));color:#fff;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(224,191,128,.2),transparent 60%)}
+.cta .container{position:relative;max-width:760px}
+.cta h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,3rem);line-height:1.15;margin:14px 0}
+.cta p{color:#e3d6bd;margin-bottom:32px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;padding:28px 0}
+
+/* ---------- Lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(14,6,7,.94);padding:24px}
+.lb.open{display:grid}
+.lb img{max-height:86vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lb p{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:#d8cbb4;font-size:.9rem}
+.lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;width:46px;height:46px;border-radius:50%;font-size:1.3rem;cursor:pointer}
+.lb button:hover{background:rgba(255,255,255,.25)}
+.lb .x{top:20px;right:20px}.lb .pv{left:20px;top:50%}.lb .nx{right:20px;top:50%}
+
+/* ---------- Mobile bar ---------- */
+.mbar{display:none}
+
+/* ---------- Reveal ---------- */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  *{animation:none!important}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:960px){
+  .facts-grid{grid-template-columns:repeat(2,1fr)}
+  .fact:nth-child(2){border-right:0}.fact:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .tiers,.exp-grid,.dest-grid{grid-template-columns:1fr}
+  .mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}
+  .nav-links .hide-m{display:none}
+}
+@media (max-width:760px){
+  .container{width:calc(100% - 32px)}
+  .hero-content{padding:120px 0 120px}
+  .day{grid-template-columns:62px 1fr;gap:6px 14px}
+  .day-n{width:60px}.day-n b{width:44px;height:44px}.day::before{left:30px;top:50px}
+  .mbar{display:flex;position:fixed;inset:auto 0 0 0;z-index:60;background:rgba(42,15,18,.96);backdrop-filter:blur(10px);justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(224,191,128,.3)}
+  .mbar a{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+  .mbar svg{width:22px;height:22px;fill:#fff}
+  footer{padding-bottom:96px}
+}
+.nav-links a{display:inline-flex;align-items:center;gap:8px}.nav-links svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--gold-light);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- Inclusions & exclusions ---------- */
+.inex{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.inex-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 32px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.inex-card.in{border-top:3px solid var(--gold)}
+.inex-card.ex{border-top:3px solid var(--maroon)}
+.inex-card h3{font-family:var(--serif);font-size:1.5rem;color:var(--maroon-deep);margin-bottom:6px}
+.inex-card .sub{font-size:.84rem;color:var(--muted);margin-bottom:18px}
+.inex-card li{position:relative;padding:11px 0 11px 34px;border-top:1px solid #efe5d1;font-size:.97rem;color:var(--ink-soft)}
+.inex-card li:first-of-type{border-top:0}
+.inex-card li::before{content:"";position:absolute;left:0;top:13px;width:20px;height:20px;background-repeat:no-repeat;background-position:center;background-size:contain}
+.inex-card.in li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b98a3e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8 12.3 2.8 2.8L16.2 9.5'/%3E%3C/svg%3E")}
+.inex-card.ex li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a141b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m9 9 6 6M15 9l-6 6'/%3E%3C/svg%3E")}
+.inex-note{margin-top:22px;font-size:.84rem;color:var(--muted);text-align:center}
+@media(max-width:960px){.inex{grid-template-columns:1fr}}
+
+/* ---------- Hero image block ---------- */
+.hero>.container{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,42%);gap:clamp(32px,5vw,88px);align-items:center}
+.hero-media{position:relative;margin:100px 0 130px;align-self:center}
+.hero-media::before{content:"";position:absolute;inset:18px -18px -18px 18px;border:1px solid rgba(224,191,128,.55);border-radius:26px}
+.hero-media img{position:relative;width:100%;aspect-ratio:4/3;max-height:560px;object-fit:cover;border-radius:22px;border:1px solid rgba(224,191,128,.5);box-shadow:0 40px 80px -30px rgba(0,0,0,.7);background:var(--maroon)}
+@media(max-width:960px){
+  .hero>.container{grid-template-columns:1fr;gap:0}
+  .hero-content{padding-bottom:36px}
+  .hero-media{margin:0 18px 110px 0}
+  .hero-media img{aspect-ratio:16/10}
+}
+
+/* ---------- Contact: text left, logo right ---------- */
+.cta{text-align:left}
+.cta .container{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,96px);align-items:center}
+.cta p{max-width:560px}
+.cta-row{justify-content:flex-start}
+.cta-logo{position:relative;margin-right:clamp(0px,4vw,70px)}
+.cta-logo::before{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(224,191,128,.4)}
+.cta-logo img{position:relative;width:clamp(170px,17vw,270px);aspect-ratio:1;object-fit:contain;border-radius:50%;background:#fff;padding:14px;border:2px solid var(--gold-light);box-shadow:0 30px 70px -26px rgba(0,0,0,.7)}
+@media(max-width:760px){
+  .cta .container{grid-template-columns:1fr}
+  .cta-logo{order:-1;margin:16px 0 0 16px}
+  .cta-logo img{width:130px}
+}
+
+/* ---------- Gallery + hero photo: original proportions, no cropping ---------- */
+.mosaic,.mosaic.few{display:flex!important;flex-wrap:wrap;gap:14px;column-count:auto}
+.mosaic::after{content:"";flex-grow:10000}
+.mosaic a,.mosaic a:first-child{display:block;margin:0;flex:1 1 240px;grid-column:auto!important;grid-row:auto!important;height:auto}
+.mosaic img{width:100%;height:auto!important;object-fit:contain}
+.hero-media{justify-self:end;width:fit-content;max-width:100%}
+.hero-media img{width:auto;max-width:100%;height:auto;max-height:560px;aspect-ratio:auto;object-fit:contain}
 </style>
 </head>
 <body>
-  <div class="site-bar">
-      <div class="top-actions">
-        <a class="back-link" href="../../../index.html">Home</a>
-        <a class="back-link secondary" href="../Explore_Destination.html">Back to Destinations</a>
-      </div>
-    <span class="state-badge">Uttar Pradesh</span>
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M12 3.2 3.5 10.1c-.4.3-.6.9-.3 1.4.2.4.6.6 1 .6H6V20a1 1 0 0 0 1 1h4v-5.5a1 1 0 0 1 1-1 1 1 0 0 1 1 1V21h4a1 1 0 0 0 1-1v-8h1.8c.4 0 .8-.2 1-.6.3-.5.1-1.1-.3-1.4L12 3.2Z"/></symbol>
+</svg>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="container nav-inner">
+    <div class="nav-links">
+      <a href="../../../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.8l9 7.4M5.5 9.6V20h4.8v-5.6h3.4V20h4.8V9.6"/></svg>Home</a>
+      <a class="hide-m" href="../Explore_Destination.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.8 8.2-2.1 5.5-5.5 2.1 2.1-5.5Z"/></svg>All Destinations</a>
+      <a class="hide-m" href="#itineraries"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Itineraries</a>
+      <a class="hide-m" href="#guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg>Guide</a>
+    </div>
+    <span class="badge">Uttar Pradesh</span>
   </div>
-  <div class="wrap">
-    <header class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="../../../images/viharasetu_logo_launch_poster.jpg" aria-hidden="true">
-        <source src="../../../images/viharasetu_logo_launch_new.MP4" type="video/mp4">
-      </video>
-      <script>
-        // Respect reduced-motion: keep the poster frame instead of playing the video
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          const heroVideo = document.querySelector('.hero-video');
-          heroVideo.removeAttribute('autoplay');
-          heroVideo.pause();
-        }
-      </script>
-      <div class="hero-text">
-        <h1>Agra</h1>
-        <p class="intro">
-          Agra — home to the Taj Mahal and centuries of Mughal grandeur along the Yamuna. We craft heritage walks, sunrise viewings, and guided explorations of Agra's imperial past.
-        </p>
-      </div>
-    </header>
+</nav>
 
-    <!-- Photo gallery: 10 images -->
-    <div class="gallery">
-      <a class="g-big" href="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg?width=700" alt="Taj Mahal at sunrise">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Symbol%20of%20eternal%20love.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Symbol%20of%20eternal%20love.jpg?width=400" alt="The Taj Mahal, symbol of eternal love">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20window%20view%20of%20Taj%20Mahal%20from%20Agra%20Fort.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20window%20view%20of%20Taj%20Mahal%20from%20Agra%20Fort.jpg?width=400" alt="Taj Mahal viewed from Agra Fort">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Jehangiri%20Mahal%20inside%20Agra%20Fort.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Jehangiri%20Mahal%20inside%20Agra%20Fort.jpg?width=400" alt="Jehangiri Mahal, Agra Fort">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Window%20in%20marble%2C%20Agra%20Fort%2C%20India.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Window%20in%20marble%2C%20Agra%20Fort%2C%20India.jpg?width=400" alt="Marble latticework, Agra Fort">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Wall%20sculpture%2C%20Agra%20Fort.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wall%20sculpture%2C%20Agra%20Fort.jpg?width=400" alt="Wall sculpture, Agra Fort">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20Balcony%20in%20Agra%20Fort%20Overlooking%20Yamuna.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20Balcony%20in%20Agra%20Fort%20Overlooking%20Yamuna.jpg?width=400" alt="Balcony overlooking the Yamuna">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20edge%20of%20Agra%20fort.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20edge%20of%20Agra%20fort.jpg?width=400" alt="Agra Fort ramparts">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Area.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Area.jpg?width=400" alt="Taj Mahal gardens">
-      </a>
-      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Latticework%20with%20Visitors%20-%20Agra%20Fort%20-%20Agra%20-%20Uttar%20Pradesh%20-%20India%20%2812612649055%29.jpg" target="_blank" rel="noopener">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Latticework%20with%20Visitors%20-%20Agra%20Fort%20-%20Agra%20-%20Uttar%20Pradesh%20-%20India%20%2812612649055%29.jpg?width=400" alt="Visitors at Agra Fort">
-      </a>
-    </div>
-
-    <div class="experiences">
-      <h2>Signature Experiences</h2>
-      <ul>
-        <li>Sunrise viewing of the Taj Mahal with a certified heritage guide</li>
-        <li>Agra Fort &amp; Fatehpur Sikri day trip</li>
-        <li>Marble inlay workshop with local artisans</li>
-      </ul>
-    </div>
-
-    <div class="itineraries">
-      <h2>Choose Your Itinerary</h2>
-      <p class="sub">Every trip is fully customisable — pick a length to see the day-by-day plan.</p>
-      <div class="cards">
-
-        <div class="card">
-          <h3>Taj Getaway — 2 Nights</h3>
-          <p class="desc">Sunrise Taj Mahal visit, Agra Fort, and a local bazaar walk.</p>
-          <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-2-nights.html">View Itinerary</a>
-        </div>
-
-        <div class="card">
-          <h3>Mughal Heritage Trail — 4 Nights</h3>
-          <p class="desc">Fatehpur Sikri excursion, marble inlay workshop, and Itmad-ud-Daulah.</p>
-          <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-4-nights.html">View Itinerary</a>
-        </div>
-
-        <div class="card">
-          <h3>Grand Agra Circuit — 6 Nights</h3>
-          <p class="desc">Extended heritage circuit with an optional Mathura &amp; Vrindavan add-on.</p>
-          <div class="price"><span class="sym">₹</span> XXXXX / person</div>
-          <a class="btn" href="itinerary-6-nights.html">View Itinerary</a>
-        </div>
+<header class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="eyebrow">Uttar Pradesh</span>
+      <h1>Agra</h1>
+      <p class="intro">Agra — home to the Taj Mahal and centuries of Mughal grandeur along the Yamuna. We craft heritage walks, sunrise viewings, and guided explorations of Agra's imperial past.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="#itineraries">Explore Itineraries</a>
+        <a class="btn btn-ghost" href="https://wa.me/919885180515" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Plan with an Expert</a>
       </div>
     </div>
+    <figure class="hero-media"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg" alt="Taj Mahal at sunrise" fetchpriority="high" decoding="async"></figure>
+  </div>
+</header>
 
-    <div class="destination-details">
-      <div class="details-column">
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5v2.2M9.5 7.2c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5M7 11c0-2.1 2.2-3.8 5-3.8s5 1.7 5 3.8M4.5 11h15M6 11v8M18 11v8M9.5 19v-4.5a2.5 2.5 0 0 1 5 0V19M3 21.5h18"/></svg></span>Famous Temples & Religious Places</h2>
-          <ul>
-        <li>Mankameshwar Temple <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Dayal Bagh Temple <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Guru Ka Taal Gurudwara <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Jama Masjid Agra <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Soami Bagh Samadhi <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+<section class="facts" aria-label="Trip at a glance">
+  <div class="container">
+    <div class="facts-grid">
+      <div class="fact"><b>2 – 6</b><span>Nights, your choice</span></div>
+      <div class="fact"><b>3</b><span>Itinerary options</span></div>
+      <div class="fact"><b>100%</b><span>Customisable itineraries</span></div>
+      <div class="fact"><b>24 hrs</b><span>Enquiry response time</span></div>
+    </div>
+  </div>
+</section>
+
+<main>
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2>Glimpses of Agra</h2>
+      <p>Tap any photo to view it full-size.</p>
+    </div>
+    <div class="mosaic reveal" id="mosaic">
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg" data-cap="Taj Mahal at sunrise"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Mahal%2C%20Agra%2C%20India.jpg" alt="Taj Mahal at sunrise"><span class="cap">Taj Mahal at sunrise</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Symbol%20of%20eternal%20love.jpg" data-cap="The Taj Mahal, symbol of eternal love"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Symbol%20of%20eternal%20love.jpg" alt="The Taj Mahal, symbol of eternal love"><span class="cap">The Taj Mahal, symbol of eternal love</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20window%20view%20of%20Taj%20Mahal%20from%20Agra%20Fort.jpg" data-cap="Taj Mahal viewed from Agra Fort"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20window%20view%20of%20Taj%20Mahal%20from%20Agra%20Fort.jpg" alt="Taj Mahal viewed from Agra Fort"><span class="cap">Taj Mahal viewed from Agra Fort</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Jehangiri%20Mahal%20inside%20Agra%20Fort.jpg" data-cap="Jehangiri Mahal, Agra Fort"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Jehangiri%20Mahal%20inside%20Agra%20Fort.jpg" alt="Jehangiri Mahal, Agra Fort"><span class="cap">Jehangiri Mahal, Agra Fort</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Window%20in%20marble%2C%20Agra%20Fort%2C%20India.jpg" data-cap="Marble latticework, Agra Fort"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Window%20in%20marble%2C%20Agra%20Fort%2C%20India.jpg" alt="Marble latticework, Agra Fort"><span class="cap">Marble latticework, Agra Fort</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Wall%20sculpture%2C%20Agra%20Fort.jpg" data-cap="Wall sculpture, Agra Fort"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Wall%20sculpture%2C%20Agra%20Fort.jpg" alt="Wall sculpture, Agra Fort"><span class="cap">Wall sculpture, Agra Fort</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20Balcony%20in%20Agra%20Fort%20Overlooking%20Yamuna.jpg" data-cap="Balcony overlooking the Yamuna"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20Balcony%20in%20Agra%20Fort%20Overlooking%20Yamuna.jpg" alt="Balcony overlooking the Yamuna"><span class="cap">Balcony overlooking the Yamuna</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20edge%20of%20Agra%20fort.jpg" data-cap="Agra Fort ramparts"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20edge%20of%20Agra%20fort.jpg" alt="Agra Fort ramparts"><span class="cap">Agra Fort ramparts</span></a>
+      <a href="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Area.jpg" data-cap="Taj Mahal gardens"><img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Taj%20Area.jpg" alt="Taj Mahal gardens"><span class="cap">Taj Mahal gardens</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section exp-wrap">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Signature Experiences</span>
+      <h2>Moments you'll carry home</h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp reveal"><div class="n">01</div><p>Sunrise viewing of the Taj Mahal with a certified heritage guide</p></div>
+      <div class="exp reveal"><div class="n">02</div><p>Agra Fort &amp; Fatehpur Sikri day trip</p></div>
+      <div class="exp reveal"><div class="n">03</div><p>Marble inlay workshop with local artisans</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="itineraries">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Choose Your Itinerary</span>
+      <h2>Three ways to travel Agra</h2>
+      <p>Every trip is fully customisable — tap an option to open the day-by-day plan.</p>
+    </div>
+
+    <div class="tiers" aria-label="Itinerary length" id="tiers"></div>
+
+    <p class="notes">Itineraries are indicative and can be tailored to your pace, interests and budget.</p>
+  </div>
+</section>
+
+<section class="section" id="inclusions" style="padding-top:0">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Good to Know</span>
+      <h2>Inclusions &amp; exclusions</h2>
+      <p>What your journey covers, and what to plan for separately.</p>
+    </div>
+    <div class="inex reveal">
+      <article class="inex-card in"><h3>What's included</h3><p class="sub">Covered in your package</p><ul>
+          <li>Accommodation as per your chosen itinerary</li>
+          <li>Ground transport as per the itinerary</li>
+          <li>Meals as marked in the plan (Breakfast, Dinner)</li>
+          <li>Sightseeing and experiences listed in the day-by-day plan</li>
+          <li>Planning support from the Viharasetu team before and during your trip</li>
+        </ul></article>
+      <article class="inex-card ex"><h3>What's not included</h3><p class="sub">Please plan for these separately</p><ul>
+          <li>Flights and train tickets to and from your starting city</li>
+          <li>Meals not marked in the itinerary</li>
+          <li>Personal expenses such as shopping, laundry, tips and phone calls</li>
+          <li>Optional activities and anything marked optional in the plan</li>
+          <li>Travel insurance</li>
+          <li>Extra costs caused by events outside our control, such as weather or road closures</li>
+        </ul></article>
+    </div>
+    <p class="inex-note">Inclusions and exclusions are indicative. The final list is confirmed in writing in your quote.</p>
+  </div>
+</section>
+
+<section class="section guide" id="guide">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Destination Guide</span>
+      <h2>What to see in each stop</h2>
+      <p>Must-visit highlights are marked, so you always know where to begin.</p>
+    </div>
+    <div class="dest-grid">
+      <article class="dest reveal"><span class="no">01</span><h3>Famous Temples & Religious Places</h3><ul>
+        <li>Mankameshwar Temple <i class="must">Must visit</i></li>
+        <li>Dayal Bagh Temple <i class="must">Must visit</i></li>
+        <li>Guru Ka Taal Gurudwara <i class="must">Must visit</i></li>
+        <li>Jama Masjid Agra <i class="must">Must visit</i></li>
+        <li>Soami Bagh Samadhi <i class="must">Must visit</i></li>
         <li>Balkeshwar Temple</li>
-        <li>St. George's Cathedral</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg></span>Must-Visit Attractions</h2>
-          <ul>
-        <li>Taj Mahal <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Agra Fort <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mehtab Bagh <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Itmad-ud-Daulah (Baby Taj) <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Fatehpur Sikri <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Akbar's Tomb (Sikandra) <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Wildlife SOS Elephant Conservation Centre <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>St. George's Cathedral</li></ul></article>
+      <article class="dest reveal"><span class="no">02</span><h3>Must-Visit Attractions</h3><ul>
+        <li>Taj Mahal <i class="must">Must visit</i></li>
+        <li>Agra Fort <i class="must">Must visit</i></li>
+        <li>Mehtab Bagh <i class="must">Must visit</i></li>
+        <li>Itmad-ud-Daulah (Baby Taj) <i class="must">Must visit</i></li>
+        <li>Fatehpur Sikri <i class="must">Must visit</i></li>
+        <li>Akbar's Tomb (Sikandra) <i class="must">Must visit</i></li>
+        <li>Wildlife SOS Elephant Conservation Centre <i class="must">Must visit</i></li>
         <li>Chini Ka Rauza</li>
         <li>Ram Bagh</li>
-        <li>Jama Masjid Agra</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4 2.5 20h19ZM12 4l-1.5 3M12 20v-6l-3.5 6M12 14l3.5 6"/></svg></span>Adventure Activities</h2>
-          <ul>
-        <li>Chambal River Safari <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bird Watching <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Elephant Conservation Visit <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Photography Tours <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Jama Masjid Agra</li></ul></article>
+      <article class="dest reveal"><span class="no">03</span><h3>Adventure Activities</h3><ul>
+        <li>Chambal River Safari <i class="must">Must visit</i></li>
+        <li>Bird Watching <i class="must">Must visit</i></li>
+        <li>Elephant Conservation Visit <i class="must">Must visit</i></li>
+        <li>Photography Tours <i class="must">Must visit</i></li>
         <li>Walking Heritage Tour</li>
         <li>Cycling Tour</li>
-        <li>Boat Ride (Seasonal)</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 21V8h3v2h2V8h2v2h2V8h2v2h2V8h3v13ZM10 21v-5a2 2 0 0 1 4 0v5M2.5 21h19"/></svg></span>Historical Places</h2>
-          <ul>
-        <li>Taj Mahal <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Agra Fort <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Fatehpur Sikri <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Akbar's Tomb <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Itmad-ud-Daulah <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Chini Ka Rauza <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mariam's Tomb <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Boat Ride (Seasonal)</li></ul></article>
+      <article class="dest reveal"><span class="no">04</span><h3>Historical Places</h3><ul>
+        <li>Taj Mahal <i class="must">Must visit</i></li>
+        <li>Agra Fort <i class="must">Must visit</i></li>
+        <li>Fatehpur Sikri <i class="must">Must visit</i></li>
+        <li>Akbar's Tomb <i class="must">Must visit</i></li>
+        <li>Itmad-ud-Daulah <i class="must">Must visit</i></li>
+        <li>Chini Ka Rauza <i class="must">Must visit</i></li>
+        <li>Mariam's Tomb <i class="must">Must visit</i></li>
         <li>Jahangir Palace</li>
         <li>Diwan-i-Khas</li>
-        <li>Diwan-i-Aam</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.3a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6Z"/></svg></span>Nearby Attractions</h2>
-          <ul>
-        <li>Fatehpur Sikri <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mathura <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Vrindavan <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bharatpur Bird Sanctuary <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Abhaneri Stepwell <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Chambal Safari <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bateshwar <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Gwalior <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Deeg Palace <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Delhi <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Jaipur <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h3l1.5-2.2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1ZM12 16.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/></svg></span>Best Photography Spots</h2>
-          <ul>
-        <li>Taj Mahal Sunrise <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mehtab Bagh <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Diwan-i-Aam</li></ul></article>
+      <article class="dest reveal"><span class="no">05</span><h3>Nearby Attractions</h3><ul>
+        <li>Fatehpur Sikri <i class="must">Must visit</i></li>
+        <li>Mathura <i class="must">Must visit</i></li>
+        <li>Vrindavan <i class="must">Must visit</i></li>
+        <li>Bharatpur Bird Sanctuary <i class="must">Must visit</i></li>
+        <li>Abhaneri Stepwell <i class="must">Must visit</i></li>
+        <li>Chambal Safari <i class="must">Must visit</i></li>
+        <li>Bateshwar <i class="must">Must visit</i></li>
+        <li>Gwalior <i class="must">Must visit</i></li>
+        <li>Deeg Palace <i class="must">Must visit</i></li>
+        <li>Delhi <i class="must">Must visit</i></li>
+        <li>Jaipur <i class="must">Must visit</i></li></ul></article>
+      <article class="dest reveal"><span class="no">06</span><h3>Best Photography Spots</h3><ul>
+        <li>Taj Mahal Sunrise <i class="must">Must visit</i></li>
+        <li>Mehtab Bagh <i class="must">Must visit</i></li>
         <li>Agra Fort</li>
         <li>Itmad-ud-Daulah</li>
         <li>Fatehpur Sikri</li>
@@ -229,13 +468,8 @@
         <li>Keetham Lake</li>
         <li>Akbar's Tomb</li>
         <li>Guru Ka Taal</li>
-        <li>Chambal River</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg></span>Top 15 Must-Visit Places</h2>
-          <ul>
+        <li>Chambal River</li></ul></article>
+      <article class="dest reveal"><span class="no">07</span><h3>Top 15 Must-Visit Places</h3><ul>
         <li>Taj Mahal</li>
         <li>Agra Fort</li>
         <li>Mehtab Bagh</li>
@@ -250,194 +484,213 @@
         <li>Sadar Bazaar</li>
         <li>Mankameshwar Temple</li>
         <li>Chini Ka Rauza</li>
-        <li>Ram Bagh</li>
-      </ul>
-        </div>
-      </div>
-
-      <div class="details-column">
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg></span>Hidden Gems</h2>
-          <ul>
-        <li>Chini Ka Rauza <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mariam's Tomb <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Keetham Lake <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Sur Sarovar Bird Sanctuary <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mughal Heritage Walk <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bateshwar Temples <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Soami Bagh Samadhi <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>National Chambal Sanctuary <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Kachhpura Village <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Gyarah Sidi <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15M5 19l8-8"/></svg></span>Gardens & Parks</h2>
-          <ul>
-        <li>Mehtab Bagh <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Ram Bagh <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Taj Nature Walk <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mughal Heritage Walk <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Ram Bagh</li></ul></article>
+      <article class="dest reveal"><span class="no">08</span><h3>Hidden Gems</h3><ul>
+        <li>Chini Ka Rauza <i class="must">Must visit</i></li>
+        <li>Mariam's Tomb <i class="must">Must visit</i></li>
+        <li>Keetham Lake <i class="must">Must visit</i></li>
+        <li>Sur Sarovar Bird Sanctuary <i class="must">Must visit</i></li>
+        <li>Mughal Heritage Walk <i class="must">Must visit</i></li>
+        <li>Bateshwar Temples <i class="must">Must visit</i></li>
+        <li>Soami Bagh Samadhi <i class="must">Must visit</i></li>
+        <li>National Chambal Sanctuary <i class="must">Must visit</i></li>
+        <li>Kachhpura Village <i class="must">Must visit</i></li>
+        <li>Gyarah Sidi <i class="must">Must visit</i></li></ul></article>
+      <article class="dest reveal"><span class="no">09</span><h3>Gardens & Parks</h3><ul>
+        <li>Mehtab Bagh <i class="must">Must visit</i></li>
+        <li>Ram Bagh <i class="must">Must visit</i></li>
+        <li>Taj Nature Walk <i class="must">Must visit</i></li>
+        <li>Mughal Heritage Walk <i class="must">Must visit</i></li>
         <li>Paliwal Park</li>
-        <li>Shah Jahan Garden</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7.5 14a4.5 4.5 0 0 1 9 0M12 5v1.8M5.2 8.2l1.2 1.2M18.8 8.2l-1.2 1.2M2.5 14h19M6 18h12M9 21h6"/></svg></span>Rivers & Viewpoints</h2>
-          <ul>
-        <li>Yamuna River <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mehtab Bagh Sunset Point <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Taj View Point <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Shah Jahan Garden</li></ul></article>
+      <article class="dest reveal"><span class="no">10</span><h3>Rivers & Viewpoints</h3><ul>
+        <li>Yamuna River <i class="must">Must visit</i></li>
+        <li>Mehtab Bagh Sunset Point <i class="must">Must visit</i></li>
+        <li>Taj View Point <i class="must">Must visit</i></li>
         <li>Taj Nature Walk Viewpoint</li>
-        <li>Keetham Lake <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15M5 19l8-8"/></svg></span>Nature & Scenic Places</h2>
-          <ul>
-        <li>Keetham Lake <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Sur Sarovar Bird Sanctuary <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>National Chambal Sanctuary <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Chambal Safari <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bateshwar Ghats <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3 4.5 21M16 3l3.5 18M12 4v3M12 10.5v3M12 17v3"/></svg></span>Famous Roads</h2>
-          <ul>
-        <li>Yamuna Expressway <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Agra–Fatehpur Sikri Road <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Keetham Lake <i class="must">Must visit</i></li></ul></article>
+      <article class="dest reveal"><span class="no">11</span><h3>Nature & Scenic Places</h3><ul>
+        <li>Keetham Lake <i class="must">Must visit</i></li>
+        <li>Sur Sarovar Bird Sanctuary <i class="must">Must visit</i></li>
+        <li>National Chambal Sanctuary <i class="must">Must visit</i></li>
+        <li>Chambal Safari <i class="must">Must visit</i></li>
+        <li>Bateshwar Ghats <i class="must">Must visit</i></li></ul></article>
+      <article class="dest reveal"><span class="no">12</span><h3>Famous Roads</h3><ul>
+        <li>Yamuna Expressway <i class="must">Must visit</i></li>
+        <li>Agra–Fatehpur Sikri Road <i class="must">Must visit</i></li>
         <li>Agra Ring Road</li>
         <li>Agra–Mathura Road</li>
-        <li>Agra–Delhi Highway</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l1 13H4ZM9 8V6a3 3 0 0 1 6 0v2"/></svg></span>Shopping</h2>
-          <ul>
-        <li>Sadar Bazaar <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Kinari Bazaar <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Marble Handicraft Shops <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Leather Goods Market <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Petha Shops <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Agra–Delhi Highway</li></ul></article>
+      <article class="dest reveal"><span class="no">13</span><h3>Shopping</h3><ul>
+        <li>Sadar Bazaar <i class="must">Must visit</i></li>
+        <li>Kinari Bazaar <i class="must">Must visit</i></li>
+        <li>Marble Handicraft Shops <i class="must">Must visit</i></li>
+        <li>Leather Goods Market <i class="must">Must visit</i></li>
+        <li>Petha Shops <i class="must">Must visit</i></li>
         <li>Shah Market</li>
-        <li>Subhash Bazaar</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 11h17a8.5 8.5 0 0 1-17 0ZM8 4c-1 1-1 2 0 3M12 3c-1 1.2-1 2.5 0 4M16 4c-1 1-1 2 0 3M8 21h8"/></svg></span>Famous Food</h2>
-          <ul>
-        <li>Agra Petha <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bedai & Jalebi <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Mughlai Biryani <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Dalmoth <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+        <li>Subhash Bazaar</li></ul></article>
+      <article class="dest reveal"><span class="no">14</span><h3>Festivals</h3><ul>
+        <li>Taj Mahotsav <i class="must">Must visit</i></li>
+        <li>Ram Barat Festival <i class="must">Must visit</i></li>
+        <li>Bateshwar Fair <i class="must">Must visit</i></li>
+        <li>Diwali <i class="must">Must visit</i></li>
+        <li>Holi <i class="must">Must visit</i></li>
+        <li>Urs Festival</li></ul></article>
+      <article class="dest food reveal" style="grid-column:1/-1"><span class="no">Taste of Uttar Pradesh</span><h3>Famous Food</h3><ul style="display:grid;grid-template-columns:repeat(2,1fr);column-gap:40px">
+        <li>Agra Petha <i class="must">Must try</i></li>
+        <li>Bedai & Jalebi <i class="must">Must try</i></li>
+        <li>Mughlai Biryani <i class="must">Must try</i></li>
+        <li>Dalmoth <i class="must">Must try</i></li>
         <li>Kachori Sabzi</li>
         <li>Rabri</li>
         <li>Lassi</li>
-        <li>Mughlai Kebabs</li>
-      </ul>
-        </div>
-
-        <div class="detail-block">
-          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg></span>Festivals</h2>
-          <ul>
-        <li>Taj Mahotsav <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Ram Barat Festival <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Bateshwar Fair <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Diwali <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Holi <span class="star-icon" role="img" aria-label="Must visit"></span></li>
-        <li>Urs Festival</li>
-      </ul>
-        </div>
-      </div>
+        <li>Mughlai Kebabs</li></ul></article>
     </div>
-
-    <div class="social">
-      <p>Have questions about this trip? Reach out to us directly.</p>
-      <div class="social-buttons">
-        <a class="social-btn instagram" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
-          Follow on Instagram
-        </a>
-        <a class="social-btn whatsapp" href="https://wa.me/919885180515" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
-          Chat on WhatsApp
-        </a>
-        <a class="social-btn email" href="mailto:info@viharasetu.co.in" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
-          Email Us
-        </a>
-      </div>
-    </div>
-
   </div>
+</section>
 
-<div class="mobile-contact-bar" aria-label="Quick contact" role="navigation">
-  <a href="../../../index.html" aria-label="Home">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3.2 3.5 10.1c-.4.3-.6.9-.3 1.4.2.4.6.6 1 .6H6V20a1 1 0 0 0 1 1h4v-5.5a1 1 0 0 1 1-1 1 1 0 0 1 1 1V21h4a1 1 0 0 0 1-1v-8h1.8c.4 0 .8-.2 1-.6.3-.5.1-1.1-.3-1.4L12 3.2Z" fill="#fff"/></svg>
-  </a>
-  <a href="tel:+919885180515" aria-label="Call us">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="#fff"/></svg>
-  </a>
-  <a href="https://wa.me/919885180515" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
-  </a>
-  <a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Instagram">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
-  </a>
-  <a href="../../../index.html#contact" aria-label="Enquiry form">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
-  </a>
+<section class="section cta" id="contact">
+  <div class="container reveal">
+    <div class="cta-text">
+  <span class="eyebrow">Plan Your Journey</span>
+      <h2>Have questions about this trip?</h2>
+      <p>Reach out to us directly — we'll shape the route, pace and stays around you.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="https://wa.me/919885180515" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Chat on WhatsApp</a>
+        <a class="btn btn-ghost" href="mailto:info@viharasetu.co.in"><svg><use href="#i-mail"/></svg>Email Us</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>Follow on Instagram</a>
+      </div>
+    </div>
+    <div class="cta-logo"><img src="../../../images/new_Logo.jpg" alt="Viharasetu logo" width="270" height="270" loading="lazy"></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="container">© Vihara Setu · Uttar Pradesh Tours · <a href="../Explore_Destination.html" style="text-decoration:underline">Back to Destinations</a></div></footer>
+
+<nav class="mbar" aria-label="Quick contact">
+  <a href="../../../index.html" aria-label="Home"><svg><use href="#i-home"/></svg></a>
+  <a href="tel:+919885180515" aria-label="Call us"><svg><use href="#i-call"/></svg></a>
+  <a href="https://wa.me/919885180515" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+  <a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
+  <a href="../../../index.html#contact" aria-label="Enquiry form"><svg><use href="#i-mail"/></svg></a>
+</nav>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="x" aria-label="Close">✕</button>
+  <button class="pv" aria-label="Previous">‹</button>
+  <img id="lbImg" alt="">
+  <button class="nx" aria-label="Next">›</button>
+  <p id="lbCap"></p>
 </div>
 
-
-<script src="../../gallery-lightbox.js"></script>
-<script src="../../itinerary-modal.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  initItineraryModals([
-    {
-      title: "Taj Getaway — 2 Nights",
-      sub: "Sunrise Taj Mahal visit, Agra Fort, and a local bazaar walk.",
-      days: [
-        { day: 1, title: "Arrival in Agra", items: ["Arrive in Agra, check-in and freshen up", "Evening at Mehtab Bagh for a Taj sunset view"], tags: ["Dinner"] },
-        { day: 2, title: "Taj Mahal & Agra Fort", items: ["Sunrise visit to the Taj Mahal", "Agra Fort in the afternoon", "Evening bazaar walk at Sadar Bazaar"], tags: ["Breakfast", "Dinner"] },
-        { day: 3, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
-      ]
-    },
-    {
-      title: "Mughal Heritage Trail — 4 Nights",
-      sub: "Fatehpur Sikri excursion, marble inlay workshop, and Itmad-ud-Daulah.",
-      days: [
-        { day: 1, title: "Arrival in Agra", items: ["Arrive in Agra, check-in and freshen up"], tags: ["Dinner"] },
-        { day: 2, title: "Taj Mahal Sunrise", items: ["Sunrise visit to the Taj Mahal", "Marble inlay workshop with local artisans"], tags: ["Breakfast", "Dinner"] },
-        { day: 3, title: "Agra Fort & Itmad-ud-Daulah", items: ["Agra Fort", "Itmad-ud-Daulah (Baby Taj)"], tags: ["Breakfast", "Dinner"] },
-        { day: 4, title: "Fatehpur Sikri", items: ["Full day excursion to Fatehpur Sikri"], tags: ["Breakfast", "Dinner"] },
-        { day: 5, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
-      ]
-    },
-    {
-      title: "Grand Agra Circuit — 6 Nights",
-      sub: "Extended heritage circuit with an optional Mathura & Vrindavan add-on.",
-      days: [
-        { day: 1, title: "Arrival in Agra", items: ["Arrive in Agra, check-in and freshen up"], tags: ["Dinner"] },
-        { day: 2, title: "Taj Mahal Sunrise", items: ["Sunrise visit to the Taj Mahal", "Marble inlay workshop"], tags: ["Breakfast", "Dinner"] },
-        { day: 3, title: "Agra Fort & Itmad-ud-Daulah", items: ["Agra Fort", "Itmad-ud-Daulah (Baby Taj)"], tags: ["Breakfast", "Dinner"] },
-        { day: 4, title: "Fatehpur Sikri", items: ["Full day excursion to Fatehpur Sikri"], tags: ["Breakfast", "Dinner"] },
-        { day: 5, title: "Agra to Mathura", items: ["Drive to Mathura", "Krishna Janmabhoomi Temple"], tags: ["Breakfast", "Dinner"] },
-        { day: 6, title: "Vrindavan Add-on", items: ["Banke Bihari Temple and ISKCON Vrindavan"], tags: ["Breakfast", "Dinner"] },
-        { day: 7, title: "Departure", items: ["Morning at leisure, check-out and departure"], tags: ["Breakfast"] }
-      ]
-    }
-  ]);
-});
-</script>
+/* ---- Nav background on scroll ---- */
+(function(){
+  var nav=document.getElementById('nav');
+  function f(){nav.classList.toggle('scrolled',window.scrollY>40)}
+  f();addEventListener('scroll',f,{passive:true});
+})();
 
+/* ---- Reveal on scroll ---- */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* ---- Itineraries ---- */
+/* Set a price (e.g. "₹ 45,000") to show it; leave null to show "Price on request". */
+var PLANS=[
+  {"key": "1", "nights": 2, "num": 2, "unit": "Nights", "alt": "3 Days", "dayCount": 3, "title": "Taj Getaway", "price": null, "sub": "Sunrise Taj Mahal visit, Agra Fort, and a local bazaar walk.", "days": [{"day": 1, "title": "Arrival in Agra", "items": ["Arrive in Agra, check-in and freshen up", "Evening at Mehtab Bagh for a Taj sunset view"], "tags": ["Dinner"]}, {"day": 2, "title": "Taj Mahal & Agra Fort", "items": ["Sunrise visit to the Taj Mahal", "Agra Fort in the afternoon", "Evening bazaar walk at Sadar Bazaar"], "tags": ["Breakfast", "Dinner"]}, {"day": 3, "title": "Departure", "items": ["Morning at leisure, check-out and departure"], "tags": ["Breakfast"]}]},
+  {"key": "2", "nights": 4, "num": 4, "unit": "Nights", "alt": "5 Days", "dayCount": 5, "title": "Mughal Heritage Trail", "price": null, "sub": "Fatehpur Sikri excursion, marble inlay workshop, and Itmad-ud-Daulah.", "days": [{"day": 1, "title": "Arrival in Agra", "items": ["Arrive in Agra, check-in and freshen up"], "tags": ["Dinner"]}, {"day": 2, "title": "Taj Mahal Sunrise", "items": ["Sunrise visit to the Taj Mahal", "Marble inlay workshop with local artisans"], "tags": ["Breakfast", "Dinner"]}, {"day": 3, "title": "Agra Fort & Itmad-ud-Daulah", "items": ["Agra Fort", "Itmad-ud-Daulah (Baby Taj)"], "tags": ["Breakfast", "Dinner"]}, {"day": 4, "title": "Fatehpur Sikri", "items": ["Full day excursion to Fatehpur Sikri"], "tags": ["Breakfast", "Dinner"]}, {"day": 5, "title": "Departure", "items": ["Morning at leisure, check-out and departure"], "tags": ["Breakfast"]}]},
+  {"key": "3", "nights": 6, "num": 6, "unit": "Nights", "alt": "7 Days", "dayCount": 7, "title": "Grand Agra Circuit", "price": null, "sub": "Extended heritage circuit with an optional Mathura & Vrindavan add-on.", "days": [{"day": 1, "title": "Arrival in Agra", "items": ["Arrive in Agra, check-in and freshen up"], "tags": ["Dinner"]}, {"day": 2, "title": "Taj Mahal Sunrise", "items": ["Sunrise visit to the Taj Mahal", "Marble inlay workshop"], "tags": ["Breakfast", "Dinner"]}, {"day": 3, "title": "Agra Fort & Itmad-ud-Daulah", "items": ["Agra Fort", "Itmad-ud-Daulah (Baby Taj)"], "tags": ["Breakfast", "Dinner"]}, {"day": 4, "title": "Fatehpur Sikri", "items": ["Full day excursion to Fatehpur Sikri"], "tags": ["Breakfast", "Dinner"]}, {"day": 5, "title": "Agra to Mathura", "items": ["Drive to Mathura", "Krishna Janmabhoomi Temple"], "tags": ["Breakfast", "Dinner"]}, {"day": 6, "title": "Vrindavan Add-on", "items": ["Banke Bihari Temple and ISKCON Vrindavan"], "tags": ["Breakfast", "Dinner"]}, {"day": 7, "title": "Departure", "items": ["Morning at leisure, check-out and departure"], "tags": ["Breakfast"]}]}
+];
+
+(function(){
+  var tiers=document.getElementById('tiers');
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function priceHTML(p){
+    return p ? 'Starting from <b>'+esc(p)+'</b> / person' : '<b>Price on request</b>';
+  }
+  PLANS.forEach(function(p,i){
+    var b=document.createElement('button');
+    b.className='tier'; b.type='button'; b.setAttribute('aria-haspopup','dialog');
+    b.innerHTML='<div class="nights">'+(p.num||p.nights)+'<small>'+(p.unit||'Nights')+' · '+(p.alt||((p.nights+1)+' Days'))+'</small></div>'+
+      '<h3>'+esc(p.title)+'</h3><p>'+esc(p.sub)+'</p>'+
+      '<div class="price">'+priceHTML(p.price)+'</div><span class="more">View day-by-day plan →</span>';
+    tiers.appendChild(b);
+  });
+  var bd=document.createElement('div');
+  bd.className='itin-bd';
+  bd.innerHTML='<div class="itin-dialog" role="dialog" aria-modal="true" tabindex="-1"><button type="button" class="itin-x" aria-label="Close">✕</button><div class="itin-body"></div></div>';
+  document.body.appendChild(bd);
+  var dlg=bd.querySelector('.itin-dialog'), body=bd.querySelector('.itin-body'), lastBtn=null;
+  function closeModal(){
+    bd.classList.remove('open'); document.body.style.overflow='';
+    if(lastBtn) lastBtn.focus();
+  }
+  function openModal(i,btn){
+    var p=PLANS[i]; lastBtn=btn;
+    dlg.setAttribute('aria-label',p.title+' — '+(p.num||p.nights)+' '+(p.unit||'Nights'));
+    var html='<div class="tl-head"><div><span class="eyebrow">'+esc(p.route||'')+'</span><h3>'+esc(p.title)+' — '+(p.num||p.nights)+' '+(p.unit||'Nights')+'</h3><p>'+esc(p.sub)+'</p></div><span class="tl-note">'+(p.dayCount||(p.nights+1))+' days · meals as marked</span></div><div class="days">';
+    p.days.forEach(function(d){
+      html+='<div class="day"><div class="day-n"><span>Day</span><b>'+d.day+'</b></div><div><h4>'+esc(d.title)+'</h4><ul>'+
+        d.items.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>'+
+        (d.tags&&d.tags.length?'<div class="meals">'+d.tags.map(function(t){return '<span>'+esc(t)+'</span>'}).join('')+'</div>':'')+
+        '</div></div>';
+    });
+    body.innerHTML=html+'</div>';
+    bd.classList.add('open'); document.body.style.overflow='hidden';
+    dlg.scrollTop=0; dlg.focus();
+  }
+  tiers.addEventListener('click',function(e){
+    var b=e.target.closest('.tier'); if(!b) return;
+    openModal(Array.prototype.indexOf.call(tiers.children,b),b);
+  });
+  bd.querySelector('.itin-x').addEventListener('click',closeModal);
+  bd.addEventListener('click',function(e){if(e.target===bd)closeModal()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.classList.contains('open'))closeModal()});
+})();
+
+/* ---- Lightbox ---- */
+(function(){
+  var links=Array.prototype.slice.call(document.querySelectorAll('#mosaic a'));
+  var lb=document.getElementById('lb'), img=document.getElementById('lbImg'), cap=document.getElementById('lbCap'), idx=0, last=null;
+  function show(i){idx=(i+links.length)%links.length;img.src=links[idx].href;img.alt=links[idx].dataset.cap||'';cap.textContent=links[idx].dataset.cap||''}
+  function open(i){last=document.activeElement;show(i);lb.classList.add('open');document.body.style.overflow='hidden';lb.querySelector('.x').focus()}
+  function close(){lb.classList.remove('open');document.body.style.overflow='';img.removeAttribute('src');if(last)last.focus()}
+  links.forEach(function(a,i){a.addEventListener('click',function(e){e.preventDefault();open(i)})});
+  lb.querySelector('.x').onclick=close;
+  lb.querySelector('.pv').onclick=function(){show(idx-1)};
+  lb.querySelector('.nx').onclick=function(){show(idx+1)};
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();
+    if(e.key==='ArrowLeft')show(idx-1);
+    if(e.key==='ArrowRight')show(idx+1);
+  });
+})();
+</script>
+<script>
+/* Gallery: rows of equal height, every photo at its own proportions (no cropping) */
+(function(){
+  var box=document.getElementById('mosaic'); if(!box) return;
+  var H=230; /* target row height in px; lower = smaller photos */
+  function size(a){
+    var im=a.querySelector('img'); if(!im||!im.naturalWidth) return;
+    var r=im.naturalWidth/im.naturalHeight;
+    a.style.flex=(r*100)+' 1 '+(r*H)+'px';
+  }
+  Array.prototype.forEach.call(box.querySelectorAll('a'),function(a){
+    var im=a.querySelector('img'); if(!im) return;
+    if(im.complete) size(a); else im.addEventListener('load',function(){size(a)});
+  });
+})();
+</script>
 </body>
 </html>
