@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Viharasetu Admin</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<style>
+  html,body{height:100%;margin:0}
+  body{display:grid;place-items:center;font-family:Segoe UI,system-ui,sans-serif;color:#16262a;
+    background:linear-gradient(180deg,#1a1446 0%,#3b2468 24%,#7a2f78 46%,#c24a6e 66%,#ee7d5a 84%,#f7b25e 100%)}
+  .card{background:#fbf7ef;border-radius:18px;padding:40px 44px;max-width:420px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  h1{margin:0 0 8px;font-size:26px;color:#062a2f}
+  p{margin:0 0 24px;color:#5d6b6e;line-height:1.5}
+  button{height:48px;padding:0 30px;border:0;border-radius:12px;background:linear-gradient(180deg,#127884,#0b5560);color:#fff;font:600 15px inherit;cursor:pointer}
+  button:hover{filter:brightness(1.08)}
+</style></head>
+<body><div class="card">
+  <h1>You're offline</h1>
+  <p>The admin portal couldn't be reached. Check your internet connection and try again.</p>
+  <button id="retry">Try again</button>
+</div>
+<script>
+  document.getElementById('retry').addEventListener('click', function () {
+    document.title = '__retry__';
+  });
+</script></body></html>
