@@ -6,112 +6,262 @@
 <meta name="robots" content="noindex, nofollow" />
 <title>Admin Login — Viharasetu</title>
 <link rel="icon" type="image/png" href="../images/fevicon.png" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link href="css/admin.css" rel="stylesheet" />
-<link href="css/login-loader.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="css/login-premium.css?v=1" rel="stylesheet" />
 </head>
 <body>
 
-<div class="auth-shell">
-  <div class="auth-card">
-    <a href="../index.html" aria-label="Go to homepage"><img class="auth-logo" src="../images/new_Logo.jpg" alt="Viharasetu logo" /></a>
-    <h1>Admin Portal</h1>
-    <p class="subtitle">Log in to manage enquiries, suppliers, bookings &amp; payments.</p>
+<main class="vs-shell">
+  <!-- ===== Brand panel ===== -->
+  <section class="vs-hero">
+    <div class="vs-stars" aria-hidden="true"></div>
 
-    <div id="expiredNotice" class="auth-error" style="display:none;">Your session expired. Please log in again.</div>
-    <div id="mockNotice" style="display:none;font-size:12px;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:12px;">
-      Local mock backend — data isn't saved. Log in with <b>admin</b> / <b>admin123</b>. Add <code>?api=live</code> for the real backend.
+    <div class="vs-brand">
+      <svg class="vs-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="23" fill="none" stroke="#e6b765" stroke-width="1.2"/>
+        <circle cx="24" cy="21" r="7" fill="#f39a1e"/>
+        <path d="M8 30 Q16 22 24 30 Q32 22 40 30" fill="none" stroke="#fbf7ef" stroke-width="2" stroke-linecap="round"/>
+        <path d="M7 31 H41" stroke="#fbf7ef" stroke-width="2" stroke-linecap="round"/>
+        <path d="M11 36 Q24 33 37 36" fill="none" stroke="#5fb3b0" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="vs-brand-name">Vihara <span>Setu</span></div>
+        <div class="vs-brand-tag">Admin Console</div>
+      </div>
     </div>
 
-    <form id="loginForm" novalidate>
-      <input type="text" id="username" placeholder="Username" autocomplete="username" autofocus />
-      <div class="pw-wrap">
-        <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
-        <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">
-          <svg id="pwIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>
-          </svg>
-        </button>
+    <div>
+      <div class="vs-hero-copy">
+        <div class="vs-eyebrow">Your command deck</div>
+        <h2>Every journey,<br><em>beautifully orchestrated.</em></h2>
+        <p>Manage packages, bookings and travellers from one place — the bridge between Aastha and Anubhav.</p>
       </div>
-      <button type="submit" class="btn-block" id="loginBtn">Log in</button>
-      <div class="auth-error" id="loginError"></div>
-    </form>
+      <div class="vs-hero-plane-wrap" aria-hidden="true">
+        <span class="vs-hero-trail"></span>
+        <img class="vs-hero-plane" data-plane src="../images/Login_images/viharasetu-plane.webp" alt="">
+      </div>
+    </div>
 
-    <button type="button" id="forgotLink"
-      style="display:block;margin:12px auto 0;background:none;border:0;padding:6px;color:var(--accent,#BB5A34);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;">
-      Forgot password?
-    </button>
-    <p id="forgotNote" style="display:none;font-size:13px;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;">
-      Ask an administrator to reset it for you — they can set a new password from the
-      <b>Users</b> section of the portal.
-    </p>
+    <div class="vs-hero-foot">
+      <span>© 2026 Vihara Setu</span>
+      <i>bridge between Aastha and Anubhav</i>
+    </div>
 
-    <p class="auth-foot">&copy; <span id="year"></span> Viharasetu. All rights reserved.</p>
+    <svg class="vs-bridge" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 52 H1200" stroke="#e6b765" stroke-width="1.5" fill="none"/>
+      <path d="M0 120 Q100 40 200 120 Q300 40 400 120 Q500 40 600 120 Q700 40 800 120 Q900 40 1000 120 Q1100 40 1200 120"
+            stroke="#e6b765" stroke-width="1.5" fill="none"/>
+      <path d="M0 40 H1200" stroke="#e6b765" stroke-width=".8" fill="none" opacity=".6"/>
+    </svg>
+  </section>
+
+  <!-- ===== Sign-in panel ===== -->
+  <section class="vs-panel">
+    <div class="vs-card">
+      <div class="vs-eyebrow">Admin access</div>
+      <h1>Welcome back</h1>
+      <p class="vs-lead">Sign in to continue to your Vihara Setu dashboard.</p>
+
+      <!-- Server-side error (PHP can fill this and remove "hidden") -->
+      <p class="vs-error" id="vsError" role="alert" hidden></p>
+      <p class="vs-error" id="expiredNotice" role="alert" hidden>Your session expired. Please log in again.</p>
+      <p class="vs-notice" id="mockNotice" hidden>Local mock backend — data isn't saved. Log in with <b>admin</b> / <b>admin123</b>. Add <code>?api=live</code> for the real backend.</p>
+
+      <form id="adminLoginForm" novalidate>
+        <div class="vs-field">
+          <label for="vsUser">Username</label>
+          <div class="vs-input">
+            <input id="vsUser" name="username" type="text" placeholder="Enter your username" autocomplete="username" required>
+            <svg class="vs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.6-3.6 4.4-5 8-5s6.4 1.4 8 5"/></svg>
+          </div>
+        </div>
+
+        <div class="vs-field">
+          <label for="vsPass">Password</label>
+          <div class="vs-input">
+            <input id="vsPass" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <svg class="vs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>
+            <button type="button" class="vs-eye" id="vsEye" aria-label="Show password" aria-pressed="false">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="vs-caps" id="vsCaps">Caps Lock is on</div>
+        </div>
+
+        <div class="vs-row">
+          <a class="vs-link" href="#" id="forgotLink">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="vs-submit">Sign in to console <span class="vs-accent" aria-hidden="true"></span></button>
+
+        <div class="vs-secure">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Secure connection · Authorised staff only
+        </div>
+      </form>
+
+      <div class="vs-divider"></div>
+      <p class="vs-notice" id="forgotNote" hidden>Ask an administrator to reset it for you — they can set a new password from the <b>Users</b> section of the portal.</p>
+      <p class="vs-help">&copy; <span id="year"></span> Viharasetu. All rights reserved.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ===== Loader ===== -->
+<div id="vs-loader" role="status" aria-live="polite" aria-hidden="true">
+  <div class="vs-stars" aria-hidden="true"></div>
+  <div class="vs-cloud vs-far vs-f1"></div><div class="vs-cloud vs-far vs-f2"></div><div class="vs-cloud vs-far vs-f3"></div>
+  <div class="vs-cloud vs-mid vs-m1"></div><div class="vs-cloud vs-mid vs-m2"></div>
+  <div class="vs-cloud vs-near vs-n1"></div><div class="vs-cloud vs-near vs-n2"></div>
+
+  <div class="vs-stage" aria-hidden="true">
+    <span class="vs-trail vs-t1"></span><span class="vs-trail vs-t2"></span>
+    <img class="vs-plane" data-plane src="../images/Login_images/viharasetu-plane.webp" alt="">
+
+    <div class="vs-chute">
+      <div class="vs-chute-sway">
+        <img class="vs-canopy vs-chute-img" alt="" src="../images/Login_images/parachute.png">
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-status">
+    <div class="vs-status-title">Taking <em>off</em></div>
+    <div class="vs-status-sub">Verifying your credentials</div>
+  </div>
+
+  <div class="vs-route" aria-hidden="true">
+    <span>Login</span>
+    <div class="vs-track"><div class="vs-fill"></div></div>
+    <span>Console</span>
   </div>
 </div>
 
-<div class="toast-host" id="toastHost"></div>
 
-<script src="js/login-loader.js?v=1"></script>
 <script src="js/utils.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/api.js"></script>
 <script>
+/* =========================================================
+   VSLoader: show() · success(url) · fail(msg) · hide()
+   ========================================================= */
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+window.VSLoader = (function () {
+  var el = document.getElementById('vs-loader');
+  var status = el.querySelector('.vs-status');
+  var original = status.innerHTML;
+  var steps = ['Verifying your credentials', 'Securing your session', 'Preparing your console'];
+  var timer = null;
+
+  function reset() {
+    clearInterval(timer);
+    el.classList.remove('vs-fail', 'vs-ok', 'vs-show');
+    void el.offsetWidth;                      // restart CSS animations
+    status.innerHTML = original;
+  }
+  function open(cls) {
+    el.classList.add('vs-show');
+    if (cls) el.classList.add(cls);
+    el.setAttribute('aria-hidden', 'false');
+  }
+
+  return {
+    show: function () {
+      reset(); open();
+      var i = 0, sub = status.querySelector('.vs-status-sub');
+      timer = setInterval(function () {
+        if (i >= steps.length - 1) return clearInterval(timer);
+        i++; sub.style.opacity = 0;
+        setTimeout(function () { sub.textContent = steps[i]; sub.style.opacity = 1; }, 300);
+      }, 1700);
+    },
+    success: function (redirectUrl) {
+      clearInterval(timer);
+      if (!el.classList.contains('vs-show')) open();
+      el.classList.add('vs-ok');
+      status.innerHTML = '<div class="vs-status-title">Welcome <em>aboard</em></div>' +
+                         '<div class="vs-status-sub">Opening your console…</div>';
+      if (redirectUrl) setTimeout(function () { location.href = redirectUrl; }, 1300);
+    },
+    fail: function (msg) {
+      reset(); open('vs-fail');
+      status.innerHTML =
+        '<div class="vs-status-title">Oops, <em>wrong credentials</em></div>' +
+        '<div class="vs-status-sub">' + esc(msg || 'Your username or password didn’t match. Please try again.') + '</div>' +
+        '<button type="button" class="vs-retry">Try again</button>';
+      var btn = status.querySelector('.vs-retry');
+      btn.addEventListener('click', function () {
+        VSLoader.hide();
+        var pw = document.getElementById('vsPass');
+        if (pw) { pw.value = ''; pw.focus(); }
+      });
+      setTimeout(function () { btn.focus(); }, 1300);
+    },
+    hide: function () {
+      clearInterval(timer);
+      el.classList.remove('vs-show', 'vs-fail', 'vs-ok');
+      el.setAttribute('aria-hidden', 'true');
+    }
+  };
+})();
+
+
   document.getElementById('year').textContent = new Date().getFullYear();
 
   if (Auth.isLoggedIn()) location.replace('portal.html');
-  if (typeof useMockApi !== 'undefined' && useMockApi) {
-    document.getElementById('mockNotice').style.display = 'block';
-  }
-  if (new URLSearchParams(location.search).get('expired') === '1') {
-    document.getElementById('expiredNotice').style.display = 'block';
-  }
+  if (typeof useMockApi !== 'undefined' && useMockApi) document.getElementById('mockNotice').hidden = false;
+  if (new URLSearchParams(location.search).get('expired') === '1') document.getElementById('expiredNotice').hidden = false;
 
-  const EYE = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/>';
-  const EYE_OFF = '<path d="M3 3l18 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.6 5.2A11.4 11.4 0 0 1 12 5c7 0 11 7 11 7a13.5 13.5 0 0 1-3.4 4.1M6.7 6.7C3.7 8.6 1 12 1 12s4 7 11 7a10.8 10.8 0 0 0 4.2-.85" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>';
+  const form = document.getElementById('adminLoginForm');
+  const userEl = document.getElementById('vsUser');
+  const passEl = document.getElementById('vsPass');
+  const eye = document.getElementById('vsEye');
+  const caps = document.getElementById('vsCaps');
+  const errorBox = document.getElementById('vsError');
+  const submitBtn = form.querySelector('.vs-submit');
 
-  document.getElementById('pwToggle').addEventListener('click', () => {
-    const input = document.getElementById('password');
-    const showing = input.type === 'text';
-    input.type = showing ? 'password' : 'text';
-    document.getElementById('pwIcon').innerHTML = showing ? EYE : EYE_OFF;
+  eye.addEventListener('click', () => {
+    const show = passEl.type === 'password';
+    passEl.type = show ? 'text' : 'password';
+    eye.setAttribute('aria-pressed', show);
+    eye.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
   });
+  const capsCheck = (e) => { if (e.getModifierState) caps.classList.toggle('on', e.getModifierState('CapsLock')); };
+  passEl.addEventListener('keydown', capsCheck);
+  passEl.addEventListener('keyup', capsCheck);
 
-  const form = document.getElementById('loginForm');
-  const errorBox = document.getElementById('loginError');
-  const loginBtn = document.getElementById('loginBtn');
+  document.getElementById('forgotLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    const note = document.getElementById('forgotNote');
+    note.hidden = !note.hidden;
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    errorBox.textContent = '';
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    if (!username || !password) { errorBox.textContent = 'Enter your username and password.'; return; }
-
-    loginBtn.disabled = true;
-    loginBtn.textContent = 'Logging in…';
+    const username = userEl.value.trim();
+    const password = passEl.value;
+    if (!username || !password) {
+      errorBox.textContent = 'Please enter both your username and password.';
+      errorBox.hidden = false;
+      (username ? passEl : userEl).focus();
+      return;
+    }
+    errorBox.hidden = true;
+    submitBtn.disabled = true;
     VSLoader.show();
     try {
       const data = await Api.login(username, password);
       Auth.saveSession(data);
-      VSLoader.show('Welcome aboard!');
-      location.href = 'portal.html';
+      VSLoader.success('portal.html');
     } catch (err) {
-      VSLoader.fail(err.message, () => {
-        const pw = document.getElementById('password');
-        pw.value = ''; pw.focus();
-      });
-      errorBox.textContent = err.message || 'Login failed. Please try again.';
-      loginBtn.disabled = false;
-      loginBtn.textContent = 'Log in';
+      VSLoader.fail(err.message);
+      submitBtn.disabled = false;
     }
   });
 
-  document.getElementById('forgotLink').addEventListener('click', () => {
-    const note = document.getElementById('forgotNote');
-    note.style.display = note.style.display === 'none' ? 'block' : 'none';
-  });
+  window.addEventListener('pageshow', (e) => { if (e.persisted) { VSLoader.hide(); submitBtn.disabled = false; } });
 </script>
 </body>
 </html>
