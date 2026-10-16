@@ -284,3 +284,11 @@ body{ font-family:var(--ui); color:var(--ink); background:var(--ivory); -webkit-
 .vs-mid  { filter: url(#vs-cf2); }
 .vs-near { filter: url(#vs-cf3); }
 .vs-far { opacity: .5; } .vs-mid { opacity: .7; } .vs-near { opacity: .85; }
+
+/* sky-blue to sunset backdrop for the loader */
+#vs-loader {
+  background:
+    radial-gradient(80% 45% at 50% 106%, rgba(255,226,160,.95) 0%, rgba(255,160,70,.6) 32%, rgba(255,140,60,0) 70%),
+    linear-gradient(180deg, #2f7fd6 0%, #5aa7ea 38%, #a9d3f2 62%, #f8c98e 84%, #f59a52 100%);
+}
+#vs-loader .vs-stars { display: none; }
