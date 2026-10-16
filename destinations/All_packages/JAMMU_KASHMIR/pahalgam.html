@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
+<link rel="stylesheet" href="../../destinations-common.css?v=16">
 <style>
   :root{
     --bg: #F4F1EA;
@@ -111,15 +112,6 @@
     background:linear-gradient(135deg, rgba(255,255,255,0.8), rgba(187,90,52,0.28));
     transform:translateX(-5px);
     box-shadow:0 12px 30px rgba(38,34,28,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
-  }
-  .back-link::before{
-    content:"✈️";
-    display:inline-block;
-    transform:scaleX(-1);
-    animation: jet-fly 2.4s ease-in-out infinite;
-  }
-  .back-link:hover::before{
-    animation: jet-fly-fast 0.7s ease-in-out infinite;
   }
 
   .top-actions{
@@ -559,7 +551,6 @@ body { padding-top: 66px; }
 </style>
 </head>
 <body>
-<script src="../../../js/airplane-loader.js?v=1" data-page-load></script>
   <div class="site-bar">
       <div class="top-actions">
         <a class="back-link" href="../../../index.html">Home</a>
@@ -657,6 +648,45 @@ body { padding-top: 66px; }
           <a class="btn" href="itinerary-6-nights.html">View Itinerary</a>
         </div>
 
+      </div>
+    </div>
+
+    <div class="destination-details">
+      <div class="details-column">
+        <div class="detail-block">
+          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5v2.2M9.5 7.2c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5M7 11c0-2.1 2.2-3.8 5-3.8s5 1.7 5 3.8M4.5 11h15M6 11v8M18 11v8M9.5 19v-4.5a2.5 2.5 0 0 1 5 0V19M3 21.5h18"/></svg></span>Famous Temples &amp; Spiritual Sites</h2>
+          <ol>
+            <li>Mamleshwar Temple (Shiva, 8th century) <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+            <li>Amarnath Yatra base camp (Pahalgam route)</li>
+            <li>Shiva shrines along the Lidder</li>
+          </ol>
+        </div>
+
+        <div class="detail-block">
+          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.3a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6Z"/></svg></span>Must-Visit Attractions</h2>
+          <ol>
+            <li>Betaab Valley <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+            <li>Aru Valley <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+            <li>Chandanwari</li>
+            <li>Lidder River</li>
+            <li>Tulian Lake trek</li>
+            <li>Kolahoi Glacier trek</li>
+            <li>Pahalgam Golf Course</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="details-column">
+        <div class="detail-block">
+          <h2><span class="h-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 11h17a8.5 8.5 0 0 1-17 0ZM8 4c-1 1-1 2 0 3M12 3c-1 1.2-1 2.5 0 4M16 4c-1 1-1 2 0 3M8 21h8"/></svg></span>Famous Food</h2>
+          <ul>
+            <li>Lidder River trout <span class="star-icon" role="img" aria-label="Must visit"></span></li>
+            <li>Wazwan</li>
+            <li>Kashmiri Kahwa</li>
+            <li>Noon Chai</li>
+            <li>Dum Aloo</li>
+          </ul>
+        </div>
       </div>
     </div>
 

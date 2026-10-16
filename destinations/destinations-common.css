@@ -49,14 +49,20 @@ body {
 }
 
 .back-link::before {
-  content: "✈️";
-  display: inline-block;
-  transform: scaleX(-1);
-  animation: jet-fly 2.4s ease-in-out infinite;
+  content: "";
+  flex: none;
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B8913F' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11.2 12 3.8l9 7.4M5.5 9.6V20h4.8v-5.6h3.4V20h4.8V9.6'/%3E%3C/svg%3E") no-repeat center / contain;
+  transition: transform .25s ease;
+}
+
+.back-link.secondary::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B8913F' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M16.5 12h-9M11.5 8l-4 4 4 4'/%3E%3C/svg%3E");
 }
 
 .back-link:hover::before {
-  animation: jet-fly-fast 0.7s ease-in-out infinite;
+  transform: scale(1.12);
 }
 
 .top-actions {
@@ -801,4 +807,31 @@ body { padding-top: 66px; }
   .itin-modal { max-width: none; border-radius: 0; min-height: 100%; padding: 28px 20px 40px; }
   .itin-day { padding-left: 56px; }
   .itin-day-badge { width: 44px; }
+}
+
+/* Premium gold line icons */
+.h-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-right: 12px;
+  vertical-align: middle;
+  border-radius: 50%;
+  color: #B8913F;
+  background: linear-gradient(145deg, #FFFBF0, #F7EDD5);
+  border: 1px solid rgba(184, 145, 63, 0.45);
+  box-shadow: 0 2px 8px rgba(184, 145, 63, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.h-icon svg { width: 22px; height: 22px; }
+
+/* "Must visit" marker: gold line star */
+.star-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  vertical-align: -2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23F7EDD5' stroke='%23B8913F' stroke-width='1.5' stroke-linejoin='round'%3E%3Cpath d='m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z'/%3E%3C/svg%3E") no-repeat center / contain;
 }
