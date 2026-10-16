@@ -372,4 +372,14 @@
     new MutationObserver(function () { document.body.classList.toggle("ec-open", c.classList.contains("open")); })
       .observe(c, { attributes: true, attributeFilter: ["class"] });
   })();
+
+  // phones: never let the page zoom while the chat is open (iOS zooms on focus)
+  (function () {
+    var m = document.querySelector('meta[name="viewport"]'), c = document.getElementById("ec-chat");
+    if (!m) return;
+    var orig = m.getAttribute("content");
+    new MutationObserver(function () {
+      m.setAttribute("content", c.classList.contains("open") ? orig.replace(/,?\s*(maximum|user)-[a-z-]+=[^,]*/g, "") + ", maximum-scale=1, user-scalable=no" : orig);
+    }).observe(c, { attributes: true, attributeFilter: ["class"] });
+  })();
 })();
