@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enquiry Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#2d5a45; --green-dark:#244a39; --field:#3f6b55; --line:#5d8671;
+    --gold:#b8923e; --text:#f2f5f1; --muted:#9db8a9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Jost',sans-serif;background:#f4f1ea;min-height:100vh}
+
+  /* ---------- Floating launcher ---------- */
+  #ec-launcher{
+    position:fixed;right:24px;bottom:24px;width:62px;height:62px;border-radius:50%;
+    background:var(--gold);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3);
+    display:flex;align-items:center;justify-content:center;z-index:9998;transition:transform .2s
+  }
+  #ec-launcher:hover{transform:scale(1.07)}
+  #ec-launcher svg{width:28px;height:28px;fill:#1d1d1d}
+
+  /* ---------- Chat window ---------- */
+  #ec-chat{
+    position:fixed;right:24px;bottom:100px;width:380px;max-width:calc(100vw - 32px);
+    height:560px;max-height:calc(100vh - 120px);background:var(--green);color:var(--text);
+    border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.35);display:none;flex-direction:column;
+    overflow:hidden;z-index:9999
+  }
+  #ec-chat.open{display:flex;animation:ecpop .25s ease}
+  @keyframes ecpop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  .ec-head{background:var(--green-dark);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+  .ec-head h3{margin:0;font-size:16px;font-weight:500;letter-spacing:.5px}
+  .ec-head small{color:var(--muted);font-size:12px;display:block;margin-top:2px}
+  .ec-close{background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;line-height:1}
+  .ec-progress{height:3px;background:var(--green-dark)}
+  .ec-progress div{height:100%;width:0;background:var(--gold);transition:width .3s}
+
+  .ec-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .ec-msg{max-width:84%;padding:10px 14px;border-radius:12px;font-size:14.5px;line-height:1.45;animation:ecpop .2s ease;word-wrap:break-word}
+  .ec-bot{background:var(--field);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
+  .ec-user{background:var(--gold);color:#1d1d1d;align-self:flex-end;border-bottom-right-radius:3px;font-weight:500}
+  .ec-typing{display:flex;gap:4px;padding:12px 14px}
+  .ec-typing span{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:ecblink 1s infinite}
+  .ec-typing span:nth-child(2){animation-delay:.15s}.ec-typing span:nth-child(3){animation-delay:.3s}
+  @keyframes ecblink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+  .ec-summary{align-self:flex-start;width:92%;background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13.5px}
+  .ec-summary div{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px dashed var(--line)}
+  .ec-summary div{align-items:center}
+  .ec-summary div:last-child{border:none}
+  .ec-summary b{color:var(--muted);font-weight:400;flex-shrink:0;min-width:84px}
+  .ec-summary span{flex:1;text-align:right;word-break:break-word}
+  .ec-edit{flex-shrink:0;background:none;border:1px solid var(--gold);color:var(--gold);font:inherit;font-size:11.5px;padding:2px 8px;border-radius:12px;cursor:pointer}
+  .ec-edit:hover{background:var(--gold);color:#1d1d1d}
+
+  /* ---------- Input area ---------- */
+  .ec-foot{padding:12px;border-top:1px solid var(--line);background:var(--green-dark)}
+  .ec-row{display:flex;gap:8px}
+  .ec-foot input,.ec-foot select,.ec-foot textarea{
+    flex:1;min-width:0;background:var(--field);border:1px solid var(--line);color:#fff;
+    padding:11px 12px;font:inherit;font-size:14.5px;border-radius:4px;outline:none
+  }
+  .ec-foot input::placeholder,.ec-foot textarea::placeholder{color:var(--muted)}
+  .ec-foot input:focus,.ec-foot select:focus,.ec-foot textarea:focus{border-color:var(--gold)}
+  .ec-foot select.cc{flex:0 0 112px}
+  .ec-foot textarea{resize:none;height:70px}
+  .ec-send{background:var(--gold);color:#1d1d1d;border:none;padding:0 16px;font:inherit;font-weight:500;letter-spacing:1px;font-size:13px;text-transform:uppercase;cursor:pointer;border-radius:4px}
+  .ec-send:hover{filter:brightness(1.1)}
+  .ec-send:disabled{opacity:.5;cursor:default}
+  .ec-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .ec-chip{background:transparent;border:1px solid var(--gold);color:var(--text);padding:8px 14px;border-radius:20px;font:inherit;font-size:13.5px;cursor:pointer}
+  .ec-chip:hover{background:var(--gold);color:#1d1d1d}
+  .ec-skip{background:none;border:none;color:var(--muted);font:inherit;font-size:12.5px;text-decoration:underline;cursor:pointer;margin-top:8px;padding:0}
+  .ec-err{color:#ffb4a8;font-size:12.5px;margin:0 0 8px}
+  .ec-note{text-align:center;color:var(--muted);font-size:11.5px;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- Demo page content: delete this and paste only the widget (from the launcher button down) into your site -->
+<div style="padding:60px 24px;text-align:center;color:#2d5a45">
+  <h1 style="font-weight:400">Your travel website</h1>
+  <p>Click the chat button at the bottom-right ↘</p>
+</div>
+
+<button id="ec-launcher" aria-label="Open enquiry chat">
+  <svg viewBox="0 0 24 24"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 1-2z"/></svg>
+</button>
+
+<div id="ec-chat" role="dialog" aria-label="Travel enquiry chat">
+  <div class="ec-head">
+    <div><h3>Plan Your Trip</h3><small>We respond within 24 hours</small></div>
+    <button class="ec-close" id="ec-close" aria-label="Close">&times;</button>
+  </div>
+  <div class="ec-progress"><div id="ec-bar"></div></div>
+  <div class="ec-body" id="ec-body"></div>
+  <div class="ec-foot" id="ec-foot"></div>
+</div>
+
+<script>
+(function () {
+  /* ================= CONFIG ================= */
+  var CONFIG = {
+    // Your server URL that receives the enquiry as JSON (POST).
+    // Leave empty to just log in the browser console while testing.
+    endpoint: "",
+    botName: "Travel Desk",
+    hotelOptions: ["Budget (2★)", "Comfort (3★)", "Premium (4★)", "Luxury (5★)", "Homestay / Boutique", "No preference"],
+    countryCodes: [
+      ["India", "+91"], ["USA", "+1"], ["UK", "+44"], ["UAE", "+971"],
+      ["Singapore", "+65"], ["Australia", "+61"], ["Canada", "+1"], ["Other", "+"]
+    ]
+  };
+
+  /* ================= STEPS (same fields as your form) ================= */
+  var steps = [
+    { key: "name",        type: "text",  q: "Hi! 👋 Let's plan your dream trip. What's your name?", ph: "Your Name" },
+    { key: "email",       type: "email", q: "Nice to meet you, {name}! What's your email address?", ph: "Email Address" },
+    { key: "phone",       type: "phone", q: "And your contact number?", ph: "Contact Number" },
+    { key: "destination", type: "text",  q: "Where would you love to go?", ph: "e.g. Varanasi, Ladakh, Kerala..." },
+    { key: "dates",       type: "text",  q: "When are you planning to travel, and for how long?", ph: "e.g. 10–17 Dec, 7 days" },
+    { key: "people",      type: "number",q: "How many people will be travelling?", ph: "No. of People" },
+    { key: "hotel",       type: "choice",q: "What kind of stay do you prefer?", options: CONFIG.hotelOptions },
+    { key: "requests",    type: "area",  q: "Any special requests — flights, celebrations, meals...?", ph: "Type here (optional)", optional: true }
+  ];
+
+  var body = document.getElementById("ec-body");
+  var foot = document.getElementById("ec-foot");
+  var bar  = document.getElementById("ec-bar");
+  var chat = document.getElementById("ec-chat");
+  var data = {}, idx = 0, started = false, busy = false, editIdx = null, lastBox = null;
+
+  /* ---------- open / close ---------- */
+  document.getElementById("ec-launcher").onclick = function () {
+    chat.classList.toggle("open");
+    if (chat.classList.contains("open") && !started) { started = true; askStep(); }
+  };
+  document.getElementById("ec-close").onclick = function () { chat.classList.remove("open"); };
+
+  /* ---------- helpers ---------- */
+  function scroll() { body.scrollTop = body.scrollHeight; }
+  function addMsg(text, who) {
+    var d = document.createElement("div");
+    d.className = "ec-msg " + (who === "user" ? "ec-user" : "ec-bot");
+    d.textContent = text;
+    body.appendChild(d); scroll();
+  }
+  function botSay(text, cb) {
+    busy = true; foot.style.visibility = "hidden";
+    var t = document.createElement("div");
+    t.className = "ec-msg ec-bot ec-typing";
+    t.innerHTML = "<span></span><span></span><span></span>";
+    body.appendChild(t); scroll();
+    setTimeout(function () {
+      t.remove(); addMsg(text, "bot");
+      busy = false; foot.style.visibility = "visible";
+      if (cb) cb();
+    }, 650);
+  }
+  function fill(str) {
+    return str.replace(/\{(\w+)\}/g, function (_, k) { return (data[k] || "").split(" ")[0]; });
+  }
+  function el(tag, attrs, html) {
+    var e = document.createElement(tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (html) e.innerHTML = html;
+    return e;
+  }
+
+  /* ---------- validation ---------- */
+  function validate(step, v) {
+    if (!v) return step.optional ? "" : "Please fill this in to continue.";
+    if (step.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return "Please enter a valid email address.";
+    if (step.type === "phone" && !/^\d{6,14}$/.test(v.replace(/[\s-]/g, ""))) return "Please enter a valid phone number (digits only).";
+    if (step.type === "number" && !(parseInt(v, 10) > 0)) return "Please enter a number greater than 0.";
+    return "";
+  }
+
+  /* ---------- ask current step ---------- */
+  function askStep() {
+    bar.style.width = (idx / steps.length * 100) + "%";
+    if (idx >= steps.length) return showSummary();
+    var s = steps[idx];
+    botSay(fill(s.q), function () { renderInput(s); });
+  }
+
+  function renderInput(s) {
+    foot.innerHTML = "";
+    var err = el("p", { "class": "ec-err" }); err.style.display = "none";
+    foot.appendChild(err);
+
+    function submit(display, value, prevalidated) {
+      var msg = prevalidated ? "" : validate(s, value);
+      if (msg) { err.textContent = msg; err.style.display = "block"; return; }
+      data[s.key] = value;
+      addMsg(display || value || "(skipped)", "user");
+      foot.innerHTML = "";
+      if (editIdx !== null) { editIdx = null; showSummary(true); }
+      else { idx++; askStep(); }
+    }
+
+    if (s.type === "choice") {
+      var chips = el("div", { "class": "ec-chips" });
+      s.options.forEach(function (o) {
+        var b = el("button", { "class": "ec-chip", type: "button" }); b.textContent = o;
+        b.onclick = function () { submit(o, o); };
+        chips.appendChild(b);
+      });
+      foot.appendChild(chips);
+      return;
+    }
+
+    var row = el("div", { "class": "ec-row" });
+    var input, cc;
+
+    if (s.type === "area") {
+      input = el("textarea", { placeholder: s.ph });
+    } else if (s.type === "phone") {
+      cc = el("select", { "class": "cc" });
+      CONFIG.countryCodes.forEach(function (c) {
+        var o = el("option", { value: c[1] }); o.textContent = c[0] + " (" + c[1] + ")";
+        cc.appendChild(o);
+      });
+      row.appendChild(cc);
+      input = el("input", { type: "tel", placeholder: s.ph, inputmode: "tel" });
+    } else {
+      input = el("input", {
+        type: s.type === "email" ? "email" : (s.type === "number" ? "number" : "text"),
+        placeholder: s.ph, min: "1"
+      });
+    }
+    row.appendChild(input);
+
+    /* prefill current answer when editing */
+    if (editIdx !== null && data[s.key]) {
+      if (s.type === "phone") {
+        var parts = data[s.key].split(" ");
+        input.value = parts.slice(1).join("");
+        for (var i = 0; i < cc.options.length; i++) if (cc.options[i].value === parts[0]) { cc.selectedIndex = i; break; }
+      } else { input.value = data[s.key]; }
+    }
+
+    var btn = el("button", { "class": "ec-send", type: "button" }); btn.textContent = editIdx !== null ? "Update" : "Send";
+    row.appendChild(btn);
+    foot.appendChild(row);
+
+    function go() {
+      var v = input.value.trim();
+      if (s.type === "phone") {
+        var pmsg = validate(s, v);
+        if (pmsg) { err.textContent = pmsg; err.style.display = "block"; return; }
+        var digits = v.replace(/[\s-]/g, "");
+        submit(cc.value + " " + digits, cc.value + " " + digits, true);
+        return;
+      }
+      submit(v, v);
+    }
+    btn.onclick = go;
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !(s.type === "area" && e.shiftKey)) { e.preventDefault(); go(); }
+    });
+
+    if (s.optional) {
+      var skip = el("button", { "class": "ec-skip", type: "button" }); skip.textContent = "Skip this";
+      skip.onclick = function () { submit("Skipped", ""); };
+      foot.appendChild(skip);
+    }
+    setTimeout(function () { input.focus(); }, 50);
+  }
+
+  /* ---------- summary + submit ---------- */
+  var labels = {
+    name: "Name", email: "Email", phone: "Contact", destination: "Destination",
+    dates: "Dates / Duration", people: "People", hotel: "Hotel", requests: "Special requests"
+  };
+
+  function startEdit(i) {
+    if (busy) return;
+    if (lastBox) { lastBox.remove(); lastBox = null; }
+    editIdx = i;
+    foot.innerHTML = "";
+    botSay("Sure — please enter your new " + labels[steps[i].key].toLowerCase() + ":", function () {
+      renderInput(steps[i]);
+    });
+  }
+
+  function showSummary(updated) {
+    bar.style.width = "100%";
+    var intro = updated
+      ? "Updated! ✅ Here are your details:"
+      : "Thanks, " + data.name.split(" ")[0] + "! Please check your details:";
+    botSay(intro, function () {
+      var box = el("div", { "class": "ec-summary" });
+      steps.forEach(function (s, i) {
+        var row = el("div"), b = el("b"), v = el("span"), e = el("button", { "class": "ec-edit", type: "button", title: "Edit" });
+        b.textContent = labels[s.key]; v.textContent = data[s.key] || "—";
+        e.innerHTML = "&#9998; Edit";
+        e.onclick = function () { startEdit(i); };
+        row.appendChild(b); row.appendChild(v); row.appendChild(e); box.appendChild(row);
+      });
+      body.appendChild(box); lastBox = box; scroll();
+
+      foot.innerHTML = "";
+      var send = el("button", { "class": "ec-send", type: "button" });
+      send.style.cssText = "width:100%;padding:13px";
+      send.textContent = "Send Enquiry →";
+      var restart = el("button", { "class": "ec-skip", type: "button" }); restart.textContent = "Start over";
+      restart.onclick = reset;
+      send.onclick = function () { sendEnquiry(send); };
+      foot.appendChild(send); foot.appendChild(restart);
+      foot.appendChild(el("p", { "class": "ec-note" }, "We respond within 24 hours. No spam, ever."));
+    });
+  }
+
+  function sendEnquiry(btn) {
+    btn.disabled = true; btn.textContent = "Sending...";
+    var done = function () {
+      foot.innerHTML = "";
+      botSay("✅ Your enquiry has been sent! Our team will contact you within 24 hours.", function () {
+        var b = el("button", { "class": "ec-send", type: "button" });
+        b.style.cssText = "width:100%;padding:13px"; b.textContent = "New enquiry";
+        b.onclick = reset; foot.appendChild(b);
+      });
+    };
+    var fail = function () {
+      btn.disabled = false; btn.textContent = "Send Enquiry →";
+      addMsg("Sorry, something went wrong. Please try again.", "bot");
+    };
+    if (!CONFIG.endpoint) { console.log("Enquiry data:", data); return setTimeout(done, 600); }
+    fetch(CONFIG.endpoint, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data)
+    }).then(function (r) { if (!r.ok) throw 0; done(); }).catch(fail);
+  }
+
+  function reset() {
+    data = {}; idx = 0; editIdx = null; lastBox = null; body.innerHTML = ""; foot.innerHTML = ""; askStep();
+  }
+})();
+</script>
+</body>
+</html>

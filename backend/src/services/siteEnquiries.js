@@ -13,7 +13,7 @@ const { validate } = require('../validation');
 const { normalizePhone } = require('../phone');
 
 // Which website form sent the enquiry; anything else is stored as NULL.
-const SOURCES = ['contact_form', 'journey_popup'];
+const SOURCES = ['contact_form', 'journey_popup', 'chatbot'];
 
 const str = (v) => String(v == null ? '' : v).trim();
 const orNull = (v) => str(v) || null;

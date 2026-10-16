@@ -12,518 +12,368 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Traveler Feedback — Vihara Setu</title>
+<title>Traveller Feedback — Words from the Road | Vihara Setu</title>
+<meta name="description" content="What Vihara Setu travellers say after coming home — real trips, real words, shared with their permission. Share your own story with us.">
+<meta name="theme-color" content="#2a0f12">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Traveller Feedback — Vihara Setu">
+<meta property="og:description" content="Real trips, real words, shared with travellers' permission.">
+<meta property="og:image" content="images/new_Logo.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #F4F1EA;
-    --ink: #26221C;
-    --ink-soft: #5C554A;
-    --accent: #BB5A34;
-    --accent-dark: #9C4826;
-    --card: #FFFFFF;
-    --line: #E4DECF;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.55;
-    position:relative;
-    overflow-x:hidden;
-    cursor: url('images/cursor.png') 10 10, auto;
-  }
-
- 
-
-  /* Floating background decoration */
-  .bg-decor{
-    position:fixed;
-    inset:0;
-    z-index:0;
-    overflow:hidden;
-    pointer-events:none;
-  }
-  .bg-decor .orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(70px);
-    opacity:0.32;
-  }
-  .bg-decor .orb1{
-    width:340px; height:340px;
-    background:var(--accent);
-    top:-100px; left:-100px;
-    animation: float1 24s ease-in-out infinite;
-  }
-  .bg-decor .orb2{
-    width:260px; height:260px;
-    background:#6B7A5E;
-    top:30%; right:-90px;
-    animation: float2 28s ease-in-out infinite;
-  }
-  .bg-decor .orb3{
-    width:220px; height:220px;
-    background:#3E5C76;
-    bottom:5%; left:8%;
-    animation: float3 20s ease-in-out infinite;
-  }
-  .bg-decor .orb4{
-    width:180px; height:180px;
-    background:var(--accent-dark);
-    bottom:-60px; right:15%;
-    animation: float1 26s ease-in-out infinite reverse;
-  }
-  @keyframes float1{
-    0%,100%{ transform: translate(0,0) scale(1); }
-    33%{ transform: translate(60px,40px) scale(1.08); }
-    66%{ transform: translate(-30px,70px) scale(0.95); }
-  }
-  @keyframes float2{
-    0%,100%{ transform: translate(0,0) scale(1); }
-    50%{ transform: translate(-70px,-50px) scale(1.1); }
-  }
-  @keyframes float3{
-    0%,100%{ transform: translate(0,0) scale(1); }
-    50%{ transform: translate(50px,-40px) scale(1.06); }
-  }
-
-  .wrap{
-    position:relative;
-    z-index:1;
-  }
-  .wrap{
-    max-width:1180px;
-    margin:0 auto;
-    padding:32px 24px 80px;
-  }
-  .back-link{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    color:#fff;
-    background:var(--accent);
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    padding:10px 20px 10px 16px;
-    border-radius:999px;
-    box-shadow:0 6px 16px rgba(187,90,52,0.28);
-    animation: slideInLeft 0.6s ease-out;
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-  }
-  .back-link:hover{
-    background:var(--accent-dark);
-    transform: translateX(-5px);
-    box-shadow:0 10px 22px rgba(187,90,52,0.4);
-  }
-  .back-link::before{
-    content:"✈️";
-    display:inline-block;
-    transform:scaleX(-1);
-    animation: jet-fly 2.4s ease-in-out infinite;
-  }
-  .back-link:hover::before{
-    animation: jet-fly-fast 0.7s ease-in-out infinite;
-  }
-  @keyframes jet-fly{
-    0%, 100% { transform: scaleX(-1) translateX(0); }
-    50% { transform: scaleX(-1) translateX(-6px); }
-  }
-  @keyframes jet-fly-fast{
-    0%, 100% { transform: scaleX(-1) translateX(0); }
-    50% { transform: scaleX(-1) translateX(-10px); }
-  }
-
-  h1{
-    font-family:'Dancing Script', cursive;
-    font-weight:700;
-    font-size:52px;
-    margin:20px 0 12px;
-    animation: handwriteIn 2.2s ease-in-out 0.2s both;
-    letter-spacing: 1px;
-    color: var(--ink);
-    position: relative;
-  }
-  
-  @keyframes handwriteIn{
-    0%{
-      opacity:0;
-      transform: translateY(20px) scaleY(0.8);
-      text-shadow: 0 0 10px rgba(187, 90, 52, 0.3);
-    }
-    50%{
-      opacity:1;
-    }
-    100%{
-      opacity:1;
-      transform: translateY(0) scaleY(1);
-      text-shadow: 0 0 0px rgba(187, 90, 52, 0);
-    }
-  }
-  .intro{
-    max-width:600px;
-    color:var(--ink-soft);
-    font-size:16px;
-    margin-bottom:44px;
-    animation: fadeInUp 0.8s ease-out 0.6s both;
-    font-style: italic;
-    font-weight: 500;
-  }
-  
-  @keyframes slideInLeft{
-    from{
-      opacity:0;
-      transform: translateX(-20px);
-    }
-    to{
-      opacity:1;
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes fadeInUp{
-    from{
-      opacity:0;
-      transform: translateY(20px);
-    }
-    to{
-      opacity:1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Testimonial cards */
-  .testimonials{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:32px;
-    animation: gridReveal 0.6s ease-out;
-  }
-  
-  @keyframes gridReveal{
-    from{
-      opacity:0;
-    }
-    to{
-      opacity:1;
-    }
-  }
-  
-  .testimonial{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:28px;
-    display:flex;
-    flex-direction:row;
-    gap:28px;
-    opacity:0;
-    transform: scale(0.82) translateY(24px);
-    transition: transform .25s ease, box-shadow .25s ease, border-color .3s ease;
-    align-items:flex-start;
-    position:relative;
-  }
-  .testimonial::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    border-radius:16px;
-    background:linear-gradient(135deg, rgba(187, 90, 52, 0.05), transparent);
-    opacity:0;
-    transition: opacity .3s ease;
-    pointer-events:none;
-  }
-  .testimonial.pop-in{
-    animation: popIn 0.6s cubic-bezier(.34, 1.56, .64, 1) forwards;
-  }
-  .testimonial:hover{
-    transform: translateY(-4px) scale(1.015);
-    box-shadow: 0 16px 32px rgba(38,34,28,0.12);
-    border-color: var(--accent);
-  }
-  .testimonial:hover::before{
-    opacity:1;
-  }
-  @keyframes popIn{
-    0%{
-      opacity:0;
-      transform: scale(0.82) translateY(24px);
-    }
-    70%{
-      opacity:1;
-      transform: scale(1.03) translateY(-2px);
-    }
-    100%{
-      opacity:1;
-      transform: scale(1) translateY(0);
-    }
-  }
-  .testimonial .top-row{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:14px;
-    flex-shrink:0;
-  }
-  .testimonial .avatar{
-    flex-shrink:0;
-    width:140px;
-    height:140px;
-    border-radius:12px;
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition: transform 0.3s ease, filter 0.3s ease;
-  }
-  .testimonial .avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .testimonial .avatar svg{
-    width:100%;
-    height:100%;
-  }
-  .testimonial:hover .avatar{
-    transform: scale(1.1) rotateZ(3deg);
-    filter: brightness(1.1);
-  }
-  .testimonial .content{
-    flex-grow:1;
-  }
-  .stars{
-    color:var(--accent);
-    font-size:15px;
-    letter-spacing:2px;
-    margin-bottom:10px;
-    display:inline-block;
-    animation: starPulse 0.8s ease-out;
-  }
-  
-  @keyframes starPulse{
-    0%{
-      opacity:0;
-      transform: scale(0.8);
-    }
-    100%{
-      opacity:1;
-      transform: scale(1);
-    }
-  }
-  .testimonial p.quote{
-    color:var(--ink);
-    font-size:16px;
-    margin:0 0 16px;
-    line-height:1.7;
-    text-align:justify;
-    text-justify:inter-word;
-  }
-  .reviewer-name{
-    font-family:'Playfair Display', serif;
-    font-weight:700;
-    font-size:16px;
-    color:var(--ink);
-  }
-  .reviewer-trip{
-    color:var(--ink-soft);
-    font-size:13px;
-    margin-top:2px;
-  }
-
-  /* CTA footer */
-  .cta{
-    margin-top:52px;
-    text-align:center;
-    padding-top:32px;
-    border-top:1px solid var(--line);
-    animation: fadeInUp 0.8s ease-out 0.6s both;
-  }
-  .cta p{
-    color:var(--ink-soft);
-    font-size:15px;
-    margin:0 0 18px;
-  }
-  .btn{
-    display:inline-block;
-    background:var(--accent);
-    color:#fff;
-    text-align:center;
-    padding:12px 26px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    transition:background .15s ease, transform .15s ease, box-shadow .15s ease;
-  }
-  .btn:hover{ 
-    background:var(--accent-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(187, 90, 52, 0.3);
-  }
-  .btn:active{
-    transform: translateY(-1px);
-  }
-
-  @media (max-width: 760px){
-    .testimonials{ grid-template-columns: 1fr; }
-    .testimonial{ flex-direction:column; }
-    .testimonial .top-row{ flex-direction:row; align-items:center; }
-    .testimonial .avatar{ width:80px; height:80px; }
-    h1{ font-size:32px; }
-  }
-</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="images/fevicon.png" type="image/png">
 
 <style>
-/* Mobile quick-contact bar */
-.mobile-contact-bar { display: none; }
-@media (max-width: 768px) {
-  .mobile-contact-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    position: fixed;
-    top: auto;
-    right: auto;
-    margin: 0;
-    left: 50%;
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    z-index: 999;
-    width: calc(100% - 32px);
-    max-width: 420px;
-    background: #363330;
-    border-radius: 999px;
-    padding: 12px 6px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-  }
-  .mobile-contact-bar a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .mobile-contact-bar svg { width: 24px; height: 24px; }
-  body { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+:root{
+  --ink:#1c1410; --ink-soft:#3b2e26; --muted:#76695b;
+  --ivory:#faf6ee; --sand:#f2e9d8; --line:#e3d6bd;
+  --maroon:#4a141b; --maroon-deep:#2a0f12;
+  --gold:#b98a3e; --gold-light:#e0bf80;
+  --radius:18px;
+  --shadow:0 24px 60px -28px rgba(42,15,18,.45);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--sans);color:var(--ink);background:var(--ivory);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.container{width:calc(100% - 72px);max-width:1280px;margin-inline:auto}
+.eyebrow{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.section{padding:clamp(64px,9vw,120px) 0}
+.section-head{max-width:640px;margin-bottom:48px}
+.section-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.15;margin:12px 0 14px;color:var(--maroon-deep)}
+.section-head p{color:var(--muted);font-size:1.02rem}
+.rule{width:56px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:22px}
+
+/* ---------- Nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,backdrop-filter .3s,box-shadow .3s}
+.nav.scrolled{background:rgba(42,15,18,.9);backdrop-filter:blur(14px);box-shadow:0 8px 30px -12px rgba(0,0,0,.5)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{display:inline-flex;align-items:center;gap:8px;color:#f6ecd8;font-size:.86rem;padding:8px 14px;border-radius:999px;transition:background .2s}
+.nav-links a:hover{background:rgba(255,255,255,.12)}
+.nav-links svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--gold-light);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.badge{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(224,191,128,.5);padding:6px 14px;border-radius:999px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 .92rem var(--sans);padding:14px 28px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.btn-gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--maroon-deep);box-shadow:0 14px 30px -14px rgba(185,138,62,.9)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4);backdrop-filter:blur(6px)}
+.btn-ghost:hover{background:rgba(255,255,255,.18)}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;color:#fff;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));overflow:hidden;padding:clamp(130px,16vw,190px) 0 clamp(90px,10vw,130px)}
+.hero::before{content:"";position:absolute;width:620px;height:620px;right:-180px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(224,191,128,.24),transparent 70%)}
+.hero .container{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.08;margin:16px 0 20px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold-light);font-weight:500}
+.hero .intro{max-width:620px;font-size:clamp(1rem,1.5vw,1.15rem);color:#eadfca}
+.hero-mark{width:clamp(120px,16vw,220px);height:auto;fill:none;stroke:rgba(224,191,128,.55);stroke-width:1.2;stroke-linejoin:round;margin-right:clamp(0px,4vw,60px)}
+
+/* ---------- Stories ---------- */
+.stories{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+.story{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:38px 36px 34px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.story:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--gold)}
+.story::before{content:"\201C";position:absolute;top:6px;right:26px;font:600 7rem/1 var(--serif);color:rgba(185,138,62,.18);pointer-events:none}
+.stars{display:flex;gap:4px;margin-bottom:18px}
+.stars svg{width:18px;height:18px;fill:var(--gold);stroke:none}
+.quote{font-family:var(--serif);font-size:1.18rem;line-height:1.6;color:var(--maroon-deep);font-style:italic;margin-bottom:28px;position:relative}
+.reviewer{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:22px;border-top:1px dashed var(--line)}
+.avatar{width:62px;height:62px;border-radius:50%;overflow:hidden;flex:none;border:2px solid var(--gold-light);background:var(--sand)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar svg{width:100%;height:100%;display:block}
+.reviewer-name{font-family:var(--serif);font-weight:600;font-size:1.15rem;color:var(--maroon-deep);line-height:1.2}
+.reviewer-trip{font-size:.84rem;color:var(--muted);letter-spacing:.03em}
+.reviewer-trip::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle}
+.story.featured{grid-column:1/-1;display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:clamp(24px,4vw,56px);padding:clamp(28px,4vw,52px);background:linear-gradient(135deg,#fff,#fbf4e4)}
+.story.featured .photo{position:relative;align-self:start}
+.story.featured .photo::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:1px solid rgba(185,138,62,.5);border-radius:22px}
+.story.featured .photo img{position:relative;width:100%;height:auto;border-radius:20px;box-shadow:0 30px 60px -28px rgba(42,15,18,.55)}
+.story.featured .photo .ph{position:relative;aspect-ratio:1;border-radius:20px;display:grid;place-items:center;font:600 4rem var(--serif);color:#fff}
+.story.featured .quote{font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.55}
+.story.featured .reviewer{border-top-color:rgba(185,138,62,.35)}
+.story.featured .avatar{display:none}
+.permission{margin-top:26px;font-size:.84rem;color:var(--muted);text-align:center}
+
+/* ---------- Share your story ---------- */
+.share{background:var(--sand)}
+.share-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,72px);align-items:start}
+.share-copy h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.15;margin:12px 0 16px;color:var(--maroon-deep)}
+.share-copy p{color:var(--ink-soft);margin-bottom:12px}
+.share-points{margin-top:22px}
+.share-points li{display:flex;gap:12px;padding:10px 0;border-top:1px solid #e6d9bd;color:var(--ink-soft);font-size:.96rem}
+.share-points li::before{content:"";flex:none;width:20px;height:20px;margin-top:3px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b98a3e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8 12.3 2.8 2.8L16.2 9.5'/%3E%3C/svg%3E") no-repeat center/contain}
+.form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,3.5vw,42px);box-shadow:var(--shadow)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{margin-bottom:18px}
+.field label,.field .lbl{display:block;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.field input,.field textarea{width:100%;font:500 .98rem var(--sans);color:var(--ink);background:var(--ivory);border:1px solid var(--line);border-radius:14px;padding:13px 16px;transition:border-color .2s,box-shadow .2s}
+.field textarea{min-height:140px;resize:vertical}
+.field input:hover,.field textarea:hover{border-color:var(--gold)}
+.field input:focus,.field textarea:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 4px rgba(185,138,62,.18)}
+.rate{display:flex;gap:6px}
+.rate button{background:none;border:0;cursor:pointer;padding:2px;line-height:0}
+.rate svg{width:34px;height:34px;fill:none;stroke:var(--gold);stroke-width:1.5;stroke-linejoin:round;transition:transform .15s,fill .15s}
+.rate button:hover svg{transform:scale(1.12)}
+.rate button.on svg{fill:var(--gold)}
+.form-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.form-actions .btn-ghost{background:#fff;color:var(--maroon);border-color:var(--line)}
+.form-actions .btn-ghost:hover{background:var(--ivory)}
+.form-note{margin-top:14px;font-size:.82rem;color:var(--muted)}
+
+/* ---------- Contact ---------- */
+.cta{background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));color:#fff;position:relative;overflow:hidden;text-align:left}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(224,191,128,.2),transparent 60%)}
+.cta .container{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,96px);align-items:center}
+.cta h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,3rem);line-height:1.15;margin:14px 0}
+.cta p{color:#e3d6bd;margin-bottom:32px;max-width:560px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px}
+.cta-logo{position:relative;justify-self:center;width:max-content;margin-right:clamp(0px,4vw,70px)}
+.cta-logo::before{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(224,191,128,.4)}
+.cta-logo img{position:relative;width:clamp(170px,17vw,270px);height:auto;aspect-ratio:1;object-fit:contain;border-radius:50%;background:#fff;padding:14px;border:2px solid var(--gold-light);box-shadow:0 30px 70px -26px rgba(0,0,0,.7)}
+footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;padding:28px 0}
+footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- Mobile bar ---------- */
+.mbar{display:none}
+
+/* ---------- Reveal ---------- */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  *{animation:none!important;transition:none!important}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:960px){
+  .stories{grid-template-columns:1fr}
+  .story.featured{grid-template-columns:1fr}
+  .story.featured .photo{max-width:340px;margin-right:14px}
+  .share-grid{grid-template-columns:1fr}
+  .nav-links .hide-m{display:none}
+  .hero .container{grid-template-columns:1fr}
+  .hero-mark{display:none}
+}
+@media (max-width:760px){
+  .container{width:calc(100% - 32px)}
+  .row2{grid-template-columns:1fr}
+  .cta .container{grid-template-columns:1fr}
+  .cta-logo{order:-1;justify-self:start;margin:16px 0 0 16px}
+  .cta-logo img{width:130px}
+  .mbar{display:flex;position:fixed;inset:auto 0 0 0;z-index:60;background:rgba(42,15,18,.96);backdrop-filter:blur(10px);justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(224,191,128,.3)}
+  .mbar a{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+  .mbar svg{width:22px;height:22px;fill:#fff}
+  footer{padding-bottom:96px}
 }
 </style>
-
 </head>
 <body>
-  <div class="bg-decor" aria-hidden="true">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="orb orb4"></div>
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M12 3.2 3.5 10.1c-.4.3-.6.9-.3 1.4.2.4.6.6 1 .6H6V20a1 1 0 0 0 1 1h4v-5.5a1 1 0 0 1 1-1 1 1 0 0 1 1 1V21h4a1 1 0 0 0 1-1v-8h1.8c.4 0 .8-.2 1-.6.3-.5.1-1.1-.3-1.4L12 3.2Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/></symbol>
+</svg>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="container nav-inner">
+    <div class="nav-links">
+      <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.8l9 7.4M5.5 9.6V20h4.8v-5.6h3.4V20h4.8V9.6"/></svg>Home</a>
+      <a class="hide-m" href="destinations/All_packages/Explore_Destination.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.8 8.2-2.1 5.5-5.5 2.1 2.1-5.5Z"/></svg>All Destinations</a>
+      <a class="hide-m" href="#stories"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1Z"/></svg>Stories</a>
+      <a class="hide-m" href="#share"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M20 4h-9M20 4v9"/></svg>Share Yours</a>
+    </div>
+    <span class="badge">Feedback</span>
   </div>
-  <div class="wrap">
-    <a class="back-link" href="index.html">Back to home</a>
+</nav>
 
-    <h1>Traveler Feedback</h1>
-    <p class="intro">
-      What our travelers say after coming home — real trips, real words, shared with their permission.
-    </p>
+<header class="hero">
+  <div class="container">
+    <div>
+      <span class="eyebrow">Traveller Stories</span>
+      <h1>Words from <em>the road</em></h1>
+      <p class="intro">What our travellers say after coming home — real trips, real words, shared with their permission.</p>
+      <div class="rule"></div>
+    </div>
+    <svg class="hero-mark" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M18 62c0-22 12-38 30-42v14c-9 3-14 10-14 18h14v38H18V62Zm54 0c0-22 12-38 30-42v14c-9 3-14 10-14 18h14v38H72V62Z"/>
+    </svg>
+  </div>
+</header>
 
-    <div class="testimonials" id="testimonials-container"></div>
+<main>
+<section class="section" id="stories">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">What Travellers Say</span>
+      <h2>Stories from our guests</h2>
+      <p>Every story below comes from a traveller who has been on a Vihara Setu journey.</p>
+    </div>
+    <div class="stories" id="testimonials-container"></div>
+    <p class="permission">Shared with each traveller's permission.</p>
+  </div>
+</section>
 
-    <div class="cta">
-      <p>Been on a trip with us? We'd love to hear how it went.</p>
-      <a class="btn" href="mailto:info@viharasetu.co.in">Share Your Feedback</a>
+<section class="section share" id="share">
+  <div class="container share-grid">
+    <div class="share-copy reveal">
+      <span class="eyebrow">Your Turn</span>
+      <h2>Been on a trip with us?<br>We'd love to hear how it went.</h2>
+      <p>Your words help other travellers choose well — and help us keep improving every journey.</p>
+      <ul class="share-points">
+        <li>It takes less than two minutes</li>
+        <li>We'll only publish your story with your permission</li>
+        <li>Prefer to talk? Message us on WhatsApp instead</li>
+      </ul>
     </div>
 
+    <form class="form reveal" id="fb-form" novalidate>
+      <div class="row2">
+        <div class="field"><label for="fb-name">Your name</label><input id="fb-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="fb-trip">Trip / destination</label><input id="fb-trip" name="trip" placeholder="e.g. Varanasi, Kerala"></div>
+      </div>
+      <div class="field">
+        <span class="lbl" id="rate-lbl">Your rating</span>
+        <div class="rate" id="rate" role="radiogroup" aria-labelledby="rate-lbl"></div>
+      </div>
+      <div class="field"><label for="fb-msg">Your experience</label><textarea id="fb-msg" name="message" required placeholder="What stayed with you? The places, the planning, the people…"></textarea></div>
+      <div class="form-actions">
+        <button class="btn btn-gold" type="submit"><svg><use href="#i-mail"/></svg>Send by Email</button>
+        <button class="btn btn-ghost" type="button" id="fb-wa"><svg><use href="#i-wa"/></svg>Send on WhatsApp</button>
+      </div>
+      <p class="form-note" id="fb-note" role="status" aria-live="polite">This opens your email or WhatsApp with your message ready to send.</p>
+    </form>
   </div>
+</section>
 
-  <script>
-    // Pool of all available testimonials — a random 6 are shown on every page load/refresh.
-    const allTestimonials = [
-      {
-        name: "Bimmi & co.",
-        trip: "Ujjain, Omkareshwar",
-        slug: "bimmi-co",
-        color: "#BB5A34",
-        quote: "Our trip was exceptionally well organized from start to finish. Every detail—from tickets, transportation, and sightseeing to the timing of each activity—was thoughtfully planned and executed. The valuable inputs and seamless coordination made the entire journey smooth, enjoyable, and affordable. A truly memorable travel experience. Highly recommended! 🌟😊🚗✈️."
-      }
-    ];
+<section class="section cta" id="contact">
+  <div class="container reveal">
+    <div>
+      <span class="eyebrow">Plan Your Journey</span>
+      <h2>Ready for your own story?</h2>
+      <p>Tell us where you'd like to go — we'll shape the route, pace and stays around you.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="https://wa.me/919885180515" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Chat on WhatsApp</a>
+        <a class="btn btn-ghost" href="mailto:info@viharasetu.co.in"><svg><use href="#i-mail"/></svg>Email Us</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>Follow on Instagram</a>
+      </div>
+    </div>
+    <div class="cta-logo"><img src="images/new_Logo.jpg" alt="Viharasetu logo" width="270" height="270" loading="lazy"></div>
+  </div>
+</section>
+</main>
 
-    function shuffle(array) {
-      const arr = array.slice();
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
+<footer><div class="container">© Vihara Setu · <a href="index.html">Back to Home</a></div></footer>
 
-    function initials(name) {
-      return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    }
+<nav class="mbar" aria-label="Quick contact">
+  <a href="index.html" aria-label="Home"><svg><use href="#i-home"/></svg></a>
+  <a href="tel:+919885180515" aria-label="Call us"><svg><use href="#i-call"/></svg></a>
+  <a href="https://wa.me/919885180515" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+  <a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
+  <a href="index.html#contact" aria-label="Enquiry form"><svg><use href="#i-mail"/></svg></a>
+</nav>
 
-    function renderTestimonial(t) {
-      const photoPath = `images/testimonials/${t.slug}.jpg`;
-      return `
-        <div class="testimonial">
-          <div class="top-row">
-            <div class="avatar">
-              <img src="${photoPath}" alt="${t.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <svg style="display:none" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg"><rect width="84" height="84" fill="${t.color}"/><text x="42" y="52" font-family="Playfair Display, serif" font-size="32" fill="#fff" text-anchor="middle">${initials(t.name)}</text></svg>
-            </div>
-            <div>
-              <div class="reviewer-name">${t.name}</div>
-              <div class="reviewer-trip">${t.trip}</div>
-            </div>
-          </div>
-          <div class="stars">★★★★★</div>
-          <p class="quote">"${t.quote}"</p>
-        </div>
-      `;
-    }
+<script>
+/* ---- Nav background on scroll ---- */
+(function(){
+  var nav=document.getElementById('nav');
+  function f(){nav.classList.toggle('scrolled',window.scrollY>40)}
+  f();addEventListener('scroll',f,{passive:true});
+})();
 
-    const container = document.getElementById('testimonials-container');
-    const selected = shuffle(allTestimonials).slice(0, 6);
-    container.innerHTML = selected.map(renderTestimonial).join('');
+/* ---- Stories ----
+   Add more testimonials to this list. Photos go in images/testimonials/<slug>.jpg
+   (a coloured initial is shown if the photo is missing). The first one is shown large;
+   a random mix of up to 6 is shown on each visit. */
+var TESTIMONIALS=[
+  {
+    name:"Bimmi & co.",
+    trip:"Ujjain, Omkareshwar",
+    slug:"bimmi-co",
+    color:"#4a141b",
+    quote:"Our trip was exceptionally well organized from start to finish. Every detail—from tickets, transportation, and sightseeing to the timing of each activity—was thoughtfully planned and executed. The valuable inputs and seamless coordination made the entire journey smooth, enjoyable, and affordable. A truly memorable travel experience. Highly recommended!"
+  }
+];
 
-    // Pop-in animation as each card scrolls into view
-    const cards = document.querySelectorAll('.testimonial');
-    const cardList = Array.from(cards);
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const delay = (cardList.indexOf(el) % 2) * 100;
-          setTimeout(() => el.classList.add('pop-in'), delay);
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.15 });
+(function(){
+  var box=document.getElementById('testimonials-container');
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+  function initials(n){return n.split(' ').map(function(w){return w[0]}).join('').replace(/[^A-Za-z]/g,'').slice(0,2).toUpperCase()}
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  var stars='<div class="stars" aria-label="5 out of 5 stars">'+new Array(6).join('<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg>')+'</div>';
+  function avatar(t){
+    var ph='<svg viewBox="0 0 84 84" aria-hidden="true"><rect width="84" height="84" fill="'+esc(t.color)+'"/><text x="42" y="54" font-family="Playfair Display, serif" font-size="32" fill="#fff" text-anchor="middle">'+esc(initials(t.name))+'</text></svg>';
+    return '<div class="avatar"><img src="images/testimonials/'+esc(t.slug)+'.jpg" alt="'+esc(t.name)+'" loading="lazy" onerror="this.remove()">'+ph+'</div>';
+  }
+  function card(t,featured){
+    var photo=featured
+      ? '<div class="photo"><img src="images/testimonials/'+esc(t.slug)+'.jpg" alt="'+esc(t.name)+'" onerror="this.outerHTML=\'<div class=ph style=background:'+esc(t.color)+'>'+esc(initials(t.name))+'</div>\'"></div>'
+      : '';
+    var body='<div>'+stars+'<p class="quote">“'+esc(t.quote)+'”</p>'+
+      '<div class="reviewer">'+avatar(t)+'<div><div class="reviewer-name">'+esc(t.name)+'</div><div class="reviewer-trip">'+esc(t.trip)+'</div></div></div></div>';
+    return '<article class="story reveal'+(featured?' featured':'')+'">'+photo+body+'</article>';
+  }
+  var list=TESTIMONIALS.slice(1);
+  var picked=[TESTIMONIALS[0]].concat(shuffle(list).slice(0,5));
+  box.innerHTML=picked.map(function(t,i){return card(t,i===0)}).join('');
+  if(picked.length>1) box.classList.add('multi');
+})();
 
-    cards.forEach(card => observer.observe(card));
-  </script>
+/* ---- Reveal on scroll ---- */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
 
-<div class="mobile-contact-bar" aria-label="Quick contact" role="navigation">
-  <a href="index.html" aria-label="Home">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3.2 3.5 10.1c-.4.3-.6.9-.3 1.4.2.4.6.6 1 .6H6V20a1 1 0 0 0 1 1h4v-5.5a1 1 0 0 1 1-1 1 1 0 0 1 1 1V21h4a1 1 0 0 0 1-1v-8h1.8c.4 0 .8-.2 1-.6.3-.5.1-1.1-.3-1.4L12 3.2Z" fill="#fff"/></svg>
-  </a>
-  <a href="tel:+919885180515" aria-label="Call us">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z" fill="#fff"/></svg>
-  </a>
-  <a href="https://wa.me/919885180515" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z" fill="#fff"/></svg>
-  </a>
-  <a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Instagram">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" fill="#fff"/></svg>
-  </a>
-  <a href="index.html#contact" aria-label="Enquiry form">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.02a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z" fill="#fff"/></svg>
-  </a>
-</div>
+/* ---- Share form: opens the visitor's email app or WhatsApp with the message ready ---- */
+(function(){
+  var rate=document.getElementById('rate'), value=0;
+  for(var i=1;i<=5;i++){
+    var b=document.createElement('button');
+    b.type='button'; b.setAttribute('role','radio'); b.setAttribute('aria-checked','false'); b.setAttribute('aria-label',i+' star'+(i>1?'s':''));
+    b.dataset.v=i;
+    b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg>';
+    rate.appendChild(b);
+  }
+  function paint(){Array.prototype.forEach.call(rate.children,function(b){var on=+b.dataset.v<=value;b.classList.toggle('on',on);b.setAttribute('aria-checked',String(+b.dataset.v===value))})}
+  rate.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;value=+b.dataset.v;paint()});
 
+  var form=document.getElementById('fb-form'), note=document.getElementById('fb-note');
+  function message(){
+    var n=form.name.value.trim(), t=form.trip.value.trim(), m=form.message.value.trim();
+    if(!n||!m){note.textContent='Please add your name and a few words about your trip.';(n?form.message:form.name).focus();return null}
+    return 'Name: '+n+'\nTrip: '+(t||'-')+'\nRating: '+(value?value+'/5':'-')+'\n\n'+m;
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var body=message(); if(!body) return;
+    location.href='mailto:info@viharasetu.co.in?subject='+encodeURIComponent('Traveller feedback'+(form.trip.value?' — '+form.trip.value.trim():''))+'&body='+encodeURIComponent(body);
+    note.textContent='Opening your email app… if nothing opens, write to info@viharasetu.co.in.';
+  });
+  document.getElementById('fb-wa').addEventListener('click',function(){
+    var body=message(); if(!body) return;
+    window.open('https://wa.me/919885180515?text='+encodeURIComponent('Traveller feedback\n\n'+body),'_blank','noopener');
+    note.textContent='Opening WhatsApp…';
+  });
+})();
+</script>
+<script src="js/enquiry-chat.js" defer></script>
 </body>
 </html>
