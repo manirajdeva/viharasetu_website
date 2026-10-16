@@ -261,3 +261,26 @@ body{ font-family:var(--ui); color:var(--ink); background:var(--ivory); -webkit-
 .vs-chute-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 10px 14px rgba(4,30,34,.35)); }
 #vs-loader.vs-fail .vs-status { margin-top: 190px; }
 
+
+/* logo badge */
+.vs-logo { position: relative; align-self: flex-start; display: block; background: #fff; border-radius: 16px; padding: 10px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.vs-logo img { display: block; width: clamp(200px, 22vw, 290px); height: auto; }
+
+
+/* natural clouds: many soft puffs, wispy edges from an SVG turbulence filter */
+.vs-cloud {
+  background:
+    radial-gradient(closest-side at 18% 62%, rgba(255,255,255,.95), rgba(255,255,255,0)),
+    radial-gradient(closest-side at 34% 40%, rgba(255,255,255,1), rgba(255,255,255,0)),
+    radial-gradient(closest-side at 52% 30%, rgba(255,255,255,1), rgba(255,255,255,0)),
+    radial-gradient(closest-side at 68% 44%, rgba(255,255,255,.98), rgba(255,255,255,0)),
+    radial-gradient(closest-side at 84% 64%, rgba(255,250,240,.9), rgba(255,255,255,0)),
+    radial-gradient(closest-side at 50% 72%, rgba(255,236,205,.75), rgba(255,255,255,0));
+  background-repeat: no-repeat;
+  background-size: 38% 70%, 44% 90%, 42% 90%, 40% 80%, 36% 64%, 90% 55%;
+  background-position: 0% 78%, 22% 30%, 50% 8%, 76% 34%, 100% 82%, 50% 100%;
+}
+.vs-far  { filter: url(#vs-cf1); }
+.vs-mid  { filter: url(#vs-cf2); }
+.vs-near { filter: url(#vs-cf3); }
+.vs-far { opacity: .5; } .vs-mid { opacity: .7; } .vs-near { opacity: .85; }
