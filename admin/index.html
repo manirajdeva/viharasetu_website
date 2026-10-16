@@ -8,6 +8,7 @@
 <link rel="icon" type="image/png" href="../images/fevicon.png" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link href="css/admin.css" rel="stylesheet" />
+<link href="css/login-loader.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -52,6 +53,7 @@
 
 <div class="toast-host" id="toastHost"></div>
 
+<script src="js/login-loader.js?v=1"></script>
 <script src="js/utils.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/api.js"></script>
@@ -89,11 +91,17 @@
 
     loginBtn.disabled = true;
     loginBtn.textContent = 'Logging in…';
+    VSLoader.show();
     try {
       const data = await Api.login(username, password);
       Auth.saveSession(data);
+      VSLoader.show('Welcome aboard!');
       location.href = 'portal.html';
     } catch (err) {
+      VSLoader.fail(err.message, () => {
+        const pw = document.getElementById('password');
+        pw.value = ''; pw.focus();
+      });
       errorBox.textContent = err.message || 'Login failed. Please try again.';
       loginBtn.disabled = false;
       loginBtn.textContent = 'Log in';

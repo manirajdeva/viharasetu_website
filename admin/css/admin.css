@@ -45,9 +45,36 @@ a { color: inherit; text-decoration: none; }
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   background: var(--sidebar);
-  padding: 20px;
+  padding: 20px clamp(20px, 8vw, 120px);
+}
+/* Full image shown uncropped in the area left of the login card */
+.auth-shell { position: relative; overflow: hidden; }
+/* Blurred copy of the photo behind everything */
+.auth-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../../images/Login_images/Fly.PNG') center / cover no-repeat;
+  filter: blur(18px);
+  transform: scale(1.1);
+  z-index: 0;
+}
+.auth-shell::before {
+  z-index: 1;
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  right: calc(390px + clamp(20px, 8vw, 120px) * 2);
+  background: url('../../images/Login_images/Fly.PNG') center / contain no-repeat;
+}
+.auth-card { position: relative; z-index: 2; }
+@media (max-width: 900px) {
+  .auth-shell::before { display: none; }
+}
+@media (max-width: 640px) {
+  .auth-shell { justify-content: center; padding: 20px; }
 }
 .auth-card {
   background: var(--card);
