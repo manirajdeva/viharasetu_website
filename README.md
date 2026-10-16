@@ -80,7 +80,7 @@ fails. That is expected.
 
 ```
 index.html                     Homepage: hero slideshow, Signature Journeys (story + enquiry popups),
-                               packages, testimonials, contact form, winter promo popup
+                               packages, testimonials, contact form, opening plane intro
 feedback.html                  Traveler feedback page (mailto + WhatsApp links, no backend)
 js/airplane-loader.js          Blueprint airplane loading overlay (window.AirplaneLoader), used by every page
 admin.html                     Redirect stub → admin/ (so old bookmarks keep working)
@@ -88,7 +88,9 @@ CNAME                          GitHub Pages custom domain (viharasetu.co.in)
 .nojekyll                      Disables Jekyll processing on GitHub Pages
 
 admin/                         Admin portal
-  index.html                   Login page (entry point; /admin/ lands here)
+  index.html                   Login page (entry point; /admin/ lands here): sunset brand panel + sign-in form,
+                               plane / parachute animation while credentials are checked
+  css/login-premium.css        Login page styles (brand panel, form, credential-check animation)
   portal.html                  App shell: sidebar + all views
   css/admin.css                Portal design system
   js/api.js                    API wrapper: picks live vs mock backend, attaches the session token
@@ -174,11 +176,13 @@ refactor_css.py, update_all_packages_css.py   Old one-off bulk-edit scripts (see
   visitor sees their Enquiry ID (e.g. `VH-20260911-01`). Each submission is also logged in the
   `site_enquirys` table with its timestamp and `source`. If the API rejects a field, the visitor sees
   the reason (for example "Enter a valid phone number.").
-- **Winter promo popup**: the winter getaways banner opens once per browser session when the
-  homepage loads (`sessionStorage` key `vih_promo_winter_seen`). It closes with ×, a click outside,
-  or Esc. The image (`images/winter.webp`, with `images/winter.jpg` as a fallback) is fetched only by
-  the popup script, and the popup waits until the image has loaded. To run a different promo, swap
-  those two images and update the `alt` text.
+- **Opening intro**: when the homepage opens, the Viharasetu plane (`images/intro-plane.webp`, a
+  cut-out of the airplane photo) flies across a sky-blue scene with drifting clouds while the name,
+  an arched bridge and the tagline appear. It runs for 4 s (3.5 s plus a 0.5 s fade) and has a **Skip**
+  button. It plays once per browser session (`sessionStorage` key `vh_intro_seen`); add `?intro` to the
+  URL to see it again. It honours `prefers-reduced-motion`. It replaces the blueprint page loader on the
+  homepage only. To remove it, delete the `vhIntro` block at the top of `<body>` in `index.html` and
+  `images/intro-plane.webp`. The winter promo popup has been retired.
 
 ### Destination packages
 
@@ -299,6 +303,9 @@ At least one admin must always exist, and no one can delete their own account.
 
 - Logging in returns a session token that expires after **6 hours**. It is kept in `sessionStorage`,
   so closing the tab ends the session. An expired token sends the user back to the login page.
+- The login page (`admin/index.html`) shows the plane taking off while the credentials are checked,
+  "Welcome aboard" on success, and a parachute with the error message on failure. The artwork is in
+  `images/Login_images/` (`Fly.PNG` background, `viharasetu-plane.webp`, `parachute.png`, `admin-logo.jpg`).
 - Passwords are stored as bcrypt hashes. There is **no self-service password reset**: "Forgot
   password?" tells the user to ask an admin, who resets it under **Users → Edit**.
 - To create the first admin, or to recover when no admin can log in, run
@@ -340,7 +347,7 @@ The API URL is set in two places. If the backend ever moves, update both:
 
 Each release is an annotated `vMAJOR.MINOR.PATCH` tag on `main` with a matching
 [GitHub Release](https://github.com/manirajdeva/viharasetu_website/releases) that lists what was
-added and changed. The current release is **v3.8.0** (2026-10-11).
+added and changed. The current release is **v3.9.0** (2026-10-16).
 
 - **MAJOR**: a platform change. For example, v3.0.0 moved the backend from Google Sheets to MySQL.
 - **MINOR**: new features, such as new form fields or homepage sections.

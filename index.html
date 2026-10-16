@@ -1203,7 +1203,130 @@
 
 </head>
 <body>
-<script src="js/airplane-loader.js?v=1" data-page-load></script>
+<!-- Opening intro: the Viharasetu plane flies across a cloudy sky for 4 seconds.
+     Shown once per browser session (add ?intro to the URL to see it again).
+     To remove it, delete this block and images/intro-plane.webp. -->
+<style>
+  #vhIntro { display: none; position: fixed; inset: 0; z-index: 3000; overflow: hidden; background:
+      radial-gradient(70% 40% at 80% 100%, rgba(255,226,170,.85), rgba(255,200,130,0) 70%),
+      linear-gradient(180deg, #2c78d2 0%, #5aa7ea 45%, #a9d3f2 78%, #e6f1fb 100%); }
+  #vhIntro.vhi-on { display: block; animation: vhi-out .5s 3.5s ease forwards; }
+  @keyframes vhi-out { to { opacity: 0; visibility: hidden; } }
+
+  .vhi-cloud { position: absolute; left: 100%; pointer-events: none; will-change: transform; backface-visibility: hidden;
+    animation: vhi-drift linear forwards; }
+  .vhi-cloud > i { display: block; width: 100%; height: 100%;
+    background:
+      radial-gradient(closest-side at 18% 62%, rgba(255,255,255,.95), rgba(255,255,255,0)),
+      radial-gradient(closest-side at 34% 40%, #fff, rgba(255,255,255,0)),
+      radial-gradient(closest-side at 52% 30%, #fff, rgba(255,255,255,0)),
+      radial-gradient(closest-side at 68% 44%, rgba(255,255,255,.98), rgba(255,255,255,0)),
+      radial-gradient(closest-side at 84% 64%, rgba(255,250,240,.9), rgba(255,255,255,0)),
+      radial-gradient(closest-side at 50% 72%, rgba(235,243,252,.8), rgba(255,255,255,0));
+    background-repeat: no-repeat;
+    background-size: 38% 70%, 44% 90%, 42% 90%, 40% 80%, 36% 64%, 90% 55%;
+    background-position: 0% 78%, 22% 30%, 50% 8%, 76% 34%, 100% 82%, 50% 100%; }
+  .vhi-far  { z-index: 1; opacity: .6; }  .vhi-far  > i { filter: url(#vhi-cf1); }
+  .vhi-mid  { z-index: 2; opacity: .8; }  .vhi-mid  > i { filter: url(#vhi-cf2); }
+  .vhi-near { z-index: 6; opacity: .9; }  .vhi-near > i { filter: url(#vhi-cf3); }
+  @keyframes vhi-drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(calc(-100vw - 700px),0,0); } }
+  .vhi-c1 { top: 10%; width: 260px; height: 110px; animation-duration: 5s; }
+  .vhi-c2 { top: 26%; width: 340px; height: 140px; animation-duration: 4.2s; animation-delay: -.6s; }
+  .vhi-c3 { top: 62%; width: 300px; height: 120px; animation-duration: 4.6s; animation-delay: -1s; }
+  .vhi-c4 { top: 40%; width: 420px; height: 170px; animation-duration: 3.4s; animation-delay: -.2s; }
+  .vhi-c5 { top: 74%; width: 640px; height: 240px; animation-duration: 2.8s; animation-delay: -.3s; }
+  .vhi-c6 { top: -4%; width: 520px; height: 200px; animation-duration: 3.2s; animation-delay: -.9s; }
+
+  .vhi-bank { position: absolute; left: -5%; right: -5%; bottom: -60px; height: 34vh; z-index: 3; will-change: transform; backface-visibility: hidden;
+    animation: vhi-bank 4s linear forwards; }
+  .vhi-bank > i { display: block; width: 100%; height: 100%; filter: url(#vhi-cf3);
+    background:
+      radial-gradient(closest-side at 10% 70%, #fff, rgba(255,255,255,0)), radial-gradient(closest-side at 28% 55%, #fff, rgba(255,255,255,0)),
+      radial-gradient(closest-side at 46% 72%, #fff, rgba(255,255,255,0)), radial-gradient(closest-side at 64% 52%, #fff, rgba(255,255,255,0)),
+      radial-gradient(closest-side at 82% 68%, #fff, rgba(255,255,255,0)), radial-gradient(closest-side at 96% 56%, #fff, rgba(255,255,255,0));
+    background-size: 30% 90%, 34% 100%, 32% 90%, 34% 100%, 32% 90%, 30% 100%;
+    background-repeat: no-repeat; background-position: 0 100%, 18% 100%, 38% 100%, 58% 100%, 78% 100%, 100% 100%; }
+  @keyframes vhi-bank { from { transform: translate3d(0,0,0); } to { transform: translate3d(-6%,0,0); } }
+
+  .vhi-stage { position: absolute; z-index: 4; top: 50%; left: 0; width: min(780px, 82vw); margin-top: calc(min(780px, 82vw) * -.1);
+    will-change: transform; backface-visibility: hidden;
+    animation: vhi-fly 3.5s cubic-bezier(.4,0,.3,1) forwards; }
+  .vhi-plane { display: block; width: 100%; height: auto; filter: drop-shadow(0 22px 20px rgba(10,50,100,.28)); will-change: transform;
+    animation: vhi-bob 2.4s ease-in-out infinite; }
+  @keyframes vhi-fly { from { transform: translate3d(-110%,0,0); } to { transform: translate3d(calc(100vw + 30px),0,0); } }
+  @keyframes vhi-bob { 0%,100% { transform: translate3d(0,0,0) rotate(-.4deg); } 50% { transform: translate3d(0,-9px,0) rotate(.5deg); } }
+  .vhi-trail { position: absolute; right: 96%; height: 4px; border-radius: 4px; z-index: 3; filter: blur(1.5px);
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9)); }
+  .vhi-t1 { top: 62%; width: 60%; } .vhi-t2 { top: 70%; width: 42%; opacity: .7; }
+
+  .vhi-brand { will-change: opacity; position: absolute; z-index: 7; left: 0; right: 0; bottom: 10vh; text-align: center;
+    font-family: 'Cormorant Garamond', Georgia, serif; opacity: 0; animation: vhi-in .8s .4s ease forwards; }
+  .vhi-brand b { display: block; font-size: clamp(38px, 6.4vw, 72px); font-weight: 700; letter-spacing: .05em; line-height: 1.05;
+    color: #0a5566; text-shadow: 0 0 18px rgba(255,255,255,.95), 0 0 6px rgba(255,255,255,.9), 0 2px 0 rgba(255,255,255,.7); }
+  .vhi-brand b em { font-style: normal; color: #f08a10;
+    background: linear-gradient(180deg, #ffb53d 0%, #f08a10 55%, #d96a06 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,.95)) drop-shadow(0 1px 0 rgba(255,255,255,.8)); }
+  .vhi-bridge { display: block; width: clamp(200px, 30vw, 340px); height: auto; margin: 6px auto 4px; filter: drop-shadow(0 0 6px rgba(255,255,255,.9)); }
+  .vhi-deck, .vhi-arch { stroke-dasharray: 340; stroke-dashoffset: 340; animation: vhi-draw 1.4s .7s ease forwards; }
+  .vhi-arch { animation-delay: 1.1s; }
+  @keyframes vhi-draw { to { stroke-dashoffset: 0; } }
+  .vhi-brand span { display: block; margin-top: 4px; font-size: clamp(16px, 2.1vw, 24px); font-style: italic; font-weight: 700; letter-spacing: .08em;
+    color: #c85a05; text-shadow: 0 0 12px rgba(255,255,255,.95), 0 0 4px rgba(255,255,255,.9); }
+  @keyframes vhi-in { to { opacity: 1; } }
+  .vhi-skip { position: absolute; z-index: 8; top: 18px; right: 18px; padding: 8px 16px; border: 1px solid rgba(255,255,255,.7); border-radius: 999px;
+    background: rgba(255,255,255,.18); color: #fff; font: 600 13px/1 system-ui, sans-serif; letter-spacing: .06em; cursor: pointer; }
+  .vhi-skip:hover { background: rgba(255,255,255,.32); }
+  @media (prefers-reduced-motion: reduce) {
+    .vhi-cloud, .vhi-bank, .vhi-plane { animation: none; }
+    .vhi-stage { animation: none; left: 50%; transform: translateX(-50%); }
+    #vhIntro.vhi-on { animation-delay: 1.6s; }
+  }
+</style>
+<div id="vhIntro" aria-hidden="true">
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <filter id="vhi-cf1" x="-20%" y="-40%" width="140%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.011 0.0176" numOctaves="4" seed="3"/><feDisplacementMap in="SourceGraphic" scale="70" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="vhi-cf2" x="-20%" y="-40%" width="140%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.016 0.0256" numOctaves="4" seed="8"/><feDisplacementMap in="SourceGraphic" scale="55" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="vhi-cf3" x="-20%" y="-40%" width="140%" height="180%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.0128" numOctaves="4" seed="12"/><feDisplacementMap in="SourceGraphic" scale="90" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="2.5"/></filter>
+  </defs></svg>
+  <div class="vhi-cloud vhi-far vhi-c1"><i></i></div><div class="vhi-cloud vhi-far vhi-c2"><i></i></div><div class="vhi-cloud vhi-mid vhi-c3"><i></i></div>
+  <div class="vhi-cloud vhi-mid vhi-c4"><i></i></div><div class="vhi-cloud vhi-near vhi-c5"><i></i></div><div class="vhi-cloud vhi-near vhi-c6"><i></i></div>
+  <div class="vhi-bank"><i></i></div>
+  <div class="vhi-stage">
+    <span class="vhi-trail vhi-t1"></span><span class="vhi-trail vhi-t2"></span>
+    <img class="vhi-plane" src="images/intro-plane.webp" width="1400" height="353" alt="" decoding="async">
+  </div>
+  <div class="vhi-brand"><b>Vihara<em>Setu</em></b><svg class="vhi-bridge" viewBox="0 0 320 54" aria-hidden="true">
+      <defs><linearGradient id="vhiBg" x1="0" x2="1"><stop offset="0" stop-color="#0b6a7a"/><stop offset=".5" stop-color="#f39a1e"/><stop offset="1" stop-color="#0b6a7a"/></linearGradient></defs>
+      <g fill="none" stroke="url(#vhiBg)" stroke-linecap="round" stroke-linejoin="round">
+        <path class="vhi-deck" d="M4 24 H316" stroke-width="3.2"/>
+        <path class="vhi-deck" d="M4 17 H316" stroke-width="1.4" opacity=".7"/>
+        <path class="vhi-arch" d="M20 24 Q52 52 84 24 M84 24 Q116 52 148 24 M148 24 Q180 52 212 24 M212 24 Q244 52 276 24" stroke-width="2.6"/>
+        <path class="vhi-arch" d="M2 24 Q10 36 20 24 M276 24 Q290 36 318 24" stroke-width="2" opacity=".8"/>
+        <path d="M20 24 V17 M84 24 V17 M148 24 V17 M212 24 V17 M276 24 V17" stroke-width="2.2"/>
+      </g>
+      <circle cx="160" cy="9" r="5" fill="#f39a1e"/>
+    </svg><span>From Aastha to Eternal Anubhav</span></div>
+  <button type="button" class="vhi-skip">Skip</button>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('vhIntro');
+  var force = /[?&]intro\b/.test(location.search);
+  var seen = false;
+  try { seen = sessionStorage.getItem('vh_intro_seen') === '1'; sessionStorage.setItem('vh_intro_seen', '1'); } catch (e) {}
+  if (seen && !force) { el.parentNode.removeChild(el); return; }
+  var html = document.documentElement, done = false;
+  html.style.overflow = 'hidden';
+  el.className = 'vhi-on';
+  function finish() {
+    if (done) return; done = true;
+    html.style.overflow = '';
+    if (el.parentNode) el.parentNode.removeChild(el);
+  }
+  el.querySelector('.vhi-skip').addEventListener('click', finish);
+  setTimeout(finish, 4000);
+})();
+</script>
 
 <!-- NAV -->
 <nav>
@@ -2270,7 +2393,7 @@ function sendEnquiry(formData) {
 
   const backdrop = document.createElement('div');
   backdrop.className = 'footer-popup-backdrop';
-  backdrop.style.zIndex = '1000'; // above the mobile contact bar (999), below the promo popup (1100)
+  backdrop.style.zIndex = '1000'; // above the mobile contact bar (999)
   backdrop.innerHTML = '<div class="footer-popup" role="dialog" aria-modal="true" aria-labelledby="jmTitle"><button type="button" class="footer-popup-close" aria-label="Close">✕</button><div class="jm-content"></div></div>';
   document.body.appendChild(backdrop);
   const box = backdrop.querySelector('.footer-popup');
@@ -2579,111 +2702,6 @@ function sendEnquiry(formData) {
   </a>
 </div>
 
-<!-- Winter promo popup — shown once per browser session when the homepage opens.
-     To retire it after the season, delete this block (style + markup + script)
-     and images/winter.webp / images/winter.jpg. -->
-<style>
-  .promo-popup {
-    position: fixed; inset: 0; z-index: 1100;            /* above the mobile contact bar (999) */
-    display: flex; align-items: center; justify-content: center;
-    padding: 16px;
-    background: rgba(26, 22, 15, 0.72);
-    opacity: 0; transition: opacity .3s ease;
-  }
-  .promo-popup[hidden] { display: none; }
-  .promo-popup.is-open { opacity: 1; }
-  .promo-popup__box {
-    position: relative;
-    /* widest that still fits the viewport height at the image's 1672×941 ratio */
-    width: min(960px, 100%, calc((100vh - 32px) * 1.777));
-    transform: translateY(12px) scale(.98); transition: transform .3s ease;
-  }
-  .promo-popup.is-open .promo-popup__box { transform: none; }
-  .promo-popup__img {
-    display: block; width: 100%; height: auto;
-    border-radius: 14px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  }
-  .promo-popup__close {
-    position: absolute; top: -14px; right: -14px;
-    width: 40px; height: 40px; border-radius: 50%; border: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--white); color: var(--ink);
-    font: 400 26px/1 'Jost', sans-serif;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-  }
-  .promo-popup__close:hover,
-  .promo-popup__close:focus-visible { background: var(--saffron); color: var(--white); outline: none; }
-  @media (max-width: 600px) {
-    .promo-popup__close { top: -12px; right: -6px; width: 36px; height: 36px; font-size: 24px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .promo-popup, .promo-popup__box { transition: none; }
-  }
-</style>
-
-<div class="promo-popup" id="promoPopup" role="dialog" aria-modal="true" aria-label="Winter getaways with Viharasetu" hidden>
-  <div class="promo-popup__box">
-    <button type="button" class="promo-popup__close" aria-label="Close">&times;</button>
-    <picture>
-      <source data-srcset="images/winter.webp" type="image/webp">
-      <img class="promo-popup__img" data-src="images/winter.jpg" width="1672" height="941" decoding="async"
-           alt="Winter getaways with Viharasetu: Kashmir, Ladakh, Himachal Pradesh, Uttarakhand, Sikkim, North East, Darjeeling, Auli, Ooty, Coorg and Munnar. Your winter story begins here.">
-    </picture>
-  </div>
-</div>
-
-<script>
-(function () {
-  const SEEN_KEY = 'vih_promo_winter_seen';
-  const popup = document.getElementById('promoPopup');
-  if (!popup) return;
-  try { if (sessionStorage.getItem(SEEN_KEY)) return; } catch (e) { /* storage blocked: just show it */ }
-
-  const img = popup.querySelector('.promo-popup__img');
-  const source = popup.querySelector('source');
-  const closeBtn = popup.querySelector('.promo-popup__close');
-  const startedAt = Date.now();
-  let lastFocus = null;
-  let prevOverflow = '';
-
-  function onKey(e) {
-    if (e.key === 'Escape') close();
-    else if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); } // the only control in the dialog
-  }
-
-  function open() {
-    lastFocus = document.activeElement;
-    prevOverflow = document.body.style.overflow;
-    popup.hidden = false;
-    void popup.offsetWidth;               // commit the hidden→shown change so the fade runs
-    popup.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', onKey);
-    closeBtn.focus({ preventScroll: true });
-    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) { /* ignore */ }
-  }
-
-  function close() {
-    popup.classList.remove('is-open');
-    document.body.style.overflow = prevOverflow;
-    document.removeEventListener('keydown', onKey);
-    setTimeout(() => { popup.hidden = true; }, 300);
-    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
-  }
-
-  closeBtn.addEventListener('click', close);
-  popup.addEventListener('click', (e) => { if (e.target === popup) close(); });
-
-  // The image is only fetched now (not with the page's own images), and the
-  // popup opens once it has loaded — never as an empty frame — and no sooner
-  // than ~1s after the page appears.
-  img.addEventListener('load', () => setTimeout(open, Math.max(0, 1000 - (Date.now() - startedAt))), { once: true });
-  source.srcset = source.dataset.srcset;
-  img.src = img.dataset.src;
-})();
-</script>
 
 </body>
 </html>
