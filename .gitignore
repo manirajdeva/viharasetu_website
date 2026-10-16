@@ -14,3 +14,6 @@ Tidb_pw.txt
 
 # stray root lockfile (real package.json lives in backend/)
 /package-lock.json
+
+# Windows thumbnail cache
+Thumbs.db
