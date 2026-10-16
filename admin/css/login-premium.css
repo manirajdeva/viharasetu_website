@@ -292,3 +292,30 @@ body{ font-family:var(--ui); color:var(--ink); background:var(--ivory); -webkit-
     linear-gradient(180deg, #2f7fd6 0%, #5aa7ea 38%, #a9d3f2 62%, #f8c98e 84%, #f59a52 100%);
 }
 #vs-loader .vs-stars { display: none; }
+
+/* premium sunset backdrop for the brand panel */
+.vs-hero {
+  background:
+    radial-gradient(46% 30% at 72% 76%, rgba(255,236,170,.95) 0%, rgba(255,184,86,.65) 28%, rgba(255,140,60,0) 70%),
+    radial-gradient(120% 60% at 50% 112%, rgba(255,128,64,.75) 0%, rgba(214,74,92,.45) 42%, rgba(0,0,0,0) 72%),
+    linear-gradient(180deg, #1a1446 0%, #3b2468 24%, #7a2f78 46%, #c24a6e 66%, #ee7d5a 84%, #f7b25e 100%);
+}
+.vs-hero::after {  /* soft vignette so text stays crisp */
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(20,10,50,.38), rgba(20,10,50,0) 60%);
+}
+.vs-hero > * { z-index: 1; }
+.vs-stars { opacity: .55; }
+.vs-hero-copy h2 em { color: #ffd08a; }
+.vs-eyebrow { color: #ffd9a0; }
+.vs-hero-foot, .vs-hero-foot i { color: #fff1dc; }
+.vs-bridge { opacity: .5; }
+
+/* loader: same purple-to-orange sunset as the brand panel */
+#vs-loader {
+  background:
+    radial-gradient(46% 30% at 72% 80%, rgba(255,236,170,.95) 0%, rgba(255,184,86,.65) 28%, rgba(255,140,60,0) 70%),
+    radial-gradient(120% 60% at 50% 112%, rgba(255,128,64,.75) 0%, rgba(214,74,92,.45) 42%, rgba(0,0,0,0) 72%),
+    linear-gradient(180deg, #1a1446 0%, #3b2468 24%, #7a2f78 46%, #c24a6e 66%, #ee7d5a 84%, #f7b25e 100%);
+}
+#vs-loader .vs-stars { display: block; opacity: .6; }
