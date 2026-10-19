@@ -1237,6 +1237,77 @@ const Itinerary = (() => {
 
   /* ---------- layout ---------- */
 
+  /* ---------- "Add table" dialog: pick rows and columns, fill the cells, insert ---------- */
+
+  function openTableDialog() {
+    const ta = $('#it-text');
+    const wrap = document.createElement('div');
+    wrap.className = 'itin-tbl-bd';
+    wrap.innerHTML = `
+      <div class="itin-tbl" role="dialog" aria-modal="true" aria-label="Add table">
+        <div class="itin-tbl-head"><b>Add table</b><button type="button" class="itin-tbl-x" aria-label="Close">×</button></div>
+        <div class="itin-tbl-size">
+          <label>Columns <input type="number" id="tb-cols" min="2" max="8" value="4" /></label>
+          <label>Rows (including the heading row) <input type="number" id="tb-rows" min="2" max="40" value="4" /></label>
+        </div>
+        <div class="itin-tbl-scroll"><div id="tb-grid" class="itin-tbl-grid"></div></div>
+        <div class="hint">The first row is the heading row. Use Tab to move between cells. Empty cells are fine.</div>
+        <div class="itin-tbl-foot">
+          <button type="button" class="btn" id="tb-cancel">Cancel</button>
+          <button type="button" class="btn primary" id="tb-insert">Insert table</button>
+        </div>
+      </div>`;
+    document.body.appendChild(wrap);
+    const q = (sel) => wrap.querySelector(sel);
+    const grid = q('#tb-grid');
+    const clamp = (el, lo, hi) => Math.min(hi, Math.max(lo, parseInt(el.value, 10) || lo));
+    const data = [];   // data[r][c], survives resizing
+
+    function render() {
+      const cols = clamp(q('#tb-cols'), 2, 8), rows = clamp(q('#tb-rows'), 2, 40);
+      grid.style.gridTemplateColumns = 'repeat(' + cols + ', minmax(120px, 1fr))';
+      grid.innerHTML = '';
+      for (let r = 0; r < rows; r++) {
+        data[r] = data[r] || [];
+        for (let c = 0; c < cols; c++) {
+          const inp = document.createElement('input');
+          inp.type = 'text'; inp.value = data[r][c] || '';
+          inp.className = r === 0 ? 'hd' : '';
+          inp.placeholder = r === 0 ? 'Heading ' + (c + 1) : '';
+          inp.setAttribute('aria-label', (r === 0 ? 'Heading ' : 'Row ' + r + ', column ') + (c + 1));
+          inp.addEventListener('input', () => { data[r][c] = inp.value; });
+          grid.appendChild(inp);
+        }
+      }
+    }
+    const close = () => { wrap.remove(); document.removeEventListener('keydown', onKey); ta.focus(); };
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
+    document.addEventListener('keydown', onKey);
+    ['#tb-cols', '#tb-rows'].forEach((s) => q(s).addEventListener('change', render));
+    q('.itin-tbl-x').onclick = close; q('#tb-cancel').onclick = close;
+    wrap.addEventListener('mousedown', (e) => { if (e.target === wrap) close(); });
+    q('#tb-insert').onclick = () => {
+      const cols = clamp(q('#tb-cols'), 2, 8), rows = clamp(q('#tb-rows'), 2, 40);
+      const clean = (v) => String(v || '').replace(/[|\r\n\t]+/g, ' ').trim();
+      const lines = [];
+      for (let r = 0; r < rows; r++) {
+        const cells = []; for (let c = 0; c < cols; c++) cells.push(clean((data[r] || [])[c]));
+        lines.push('| ' + cells.join(' | ') + ' |');
+      }
+      const v = ta.value, a = ta.selectionStart == null ? v.length : ta.selectionStart, b = ta.selectionEnd == null ? a : ta.selectionEnd;
+      const before = v.slice(0, a), after = v.slice(b), NL = '\n';
+      const pre = before && !before.endsWith(NL + NL) ? (before.endsWith(NL) ? NL : NL + NL) : '';
+      const post = after && !after.startsWith(NL + NL) ? (after.startsWith(NL) ? NL : NL + NL) : '';
+      const ins = pre + lines.join(NL) + post;
+      ta.value = before + ins + after;
+      ta.selectionStart = ta.selectionEnd = before.length + ins.length;
+      close();
+      contentChanged();
+    };
+    render();
+    q('#tb-grid input').focus();
+  }
+
   function shell() {
     root().innerHTML = `
       <div class="card">
@@ -1260,7 +1331,10 @@ const Itinerary = (() => {
           </div>
         </div>
         <div class="field">
-          <label for="it-text">Itinerary</label>
+          <div class="itin-labelrow">
+            <label for="it-text">Itinerary</label>
+            <button type="button" class="btn sm" id="it-add-table" title="Insert a table at the cursor">▦ Add table</button>
+          </div>
           <textarea id="it-text" class="itin-text" spellcheck="true" maxlength="${MAX_CHARS + 5000}"
             placeholder="Paste your itinerary here. Supports up to ${MAX_LINES} lines…&#10;&#10;Day 1: Arrival in Goa&#10;- Pickup from Dabolim Airport&#10;Hotel: Taj Fort Aguada&#10;&#10;Day 2 – North Goa Sightseeing&#10;…"></textarea>
           <div class="itin-foot">
@@ -1318,6 +1392,7 @@ const Itinerary = (() => {
       </div>`;
 
     $('#it-text').addEventListener('input', contentChanged);
+    $('#it-add-table').addEventListener('click', openTableDialog);
     ['#it-customer', '#it-footer'].forEach((s) => $(s).addEventListener('input', contentChanged));
     $('#it-watermark').addEventListener('change', contentChanged);
     // Look the enquiry up when an ID is picked from the list, typed and left, or Enter is pressed.

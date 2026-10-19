@@ -581,3 +581,19 @@ table.data-table .cell-link:hover { opacity: .75; }
 .user-status { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
 .user-status.on { background: #e3f3ea; color: #1f6b3a; }
 .user-status.off { background: #f4e4e1; color: #9a2f22; }
+
+/* Add-table dialog (Itinerary) */
+.itin-labelrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.itin-labelrow label { margin: 0; }
+.itin-tbl-bd { position: fixed; inset: 0; background: rgba(20, 18, 14, .55); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 1000; }
+.itin-tbl { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-lg); width: min(860px, 100%); max-height: 92vh; display: flex; flex-direction: column; padding: 18px 20px; gap: 12px; }
+.itin-tbl-head { display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
+.itin-tbl-x { background: none; border: 0; font-size: 26px; line-height: 1; cursor: pointer; color: var(--ink-soft); }
+.itin-tbl-size { display: flex; gap: 18px; flex-wrap: wrap; }
+.itin-tbl-size label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft); }
+.itin-tbl-size input { width: 70px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+.itin-tbl-scroll { overflow: auto; border: 1px solid var(--line); border-radius: 10px; padding: 8px; min-height: 120px; }
+.itin-tbl-grid { display: grid; gap: 6px; }
+.itin-tbl-grid input { min-width: 0; padding: 8px 9px; border: 1px solid var(--line); border-radius: 8px; font: inherit; font-size: 13.5px; }
+.itin-tbl-grid input.hd { background: #F3F5FB; font-weight: 600; border-color: #D5DAEC; }
+.itin-tbl-foot { display: flex; justify-content: flex-end; gap: 10px; }
