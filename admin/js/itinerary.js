@@ -405,7 +405,17 @@ const ItineraryParser = (() => {
     return '';
   }
 
-  return { parse, matchDay, verify };
+  /** Pasted text → rows of cells, or null when it holds no table (pipes, tabs, or one cell per line). */
+  function tableFromText(raw) {
+    const out = [];
+    gatherBlankSeparatedTables(normalizeInput(raw)).split('\n').forEach((l) => {
+      const cells = l.trim() ? tableCells(l.trim()) : null;
+      if (cells && cells.length) out.push(cells);
+    });
+    return out.length >= 2 ? out : null;
+  }
+
+  return { parse, matchDay, verify, tableFromText };
 })();
 
 /* ============================ PDF builder ============================ */
@@ -1248,10 +1258,10 @@ const Itinerary = (() => {
         <div class="itin-tbl-head"><b>Add table</b><button type="button" class="itin-tbl-x" aria-label="Close">×</button></div>
         <div class="itin-tbl-size">
           <label>Columns <input type="number" id="tb-cols" min="2" max="8" value="4" /></label>
-          <label>Rows (including the heading row) <input type="number" id="tb-rows" min="2" max="40" value="4" /></label>
+          <label>Rows (including the heading row) <input type="number" id="tb-rows" min="2" max="60" value="4" /></label>
         </div>
         <div class="itin-tbl-scroll"><div id="tb-grid" class="itin-tbl-grid"></div></div>
-        <div class="hint">The first row is the heading row. Use Tab to move between cells. Empty cells are fine.</div>
+        <div class="hint"><b>Tip:</b> copy a table from ChatGPT, a web page, Word or Excel, click a cell below and paste (Ctrl+V). The whole table fills in. The first row is the heading row.</div>
         <div class="itin-tbl-foot">
           <button type="button" class="btn" id="tb-cancel">Cancel</button>
           <button type="button" class="btn primary" id="tb-insert">Insert table</button>
@@ -1264,7 +1274,7 @@ const Itinerary = (() => {
     const data = [];   // data[r][c], survives resizing
 
     function render() {
-      const cols = clamp(q('#tb-cols'), 2, 8), rows = clamp(q('#tb-rows'), 2, 40);
+      const cols = clamp(q('#tb-cols'), 2, 8), rows = clamp(q('#tb-rows'), 2, 60);
       grid.style.gridTemplateColumns = 'repeat(' + cols + ', minmax(120px, 1fr))';
       grid.innerHTML = '';
       for (let r = 0; r < rows; r++) {
@@ -1280,6 +1290,28 @@ const Itinerary = (() => {
         }
       }
     }
+    // Paste a table copied from ChatGPT, a web page, Word, Excel or a PDF straight into the grid.
+    wrap.addEventListener('paste', (e) => {
+      const cd = e.clipboardData; if (!cd) return;
+      let rows = null;
+      const html = cd.getData('text/html');
+      if (html && /<table/i.test(html)) {
+        const tbl = new DOMParser().parseFromString(html, 'text/html').querySelector('table');
+        if (tbl) rows = Array.from(tbl.rows).map((r) => Array.from(r.cells).map((c) => c.textContent.replace(/\s+/g, ' ').trim()));
+      }
+      const txt = cd.getData('text/plain') || '';
+      if (!rows && /\t/.test(txt)) rows = txt.replace(/\r/g, '').split('\n').filter((l) => l.trim()).map((l) => l.split('\t').map((c) => c.trim()));
+      if (!rows) rows = ItineraryParser.tableFromText(txt);
+      rows = rows && rows.filter((r) => r.some((c) => c));
+      if (!rows || rows.length < 2 || Math.max(...rows.map((r) => r.length)) < 2) return;   // a single value pastes normally
+      e.preventDefault();
+      const cols = Math.min(8, Math.max(...rows.map((r) => r.length)));
+      rows = rows.slice(0, 60);
+      data.length = 0;
+      rows.forEach((r, ri) => { data[ri] = []; for (let c = 0; c < cols; c++) data[ri][c] = r[c] || ''; });
+      q('#tb-cols').value = cols; q('#tb-rows').value = Math.max(2, rows.length);
+      render();
+    });
     const close = () => { wrap.remove(); document.removeEventListener('keydown', onKey); ta.focus(); };
     const onKey = (e) => { if (e.key === 'Escape') close(); };
     document.addEventListener('keydown', onKey);
@@ -1287,7 +1319,7 @@ const Itinerary = (() => {
     q('.itin-tbl-x').onclick = close; q('#tb-cancel').onclick = close;
     wrap.addEventListener('mousedown', (e) => { if (e.target === wrap) close(); });
     q('#tb-insert').onclick = () => {
-      const cols = clamp(q('#tb-cols'), 2, 8), rows = clamp(q('#tb-rows'), 2, 40);
+      const cols = clamp(q('#tb-cols'), 2, 8), rows = clamp(q('#tb-rows'), 2, 60);
       const clean = (v) => String(v || '').replace(/[|\r\n\t]+/g, ' ').trim();
       const lines = [];
       for (let r = 0; r < rows; r++) {
