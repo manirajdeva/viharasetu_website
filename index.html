@@ -906,6 +906,10 @@
 
   .nl-btn:hover { background: #d4a84d; }
 
+  .nl-consent { display: flex; align-items: flex-start; gap: 0.7rem; margin: 0.2rem 0 1.1rem; font-size: 0.82rem; line-height: 1.55; color: rgba(255,255,255,0.78); cursor: pointer; text-align: left; }
+  .nl-consent input { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-top: 0.15rem; accent-color: var(--gold); cursor: pointer; }
+  .nl-consent a { color: var(--gold-light, #e0bf80); text-decoration: underline; text-underline-offset: 2px; }
+  .nl-consent a:hover { color: #fff; }
   .nl-note {
     font-size: 0.72rem;
     color: rgba(255,255,255,0.35);
@@ -1636,6 +1640,13 @@
             rows="3"
             maxlength="1000"
             placeholder="Special Requests — flights, celebrations, meals… (optional)"></textarea>
+
+  <label class="nl-consent">
+    <input id="consent" type="checkbox" required>
+    <span>I agree to receive promotional communication and accept the
+      <a href="#" class="footer-popup-link" data-popup="terms-conditions">Terms &amp; Conditions</a> and
+      <a href="#" class="footer-popup-link" data-popup="privacy-policy">Privacy Policy</a>.</span>
+  </label>
 
   <button type="submit" class="nl-btn">
     Send Enquiry →
