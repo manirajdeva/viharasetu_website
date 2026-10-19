@@ -12,6 +12,7 @@ const pool = require('../db');
 const { ENTITIES, headersFor, toDisplayRow, toDbValues } = require('../mappers');
 const { nextEnquiryId, nextPaymentId } = require('../ids');
 const { preparePaymentValues, paymentGroupKey, renumberGroup } = require('./payments');
+const audit = require('../audit');
 
 const num = (x) => Number(String(x == null ? '' : x).replace(/[₹,\s]/g, '')) || 0;
 
@@ -55,8 +56,9 @@ async function getRow(key, rowIndex) {
  * opts.afterInsert(conn, generated), if given, runs inside the same
  * transaction after the insert, for extra writes that must commit or roll
  * back together with this row (e.g. the site_enquirys log).
+ * opts.actor / opts.source say who made the change, for the audit_log entry.
  */
-async function createRow(key, values, { afterInsert } = {}) {
+async function createRow(key, values, { afterInsert, actor, source } = {}) {
   const spec = ENTITIES[key];
   const conn = await pool.getConnection();
   try {
@@ -80,12 +82,14 @@ async function createRow(key, values, { afterInsert } = {}) {
     }
 
     const cols = Object.keys(db);
-    await conn.query(
+    const [ins] = await conn.query(
       `INSERT INTO ${q(spec.table)} (${cols.map(q).join(', ')}) VALUES (${cols.map(() => '?').join(', ')})`,
       cols.map((c) => db[c]),
     );
 
     if (key === 'payments') await renumberGroup(conn, paymentGroupKey(vals));
+    const [[created]] = await conn.query(`SELECT * FROM ${q(spec.table)} WHERE id = ?`, [ins.insertId]);
+    await audit.record(conn, { table: spec.table, action: 'INSERT', actor, source, after: created });
     if (afterInsert) await afterInsert(conn, generatedOut);
 
     await conn.commit();
@@ -102,7 +106,7 @@ async function createRow(key, values, { afterInsert } = {}) {
  * Update a row by rowIndex (= id). Timestamp and the generated id columns are
  * preserved (never written), exactly like Code.gs.updateRow_.
  */
-async function updateRow(key, rowIndex, values) {
+async function updateRow(key, rowIndex, values, { actor, source } = {}) {
   const spec = ENTITIES[key];
   if (!rowIndex) {
     const e = new Error('Missing rowIndex');
@@ -143,6 +147,9 @@ async function updateRow(key, rowIndex, values) {
       if (oldKey !== newKey) await renumberGroup(conn, oldKey);
     }
 
+    const [[updated]] = await conn.query(`SELECT * FROM ${q(spec.table)} WHERE id = ?`, [Number(rowIndex)]);
+    await audit.record(conn, { table: spec.table, action: 'UPDATE', actor, source, before: cur[0], after: updated });
+
     await conn.commit();
     return { ok: true };
   } catch (err) {
@@ -153,7 +160,7 @@ async function updateRow(key, rowIndex, values) {
   }
 }
 
-async function deleteRow(key, admin, rowIndex) {
+async function deleteRow(key, admin, rowIndex, { source } = {}) {
   if (!admin) {
     const e = new Error('Not signed in.');
     e.code = 'FORBIDDEN';
@@ -165,25 +172,15 @@ async function deleteRow(key, admin, rowIndex) {
     throw e;
   }
 
-  // Payments: delete then renumber the affected group so instalments stay 1..N.
-  if (key === 'payments') {
-    const conn = await pool.getConnection();
-    try {
-      await conn.beginTransaction();
-      const [[victim]] = await conn.query('SELECT enquiry_id, customer FROM payments WHERE id = ? LIMIT 1', [Number(rowIndex)]);
-      await conn.query('DELETE FROM payments WHERE id = ?', [Number(rowIndex)]);
-      if (victim) await renumberGroup(conn, paymentGroupKey(victim));
-      await conn.commit();
-    } catch (err) {
-      await conn.rollback();
-      throw err;
-    } finally {
-      conn.release();
-    }
-    return { ok: true };
-  }
-
-  await pool.query(`DELETE FROM ${q(ENTITIES[key].table)} WHERE id = ?`, [Number(rowIndex)]);
+  const spec = ENTITIES[key];
+  await audit.inTransaction(async (conn) => {
+    const [[victim]] = await conn.query(`SELECT * FROM ${q(spec.table)} WHERE id = ? LIMIT 1 FOR UPDATE`, [Number(rowIndex)]);
+    if (!victim) return; // already gone
+    await conn.query(`DELETE FROM ${q(spec.table)} WHERE id = ?`, [Number(rowIndex)]);
+    // Payments: renumber the affected group so instalments stay 1..N.
+    if (key === 'payments') await renumberGroup(conn, paymentGroupKey(victim));
+    await audit.record(conn, { table: spec.table, action: 'DELETE', actor: admin.username, source, before: victim });
+  });
   return { ok: true };
 }
 

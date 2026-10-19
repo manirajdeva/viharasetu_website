@@ -25,6 +25,7 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 
 const auth = require('../auth');
+const audit = require('../audit');
 const sheets = require('../services/sheets');
 const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
@@ -117,6 +118,10 @@ router.patch('/profile', requireSession, wrap(async (req, res) => {
   return res.status(result.ok ? 200 : 400).json(result);
 }));
 
+/* ----------------------------- change history ----------------------------- */
+
+router.get('/audit', requireSession, requireAdminRole, wrap(async (req, res) => ok(res, await audit.list(req.query))));
+
 /* --------------------------- entity CRUD --------------------------- */
 
 router.get('/:entity', requireSession, requireEntity, wrap(async (req, res) => {
@@ -147,7 +152,7 @@ router.post('/:entity', requireSession, requireEntity, wrap(async (req, res) => 
   const vErr = validate(req.entity, values);
   if (vErr) return fail(res, 422, 'VALIDATION', vErr);
   try {
-    const result = await sheets.createRow(req.entity, values);
+    const result = await sheets.createRow(req.entity, values, { actor: req.admin.username });
     return ok(res, result, 201);
   } catch (err) {
     if (err && err.code) return fail(res, 400, err.code, err.message);
@@ -160,7 +165,7 @@ const doUpdate = wrap(async (req, res) => {
   const vErr = validate(req.entity, values);
   if (vErr) return fail(res, 422, 'VALIDATION', vErr);
   try {
-    const result = await sheets.updateRow(req.entity, Number(req.params.id), values);
+    const result = await sheets.updateRow(req.entity, Number(req.params.id), values, { actor: req.admin.username });
     return ok(res, result);
   } catch (err) {
     if (err && err.code === 'NOT_FOUND') return fail(res, 404, err.code, err.message);

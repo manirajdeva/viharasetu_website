@@ -14,6 +14,7 @@ const pool = require('../db');
 const config = require('../config');
 const { roleOf, isActive } = require('../auth');
 const { isValidPhone } = require('../phone');
+const audit = require('../audit');
 
 const NAME_RE = /^[A-Za-z0-9._-]{3,80}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,7 +55,7 @@ function validate(v, { isCreate }) {
   return null;
 }
 
-async function createUser(values) {
+async function createUser(values, actor) {
   const v = values || {};
   const bad = validate(v, { isCreate: true });
   if (bad) throw err('VALIDATION', bad);
@@ -65,10 +66,14 @@ async function createUser(values) {
 
   const role = normRole(v.role);
   const hash = await bcrypt.hash(String(v.password), config.bcryptRounds);
-  await pool.query(
-    'INSERT INTO admins (username, password_hash, role, can_delete, mobile, email) VALUES (?, ?, ?, ?, ?, ?)',
-    [username, hash, role, 1, String(v.mobile || '').trim() || null, String(v.email || '').trim() || null],
-  );
+  await audit.inTransaction(async (conn) => {
+    const [ins] = await conn.query(
+      'INSERT INTO admins (username, password_hash, role, can_delete, mobile, email) VALUES (?, ?, ?, ?, ?, ?)',
+      [username, hash, role, 1, String(v.mobile || '').trim() || null, String(v.email || '').trim() || null],
+    );
+    const [[created]] = await conn.query('SELECT * FROM admins WHERE id = ?', [ins.insertId]);
+    await audit.record(conn, { table: 'admins', action: 'INSERT', actor, after: created });
+  });
   return { ok: true };
 }
 
@@ -105,8 +110,12 @@ async function updateUser(targetUsername, values, actingUsername) {
   if (v.password) { sets.push('password_hash = ?'); args.push(await bcrypt.hash(String(v.password), config.bcryptRounds)); }
   if (!sets.length) return { ok: true };
   args.push(target.username);
-  await pool.query(`UPDATE admins SET ${sets.join(', ')} WHERE username = ?`, args);
-  if (wasActive && !nowActive) await pool.query('DELETE FROM sessions WHERE username = ?', [target.username]); // sign them out now
+  await audit.inTransaction(async (conn) => {
+    await conn.query(`UPDATE admins SET ${sets.join(', ')} WHERE username = ?`, args);
+    if (wasActive && !nowActive) await conn.query('DELETE FROM sessions WHERE username = ?', [target.username]); // sign them out now
+    const [[updated]] = await conn.query('SELECT * FROM admins WHERE id = ?', [target.id]);
+    await audit.record(conn, { table: 'admins', action: 'UPDATE', actor: actingUsername, before: target, after: updated });
+  });
   return { ok: true };
 }
 
@@ -121,8 +130,11 @@ async function deleteUser(targetUsername, actingUsername) {
   if (roleOf(target) === 'admin' && isActive(target) && (await adminCount()) <= 1) {
     throw err('LAST_ADMIN', 'At least one active admin must remain.');
   }
-  await pool.query('DELETE FROM admins WHERE username = ?', [targetUsername]);
-  await pool.query('DELETE FROM sessions WHERE username = ?', [targetUsername]);
+  await audit.inTransaction(async (conn) => {
+    await conn.query('DELETE FROM admins WHERE username = ?', [targetUsername]);
+    await conn.query('DELETE FROM sessions WHERE username = ?', [targetUsername]);
+    await audit.record(conn, { table: 'admins', action: 'DELETE', actor: actingUsername, before: target });
+  });
   return { ok: true };
 }
 

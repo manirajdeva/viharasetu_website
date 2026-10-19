@@ -251,3 +251,29 @@ CREATE TABLE IF NOT EXISTS partner_transactions (
   KEY idx_ptx_date (txn_date),
   KEY idx_ptx_partner (partner)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/* ------------------------------------------------------------------ *
+ *  audit_log  — change history for every insert / update / delete made
+ *  through the API (enquiries, suppliers, bookings, payments, supplier
+ *  payments, expenses, partner transactions, admins). Written in the same
+ *  transaction as the change. No foreign key on purpose: history outlives
+ *  the rows it describes. The API also creates this table on start-up.
+ *    INSERT -> changes = new row      DELETE -> changes = row before delete
+ *    UPDATE -> changes = { column: { old, new } } (changed columns only)
+ * ------------------------------------------------------------------ */
+CREATE TABLE IF NOT EXISTS audit_log (
+  id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  table_name  VARCHAR(40)  NOT NULL,
+  record_id   BIGINT UNSIGNED NOT NULL,
+  record_ref  VARCHAR(80)      NULL,                                   -- ENQ-… / PMT-… / username
+  action      ENUM('INSERT','UPDATE','DELETE') NOT NULL,
+  changed_by  VARCHAR(80)  NOT NULL,                                   -- admin username, or 'website'
+  source      VARCHAR(20)  NOT NULL DEFAULT 'portal',                  -- 'portal' | 'website'
+  changed_at  DATETIME     NOT NULL,                                   -- UTC
+  changes     JSON         NOT NULL,
+  PRIMARY KEY (id),
+  KEY idx_audit_record (table_name, record_id, id),
+  KEY idx_audit_ref (record_ref),
+  KEY idx_audit_changed_at (changed_at),
+  KEY idx_audit_user (changed_by, changed_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -16,6 +16,7 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 
 const auth = require('../auth');
+const audit = require('../audit');
 const sheets = require('../services/sheets');
 const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
@@ -114,13 +115,17 @@ router.post(
         case 'updateProfile':
           return res.json(await updateProfile(admin, body.values || {}));
 
+        case 'auditLog':
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can view the change history.');
+          return res.json({ ok: true, ...(await audit.list(body.data || {})) });
+
         case 'listUsers':
           if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
           return res.json({ ok: true, users: await users.listUsers() });
 
         case 'createUser':
           if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
-          return res.json(await users.createUser(body.values || {}));
+          return res.json(await users.createUser(body.values || {}, admin.username));
 
         case 'updateUser':
           if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
@@ -135,7 +140,7 @@ router.post(
           if (!key) return fail(res, 'BAD_SHEET', 'Unknown sheet.');
           const vErr = validate(key, body.values || {});
           if (vErr) return fail(res, 'VALIDATION', vErr);
-          return res.json(await sheets.createRow(key, body.values || {}));
+          return res.json(await sheets.createRow(key, body.values || {}, { actor: admin.username }));
         }
 
         case 'update': {
@@ -143,7 +148,7 @@ router.post(
           if (!key) return fail(res, 'BAD_SHEET', 'Unknown sheet.');
           const vErr = validate(key, body.values || {});
           if (vErr) return fail(res, 'VALIDATION', vErr);
-          return res.json(await sheets.updateRow(key, Number(body.rowIndex), body.values || {}));
+          return res.json(await sheets.updateRow(key, Number(body.rowIndex), body.values || {}, { actor: admin.username }));
         }
 
         case 'delete': {

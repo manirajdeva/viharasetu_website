@@ -41,6 +41,8 @@ async function submit(body) {
   }
 
   return sheets.createRow('enquiries', values, {
+    actor: 'website',
+    source: 'website',
     // submitted_at comes from Node, not the column DEFAULT (TiDB's NOW() runs behind UTC).
     afterInsert: (conn, { enquiryId }) => conn.query(
       `INSERT INTO site_enquirys
