@@ -251,8 +251,63 @@ const ItineraryParser = (() => {
       .replace(LOOKALIKE_RE, (ch) => ch.normalize('NFKC'));
   }
 
+  /**
+   * Tables copied from ChatGPT or a web page often arrive with every cell on its
+   * own line and a blank line between cells. A run of 9+ short lines like that is
+   * regrouped into rows when some column count (3-8) divides it evenly and at least
+   * two columns hold values of one consistent shape ("Day 1", "9:00 AM" ...).
+   * The rows are then handled exactly like "a | b | c" lines.
+   */
+  const shapeOf = (x) => x.replace(/[0-9]+/g, '9').replace(/[A-Za-z]+/g, 'a');
+  function columnsFor(cells) {
+    let best = 0, bestScore = 0;
+    for (let c = 3; c <= 8; c++) {
+      if (cells.length % c || cells.length / c < 3) continue;
+      let strong = 0, total = 0;
+      for (let col = 0; col < c; col++) {
+        const freq = {}; let n = 0;
+        for (let r = 1; r < cells.length / c; r++) { const k = shapeOf(cells[r * c + col]); freq[k] = (freq[k] || 0) + 1; n++; }
+        const top = Math.max(...Object.values(freq)) / n;
+        if (top >= 0.9) strong++;
+        total += top;
+      }
+      if (strong >= 2 && total / c > bestScore) { best = c; bestScore = total / c; }
+    }
+    return bestScore >= 0.5 ? best : 0;
+  }
+  function gatherBlankSeparatedTables(text) {
+    const lines = text.split('\n'), out = [];
+    const ok = (l) => l !== undefined && l.trim() && l.trim().length <= 80 && !/\|/.test(l) && !/^\s*(?:[-*•–—>]\s|\d{1,3}[.)]\s)/.test(l);
+    let i = 0;
+    while (i < lines.length) {
+      if (!ok(lines[i])) { out.push(lines[i]); i++; continue; }
+      const run = []; let j = i;
+      for (;;) {
+        run.push(lines[j].trim());
+        if (lines[j + 1] !== undefined && !lines[j + 1].trim() && ok(lines[j + 2])) j += 2; else { j += 1; break; }
+      }
+      // The table may sit inside the run (a title line before it, a heading after it).
+      let best = null;
+      for (let a = 0; a + 9 <= run.length && a <= 6; a++) {
+        for (let e = run.length; e - a >= 9 && e >= run.length - 6; e--) {
+          const c = columnsFor(run.slice(a, e));
+          if (c && (!best || e - a > best.e - best.a)) best = { a, e, c };
+        }
+      }
+      if (best) {
+        const cells = run.slice(best.a, best.e), c = best.c;
+        run.slice(0, best.a).forEach((x) => out.push(x, ''));
+        for (let r = 0; r < cells.length / c; r++) out.push(cells.slice(r * c, r * c + c).join(' | '));
+        out.push('');
+        run.slice(best.e).forEach((x, n, arr) => { out.push(x); if (n < arr.length - 1) out.push(''); });
+      } else for (let k = i; k < j; k++) out.push(lines[k]);
+      i = j;
+    }
+    return out.join('\n');
+  }
+
   function parse(raw) {
-    const lines = unwrap(normalizeInput(raw).split('\n').map(describe));
+    const lines = unwrap(gatherBlankSeparatedTables(normalizeInput(raw)).split('\n').map(describe));
     const blocks = [];
     lines.forEach((L, i) => {
       if (L.blank) {
