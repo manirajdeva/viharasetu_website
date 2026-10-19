@@ -35,7 +35,7 @@ const ItineraryParser = (() => {
     'day-wise itinerary', 'daywise itinerary', 'tour itinerary', 'itinerary details', 'trip summary', 'tour summary',
     'package details', 'tour details', 'stay distribution', 'stay details', 'hotel stay', 'stay plan', 'highlights', 'tour highlights', 'trip highlights', 'package highlights',
     'inclusions', 'exclusions', 'package inclusions', 'package exclusions', 'cost includes', 'cost excludes',
-    'what\'s included', 'what\'s not included', 'hotel details', 'hotels', 'accommodation', 'accommodation details',
+    'what\'s included', 'what\'s not included', 'hotel details', 'hotel accommodation', 'hotels', 'accommodation', 'accommodation details',
     'package cost', 'package price', 'cost', 'price', 'pricing', 'tour cost', 'transport', 'transport details',
     'flight details', 'train details', 'meal plan', 'terms and conditions', 'terms & conditions',
     'cancellation policy', 'payment policy', 'payment terms', 'booking policy', 'important notes',
@@ -159,6 +159,17 @@ const ItineraryParser = (() => {
     return runs.filter((r) => r.text);
   }
 
+  /** "City| Hotel| Nights" / "a<TAB>b<TAB>c" → ['City','Hotel','Nights']; null when it is not a row. */
+  function tableCells(text) {
+    const sep = /^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)+\|?$/.test(text) ? 'divider'
+      : (text.split('|').length >= 3 ? '|' : (text.split('\t').length >= 3 ? '\t' : ''));
+    if (!sep) return null;
+    if (sep === 'divider') return [];
+    let parts = text.split(sep).map((c) => unemphasise(c.trim()));
+    if (sep === '|') { if (parts[0] === '') parts.shift(); if (parts[parts.length - 1] === '') parts.pop(); }
+    return parts.length >= 2 ? parts : null;
+  }
+
   /** One input line → { blank } | { rule } | { indent, text, core, plain, icon, listy }. */
   function describe(original) {
     const line = original.replace(/\s+$/, '');
@@ -166,6 +177,10 @@ const ItineraryParser = (() => {
     const text = line.trim();
     // "---", "***", "___", "====" on their own are dividers.
     if (/^([-_*=])(?:\s*\1){2,}$/.test(text)) return { rule: true };
+    // A table row: 3+ cells split by "|" (or by tabs, as pasted from Excel). The
+    // "Phuket – Krabi | 9 Days" style title with a single bar is not a table.
+    const cells = tableCells(text);
+    if (cells) return { table: true, cells, text, core: text, plain: text, indent: 0 };
     const deco = text.match(DECOR_RE);
     // A line made only of symbols ("★★★") is kept exactly as typed.
     const core = deco && deco[0].length < text.length ? text.slice(deco[0].length) : text;
@@ -203,7 +218,7 @@ const ItineraryParser = (() => {
     for (const L of lines) {
       const prev = out[out.length - 1];
       let canJoin = false;
-      if (prev && !prev.blank && !prev.rule && !L.blank && !L.rule && !startsBlock(L)) {
+      if (prev && !prev.blank && !prev.rule && !prev.table && !L.blank && !L.rule && !L.table && !startsBlock(L)) {
         const day = matchDay(prev.plain);
         // A short "Day 1: Arrival" or "Inclusions" line is a title; nothing joins onto it.
         const titleLine = prev.plain.length < 60 && (day || isSection(prev.plain, null));
@@ -247,6 +262,13 @@ const ItineraryParser = (() => {
       }
       if (L.rule) {
         if (blocks.length && blocks[blocks.length - 1].type !== 'rule') blocks.push({ type: 'rule' });
+        return;
+      }
+      if (L.table) {
+        if (!L.cells.length) return; // markdown "|---|---|" divider
+        const last = blocks[blocks.length - 1];
+        if (last && last.type === 'table') last.rows.push(L.cells);
+        else blocks.push({ type: 'table', rows: [L.cells] });
         return;
       }
       const { indent, core, plain, icon } = L;
@@ -309,7 +331,7 @@ const ItineraryParser = (() => {
 
   /** Every word and number, in order (punctuation, icons and markdown ignored). */
   const tokensOf = (s) => String(s || '').match(/[\p{L}\p{N}]+/gu) || [];
-  const blockText = (b) => [b.text || '', b.marker || '', ...(b.runs || []).map((r) => r.text)].join(' ');
+  const blockText = (b) => [b.text || '', b.marker || '', ...(b.runs || []).map((r) => r.text), ...(b.rows || []).map((r) => r.join(' '))].join(' ');
 
   /**
    * Proof that formatting changed presentation only: the words and numbers in
@@ -687,6 +709,73 @@ const ItineraryPdf = (() => {
       });
     }
 
+    /**
+     * A table: column widths follow the content (long columns get the room, short
+     * ones like "Nights" stay narrow), cells wrap, the first row is the header and
+     * repeats if the table runs onto another page.
+     */
+    function drawTable(rows) {
+      const pt = 9.5, lineH = 4.7, padX = 2, padY = 1.7;
+      const ncol = Math.max(...rows.map((r) => r.length));
+      const grid = rows.map((r) => Array.from({ length: ncol }, (_, c) => r[c] || ''));
+      const wOf = (txt, bold) => widthOf(doc, txt, bold, pt);
+      const minW = new Array(ncol).fill(0), natW = new Array(ncol).fill(0);
+      grid.forEach((r, ri) => r.forEach((cell, c) => {
+        const bold = ri === 0;
+        natW[c] = Math.max(natW[c], wOf(cell, bold) + 2 * padX);
+        (cell.match(/[^\s]+/g) || []).forEach((w) => { minW[c] = Math.max(minW[c], Math.min(wOf(w, bold), 30) + 2 * padX); });
+      }));
+      let widths;
+      const sumNat = natW.reduce((a, b) => a + b, 0);
+      if (sumNat <= contentW) {
+        widths = natW.map((w) => w * contentW / sumNat);
+      } else {
+        const sumMin = minW.reduce((a, b) => a + b, 0);
+        const spare = Math.max(0, contentW - sumMin);
+        const want = natW.map((w, c) => Math.max(0, w - minW[c]));
+        const sumWant = want.reduce((a, b) => a + b, 0) || 1;
+        widths = minW.map((w, c) => w + spare * want[c] / sumWant);
+        const f = contentW / widths.reduce((a, b) => a + b, 0);
+        widths = widths.map((w) => w * f);
+      }
+      const layout = (cell, c, bold) => {
+        const w = widths[c] - 2 * padX;
+        if (!cell) return { lines: [], h: 0 };
+        if (!covered(cell)) { const im = rasterLines(cell, w, pt, bold, bold ? NAVY : INK); return { img: im, h: im.reduce((s, l) => s + l.h, 0) }; }
+        const lines = wrapRuns(doc, [{ text: cell, bold }], w, pt);
+        return { lines, h: lines.length * lineH };
+      };
+      const rowLayout = (r, ri) => {
+        const cells = r.map((cell, c) => layout(cell, c, ri === 0));
+        return { cells, h: Math.max(lineH, ...cells.map((x) => x.h)) + 2 * padY };
+      };
+      const drawRow = (rl, header) => {
+        let cx = M_X;
+        if (header) { doc.setFillColor(...TINT); doc.rect(M_X, y, contentW, rl.h, 'F'); }
+        doc.setDrawColor(...RULE); doc.setLineWidth(0.25);
+        rl.cells.forEach((cl, c) => {
+          doc.rect(cx, y, widths[c], rl.h, 'S');
+          let ty = y + padY;
+          if (cl.img) cl.img.forEach((im) => { doc.addImage(im.data, 'PNG', cx + padX, ty, im.w, im.h); ty += im.h; });
+          else {
+            doc.setFont(FONT, header ? 'bold' : 'normal'); doc.setFontSize(pt); doc.setTextColor(...(header ? NAVY : INK));
+            cl.lines.forEach((segs) => { doc.text(segs.map((sg) => sg.text).join(''), cx + padX, ty + lineH * 0.72); ty += lineH; });
+          }
+          cx += widths[c];
+        });
+        if (header) { doc.setFillColor(...SAFFRON); doc.rect(M_X, y + rl.h - 0.5, contentW, 0.5, 'F'); }
+        y += rl.h;
+      };
+      const layouts = grid.map(rowLayout);
+      if (y > CONTENT_TOP) y += 1.5;
+      ensure(layouts[0].h + (layouts[1] ? layouts[1].h : 0));   // header never alone at the foot of a page
+      drawRow(layouts[0], true);
+      for (let ri = 1; ri < layouts.length; ri++) {
+        if (y + layouts[ri].h > CONTENT_BOTTOM) { newPage(); drawRow(layouts[0], true); }
+        drawRow(layouts[ri], false);
+      }
+    }
+
     blocks.forEach((b, i) => {
       if (b.type === 'blank') { if (y > CONTENT_TOP) y += 2.6; return; }
 
@@ -723,6 +812,8 @@ const ItineraryPdf = (() => {
         y = top + bandH + 2.5;
         return;
       }
+
+      if (b.type === 'table') { drawTable(b.rows); if (blocks[i + 1] && blocks[i + 1].type !== 'blank') y += 2; return; }
 
       if (b.type === 'section') {
         const pt = 11.5;
