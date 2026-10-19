@@ -336,7 +336,11 @@ const ItineraryParser = (() => {
         return;
       }
       const next = lines.slice(i + 1).find((n) => !n.blank && !n.rule);
-      const section = isSection(plain, next && { listy: next.listy, core: next.plain });
+      // A bulleted / numbered line is a list item, never a heading, however short it is
+      // ("- Wat Chalong" after "- Private city tour covering"), unless it names a known section.
+      const isItem = icon || NUMBER_RE.test(core);
+      const section = isItem && !sectionSet.has(plain.replace(/[:\s]+$/, '').toLowerCase()) ? null
+        : isSection(plain, next && { listy: next.listy, core: next.plain });
       if (section) { blocks.push({ type: 'section', text: section }); return; }
 
       if (icon) { blocks.push({ type: 'bullet', indent, marker: '•', runs: inlineRuns(core) }); return; }
