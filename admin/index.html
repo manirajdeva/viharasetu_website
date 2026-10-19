@@ -172,7 +172,7 @@ window.VSLoader = (function () {
       el.classList.add('vs-ok');
       status.innerHTML = '<div class="vs-status-title">Welcome <em>aboard</em></div>' +
                          '<div class="vs-status-sub">Opening your console…</div>';
-      if (redirectUrl) setTimeout(function () { location.href = redirectUrl; }, 1300);
+      if (redirectUrl) setTimeout(function () { location.href = redirectUrl; }, 500);
     },
     fail: function (msg) {
       reset(); open('vs-fail');

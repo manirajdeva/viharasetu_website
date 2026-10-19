@@ -68,7 +68,7 @@ async function verifyAdmin(username, password) {
 }
 
 async function createSession(username) {
-  await purgeExpiredSessions();
+  // Expired rows are purged on startup and every 30 min (server.js), not on each login.
   const token = crypto.randomBytes(16).toString('hex'); // 32 hex chars
   const expiresAt = new Date(Date.now() + config.sessionTtlMs);
   await pool.query('INSERT INTO sessions (token, username, expires_at) VALUES (?, ?, ?)', [token, username, expiresAt]);
