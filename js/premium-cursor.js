@@ -1,73 +1,77 @@
 /**
- * premium-cursor.js — ViharaSetu "compass" cursor.
+ * premium-cursor.js — ViharaSetu "flight path" cursor.
  *
- *  - a saffron dot that tracks the pointer exactly
- *  - a thin gold compass ring that trails it with a soft lag; a saffron heading
- *    marker orbits the ring and points the way you are travelling
- *  - over links / buttons the ring swells into a translucent gold lens
- *  - over any element carrying data-cursor-text="Explore" the lens shows that word
- *  - over text fields the dot becomes a slim caret bar
- *  - press = a small compression, release = a ripple
+ *  - a small two-tone paper plane that banks toward the direction you move
+ *  - a tapering gold contrail (like a route line on a map) that fades behind it
+ *  - over links / buttons the plane swells and a dashed "holding pattern" ring orbits it
+ *  - over any element carrying data-cursor-text="Explore" a jade pill with that word
+ *    follows the plane
+ *  - over text fields the plane gives way to a slim caret bar
+ *  - click = a passport-stamp ring stamps the spot
  *
- * Self-contained (injects its own CSS). Only runs for a real mouse: touch
- * devices and "reduce motion" users keep the normal cursor, and the normal
- * cursor stays until the first mouse move so nothing flashes.
+ * Self-contained (injects its own CSS + canvas). Only runs for a real mouse:
+ * touch devices and "reduce motion" users keep the normal cursor, and the
+ * normal cursor stays until the first mouse move so nothing flashes.
  */
 (function () {
   'use strict';
   if (window.__vsCursor) return;
   window.__vsCursor = true;
 
-  var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!canHover || reduceMotion) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var SAFFRON = '#C8611A', GOLD = '#B8913F';
+  var SAFFRON = '#C8611A', SAFFRON_DARK = '#8B3E0D', GOLD = '#B8913F', JADE = '#2A5C45', CREAM = '#FAF6F0';
+  var TRAIL_MS = 650;      // how long a trail point lives
+  var MAX_POINTS = 60;
 
   var css = [
     'html.vsc-on, html.vsc-on * { cursor: none !important; }',
-    '.vsc { position: fixed; top: 0; left: 0; z-index: 2147483000; pointer-events: none; opacity: 0;',
-    '  transition: opacity .25s ease; will-change: transform; }',
-    '.vsc.vsc-live { opacity: 1; }',
-    '.vsc.vsc-away { opacity: 0; }',
+    '.vsc-layer { position: fixed; z-index: 2147482990; pointer-events: none; opacity: 0; transition: opacity .25s ease; }',
+    '.vsc-layer.vsc-live { opacity: 1; }',
+    '.vsc-layer.vsc-away { opacity: 0; }',
+    'canvas.vsc-layer { left: 0; top: 0; width: 100vw; height: 100vh; }',
 
-    /* dot */
-    '.vsc-dot-body { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%;',
-    '  background: ' + SAFFRON + '; box-shadow: 0 0 0 1.5px rgba(255,255,255,.92), 0 1px 6px rgba(0,0,0,.28);',
-    '  transition: width .25s cubic-bezier(.2,.8,.2,1), height .25s cubic-bezier(.2,.8,.2,1),',
-    '    left .25s cubic-bezier(.2,.8,.2,1), top .25s cubic-bezier(.2,.8,.2,1), border-radius .25s, opacity .2s, transform .2s; }',
-    '.vsc-dot.is-link .vsc-dot-body { transform: scale(.5); }',
-    '.vsc-dot.is-label .vsc-dot-body { opacity: 0; }',
-    '.vsc-dot.is-text .vsc-dot-body { width: 3px; height: 24px; left: -1.5px; top: -12px; border-radius: 2px; }',
-    '.vsc-dot.is-down .vsc-dot-body { transform: scale(.7); }',
+    '.vsc-plane { left: 0; top: 0; z-index: 2147483000; will-change: transform; }',
+    '.vsc-fly { position: absolute; left: -15px; top: -15px; width: 30px; height: 30px;',
+    '  transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .2s; }',
+    '.vsc-fly svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 2px 3px rgba(26,22,15,.35)); }',
+    '.vsc-bob { position: absolute; inset: 0; animation: vsc-bob 2.4s ease-in-out infinite; }',
+    '@keyframes vsc-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1.6px); } }',
 
-    /* ring */
-    '.vsc-ring-body { box-sizing: border-box; position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%;',
-    '  border: 1.5px solid ' + GOLD + '; background: rgba(184,145,63,0);',
-    '  box-shadow: 0 0 0 1px rgba(255,255,255,.38), 0 2px 14px rgba(26,22,15,.18), inset 0 0 0 1px rgba(255,255,255,.28);',
-    '  transition: transform .35s cubic-bezier(.2,.8,.2,1), background .3s, border-color .3s, opacity .3s; }',
-    '.vsc-ring svg { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; overflow: visible; }',
-    '.vsc-ring .vsc-ticks { transition: opacity .3s; }',
-    '.vsc-ring.is-link .vsc-ring-body { transform: scale(1.7); background: rgba(184,145,63,.16); border-color: rgba(200,97,26,.85); }',
-    '.vsc-ring.is-link .vsc-ticks { opacity: 0; }',
-    '.vsc-ring.is-label .vsc-ring-body { transform: scale(2.1); background: rgba(250,246,240,.9); border-color: ' + SAFFRON + ';',
-    '  box-shadow: 0 6px 26px rgba(26,22,15,.22); }',
-    '.vsc-ring.is-label .vsc-ticks { opacity: 0; }',
-    '.vsc-ring.is-text .vsc-ring-body { opacity: 0; transform: scale(.4); }',
-    '.vsc-ring.is-down .vsc-ring-body { transform: scale(.82); }',
-    '.vsc-ring.is-link.is-down .vsc-ring-body { transform: scale(1.45); }',
+    '.vsc-plane.is-link .vsc-fly { transform: scale(1.3); }',
+    '.vsc-plane.is-label .vsc-fly { transform: scale(1.15); }',
+    '.vsc-plane.is-text .vsc-fly { transform: scale(.3); opacity: 0; }',
+    '.vsc-plane.is-down .vsc-fly { transform: scale(.82); }',
+    '.vsc-plane.is-link.is-down .vsc-fly { transform: scale(1.1); }',
 
-    /* label */
-    '.vsc-label { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%) scale(.6); opacity: 0;',
-    '  font: 500 9.5px/1 "Jost", system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase;',
-    '  color: #1A160F; white-space: nowrap; transition: opacity .25s, transform .3s cubic-bezier(.2,.8,.2,1); }',
-    '.vsc-ring.is-label .vsc-label { opacity: 1; transform: translate(-50%, -50%) scale(1); }',
+    /* dashed holding-pattern ring */
+    '.vsc-orbit { position: absolute; left: -26px; top: -26px; width: 52px; height: 52px; border-radius: 50%;',
+    '  border: 1.5px dashed ' + GOLD + '; opacity: 0; transform: scale(.5);',
+    '  transition: opacity .3s, transform .4s cubic-bezier(.2,.8,.2,1); animation: vsc-spin 9s linear infinite; }',
+    '.vsc-plane.is-link .vsc-orbit, .vsc-plane.is-label .vsc-orbit { opacity: .95; transform: scale(1); }',
+    '@keyframes vsc-spin { to { rotate: 360deg; } }',
 
-    /* click ripple */
-    '.vsc-ripple { position: fixed; z-index: 2147482999; pointer-events: none; width: 44px; height: 44px; margin: -22px 0 0 -22px;',
-    '  border-radius: 50%; border: 1.5px solid ' + SAFFRON + '; opacity: .7; transform: scale(.5);',
-    '  animation: vsc-ripple .6s cubic-bezier(.2,.7,.2,1) forwards; }',
-    '@keyframes vsc-ripple { to { transform: scale(2.6); opacity: 0; } }'
+    /* word pill */
+    '.vsc-pill { position: absolute; left: 24px; top: 14px; padding: 7px 13px 6px; border-radius: 999px;',
+    '  background: ' + JADE + '; color: ' + CREAM + '; white-space: nowrap;',
+    '  font: 500 9.5px/1 "Jost", system-ui, sans-serif; letter-spacing: .18em; text-transform: uppercase;',
+    '  box-shadow: 0 6px 20px rgba(26,22,15,.28), 0 0 0 1px rgba(184,145,63,.55);',
+    '  opacity: 0; transform: translateX(-6px) scale(.9); transform-origin: left center;',
+    '  transition: opacity .25s, transform .3s cubic-bezier(.2,.8,.2,1); }',
+    '.vsc-plane.is-label .vsc-pill { opacity: 1; transform: none; }',
+
+    /* caret */
+    '.vsc-caret { position: absolute; left: -1.5px; top: -12px; width: 3px; height: 24px; border-radius: 2px;',
+    '  background: ' + SAFFRON + '; box-shadow: 0 0 0 1.5px rgba(255,255,255,.9); opacity: 0; transform: scaleY(.4);',
+    '  transition: opacity .2s, transform .25s cubic-bezier(.2,.8,.2,1); }',
+    '.vsc-plane.is-text .vsc-caret { opacity: 1; transform: none; }',
+
+    /* passport stamp */
+    '.vsc-stamp { position: fixed; z-index: 2147482995; pointer-events: none; width: 46px; height: 46px; margin: -23px 0 0 -23px;',
+    '  border-radius: 50%; border: 2px solid ' + SAFFRON + '; box-shadow: inset 0 0 0 3px rgba(200,97,26,0), inset 0 0 0 4px ' + SAFFRON + ';',
+    '  opacity: .8; transform: scale(1.5) rotate(-12deg); animation: vsc-stamp .7s cubic-bezier(.2,.8,.2,1) forwards; }',
+    '@keyframes vsc-stamp { 25% { transform: scale(.95) rotate(-12deg); opacity: .85; } 100% { transform: scale(1.15) rotate(-12deg); opacity: 0; } }'
   ].join('\n');
 
   var style = document.createElement('style');
@@ -75,59 +79,79 @@
   document.head.appendChild(style);
 
   /* ---- DOM ---- */
-  var ring = document.createElement('div');
-  ring.className = 'vsc vsc-ring';
-  ring.setAttribute('aria-hidden', 'true');
-  ring.innerHTML =
-    '<div class="vsc-ring-body"></div>' +
-    '<svg viewBox="0 0 44 44" focusable="false">' +
-      '<g class="vsc-ticks" stroke="' + GOLD + '" stroke-width="1.5" stroke-linecap="round">' +
-        '<line x1="22" y1="2.5" x2="22" y2="6.5"/><line x1="22" y1="37.5" x2="22" y2="41.5"/>' +
-        '<line x1="2.5" y1="22" x2="6.5" y2="22"/><line x1="37.5" y1="22" x2="41.5" y2="22"/>' +
-      '</g>' +
-      '<g class="vsc-heading" style="transform-origin:22px 22px"><path d="M22 -3.5 L25.2 2.8 L22 1.4 L18.8 2.8 Z" fill="' + SAFFRON + '" stroke="#fff" stroke-width=".8" stroke-linejoin="round"/></g>' +
-    '</svg>' +
-    '<span class="vsc-label"></span>';
+  var canvas = document.createElement('canvas');
+  canvas.className = 'vsc-layer';
+  canvas.setAttribute('aria-hidden', 'true');
+  var ctx = canvas.getContext('2d');
 
-  var dot = document.createElement('div');
-  dot.className = 'vsc vsc-dot';
-  dot.setAttribute('aria-hidden', 'true');
-  dot.innerHTML = '<div class="vsc-dot-body"></div>';
+  var plane = document.createElement('div');
+  plane.className = 'vsc-layer vsc-plane';
+  plane.setAttribute('aria-hidden', 'true');
+  plane.innerHTML =
+    '<div class="vsc-orbit"></div>' +
+    '<div class="vsc-fly"><div class="vsc-bob"><svg viewBox="0 0 24 24" focusable="false">' +
+      '<path d="M23 12 L3 3.5 L8.5 12 Z" fill="' + SAFFRON + '"/>' +
+      '<path d="M23 12 L8.5 12 L3 20.5 Z" fill="' + SAFFRON_DARK + '"/>' +
+      '<path d="M23 12 L3 3.5 L8.5 12 L3 20.5 Z" fill="none" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/>' +
+    '</svg></div></div>' +
+    '<div class="vsc-caret"></div>' +
+    '<span class="vsc-pill"></span>';
 
-  document.body.appendChild(ring);
-  document.body.appendChild(dot);
+  document.body.appendChild(canvas);
+  document.body.appendChild(plane);
 
-  var heading = ring.querySelector('.vsc-heading');
-  var label = ring.querySelector('.vsc-label');
+  var fly = plane.querySelector('.vsc-fly');
+  var pill = plane.querySelector('.vsc-pill');
   var root = document.documentElement;
 
-  /* ---- motion ---- */
-  var tx = -100, ty = -100;       // pointer
-  var rx = -100, ry = -100;       // ring (lags)
-  var angle = 0, targetAngle = 0; // heading, degrees (0 = north)
-  var raf = 0, started = false;
+  /* ---- canvas sizing ---- */
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
 
-  function shortest(from, to) {
-    var d = ((to - from + 540) % 360) - 180;
-    return d;
+  /* ---- motion ---- */
+  var x = -100, y = -100;
+  var angle = -45, targetAngle = -45; // degrees; 0 = pointing right
+  var pts = [];
+  var raf = 0, started = false, lastX = null, lastY = null;
+
+  function shortest(from, to) { return ((to - from + 540) % 360) - 180; }
+
+  function drawTrail(now) {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    while (pts.length && now - pts[0].t > TRAIL_MS) pts.shift();
+    if (pts.length < 2) return;
+
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    for (var i = 1; i < pts.length; i++) {
+      var a = pts[i - 1], b = pts[i];
+      var life = 1 - (now - b.t) / TRAIL_MS;           // 1 = fresh, 0 = gone
+      if (life <= 0) continue;
+      var grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+      grad.addColorStop(0, 'rgba(184,145,63,' + (life * 0.55).toFixed(3) + ')');
+      grad.addColorStop(1, 'rgba(200,97,26,' + (life * 0.75).toFixed(3) + ')');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 0.6 + life * 3.2;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
   }
 
-  function frame() {
+  function frame(now) {
     raf = 0;
-    var dx = tx - rx, dy = ty - ry;
-    rx += dx * 0.18;
-    ry += dy * 0.18;
-
-    if (Math.abs(dx) + Math.abs(dy) > 3) {
-      targetAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90; // marker art points up
-    }
     var turn = shortest(angle, targetAngle);
-    angle += turn * 0.14;
-
-    ring.style.transform = 'translate3d(' + rx.toFixed(2) + 'px,' + ry.toFixed(2) + 'px,0)';
-    heading.style.transform = 'rotate(' + angle.toFixed(1) + 'deg)';
-
-    if (Math.abs(dx) + Math.abs(dy) > 0.1 || Math.abs(turn) > 0.2) raf = requestAnimationFrame(frame);
+    angle += turn * 0.2;
+    fly.style.rotate = angle.toFixed(1) + 'deg';
+    drawTrail(now);
+    if (pts.length > 1 || Math.abs(turn) > 0.3) raf = requestAnimationFrame(frame);
   }
   function kick() { if (!raf) raf = requestAnimationFrame(frame); }
 
@@ -136,57 +160,57 @@
   var TEXT = 'input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea, [contenteditable=""], [contenteditable="true"]';
 
   function setState(el) {
-    var tag = el && el.closest ? el.closest('[data-cursor-text]') : null;
-    var isText = !!(el && el.closest && el.closest(TEXT));
-    var isLink = !isText && !!(el && el.closest && el.closest(LINK));
-    var inner = el && el.closest ? el.closest(LINK) : null;
+    var can = el && el.closest;
+    var tag = can ? el.closest('[data-cursor-text]') : null;
+    var inner = can ? el.closest(LINK) : null;
+    var isText = !!(can && el.closest(TEXT));
     var isLabel = !!tag && !(inner && inner !== tag && tag.contains(inner)); // a button inside a labelled card stays a button
+    var isLink = !isText && !!inner && !isLabel;
 
-    ring.classList.toggle('is-label', isLabel);
-    dot.classList.toggle('is-label', isLabel);
-    if (isLabel) label.textContent = tag.getAttribute('data-cursor-text');
-
-    ring.classList.toggle('is-text', isText);
-    dot.classList.toggle('is-text', isText);
-
-    var link = isLink && !isLabel;
-    ring.classList.toggle('is-link', link);
-    dot.classList.toggle('is-link', link);
+    if (isLabel) pill.textContent = tag.getAttribute('data-cursor-text');
+    plane.classList.toggle('is-label', isLabel);
+    plane.classList.toggle('is-link', isLink);
+    plane.classList.toggle('is-text', isText);
   }
 
-  function place(e) {
-    tx = e.clientX; ty = e.clientY;
-    dot.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+  function onMove(e) {
+    x = e.clientX; y = e.clientY;
     if (!started) {
       started = true;
-      rx = tx; ry = ty;
+      lastX = x; lastY = y;
       root.classList.add('vsc-on');
-      ring.classList.add('vsc-live');
-      dot.classList.add('vsc-live');
+      canvas.classList.add('vsc-live');
+      plane.classList.add('vsc-live');
     }
+    plane.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+
+    var dx = x - lastX, dy = y - lastY;
+    if (dx * dx + dy * dy > 9) {                       // ignore sub-3px jitter when choosing heading
+      targetAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+      lastX = x; lastY = y;
+    }
+    pts.push({ x: x, y: y, t: performance.now() });
+    if (pts.length > MAX_POINTS) pts.shift();
     kick();
   }
 
-  document.addEventListener('mousemove', place, { passive: true });
+  document.addEventListener('mousemove', onMove, { passive: true });
   document.addEventListener('mouseover', function (e) { setState(e.target); }, { passive: true });
-
-  document.addEventListener('mousedown', function () {
-    ring.classList.add('is-down'); dot.classList.add('is-down');
-  }, { passive: true });
+  document.addEventListener('mousedown', function () { plane.classList.add('is-down'); }, { passive: true });
   document.addEventListener('mouseup', function (e) {
-    ring.classList.remove('is-down'); dot.classList.remove('is-down');
-    var r = document.createElement('div');
-    r.className = 'vsc-ripple';
-    r.style.left = e.clientX + 'px';
-    r.style.top = e.clientY + 'px';
-    document.body.appendChild(r);
-    setTimeout(function () { r.remove(); }, 650);
+    plane.classList.remove('is-down');
+    var s = document.createElement('div');
+    s.className = 'vsc-stamp';
+    s.style.left = e.clientX + 'px';
+    s.style.top = e.clientY + 'px';
+    document.body.appendChild(s);
+    setTimeout(function () { s.remove(); }, 750);
   }, { passive: true });
 
-  document.documentElement.addEventListener('mouseleave', function () {
-    ring.classList.add('vsc-away'); dot.classList.add('vsc-away');
+  root.addEventListener('mouseleave', function () {
+    plane.classList.add('vsc-away'); canvas.classList.add('vsc-away'); pts.length = 0;
   });
-  document.documentElement.addEventListener('mouseenter', function () {
-    ring.classList.remove('vsc-away'); dot.classList.remove('vsc-away');
+  root.addEventListener('mouseenter', function () {
+    plane.classList.remove('vsc-away'); canvas.classList.remove('vsc-away');
   });
 })();
