@@ -170,7 +170,7 @@ async function generateReceipt(rows, enquiryId) {
   doc.text('Seal & Signature', W - M, y, { align: 'right' });
 
   /* ---- footer (company block + disclaimer), pinned near the page bottom ---- */
-  let fy = H - 24;
+  let fy = H - 28;
   doc.setDrawColor(200); doc.line(M, fy, W - M, fy); fy += 5;
   doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(30);
   doc.text(COMPANY.name, W / 2, fy, { align: 'center' }); fy += 4;
@@ -178,7 +178,8 @@ async function generateReceipt(rows, enquiryId) {
   doc.text(COMPANY.tagline, W / 2, fy, { align: 'center' }); fy += 3.6;
   doc.text(contactLine, W / 2, fy, { align: 'center' }); fy += 4.2;
   doc.setFont('helvetica', 'italic'); doc.setFontSize(6.5); doc.setTextColor(130);
-  doc.text('This is a computer-generated receipt and does not require a physical signature unless otherwise specified.', W / 2, fy, { align: 'center' });
+  doc.text('This is a computer-generated receipt and does not require a physical signature unless otherwise specified.', W / 2, fy, { align: 'center' }); fy += 3.6;
+  doc.text('Terms and conditions apply.', W / 2, fy, { align: 'center' });
 
   doc.save(`Receipt_${String(enquiryId).replace(/[^\w-]/g, '')}.pdf`);
 }
