@@ -45,6 +45,33 @@ if (_isLocalhost) {
     : '[Viharasetu admin] Using the REAL Google backend (forced via ?api=live). Add ?api=mock to switch back.');
 }
 
+/**
+ * Which computer is signing in. A web page cannot read the PC's name, so:
+ *   - the Windows desktop app supplies the real hostname (window.vihDesktop),
+ *   - a browser sends the name typed once on the login page (remembered here),
+ *   - every browser also gets a random device id so one machine is recognisable across logins.
+ * The login audit stores these as self-reported labels.
+ */
+async function deviceInfo(typedName) {
+  const lsGet = (k) => { try { return localStorage.getItem(k) || ''; } catch { return ''; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch { /* private mode */ } };
+
+  let deviceId = lsGet('vih_device_id');
+  if (!/^[A-Za-z0-9-]{8,40}$/.test(deviceId)) {
+    deviceId = (self.crypto && crypto.randomUUID) ? crypto.randomUUID()
+      : Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+    lsSet('vih_device_id', deviceId);
+  }
+
+  let systemName = '';
+  try { if (window.vihDesktop && window.vihDesktop.systemName) systemName = await window.vihDesktop.systemName(); } catch { /* fall back */ }
+  if (!systemName) {
+    systemName = String(typedName != null ? typedName : lsGet('vih_system_name')).trim();
+    if (typedName != null) lsSet('vih_system_name', systemName);
+  }
+  return { systemName: systemName.slice(0, 80), deviceId };
+}
+
 class ApiError extends Error {
   constructor(code, message) { super(message); this.code = code; }
 }
@@ -99,9 +126,12 @@ const Api = (() => {
   }
 
   return {
-    login: (username, password) => post({ action: 'login', username, password }).then(j => j.user
-      ? Object.assign({ token: j.token, expiresAt: j.expiresAt }, j.user)
-      : j),
+    login: async (username, password, device = {}) => {
+      const info = await deviceInfo(device.systemName);
+      return post({ action: 'login', username, password, systemName: info.systemName, deviceId: info.deviceId }).then(j => j.user
+        ? Object.assign({ token: j.token, expiresAt: j.expiresAt }, j.user)
+        : j);
+    },
     logout: () => post({ action: 'logout' }),
 
     getSheet,

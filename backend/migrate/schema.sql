@@ -296,10 +296,13 @@ CREATE TABLE IF NOT EXISTS login_audit (
   session_ref CHAR(16)         NULL,
   ip          VARCHAR(64)      NULL,
   device      VARCHAR(80)      NULL,                                   -- "Chrome on Windows"
+  system_name VARCHAR(80)      NULL,                                   -- computer name as REPORTED by the client (desktop app: real hostname)
+  device_id   VARCHAR(40)      NULL,                                   -- random per-browser id: recognises one machine across logins
   user_agent  VARCHAR(255)     NULL,
   logged_at   DATETIME     NOT NULL,                                   -- UTC
   PRIMARY KEY (id),
   KEY idx_login_user (username, logged_at),
   KEY idx_login_time (logged_at),
-  KEY idx_login_session (session_ref)
+  KEY idx_login_session (session_ref),
+  KEY idx_login_device (device_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

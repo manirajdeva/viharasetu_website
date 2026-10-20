@@ -78,6 +78,14 @@
           <div class="vs-caps" id="vsCaps" role="status" aria-live="polite"></div>
         </div>
 
+        <div class="vs-field" id="sysField">
+          <label for="vsSys">Computer name <span style="font-weight:400;opacity:.65">(optional)</span></label>
+          <div class="vs-input">
+            <input id="vsSys" name="system" type="text" maxlength="80" placeholder="e.g. Reception PC" autocomplete="off">
+            <svg class="vs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+          </div>
+        </div>
+
         <div class="vs-row">
           <a class="vs-link" href="#" id="forgotLink">Forgot password?</a>
         </div>
@@ -131,7 +139,7 @@
 
 <script src="js/utils.js"></script>
 <script src="js/auth.js?v=9"></script>
-<script src="js/api.js"></script>
+<script src="js/api.js?v=2"></script>
 <script>
 /* =========================================================
    VSLoader: show() · success(url) · fail(msg) · hide()
@@ -206,6 +214,10 @@ window.VSLoader = (function () {
   const form = document.getElementById('adminLoginForm');
   const userEl = document.getElementById('vsUser');
   const passEl = document.getElementById('vsPass');
+  const sysEl = document.getElementById('vsSys');
+  // The Windows desktop app reports the real computer name itself; browsers can't, so ask once and remember it.
+  if (window.vihDesktop) document.getElementById('sysField').hidden = true;
+  else { try { sysEl.value = localStorage.getItem('vih_system_name') || ''; } catch { /* private mode */ } }
   const eye = document.getElementById('vsEye');
   const caps = document.getElementById('vsCaps');
   const errorBox = document.getElementById('vsError');
@@ -248,7 +260,7 @@ window.VSLoader = (function () {
     submitBtn.disabled = true;
     VSLoader.show();
     try {
-      const data = await Api.login(username, password);
+      const data = await Api.login(username, password, { systemName: sysEl.value });
       Auth.saveSession(data);
       VSLoader.success('portal.html');
     } catch (err) {

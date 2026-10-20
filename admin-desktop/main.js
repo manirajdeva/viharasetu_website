@@ -32,6 +32,8 @@ function clearCreds() { pending = null; try { fs.unlinkSync(credsFile()); } catc
 const fromAdminPage = (e) => { try { return new URL(e.senderFrame.url).hostname.endsWith('viharasetu.co.in'); } catch { return false; } };
 ipcMain.handle('creds:get', (e) => (fromAdminPage(e) ? readCreds() : null));
 ipcMain.handle('creds:clear', (e) => { if (fromAdminPage(e)) clearCreds(); });
+// The real computer name, for the login audit (only the admin pages may ask).
+ipcMain.handle('sys:name', (e) => (fromAdminPage(e) ? require('os').hostname() : ''));
 ipcMain.on('creds:pending', (e, c) => {
   if (fromAdminPage(e) && c && typeof c.username === 'string' && typeof c.password === 'string') pending = { username: c.username, password: c.password };
 });

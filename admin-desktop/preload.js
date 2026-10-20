@@ -8,7 +8,12 @@
  * The page itself never gets access to the stored password except by the form
  * fields being filled in, exactly as a browser's password manager would do.
  */
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, contextBridge } = require('electron');
+
+// Lets the admin login report which computer is signing in (see admin/js/api.js).
+if (location.hostname.endsWith('viharasetu.co.in')) {
+  contextBridge.exposeInMainWorld('vihDesktop', { systemName: () => ipcRenderer.invoke('sys:name') });
+}
 
 if (location.hostname.endsWith('viharasetu.co.in') && /\/admin\/(index\.html)?$/.test(location.pathname)) {
   window.addEventListener('DOMContentLoaded', async () => {
