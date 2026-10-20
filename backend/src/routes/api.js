@@ -26,6 +26,7 @@ const rateLimit = require('express-rate-limit');
 
 const auth = require('../auth');
 const audit = require('../audit');
+const loginAudit = require('../loginAudit');
 const sheets = require('../services/sheets');
 const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
@@ -78,18 +79,35 @@ const loginLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many login attempts. Try again later.' } },
+  handler: (req, res, _next, options) => {
+    loginAudit.recordRateLimited(req);
+    res.status(options.statusCode).json(options.message);
+  },
 });
 
 router.post('/auth/login', loginLimiter, wrap(async (req, res) => {
   const admin = await auth.verifyAdmin(req.body.username, req.body.password);
-  if (!admin) return fail(res, 401, 'BAD_LOGIN', 'Invalid username or password.');
-  if (!auth.isActive(admin)) return fail(res, 403, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
+  if (!admin) {
+    // not awaited: auditing must never slow or block a login
+    auth.findAdmin(req.body.username)
+      .catch(() => null)
+      .then((known) => loginAudit.record(req, { event: 'LOGIN_FAILED', username: req.body.username, admin: known, reason: 'BAD_LOGIN' }));
+    return fail(res, 401, 'BAD_LOGIN', 'Invalid username or password.');
+  }
+  if (!auth.isActive(admin)) {
+    loginAudit.record(req, { event: 'LOGIN_FAILED', username: admin.username, admin, reason: 'INACTIVE' });
+    return fail(res, 403, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
+  }
   const sess = await auth.createSession(admin.username);
+  loginAudit.record(req, { event: 'LOGIN', admin, token: sess.token });
   return ok(res, { token: sess.token, expiresAt: sess.expiresAt, user: auth.publicAdmin(admin) });
 }));
 
 router.post('/auth/logout', wrap(async (req, res) => {
-  await auth.deleteSession(bearer(req));
+  const token = bearer(req);
+  const who = await auth.sessionUsername(token).catch(() => null);
+  if (who) loginAudit.record(req, { event: 'LOGOUT', username: who, token });
+  await auth.deleteSession(token);
   return ok(res, {});
 }));
 
@@ -119,6 +137,8 @@ router.patch('/profile', requireSession, wrap(async (req, res) => {
 }));
 
 /* ----------------------------- change history ----------------------------- */
+
+router.get('/login-audit', requireSession, requireAdminRole, wrap(async (req, res) => ok(res, await loginAudit.list(req.query))));
 
 router.get('/audit', requireSession, requireAdminRole, wrap(async (req, res) => ok(res, await audit.list(req.query))));
 

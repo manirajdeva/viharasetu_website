@@ -17,6 +17,7 @@ const rateLimit = require('express-rate-limit');
 
 const auth = require('../auth');
 const audit = require('../audit');
+const loginAudit = require('../loginAudit');
 const sheets = require('../services/sheets');
 const dashboard = require('../services/dashboard');
 const reports = require('../services/reports');
@@ -40,6 +41,10 @@ const loginLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many login attempts. Try again later.' } },
+  handler: (req, res, _next, options) => {
+    loginAudit.recordRateLimited(req);
+    res.status(options.statusCode).json(options.message);
+  },
 });
 
 function sheetKey(body) {
@@ -83,13 +88,25 @@ router.post(
 
       if (body.action === 'login') {
         const admin = await auth.verifyAdmin(body.username, body.password);
-        if (!admin) return fail(res, 'BAD_LOGIN', 'Invalid username or password.');
-        if (!auth.isActive(admin)) return fail(res, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
+        if (!admin) {
+          // not awaited: auditing must never slow or block a login
+          auth.findAdmin(body.username)
+            .catch(() => null)
+            .then((known) => loginAudit.record(req, { event: 'LOGIN_FAILED', username: body.username, admin: known, reason: 'BAD_LOGIN' }));
+          return fail(res, 'BAD_LOGIN', 'Invalid username or password.');
+        }
+        if (!auth.isActive(admin)) {
+          loginAudit.record(req, { event: 'LOGIN_FAILED', username: admin.username, admin, reason: 'INACTIVE' });
+          return fail(res, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
+        }
         const sess = await auth.createSession(admin.username);
+        loginAudit.record(req, { event: 'LOGIN', admin, token: sess.token });
         return res.json({ ok: true, token: sess.token, expiresAt: sess.expiresAt, user: auth.publicAdmin(admin) });
       }
 
       if (body.action === 'logout') {
+        const who = await auth.sessionUsername(body.token).catch(() => null);
+        if (who) loginAudit.record(req, { event: 'LOGOUT', username: who, token: body.token });
         await auth.deleteSession(body.token);
         return res.json({ ok: true });
       }
@@ -114,6 +131,10 @@ router.post(
 
         case 'updateProfile':
           return res.json(await updateProfile(admin, body.values || {}));
+
+        case 'loginLog':
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can view the login history.');
+          return res.json({ ok: true, ...(await loginAudit.list(body.data || {})) });
 
         case 'auditLog':
           if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can view the change history.');

@@ -277,3 +277,29 @@ CREATE TABLE IF NOT EXISTS audit_log (
   KEY idx_audit_changed_at (changed_at),
   KEY idx_audit_user (changed_by, changed_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/* ------------------------------------------------------------------ *
+ *  login_audit  - who signed in, when, from where; failed attempts too.
+ *    LOGIN / LOGIN_FAILED (reason BAD_LOGIN | INACTIVE | RATE_LIMITED) / LOGOUT
+ *  session_ref = short hash of the session token: pairs a LOGIN with its LOGOUT.
+ *  The password and the token itself are never stored. The API also creates
+ *  this table on start-up.
+ * ------------------------------------------------------------------ */
+CREATE TABLE IF NOT EXISTS login_audit (
+  id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  username    VARCHAR(80)  NOT NULL,                                   -- as typed (or the account name)
+  admin_id    BIGINT UNSIGNED NULL,                                    -- set when the account exists
+  role        VARCHAR(20)      NULL,
+  event       ENUM('LOGIN','LOGIN_FAILED','LOGOUT') NOT NULL,
+  success     TINYINT(1)   NOT NULL,
+  reason      VARCHAR(40)      NULL,
+  session_ref CHAR(16)         NULL,
+  ip          VARCHAR(64)      NULL,
+  device      VARCHAR(80)      NULL,                                   -- "Chrome on Windows"
+  user_agent  VARCHAR(255)     NULL,
+  logged_at   DATETIME     NOT NULL,                                   -- UTC
+  PRIMARY KEY (id),
+  KEY idx_login_user (username, logged_at),
+  KEY idx_login_time (logged_at),
+  KEY idx_login_session (session_ref)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

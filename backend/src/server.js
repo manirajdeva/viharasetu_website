@@ -127,6 +127,13 @@ async function start() {
     process.exit(1);
   }
 
+  try {
+    await require('./loginAudit').ensureSchema();
+  } catch (err) {
+    log.error('Could not create the login_audit table', err);
+    process.exit(1);
+  }
+
   await auth.purgeExpiredSessions().catch(() => {});
   setInterval(() => auth.purgeExpiredSessions().catch(() => {}), 30 * 60 * 1000).unref();
 
