@@ -270,13 +270,15 @@ CREATE TABLE IF NOT EXISTS audit_log (
   changed_by  VARCHAR(80)  NOT NULL,                                   -- admin username, or 'website'
   source      VARCHAR(20)  NOT NULL DEFAULT 'portal',                  -- 'portal' | 'website'
   changed_at  DATETIME     NOT NULL,                                   -- UTC
+  changed_at_ist DATETIME      NULL,                                   -- same instant in India Standard Time (UTC+05:30)
   changes     JSON         NOT NULL,
   PRIMARY KEY (id),
   KEY idx_audit_record (table_name, record_id, id),
   KEY idx_audit_ref (record_ref),
   KEY idx_audit_changed_at (changed_at),
   KEY idx_audit_user (changed_by, changed_at)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  /*T![auto_id_cache] AUTO_ID_CACHE=1 */;   -- TiDB: consecutive ids (no 30000-sized jumps)
 
 /* ------------------------------------------------------------------ *
  *  login_audit  - who signed in, when, from where; failed attempts too.
@@ -300,9 +302,11 @@ CREATE TABLE IF NOT EXISTS login_audit (
   device_id   VARCHAR(40)      NULL,                                   -- random per-browser id: recognises one machine across logins
   user_agent  VARCHAR(255)     NULL,
   logged_at   DATETIME     NOT NULL,                                   -- UTC
+  logged_at_ist DATETIME       NULL,                                   -- same instant in India Standard Time (UTC+05:30)
   PRIMARY KEY (id),
   KEY idx_login_user (username, logged_at),
   KEY idx_login_time (logged_at),
   KEY idx_login_session (session_ref),
   KEY idx_login_device (device_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  /*T![auto_id_cache] AUTO_ID_CACHE=1 */;   -- TiDB: consecutive ids (no 30000-sized jumps)

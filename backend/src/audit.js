@@ -13,6 +13,8 @@
  */
 
 const pool = require('./db');
+const { istString, ensureIstColumn } = require('./time');
+const { ensureConsecutiveIds } = require('./tidb');
 
 const IGNORED_COLUMNS = new Set(['updated_at']); // bookkeeping, changes on every write
 const REDACTED_COLUMNS = new Set(['password_hash']);
@@ -28,13 +30,18 @@ async function ensureSchema() {
       changed_by  VARCHAR(80)  NOT NULL,
       source      VARCHAR(20)  NOT NULL DEFAULT 'portal',
       changed_at  DATETIME     NOT NULL,
+      changed_at_ist DATETIME      NULL,
       changes     JSON         NOT NULL,
       PRIMARY KEY (id),
       KEY idx_audit_record (table_name, record_id, id),
       KEY idx_audit_ref (record_ref),
       KEY idx_audit_changed_at (changed_at),
       KEY idx_audit_user (changed_by, changed_at)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    /*T![auto_id_cache] AUTO_ID_CACHE=1 */`);
+
+  await ensureIstColumn(pool, 'audit_log', 'changed_at_ist', 'changed_at', 'changed_at');
+  await ensureConsecutiveIds(pool, 'audit_log');
 }
 
 function plain(value) {
@@ -86,10 +93,11 @@ async function record(conn, { table, action, actor, source = 'portal', before, a
     if (!Object.keys(changes).length) return;
   }
   const row = action === 'DELETE' ? before : after;
+  const changedAt = new Date(Math.floor(Date.now() / 1000) * 1000); // whole seconds: UTC and IST columns then always agree
   await conn.query(
-    `INSERT INTO audit_log (table_name, record_id, record_ref, action, changed_by, source, changed_at, changes)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    [table, row.id, refOf(row), action, String(actor || 'system'), source, new Date(), JSON.stringify(changes)],
+    `INSERT INTO audit_log (table_name, record_id, record_ref, action, changed_by, source, changed_at, changed_at_ist, changes)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [table, row.id, refOf(row), action, String(actor || 'system'), source, changedAt, istString(changedAt), JSON.stringify(changes)],
   );
 }
 
@@ -133,7 +141,7 @@ async function list(filters = {}) {
 
   const [[{ total }]] = await pool.query(`SELECT COUNT(*) AS total FROM audit_log ${clause}`, args);
   const [rows] = await pool.query(
-    `SELECT id, table_name, record_id, record_ref, action, changed_by, source, changed_at, changes
+    `SELECT id, table_name, record_id, record_ref, action, changed_by, source, changed_at, changed_at_ist, changes
        FROM audit_log ${clause} ORDER BY id DESC LIMIT ? OFFSET ?`,
     [...args, limit, offset],
   );
@@ -147,7 +155,8 @@ async function list(filters = {}) {
       action: r.action,
       by: r.changed_by,
       source: r.source,
-      at: r.changed_at instanceof Date ? r.changed_at.toISOString() : r.changed_at,
+      at: r.changed_at instanceof Date ? r.changed_at.toISOString() : r.changed_at,      // UTC instant
+      atIst: r.changed_at_ist instanceof Date ? r.changed_at_ist.toISOString().slice(0, 19).replace('T', ' ') : (r.changed_at_ist || ''), // IST wall clock
       changes: typeof r.changes === 'string' ? JSON.parse(r.changes) : r.changes,
     })),
   };

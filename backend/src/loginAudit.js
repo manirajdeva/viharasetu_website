@@ -9,7 +9,8 @@
  *
  * Each row keeps the username as typed, the client IP, a readable device
  * ("Chrome on Windows"), the computer name the client reported (system_name), a
- * per-browser device_id, and the raw user-agent. LOGIN and LOGOUT carry the same
+ * per-browser device_id, and the raw user-agent. Times are kept twice: logged_at
+ * in UTC (canonical) and logged_at_ist in India Standard Time (easy to read). LOGIN and LOGOUT carry the same
  * `session_ref` (a short hash of the session token) so a session's sign-in and
  * sign-out can be paired. The token itself and the password are never stored.
  *
@@ -20,6 +21,8 @@
 const crypto = require('crypto');
 const pool = require('./db');
 const log = require('./logger');
+const { istString, ensureIstColumn } = require('./time');
+const { ensureConsecutiveIds } = require('./tidb');
 
 async function ensureSchema() {
   await pool.query(`
@@ -38,12 +41,14 @@ async function ensureSchema() {
       device_id   VARCHAR(40)      NULL,
       user_agent  VARCHAR(255)     NULL,
       logged_at   DATETIME     NOT NULL,
+      logged_at_ist DATETIME       NULL,
       PRIMARY KEY (id),
       KEY idx_login_user (username, logged_at),
       KEY idx_login_time (logged_at),
       KEY idx_login_session (session_ref),
       KEY idx_login_device (device_id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    /*T![auto_id_cache] AUTO_ID_CACHE=1 */`);
 
   // ... and added to a table created before they existed
   const [cols] = await pool.query(
@@ -55,6 +60,9 @@ async function ensureSchema() {
     await pool.query('ALTER TABLE login_audit ADD COLUMN device_id VARCHAR(40) NULL AFTER system_name');
     await pool.query('ALTER TABLE login_audit ADD KEY idx_login_device (device_id)');
   }
+
+  await ensureIstColumn(pool, 'login_audit', 'logged_at_ist', 'logged_at', 'logged_at');
+  await ensureConsecutiveIds(pool, 'login_audit');
 }
 
 /** Short, non-reversible handle for a session token (pairs LOGIN with LOGOUT). */
@@ -102,10 +110,11 @@ async function record(req, { event, username, admin, reason, token }) {
   try {
     const ua = req && req.headers ? req.headers['user-agent'] : null;
     const body = req && req.body && typeof req.body === 'object' ? req.body : {};
+    const loggedAt = new Date(Math.floor(Date.now() / 1000) * 1000); // whole seconds: UTC and IST columns then always agree
     await pool.query(
       `INSERT INTO login_audit
-         (username, admin_id, role, event, success, reason, session_ref, ip, device, system_name, device_id, user_agent, logged_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         (username, admin_id, role, event, success, reason, session_ref, ip, device, system_name, device_id, user_agent, logged_at, logged_at_ist)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         clip(username || (admin && admin.username) || '', 80),
         admin ? admin.id : null,
@@ -119,7 +128,8 @@ async function record(req, { event, username, admin, reason, token }) {
         cleanName(body.systemName),
         cleanDeviceId(body.deviceId),
         clip(ua, 255),
-        new Date(),
+        loggedAt,
+        istString(loggedAt),
       ],
     );
   } catch (err) {
@@ -166,7 +176,7 @@ async function list(filters = {}) {
 
   const [[{ total }]] = await pool.query(`SELECT COUNT(*) AS total FROM login_audit ${clause}`, args);
   const [rows] = await pool.query(
-    `SELECT id, username, role, event, success, reason, session_ref, ip, device, system_name, device_id, logged_at
+    `SELECT id, username, role, event, success, reason, session_ref, ip, device, system_name, device_id, logged_at, logged_at_ist
        FROM login_audit ${clause} ORDER BY id DESC LIMIT ? OFFSET ?`,
     [...args, limit, offset],
   );
@@ -184,7 +194,8 @@ async function list(filters = {}) {
       device: r.device || '',
       systemName: r.system_name || '',
       deviceId: r.device_id || '',
-      at: r.logged_at instanceof Date ? r.logged_at.toISOString() : r.logged_at,
+      at: r.logged_at instanceof Date ? r.logged_at.toISOString() : r.logged_at,      // UTC instant
+      atIst: r.logged_at_ist instanceof Date ? r.logged_at_ist.toISOString().slice(0, 19).replace('T', ' ') : (r.logged_at_ist || ''), // IST wall clock
     })),
   };
 }
