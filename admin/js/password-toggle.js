@@ -4,6 +4,10 @@
  * the portal — the Users add/edit form, the Profile page, anything added later.
  * Popups are built on demand, so a MutationObserver enhances fields as they
  * appear. Fields that already carry their own toggle (the login page) are skipped.
+ *
+ * Each field also shows a small Caps Lock badge while it is focused:
+ *   amber "CAPS ON" / green "caps off". The state is read from every key and mouse
+ *   event (getModifierState), so it is right the moment you click or Tab into a field.
  */
 (function () {
   'use strict';
@@ -18,19 +22,47 @@
 
   var css =
     '.pw-wrap{position:relative;display:block;width:100%}' +
-    '.pw-wrap>input{padding-right:42px!important}' +
+    '.pw-wrap>input{padding-right:112px!important}' +
     '.pw-wrap input::-ms-reveal,.pw-wrap input::-ms-clear{display:none}' +
     '.pw-eye{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:32px;height:32px;padding:0;border:0;' +
       'border-radius:7px;background:transparent;color:var(--ink-soft,#5C554A);cursor:pointer;display:grid;place-items:center;' +
       'transition:color .15s,background .15s}' +
     '.pw-eye:hover{color:var(--accent,#BB5A34);background:rgba(187,90,52,.08)}' +
     '.pw-eye:focus-visible{outline:2px solid var(--accent,#BB5A34);outline-offset:1px}' +
+    '.pw-caps{position:absolute;right:42px;top:50%;transform:translateY(-50%);display:none;align-items:center;gap:5px;' +
+      'padding:3px 8px 3px 7px;border-radius:999px;font-family:inherit;font-weight:600;font-size:10.5px;line-height:1.2;letter-spacing:.05em;text-transform:uppercase;' +
+      'white-space:nowrap;pointer-events:none;user-select:none}' +
+    '.pw-caps::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}' +
+    '.pw-wrap:focus-within .pw-caps.known{display:inline-flex}' +
+    '.pw-caps.on{background:#FDECC8;color:#8A4B00}' +
+    '.pw-caps.off{background:rgba(42,92,69,.1);color:#2A5C45}' +
     '.pw-eye .pw-off{display:none}' +
     '.pw-eye[aria-pressed="true"] .pw-on{display:none}' +
     '.pw-eye[aria-pressed="true"] .pw-off{display:block}';
   var style = document.createElement('style');
   style.textContent = css;
   document.head.appendChild(style);
+
+  var capsOn = null;                       // null = not known yet
+  var badges = [];
+
+  function paint(b) {
+    b.classList.toggle('on', capsOn === true);
+    b.classList.toggle('off', capsOn === false);
+    b.classList.toggle('known', capsOn !== null);
+    b.textContent = capsOn ? 'Caps on' : 'Caps off';
+  }
+  function readCaps(e) {
+    if (!e || !e.getModifierState) return;
+    var now = e.getModifierState('CapsLock');
+    if (now === capsOn) return;
+    capsOn = now;
+    badges = badges.filter(function (b) { return b.isConnected; });
+    badges.forEach(paint);
+  }
+  ['keydown', 'keyup', 'mousedown', 'mouseup'].forEach(function (t) {
+    document.addEventListener(t, readCaps, true);
+  });
 
   function enhance(input) {
     if (input.dataset.pwToggle) return;
@@ -50,6 +82,14 @@
     btn.title = 'Show password';
     btn.innerHTML = EYE + EYE_OFF;
     wrap.appendChild(btn);
+
+    var badge = document.createElement('span');
+    badge.className = 'pw-caps';
+    badge.setAttribute('role', 'status');
+    badge.setAttribute('aria-live', 'polite');
+    wrap.appendChild(badge);
+    badges.push(badge);
+    paint(badge);
 
     // keep the caret where it is: don't let the click pull focus off the field
     btn.addEventListener('mousedown', function (e) { e.preventDefault(); });

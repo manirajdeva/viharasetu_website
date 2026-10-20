@@ -102,8 +102,10 @@ body{ font-family:var(--ui); color:var(--ink); background:var(--ivory); -webkit-
 .vs-input input:focus + svg.vs-ico, .vs-input:focus-within svg.vs-ico{ color:var(--teal); }
 .vs-eye{ position:absolute; right:5px; top:5px; width:44px; height:44px; border:0; border-radius:10px; background:transparent; color:#6c7a7c; cursor:pointer; display:grid; place-items:center; }
 .vs-eye:hover{ background:#f3efe6; color:var(--teal); }
-.vs-caps{ margin-top:8px; font-size:12px; color:#9a5a00; display:none; }
-.vs-caps.on{ display:block; }
+.vs-caps{ margin-top:8px; font-size:12px; font-weight:600; display:none; }
+.vs-input:focus-within ~ .vs-caps.known, .vs-field:focus-within .vs-caps.known{ display:block; }
+.vs-caps.on{ color:#9a5a00; }
+.vs-caps.off{ color:#2A5C45; }
 
 .vs-row{ display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin:4px 0 26px; font-size:14px; }
 .vs-check{ display:flex; align-items:center; gap:10px; cursor:pointer; color:#3d4c4f; min-height:44px; }
