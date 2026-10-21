@@ -285,6 +285,7 @@ function makeSheetModule(cfg) {
           </div>
           ${cfg.totalBox ? `<div class="total-box"><span class="label">${Utils.escapeHtml(cfg.totalBox.label)}</span><b id="${cfg.key}-total">₹0</b></div>` : ''}
           <div class="grp">
+            <button class="btn sm" data-x="refresh" title="Reload the latest data">↻ Refresh</button>
             <button class="btn sm" data-x="csv">CSV</button>
             <button class="btn sm" data-x="xlsx">Excel</button>
             <button class="btn sm" data-x="pdf">PDF</button>
@@ -297,6 +298,7 @@ function makeSheetModule(cfg) {
       </div>`;
 
     root().querySelector('[data-x="add"]').addEventListener('click', () => openForm(null));
+    Utils.wireRefresh(root().querySelector('[data-x="refresh"]'), () => load(true), cfg.title);
     root().querySelector('[data-x="csv"]').addEventListener('click', () => Utils.exportCSV(filtered(), exportColumns, cfg.key));
     root().querySelector('[data-x="xlsx"]').addEventListener('click', () => Utils.exportExcel(filtered(), exportColumns, cfg.key));
     root().querySelector('[data-x="pdf"]').addEventListener('click', () => Utils.exportPDF(filtered(), exportColumns, cfg.key, cfg.title));

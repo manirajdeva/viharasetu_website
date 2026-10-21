@@ -43,7 +43,7 @@ const HEADERS = {
   bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes', 'Created By', 'Updated By'],
   payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated', 'Created By', 'Updated By'],
   supplier_ments: ['Enquiry ID', 'Customer Name', 'Supplier Name', 'Total Amount', 'Package Cost', 'Profit', 'Created Date', 'Updated Date', 'Created By', 'Updated By'],
-  expenses: ['Expense Date', 'Category', 'Description', 'Amount', 'Paid By', 'Notes', 'Created Date', 'Updated Date'],
+  expenses: ['Expense Date', 'Category', 'Description', 'Amount', 'Paid By', 'Notes', 'Created Date', 'Updated Date', 'Created By', 'Updated By'],
   partner_transactions: ['Date', 'Partner', 'Type', 'Amount', 'Notes', 'Created Date', 'Updated Date']
 };
 
@@ -435,7 +435,7 @@ function reports(filters) {
 /* ---------------- seed ---------------- */
 
 function push(key, obj) {
-  const tracked = ['enquiries', 'suppliers', 'bookings', 'payments', 'supplier_ments'].includes(key);
+  const tracked = ['enquiries', 'suppliers', 'bookings', 'payments', 'supplier_ments', 'expenses'].includes(key);
   db[key].push(Object.assign({ rowIndex: ++rowSeq[key] }, tracked ? { 'Created By': 'admin', 'Updated By': '' } : {}, obj));
 }
 function daysAgoIso(d) { const x = new Date(); x.setDate(x.getDate() - d); return x.toISOString(); }

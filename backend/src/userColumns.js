@@ -1,6 +1,7 @@
 /**
  * userColumns.js
- * "Who did it" columns on the five record tables the portal edits:
+ * "Who did it" columns on the record tables the portal edits (enquiries, suppliers,
+ * bookings, payments, supplier payments, expenses):
  *   created_id  the signed-in user's name when the row was added     (e.g. maniraj_dev)
  *   updated_id  the signed-in user's name on the latest real change
  * Enquiries that arrive from the public website are created by 'website'.
@@ -8,7 +9,7 @@
  * client cannot set them. (They hold the user NAME, not a numeric id.)
  */
 
-const USER_TRACKED = ['enquiries', 'suppliers', 'bookings', 'payments', 'supplier_ments'];
+const USER_TRACKED = ['enquiries', 'suppliers', 'bookings', 'payments', 'supplier_ments', 'expenses'];
 
 const userTracked = (table) => USER_TRACKED.includes(table);
 

@@ -26,11 +26,12 @@ const Users = (() => {
       <div class="card">
         <div class="toolbar">
           <div class="grp"><input type="search" id="users-search" placeholder="Search username, role, email…" /></div>
-          <div class="grp"><button class="btn primary" id="users-add">+ Add user</button></div>
+          <div class="grp"><button class="btn sm" data-x="refresh" title="Reload the latest data">↻ Refresh</button><button class="btn primary" id="users-add">+ Add user</button></div>
         </div>
         <div class="table-wrap" id="users-tw"><div class="loading">Loading…</div></div>
       </div>`;
     root().querySelector('#users-add').addEventListener('click', () => openForm(null));
+    Utils.wireRefresh(root().querySelector('[data-x="refresh"]'), () => load(), 'Users');
     root().querySelector('#users-search').addEventListener('input', Utils.debounce((e) => { search = e.target.value; paint(); }));
   }
 

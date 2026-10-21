@@ -24,7 +24,9 @@ const Expenses = makeSheetModule({
     { key: 'Amount', label: 'Amount', type: 'currency' },
     { key: 'Paid By', label: 'Paid by' },
     { key: 'Notes', label: 'Notes' },
-    { key: 'Created Date', label: 'Created', type: 'datetime' }
+    { key: 'Created Date', label: 'Created', type: 'datetime' },
+    { key: 'Created By', label: 'Created by' },
+    { key: 'Updated By', label: 'Updated by' }
   ],
   formFields: [
     { key: 'Expense Date', label: 'Date', type: 'date', required: true, default: Utils.todayISO() },

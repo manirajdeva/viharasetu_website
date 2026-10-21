@@ -39,6 +39,7 @@ const Account = (() => {
             <button class="btn sm" id="acc-reset">Reset</button>
           </div>
           <div class="grp">
+            <button class="btn sm" data-x="refresh" title="Reload the latest data">↻ Refresh</button>
             <button class="btn sm" data-x="csv">CSV</button>
             <button class="btn sm" data-x="xlsx">Excel</button>
             <button class="btn sm" data-x="pdf">PDF</button>
@@ -63,6 +64,7 @@ const Account = (() => {
       root().querySelector('#acc-to').value = '';
       draw();
     });
+    Utils.wireRefresh(root().querySelector('[data-x="refresh"]'), () => load(), 'Account statement');
     root().querySelector('#acc-invest').addEventListener('click', () => openTxn('Investment'));
     root().querySelector('#acc-withdraw').addEventListener('click', () => openTxn('Withdrawal'));
     root().querySelector('[data-x="csv"]').addEventListener('click', () => Utils.exportCSV(visibleRows(), COLS, 'account-statement'));

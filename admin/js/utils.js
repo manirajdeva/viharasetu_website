@@ -301,7 +301,32 @@ const Utils = (() => {
     URL.revokeObjectURL(url);
   }
 
+  /**
+   * Wires a "↻ Refresh" button. While `task()` runs the button is disabled and reads
+   * "Refreshing…"; afterwards a short toast confirms. The task keeps the page's
+   * search / filters / sort - it only reloads the data.
+   */
+  function wireRefresh(btn, task, what) {
+    if (!btn) return;
+    const original = btn.innerHTML;
+    btn.addEventListener('click', async () => {
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.innerHTML = 'Refreshing…';
+      try {
+        await task();
+        success((what || 'Data') + ' refreshed.');
+      } catch (err) {
+        error((err && err.message) || 'Could not refresh. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
+    });
+  }
+
   return {
+    wireRefresh,
     toast, success, error, info, confirmDialog, showLoading, hideLoading,
     todayISO, formatDate, formatDateDMY, formatDateTime, formatCurrency, timeAgo, debounce,
     isValidEmail, isValidMobile, escapeHtml, escapeAttr,

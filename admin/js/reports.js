@@ -48,6 +48,7 @@ const Reports = (() => {
         <div class="toolbar">
           <div class="section-title" style="margin:0;">Results <span class="stat-pill" id="rpt-count">0</span></div>
           <div class="grp">
+            <button class="btn sm" data-x="refresh" title="Reload the latest data">↻ Refresh</button>
             <button class="btn sm" data-x="csv">CSV</button>
             <button class="btn sm" data-x="xlsx">Excel</button>
             <button class="btn sm" data-x="pdf">PDF</button>
@@ -57,6 +58,7 @@ const Reports = (() => {
       </div>`;
 
     document.getElementById('rpt-form').addEventListener('submit', (e) => { e.preventDefault(); generate(); });
+    Utils.wireRefresh(document.querySelector('#view-reports [data-x="refresh"]'), () => generate(), 'Report');
     document.getElementById('rpt-reset').addEventListener('click', () => { document.getElementById('rpt-form').reset(); generate(); });
     document.querySelector('#view-reports [data-x="csv"]').addEventListener('click', () => Utils.exportCSV(rows, columns, 'viharasetu_report'));
     document.querySelector('#view-reports [data-x="xlsx"]').addEventListener('click', () => Utils.exportExcel(rows, columns, 'viharasetu_report'));

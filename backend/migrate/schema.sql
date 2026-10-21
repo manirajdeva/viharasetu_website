@@ -241,6 +241,8 @@ CREATE TABLE IF NOT EXISTS expenses (
   notes        TEXT             NULL,                                  -- "Notes"
   created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,        -- "Created Date"
   updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- "Updated Date"
+  created_id   VARCHAR(80)      NULL,                                -- user name that added the row (e.g. maniraj_dev)
+  updated_id   VARCHAR(80)      NULL,                                -- user name that made the latest change
   PRIMARY KEY (id),
   KEY idx_expenses_date (expense_date),
   KEY idx_expenses_category (category)
