@@ -80,7 +80,7 @@ const Api = (() => {
 
   function handleAuthFailure() {
     Auth.clearSession();
-    if (!location.pathname.endsWith('index.html')) {
+    if (!/(^|\/)(index\.html)?$/.test(location.pathname)) {   // already on the login page (/admin/ or /admin/index.html)? stay
       setTimeout(() => location.replace('index.html?expired=1'), 900);
     }
   }
@@ -133,6 +133,8 @@ const Api = (() => {
         : j);
     },
     logout: () => post({ action: 'logout' }),
+    /** Is the saved session still known to the server? Rejects with code SESSION_EXPIRED if not. */
+    whoami: () => post({ action: 'whoami' }),
 
     getSheet,
 

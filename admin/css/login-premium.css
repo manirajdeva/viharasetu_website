@@ -147,6 +147,155 @@ body{ font-family:var(--ui); color:var(--ink); background:var(--ivory); -webkit-
   .vs-card h1{ font-size:38px; }
 }
 
+
+/* =========================================================
+   BOARDING-PASS SIGN-IN (right side) - landscape pass:
+   header + route + fields on the left, tear-off teal stub on the right
+   ========================================================= */
+.vs-sr{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+.vs-hero{ flex:1 1 520px; }
+.vs-panel{
+  flex:1.3 1 640px; min-height:100vh; padding:20px 24px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:#0a2d34;
+  --stub:clamp(150px, 27%, 190px);
+}
+.vs-pass{
+  position:relative; display:grid; grid-template-columns:minmax(0,1fr) var(--stub);
+  width:100%; max-width:760px; border-radius:22px;
+  filter:drop-shadow(0 26px 40px rgba(0,0,0,.45));
+}
+
+/* left: the ticket */
+.vs-pass-left{ background:#fffdf8; color:var(--ink); border-radius:22px 0 0 22px; overflow:hidden; display:flex; flex-direction:column; min-width:0; }
+.vs-pass-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex:0 0 auto;
+  padding:0 24px; height:52px; background:linear-gradient(100deg,#0b5560 0%,#0f7580 100%); color:#fff;
+}
+.vs-pass-title{ font-family:var(--display); font-weight:600; font-size:22px; letter-spacing:.01em; white-space:nowrap; }
+.vs-pass-title em{ font-style:normal; color:var(--saffron); }
+.vs-pass-class{
+  padding:7px 14px 6px; border-radius:999px; white-space:nowrap;
+  background:linear-gradient(180deg,#f8b645,#ec9420); color:#06303a;
+  font-size:10.5px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  box-shadow:0 2px 6px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.35);
+}
+.vs-pass-body{ padding:14px 24px 0; flex:1 1 auto; }
+
+.vs-pass-route{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+.vs-code{ display:flex; flex-direction:column; }
+.vs-code b{ font-family:var(--display); font-weight:500; font-size:clamp(40px, 5.2vh, 52px); line-height:.95; color:var(--deep); letter-spacing:.01em; }
+.vs-code small{ margin-top:5px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#6f7c7e; }
+.vs-code-r{ text-align:right; align-items:flex-end; }
+.vs-flight{ flex:1; display:flex; align-items:center; gap:8px; margin-top:20px; color:var(--saffron); }
+.vs-flight i{ flex:1; height:0; border-top:2px dashed #cfc7b4; }
+.vs-pass-plane{ transform:rotate(90deg); flex:0 0 auto; }
+
+.vs-welcome{ margin:12px 0 14px; font-size:13.5px; line-height:1.5; color:var(--muted); }
+.vs-welcome b{ color:var(--deep); font-weight:700; }
+
+.vs-pass .vs-error, .vs-pass .vs-notice{ margin:0 0 12px; padding:9px 12px; font-size:13px; }
+.vs-fields2{ display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:0 14px; }
+.vs-pass .vs-field{ margin-bottom:12px; min-width:0; }
+.vs-pass .vs-field label{ font-size:10.5px; letter-spacing:.14em; color:#5a676a; margin-bottom:6px; }
+.vs-opt{ font-weight:500; letter-spacing:.04em; text-transform:none; opacity:.7; }
+.vs-pass .vs-input input{ height:46px; border-radius:13px; font-size:14px; background:#fff; }
+.vs-pass .vs-input input:focus{ border-color:var(--teal); box-shadow:0 0 0 4px rgba(15,110,120,.14); }
+.vs-pass .vs-eye{ top:3px; right:3px; width:40px; height:40px; }
+.vs-pass .vs-caps{ margin-top:4px; font-size:11.5px; }
+
+.vs-fields-sub{ align-items:end; }
+.vs-keeprow{ margin:0 0 12px; min-height:46px; display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:13px; }
+.vs-pass .vs-check{ min-height:0; font-size:13px; gap:8px; color:#3d4c4f; }
+.vs-pass .vs-check input{ width:20px; height:20px; border-radius:6px; flex:0 0 auto; }
+
+.vs-pass .vs-submit{
+  height:50px; border-radius:14px; gap:12px; margin-top:2px;
+  background:linear-gradient(180deg,#f7b13c,#ea8c10); color:#2b1a02;
+  font-size:14px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+  box-shadow:0 14px 28px rgba(234,140,16,.32), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.vs-pass .vs-submit:hover{ box-shadow:0 18px 34px rgba(234,140,16,.4), inset 0 1px 0 rgba(255,255,255,.4); }
+.vs-pass .vs-submit:focus-visible{ outline:3px solid var(--teal); }
+.vs-pass .vs-secure{ justify-content:flex-start; margin:10px 0 0; font-size:11.5px; gap:7px; }
+
+.vs-pass-info{
+  margin:12px 24px 0; padding:12px 0 16px; border-top:2px dashed #ddd5c2;
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;
+}
+.vs-pass-info dt{ font-size:9.5px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:#7b8789; margin:0 0 3px; }
+.vs-pass-info dd{ margin:0; font:600 15px/1.1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; color:var(--deep); letter-spacing:.02em; }
+
+/* right: the teal stub */
+.vs-pass-side{
+  position:relative; display:flex; flex-direction:column; justify-content:space-between; gap:14px;
+  padding:22px 18px 18px 22px; border-radius:0 22px 22px 0; color:#fff;
+  background:linear-gradient(180deg,#0c5360 0%,#073a43 100%);
+}
+.vs-pass-side::before{ content:""; position:absolute; left:-1px; top:16px; bottom:16px; border-left:2px dashed rgba(207,199,180,.9); }
+.vs-pass-side .vs-eyebrow{ color:var(--saffron); font-size:10.5px; letter-spacing:.22em; }
+.vs-pass-side h2{ font-family:var(--display); font-weight:600; font-size:clamp(22px, 3.4vh, 29px); line-height:1.08; margin:10px 0 14px; color:#fff; }
+.vs-pass-side h2 em{ color:var(--saffron); font-style:italic; }
+.vs-side-grid{ margin:0; display:grid; grid-template-columns:1fr 1fr; gap:12px 10px; }
+.vs-side-grid dt{ font-size:9px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:#7fd0d2; margin:0 0 3px; }
+.vs-side-grid dd{ margin:0; font:700 14px/1.1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; color:#fff; }
+.vs-side-bottom{ display:flex; flex-direction:column; gap:10px; }
+.vs-barcode{ height:54px; padding:6px 8px; border-radius:8px; color:#062a2f; background:#fff; }
+.vs-side-tag{ font-family:var(--display); font-size:13px; color:#e9d7b5; text-align:center; line-height:1.2; }
+
+/* notches where the stub tears off */
+.vs-notch{ position:absolute; z-index:2; width:28px; height:28px; border-radius:50%; background:#0a2d34; left:calc(100% - var(--stub) - 14px); }
+.vs-notch-t{ top:-14px; }
+.vs-notch-b{ bottom:-14px; }
+
+.vs-panel .vs-help{ margin:0; color:#9fb9bb; }
+
+/* shorter screens: tighten so the pass still fits without scrolling */
+@media (max-height:760px){
+  .vs-pass-head{ height:46px; }
+  .vs-pass-body{ padding-top:10px; }
+  .vs-welcome{ margin:8px 0 10px; }
+  .vs-pass .vs-field{ margin-bottom:9px; }
+  .vs-pass .vs-input input{ height:42px; }
+  .vs-pass .vs-eye{ width:36px; height:36px; }
+  .vs-keeprow{ min-height:42px; margin-bottom:9px; }
+  .vs-pass .vs-submit{ height:46px; }
+  .vs-pass-info{ margin-top:8px; padding:9px 0 12px; }
+  .vs-panel{ padding-top:12px; padding-bottom:12px; gap:10px; }
+}
+
+/* narrower windows: hero hides, the pass is centred on its own */
+@media (max-width:1180px){
+  .vs-hero{ display:none; }
+  .vs-panel{ padding:24px 16px; }
+}
+/* short laptop screens: only the SPACING of the left panel tightens (picture and text unchanged) so nothing scrolls */
+@media (min-width:1181px) and (max-height:720px){
+  .vs-hero{ padding-top:22px; padding-bottom:22px; }
+  .vs-hero-copy h2{ margin:8px 0 10px; font-size:clamp(34px,3.8vw,52px); }
+  .vs-hero-plane-wrap{ height:150px; }
+  .vs-hero-plane{ top:14px; }
+  .vs-hero-trail{ top:112px; }
+}
+/* phones: stub drops under the ticket */
+@media (max-width:640px){
+  .vs-pass{ grid-template-columns:1fr; --stub:0px; }
+  .vs-pass-left{ border-radius:22px 22px 0 0; }
+  .vs-pass-side{ border-radius:0 0 22px 22px; flex-direction:row; align-items:center; padding:16px 18px; }
+  .vs-pass-side::before{ left:16px; right:16px; top:-1px; bottom:auto; border-left:0; border-top:2px dashed rgba(207,199,180,.9); }
+  .vs-pass-side h2, .vs-pass-side .vs-eyebrow, .vs-side-tag{ display:none; }
+  .vs-side-top{ flex:1; } .vs-side-bottom{ flex:0 0 112px; }
+  .vs-side-grid{ grid-template-columns:repeat(4, auto); gap:6px 14px; }
+  .vs-notch{ display:none; }
+  .vs-pass-head{ padding:0 18px; }
+  .vs-pass-title{ font-size:19px; }
+  .vs-pass-class{ font-size:9.5px; padding:6px 10px 5px; letter-spacing:.14em; }
+  .vs-pass-body{ padding:12px 18px 0; }
+  .vs-pass-info{ margin:10px 18px 0; grid-template-columns:repeat(2, 1fr); }
+  .vs-panel{ padding:16px 12px 24px; justify-content:flex-start; }
+}
+
 /* =========================================================
    LOADER (plane · success · parachute)
    ========================================================= */

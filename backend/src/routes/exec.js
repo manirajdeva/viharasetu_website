@@ -120,6 +120,9 @@ router.post(
       }
 
       switch (body.action) {
+        case 'whoami':   // cheap session check (the login page uses it before sending someone to the portal)
+          return res.json({ ok: true, user: auth.publicAdmin(admin) });
+
         case 'bootstrap':
           return res.json({ ok: true, data: await bootstrap.build() });
 

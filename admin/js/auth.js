@@ -5,16 +5,28 @@
  * The session ({ token, username, canDelete, mobile, email, expiresAt }) is
  * kept in sessionStorage — it survives navigation between login.html and
  * portal.html and a page refresh, but is cleared the moment the browser tab
- * is closed. The token is minted server-side by Code.gs on login and must
- * accompany every subsequent request; Code.gs expires it after 6 hours.
+ * is closed. If "Keep me signed in" is ticked at login it is kept in
+ * localStorage instead, so it also survives closing the browser - but only
+ * until the server-side token expires (6 hours); logging out clears it.
+ * The token is minted server-side on login and must accompany every
+ * subsequent request.
  */
 
 const Auth = (() => {
   const KEY = 'vih_admin_session';
 
-  function saveSession(data) {
+  const where = () => {
+    try { if (sessionStorage.getItem(KEY)) return sessionStorage; } catch { /* storage blocked */ }
+    try { if (localStorage.getItem(KEY)) return localStorage; } catch { /* storage blocked */ }
+    return null;
+  };
+
+  function saveSession(data, keep) {
     const role = data.role || (data.canDelete ? 'admin' : 'employee');
-    sessionStorage.setItem(KEY, JSON.stringify({
+    clearSession();
+    let target = sessionStorage;
+    if (keep) { try { target = localStorage; localStorage.getItem(KEY); } catch { target = sessionStorage; } }
+    target.setItem(KEY, JSON.stringify({
       token: data.token,
       username: data.username,
       role,
@@ -29,7 +41,8 @@ const Auth = (() => {
 
   function getSession() {
     try {
-      const raw = sessionStorage.getItem(KEY);
+      const store = where();
+      const raw = store && store.getItem(KEY);
       if (!raw) return null;
       const s = JSON.parse(raw);
       if (!s.expiresAt || s.expiresAt < Date.now()) { clearSession(); return null; }
@@ -46,13 +59,16 @@ const Auth = (() => {
   function patchSession(patch) {
     const s = getSession();
     if (!s) return;
-    sessionStorage.setItem(KEY, JSON.stringify(Object.assign(s, patch)));
+    (where() || sessionStorage).setItem(KEY, JSON.stringify(Object.assign(s, patch)));
   }
 
   const getToken = () => getSession()?.token || null;
   const getUser = () => getSession() || null;
   const isLoggedIn = () => !!getSession();
-  const clearSession = () => sessionStorage.removeItem(KEY);
+  function clearSession() {
+    try { sessionStorage.removeItem(KEY); } catch { /* storage blocked */ }
+    try { localStorage.removeItem(KEY); } catch { /* storage blocked */ }
+  }
 
   /** Call at the top of portal.html. Redirects to the login page if there is no valid session. */
   function guardPage() {

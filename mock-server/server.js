@@ -539,6 +539,7 @@ function handlePost(body, res) {
     const actor = requireSession(p.token);
     const adminsOnly = () => ({ ok: false, error: { code: 'FORBIDDEN', message: 'Only admins can manage users.' } });
     switch (p.action) {
+      case 'whoami': return send(res, { ok: true, user: publicUser(actor) });
       case 'bootstrap': return send(res, {
         ok: true,
         data: {
