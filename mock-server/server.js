@@ -38,11 +38,11 @@ const publicUser = (u) => ({
 });
 
 const HEADERS = {
-  enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'No. of People', 'Hotel Preference', 'Special Requests', 'Referred By', 'Status', 'Notes'],
-  suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No'],
-  bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes'],
-  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated'],
-  supplier_ments: ['Enquiry ID', 'Customer Name', 'Supplier Name', 'Total Amount', 'Package Cost', 'Profit', 'Created Date', 'Updated Date'],
+  enquiries: ['Enquiry ID', 'Timestamp', 'Name', 'Email', 'Phone', 'Destination', 'Travel', 'No. of People', 'Hotel Preference', 'Special Requests', 'Referred By', 'Status', 'Notes', 'Created By', 'Updated By'],
+  suppliers: ['Timestamp', 'Supplier Company Name', 'States', 'Supplier Name', 'Supplier ID', 'Contact No', 'Created By', 'Updated By'],
+  bookings: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Travel Dates', 'Pax', 'Amount', 'Payment Status', 'Notes', 'Created By', 'Updated By'],
+  payments: ['Enquiry ID', 'Timestamp', 'Customer', 'Destination', 'Amount Paid', 'Payment Mode', 'Transaction Ref', 'Notes', 'Total Amount', 'Pending Amount', 'Payment ID', 'Last Updated', 'Created By', 'Updated By'],
+  supplier_ments: ['Enquiry ID', 'Customer Name', 'Supplier Name', 'Total Amount', 'Package Cost', 'Profit', 'Created Date', 'Updated Date', 'Created By', 'Updated By'],
   expenses: ['Expense Date', 'Category', 'Description', 'Amount', 'Paid By', 'Notes', 'Created Date', 'Updated Date'],
   partner_transactions: ['Date', 'Partner', 'Type', 'Amount', 'Notes', 'Created Date', 'Updated Date']
 };
@@ -219,7 +219,7 @@ function prepareSupplierValues(values, editingRowIndex) {
   values['Profit'] = round2((Number(values['Total Amount']) || 0) - (Number(values['Package Cost']) || 0));
 }
 
-function createRow(p) {
+function createRow(p, actor) {
   const key = String(p.sheet || 'enquiries').toLowerCase();
   if (!HEADERS[key]) throw new AppError('BAD_SHEET', 'Unknown sheet.');
   const values = p.values || {};
@@ -228,7 +228,9 @@ function createRow(p) {
 
   const row = { rowIndex: ++rowSeq[key] };
   HEADERS[key].forEach((h) => {
-    if (h === 'Timestamp' || h === 'Last Updated' || h === 'Created Date' || h === 'Updated Date') row[h] = nowIso();
+    if (h === 'Created By') row[h] = actor ? actor.username : '';
+    else if (h === 'Updated By') row[h] = '';
+    else if (h === 'Timestamp' || h === 'Last Updated' || h === 'Created Date' || h === 'Updated Date') row[h] = nowIso();
     else if (h === 'Enquiry ID' && key === 'enquiries') row[h] = nextEnquiryId();
     else if (h === 'Payment ID' && key === 'payments') row[h] = nextPaymentId();
     else row[h] = values[h] == null ? '' : values[h];
@@ -237,7 +239,7 @@ function createRow(p) {
   return { ok: true };
 }
 
-function updateRow(p) {
+function updateRow(p, actor) {
   const key = String(p.sheet || 'enquiries').toLowerCase();
   if (!HEADERS[key]) throw new AppError('BAD_SHEET', 'Unknown sheet.');
   if (!p.rowIndex) throw new AppError('BAD_REQUEST', 'Missing rowIndex');
@@ -247,13 +249,17 @@ function updateRow(p) {
   if (key === 'payments') preparePaymentValues(values, p.rowIndex);
   if (key === 'supplier_ments') prepareSupplierValues(values, p.rowIndex);
 
+  let changed = false;
   HEADERS[key].forEach((h) => {
-    if (h === 'Timestamp' || h === 'Created Date') return;
+    if (h === 'Timestamp' || h === 'Created Date' || h === 'Created By' || h === 'Updated By') return;
     if (h === 'Last Updated' || h === 'Updated Date') { existing[h] = nowIso(); return; }
     if (h === 'Enquiry ID' && key === 'enquiries') return;
     if (h === 'Payment ID' && key === 'payments') return;
-    existing[h] = values[h] == null ? '' : values[h];
+    const next = values[h] == null ? '' : values[h];
+    if (String(existing[h] == null ? '' : existing[h]) !== String(next)) changed = true;
+    existing[h] = next;
   });
+  if (changed && HEADERS[key].includes('Updated By')) existing['Updated By'] = actor ? actor.username : '';
   return { ok: true };
 }
 
@@ -429,7 +435,8 @@ function reports(filters) {
 /* ---------------- seed ---------------- */
 
 function push(key, obj) {
-  db[key].push(Object.assign({ rowIndex: ++rowSeq[key] }, obj));
+  const tracked = ['enquiries', 'suppliers', 'bookings', 'payments', 'supplier_ments'].includes(key);
+  db[key].push(Object.assign({ rowIndex: ++rowSeq[key] }, tracked ? { 'Created By': 'admin', 'Updated By': '' } : {}, obj));
 }
 function daysAgoIso(d) { const x = new Date(); x.setDate(x.getDate() - d); return x.toISOString(); }
 
@@ -522,7 +529,7 @@ function handlePost(body, res) {
         'Phone': p.phone || '', 'Destination': p.destination || '', 'Travel': p.travel || '',
         'No. of People': p.no_of_people || '', 'Hotel Preference': p.hotel_preference || '',
         'Special Requests': p.special_req || '',
-        'Status': 'New', 'Notes': p.notes || p.message || ''
+        'Status': 'New', 'Notes': p.notes || p.message || '', 'Created By': 'website'
       });
       return send(res, { ok: true, enquiryId: id });
     }
@@ -551,8 +558,8 @@ function handlePost(body, res) {
       case 'createUser': return send(res, actor.role === 'admin' ? createUser(p) : adminsOnly());
       case 'updateUser': return send(res, actor.role === 'admin' ? updateUser(Object.assign({ actor: actor.username }, p)) : adminsOnly());
       case 'deleteUser': return send(res, actor.role === 'admin' ? deleteUser(p, actor) : adminsOnly());
-      case 'create': return send(res, createRow(p));
-      case 'update': return send(res, updateRow(p));
+      case 'create': return send(res, createRow(p, actor));
+      case 'update': return send(res, updateRow(p, actor));
       case 'delete': return send(res, deleteRow(p, actor));
       default: return send(res, { ok: false, error: { code: 'UNKNOWN_ACTION', message: 'Unknown action: ' + p.action } });
     }

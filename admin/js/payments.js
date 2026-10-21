@@ -235,7 +235,9 @@ const Payments = makeSheetModule({
     { key: 'Pending Amount', label: 'Pending', type: 'currency-pending' },
     { key: 'Payment Mode', label: 'Mode' },
     { key: 'Transaction Ref', label: 'Txn ref' },
-    { key: 'Notes', label: 'Notes' }
+    { key: 'Notes', label: 'Notes' },
+    { key: 'Created By', label: 'Created by' },
+    { key: 'Updated By', label: 'Updated by' }
   ],
   formFields: [
     { key: 'Enquiry ID', label: 'Enquiry ID', type: 'picker', list: 'enquiryIdList', placeholder: 'Search by enquiry ID, name, phone or destination…', full: true },

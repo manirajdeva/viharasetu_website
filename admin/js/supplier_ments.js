@@ -23,7 +23,9 @@ const SupplierMents = makeSheetModule({
     { key: 'Package Cost', label: 'Package cost', type: 'currency' },
     { key: 'Profit', label: 'Profit', type: 'currency' },
     { key: 'Created Date', label: 'Created', type: 'datetime' },
-    { key: 'Updated Date', label: 'Updated', type: 'datetime' }
+    { key: 'Updated Date', label: 'Updated', type: 'datetime' },
+    { key: 'Created By', label: 'Created by' },
+    { key: 'Updated By', label: 'Updated by' }
   ],
   formFields: [
     { key: 'Enquiry ID', label: 'Enquiry ID', type: 'picker', list: 'enquiryIdList', placeholder: 'Search by enquiry ID, name, phone or destination…', full: true, required: true },

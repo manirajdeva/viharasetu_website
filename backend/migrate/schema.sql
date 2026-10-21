@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS enquiries (
   notes        TEXT             NULL,                                   -- "Notes"
   created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_id   VARCHAR(80)      NULL,                                -- user name that added the row (e.g. maniraj_dev)
+  updated_id   VARCHAR(80)      NULL,                                -- user name that made the latest change
   PRIMARY KEY (id),
   UNIQUE KEY uq_enquiries_enquiry_id (enquiry_id),
   KEY idx_enquiries_status (status),
@@ -85,6 +87,8 @@ CREATE TABLE IF NOT EXISTS suppliers (
   contact_no     VARCHAR(20)      NULL,                                 -- "Contact No"
   created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_id   VARCHAR(80)      NULL,                                -- user name that added the row (e.g. maniraj_dev)
+  updated_id   VARCHAR(80)      NULL,                                -- user name that made the latest change
   PRIMARY KEY (id),
   KEY idx_suppliers_company (company_name),
   KEY idx_suppliers_code (supplier_code)
@@ -109,6 +113,8 @@ CREATE TABLE IF NOT EXISTS bookings (
   notes          TEXT             NULL,                                 -- "Notes"
   created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_id   VARCHAR(80)      NULL,                                -- user name that added the row (e.g. maniraj_dev)
+  updated_id   VARCHAR(80)      NULL,                                -- user name that made the latest change
   PRIMARY KEY (id),
   KEY idx_bookings_enquiry_id (enquiry_id),
   KEY idx_bookings_customer (customer),
@@ -140,6 +146,8 @@ CREATE TABLE IF NOT EXISTS payments (
   notes           TEXT             NULL,                                -- "Notes"
   created_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_id   VARCHAR(80)      NULL,                                -- user name that added the row (e.g. maniraj_dev)
+  updated_id   VARCHAR(80)      NULL,                                -- user name that made the latest change
   PRIMARY KEY (id),
   UNIQUE KEY uq_payments_payment_id (payment_id),
   KEY idx_payments_enquiry_id (enquiry_id),
@@ -213,6 +221,8 @@ CREATE TABLE IF NOT EXISTS supplier_ments (
   profit        DECIMAL(12,2) NOT NULL DEFAULT 0,                      -- "Profit" = total_amount - package_cost (derived, stored)
   created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,       -- "Created Date"
   updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- "Updated Date"
+  created_id   VARCHAR(80)      NULL,                                -- user name that added the row (e.g. maniraj_dev)
+  updated_id   VARCHAR(80)      NULL,                                -- user name that made the latest change
   PRIMARY KEY (id),
   UNIQUE KEY uq_supplier_ments_enquiry_id (enquiry_id),
   KEY idx_supplier_ments_supplier (supplier_name),

@@ -13,6 +13,7 @@ const { ENTITIES, headersFor, toDisplayRow, toDbValues } = require('../mappers')
 const { nextEnquiryId, nextPaymentId } = require('../ids');
 const { preparePaymentValues, paymentGroupKey, renumberGroup } = require('./payments');
 const audit = require('../audit');
+const { userTracked, actorName, decorateRow, headersWithUsers } = require('../userColumns');
 
 const num = (x) => Number(String(x == null ? '' : x).replace(/[₹,\s]/g, '')) || 0;
 
@@ -36,16 +37,19 @@ async function prepareSupplierValues(conn, vals, cur) {
 
 const q = (name) => `\`${name}\``; // identifiers are from our own map, but quote them anyway
 
+/** Column headers for an entity, including Created By / Updated By where tracked. */
+const headersOf = (key) => headersWithUsers(ENTITIES[key].table, headersFor(key));
+
 /** All rows for one entity, in insertion order, as display rows. */
 async function listRows(key) {
   const { table } = ENTITIES[key];
   const [rows] = await pool.query(`SELECT * FROM ${q(table)} ORDER BY id ASC`);
-  return { headers: headersFor(key), rows: rows.map((r) => toDisplayRow(key, r)) };
+  return { headers: headersOf(key), rows: rows.map((r) => decorateRow(table, toDisplayRow(key, r), r)) };
 }
 
 async function getRow(key, rowIndex) {
   const [rows] = await pool.query(`SELECT * FROM ${q(ENTITIES[key].table)} WHERE id = ? LIMIT 1`, [Number(rowIndex)]);
-  return rows.length ? toDisplayRow(key, rows[0]) : null;
+  return rows.length ? decorateRow(ENTITIES[key].table, toDisplayRow(key, rows[0]), rows[0]) : null;
 }
 
 /**
@@ -70,6 +74,7 @@ async function createRow(key, values, { afterInsert, actor, source } = {}) {
 
     const db = toDbValues(key, vals, { skip: Object.keys(spec.generated) });
     db[spec.tsColumn] = new Date();
+    if (userTracked(spec.table)) db.created_id = actorName(actor);   // who added it
 
     const generatedOut = {};
     if (key === 'enquiries') {
@@ -148,6 +153,10 @@ async function updateRow(key, rowIndex, values, { actor, source } = {}) {
     }
 
     const [[updated]] = await conn.query(`SELECT * FROM ${q(spec.table)} WHERE id = ?`, [Number(rowIndex)]);
+    // who last changed it - only when something really changed, so a Save with no edits does not take over the row
+    if (userTracked(spec.table) && audit.hasChanges(cur[0], updated)) {
+      await conn.query(`UPDATE ${q(spec.table)} SET updated_id = ? WHERE id = ?`, [actorName(actor), Number(rowIndex)]);
+    }
     await audit.record(conn, { table: spec.table, action: 'UPDATE', actor, source, before: cur[0], after: updated });
 
     await conn.commit();
@@ -184,4 +193,4 @@ async function deleteRow(key, admin, rowIndex, { source } = {}) {
   return { ok: true };
 }
 
-module.exports = { listRows, getRow, createRow, updateRow, deleteRow };
+module.exports = { listRows, getRow, createRow, updateRow, deleteRow, headersOf };

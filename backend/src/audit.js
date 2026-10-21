@@ -16,7 +16,7 @@ const pool = require('./db');
 const { istString, ensureIstColumn } = require('./time');
 const { ensureConsecutiveIds } = require('./tidb');
 
-const IGNORED_COLUMNS = new Set(['updated_at']); // bookkeeping, changes on every write
+const IGNORED_COLUMNS = new Set(['updated_at', 'created_id', 'updated_id']); // bookkeeping; the log's own changed_by already says who
 const REDACTED_COLUMNS = new Set(['password_hash']);
 
 async function ensureSchema() {
@@ -162,4 +162,7 @@ async function list(filters = {}) {
   };
 }
 
-module.exports = { ensureSchema, record, inTransaction, list };
+/** True when an update really changed a user-visible column. */
+const hasChanges = (before, after) => Object.keys(diff(before, after)).length > 0;
+
+module.exports = { ensureSchema, record, inTransaction, list, hasChanges };

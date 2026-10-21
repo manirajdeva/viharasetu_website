@@ -134,6 +134,13 @@ async function start() {
     process.exit(1);
   }
 
+  try {
+    await require('./userColumns').ensureSchema(pool);
+  } catch (err) {
+    log.error('Could not add the created_id / updated_id columns', err);
+    process.exit(1);
+  }
+
   await auth.purgeExpiredSessions().catch(() => {});
   setInterval(() => auth.purgeExpiredSessions().catch(() => {}), 30 * 60 * 1000).unref();
 

@@ -26,7 +26,9 @@ const Enquiries = makeSheetModule({
     { key: 'Special Requests', label: 'Special requests' },
     { key: 'Referred By', label: 'Referred by' },
     { key: 'Status', label: 'Status' },
-    { key: 'Notes', label: 'Notes' }
+    { key: 'Notes', label: 'Notes' },
+    { key: 'Created By', label: 'Created by' },
+    { key: 'Updated By', label: 'Updated by' }
   ],
   formFields: [
     { key: 'Name', label: 'Name', required: true },

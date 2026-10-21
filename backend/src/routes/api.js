@@ -158,7 +158,7 @@ router.get('/:entity', requireSession, requireEntity, wrap(async (req, res) => {
   const offset = Math.max(parseInt(req.query.offset, 10) || 0, 0);
   if (limit) out = out.slice(offset, offset + limit);
 
-  return ok(res, { headers: headersFor(req.entity), rows: out, total });
+  return ok(res, { headers: sheets.headersOf(req.entity), rows: out, total });
 }));
 
 router.get('/:entity/:id', requireSession, requireEntity, wrap(async (req, res) => {

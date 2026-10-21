@@ -26,7 +26,9 @@ const Bookings = makeSheetModule({
     { key: 'Pax', label: 'Pax' },
     { key: 'Amount', label: 'Amount', type: 'currency' },
     { key: 'Payment Status', label: 'Payment' },
-    { key: 'Notes', label: 'Notes' }
+    { key: 'Notes', label: 'Notes' },
+    { key: 'Created By', label: 'Created by' },
+    { key: 'Updated By', label: 'Updated by' }
   ],
   formFields: [
     { key: 'Enquiry ID', label: 'Enquiry ID', type: 'picker', list: 'enquiryIdList', placeholder: 'Search by enquiry ID, name, phone or destination…', full: true },

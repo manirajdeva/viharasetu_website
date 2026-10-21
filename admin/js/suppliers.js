@@ -19,7 +19,9 @@ const Suppliers = makeSheetModule({
     { key: 'Supplier Company Name', label: 'Company' },
     { key: 'Supplier Name', label: 'Contact person' },
     { key: 'States', label: 'Regions' },
-    { key: 'Contact No', label: 'Phone' }
+    { key: 'Contact No', label: 'Phone' },
+    { key: 'Created By', label: 'Created by' },
+    { key: 'Updated By', label: 'Updated by' }
   ],
   formFields: [
     { key: 'Supplier Company Name', label: 'Company name', required: true },
