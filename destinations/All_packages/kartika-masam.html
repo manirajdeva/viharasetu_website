@@ -501,6 +501,7 @@ footer{background:#140607;color:#a99b86;text-align:center;font-size:.82rem;paddi
       <p>Join a fixed departure timed to the festival days, or travel on your own dates. Tap a yatra to open the day-by-day plan.</p>
     </div>
     <div class="tiers" aria-label="Kartika yatras" id="tiers"></div>
+    <p class="price-note" style="margin:14px 0 0;font-size:.8rem;opacity:.75;text-align:center">Indicative starting prices per person on twin sharing, excluding flights/trains. Final quote depends on dates, hotels and group size.</p>
     <p class="notes">Itineraries are indicative and can be tailored to your pace, group size and budget. Seats on Dev Deepawali boats are limited — early booking recommended.</p>
   </div>
 </section>
@@ -731,16 +732,16 @@ footer{background:#140607;color:#a99b86;text-align:center;font-size:.82rem;paddi
 })();
 
 /* ---- Itineraries ---- */
-/* Set a price (e.g. "₹ 45,000") to show it; leave null to show "Price on request". */
+/* Set a price (e.g. "₹ 45,000") to show it; indicative per person, twin sharing, ex-flights/trains. */
 var PLANS=[
-  {"key":"pancharama","num":3,"unit":"Days","alt":"2 Nights","dayCount":3,"title":"Pancharama Kshetra Darshan","route":"Vijayawada · Amaravati · Bhimavaram · Palakollu · Draksharamam · Samalkot · Rajahmundry","routeShort":"Andhra Pradesh","when":"Any Karthika weekend · best over a Somavaram","price":null,
+  {"key":"pancharama","num":3,"unit":"Days","alt":"2 Nights","dayCount":3,"title":"Pancharama Kshetra Darshan","route":"Vijayawada · Amaravati · Bhimavaram · Palakollu · Draksharamam · Samalkot · Rajahmundry","routeShort":"Andhra Pradesh","when":"Any Karthika weekend · best over a Somavaram","price": "₹ 9,500",
    "sub":"All five ancient Shiva kshetras of the Pancharamas, with Karthika deepam on the Godavari and a dawn snanam at Pushkar Ghat.",
    "days":[
     {"day":1,"title":"Amararama & Somarama","items":["Pick-up at Vijayawada airport / railway station","Darshan at Amareswara Swamy temple, Amaravati, on the banks of the Krishna","Drive to Bhimavaram; evening darshan at Someswara Swamy (Somarama), whose lingam is said to change colour with the moon","Overnight stay in Bhimavaram"],"tags":["Dinner"],"rit":["Deepa daanam"]},
     {"day":2,"title":"Ksheerarama, Draksharama & Kumararama","items":["Early darshan at Ksheera Ramalingeswara, Palakollu","Rudrabhishekam at Bhimeswara Swamy, Draksharamam — also one of the Shakti Peethas (Manikyamba)","Afternoon darshan at Kumara Bhimeswara, Samalkot; taste Kakinada kaja on the way","Evening Godavari aarti and floating Karthika deepams at Pushkar Ghat, Rajahmundry","Overnight stay in Rajahmundry"],"tags":["Breakfast","Dinner"],"rit":["Rudrabhishekam","Godavari deepam"]},
     {"day":3,"title":"Godavari Snanam & Departure","items":["Pre-dawn Karthika snanam in the Godavari with sankalpam","Vanabhojanam-style sattvic brunch","Transfer to Rajahmundry airport / railway station"],"tags":["Breakfast","Brunch"],"rit":["Karthika snanam"]}
    ]},
-  {"key":"kashi","num":5,"unit":"Days","alt":"4 Nights","dayCount":5,"title":"Kashi Dev Deepawali","route":"Varanasi · Sarnath","routeShort":"Fixed departure","when":"Fixed departure · 21 – 25 Nov 2026","feat":true,"ribbon":"Signature","price":null,
+  {"key":"kashi","num":5,"unit":"Days","alt":"4 Nights","dayCount":5,"title":"Kashi Dev Deepawali","route":"Varanasi · Sarnath","routeShort":"Fixed departure","when":"Fixed departure · 21 – 25 Nov 2026","feat":true,"ribbon":"Signature","price": "₹ 16,500",
    "sub":"Five days in Kashi timed to Karthika Pournami — Somavara abhishekam at Vishwanath, and Dev Deepawali from your own reserved boat.",
    "days":[
     {"day":1,"date":"Sat 21 Nov","title":"Arrival & Ganga Aarti","items":["Arrive in Varanasi, welcome and check-in near the ghats","Evening Ganga Aarti at Dashashwamedh Ghat from a reserved boat","Overnight stay in Varanasi"],"tags":["Dinner"],"rit":["Deepa daanam"]},
@@ -749,7 +750,7 @@ var PLANS=[
     {"day":4,"date":"Tue 24 Nov","title":"Karthika Pournami · Dev Deepawali","items":["Pre-dawn Ganga snanam with sankalpam and deepa daanam","Day at a relaxed pace; sattvic lunch","From dusk, Dev Deepawali from a reserved boat — the ghats lit end to end with lakhs of diyas","Overnight stay in Varanasi"],"tags":["Breakfast","Lunch","Dinner"],"rit":["Karthika snanam","Deepa daanam"]},
     {"day":5,"date":"Wed 25 Nov","title":"Departure","items":["Morning at leisure; malaiyyo on the Godowlia lanes","Transfer to Varanasi airport / railway station"],"tags":["Breakfast"]}
    ]},
-  {"key":"grand","num":9,"unit":"Days","alt":"8 Nights","dayCount":9,"title":"Grand Kartika Shiva Yatra","route":"Hyderabad · Srisailam · Vijayawada · Pancharamas · Rajahmundry · Varanasi","routeShort":"Fixed departure","when":"Fixed departure · 17 – 25 Nov 2026","price":null,
+  {"key":"grand","num":9,"unit":"Days","alt":"8 Nights","dayCount":9,"title":"Grand Kartika Shiva Yatra","route":"Hyderabad · Srisailam · Vijayawada · Pancharamas · Rajahmundry · Varanasi","routeShort":"Fixed departure","when":"Fixed departure · 17 – 25 Nov 2026","price": "₹ 30,500",
    "sub":"Srisailam's Jyotirlinga, all five Pancharamas and Kashi on Karthika Pournami — the whole month's devotion in one unhurried journey.",
    "days":[
     {"day":1,"date":"Tue 17 Nov","title":"Hyderabad to Srisailam","items":["Pick-up in Hyderabad; scenic drive through the Nallamala forest","Evening darshan at Sri Mallikarjuna Swamy & Bhramaramba Devi","Overnight stay in Srisailam"],"tags":["Dinner"]},
