@@ -160,6 +160,47 @@
   .pilgrim li::before{content:"\2766";position:absolute;left:0;color:#e9a564;font-size:.8rem}
   .pilgrim li b{color:#fff;font-weight:600}
 
+  /* ---------- Airport codes ---------- */
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .tool-btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 18px;font:inherit;font-size:.88rem;font-weight:500;color:var(--ink);cursor:pointer;transition:all .18s}
+  .tool-btn:hover{border-color:var(--saffron);color:var(--saffron)}
+  .tool-btn svg{color:var(--saffron)}
+  .ap-bd{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(23,18,13,.62);backdrop-filter:blur(4px)}
+  .ap-bd.open{display:flex}
+  .ap-dialog{display:flex;flex-direction:column;width:min(860px,100%);max-height:calc(100vh - 40px);background:var(--paper);border-radius:22px;box-shadow:0 40px 90px -30px rgba(0,0,0,.6);overflow:hidden}
+  .ap-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:24px 26px 6px}
+  .ap-head h2{font-size:clamp(1.5rem,3vw,2rem)}
+  .ap-head p{font-size:.86rem;color:var(--muted);margin-top:4px}
+  .ap-x{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:1.2rem;line-height:1;cursor:pointer;color:var(--ink)}
+  .ap-x:hover{border-color:var(--gold)}
+  .ap-bar{padding:12px 26px 0}
+  .ap-bar .search{padding:2px 6px 2px 14px}
+  .ap-bar .search input{padding:11px 0;font-size:.98rem}
+  .ap-tabs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .ap-count{margin-left:auto;align-self:center;font-size:.8rem;color:var(--muted)}
+  .ap-list{overflow:auto;padding:10px 14px 18px;margin-top:8px;-webkit-overflow-scrolling:touch}
+  .ap-row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;width:100%;text-align:left;border:0;background:none;font:inherit;padding:11px 12px;border-radius:12px;cursor:pointer;color:inherit}
+  .ap-row:hover,.ap-row:focus-visible{background:var(--gold-soft);outline:none}
+  .ap-code{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--saffron-deep);letter-spacing:.04em}
+  .ap-name{font-size:.93rem;font-weight:600;line-height:1.3}
+  .ap-city{font-size:.8rem;color:var(--muted);margin-top:2px}
+  .ap-tag{font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:4px 10px;white-space:nowrap}
+  .ap-tag.i{background:#e5f3ea;color:#1f7a49}
+  .ap-tag.d{background:var(--gold-soft);color:var(--saffron-deep)}
+  .ap-none{text-align:center;color:var(--muted);padding:34px 10px;font-size:.92rem}
+  .ap-foot{padding:12px 26px 18px;border-top:1px solid var(--line);font-size:.76rem;color:var(--muted)}
+  @media (max-width:600px){
+    .ap-bd{align-items:flex-end;padding:0}
+    .ap-dialog{width:100%;max-height:92vh;border-radius:22px 22px 0 0}
+    .ap-head{padding:20px 18px 4px}
+    .ap-bar{padding:10px 18px 0}
+    .ap-list{padding:8px 8px 14px}
+    .ap-row{grid-template-columns:52px 1fr;gap:10px}
+    .ap-tag{display:none}
+    .ap-code{font-size:1.3rem}
+    .ap-foot{padding:10px 18px 16px}
+  }
+
   /* ---------- Help banner ---------- */
   .help{margin:64px 0 0;background:var(--night);color:#f2e8d9;border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
   .help::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 260px at 100% 0,rgba(200,100,30,.35),transparent 60%)}
@@ -236,6 +277,12 @@
       <kbd>/</kbd>
     </label>
     <div class="chips" id="chips" role="tablist" aria-label="Filter by region"></div>
+    <div class="tools">
+      <button type="button" class="tool-btn" id="apOpen" aria-haspopup="dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 21 12 13l-6.5-3 .8-2 7.7 1.2L18 4.5c.6-.7 1.8-.8 2.4-.2s.5 1.8-.2 2.4l-4.7 4.5 1.2 7.7-2 .8-3-6.5-8 1.5Z" transform="translate(0 -1)"/></svg>
+        Airport names &amp; codes (India)
+      </button>
+    </div>
   </div>
 
   <section class="block" id="favWrap">
@@ -360,6 +407,32 @@
   </div>
 </footer>
 
+<div class="ap-bd" id="apModal" role="dialog" aria-modal="true" aria-labelledby="apTitle">
+  <div class="ap-dialog">
+    <div class="ap-head">
+      <div>
+        <h2 id="apTitle">Airports in <em>India</em></h2>
+        <p>Airport names with their 3-letter IATA codes. Tap any row to copy the code.</p>
+      </div>
+      <button type="button" class="ap-x" id="apClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="ap-bar">
+      <label class="search" for="apQ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="apQ" type="search" placeholder="Search airport, city or code — e.g. Jaipur, JAI" autocomplete="off">
+      </label>
+      <div class="ap-tabs" id="apTabs">
+        <button type="button" class="chip on" data-t="all">All</button>
+        <button type="button" class="chip" data-t="I">International</button>
+        <button type="button" class="chip" data-t="D">Domestic</button>
+        <span class="ap-count" id="apCount"></span>
+      </div>
+    </div>
+    <div class="ap-list" id="apList"></div>
+    <div class="ap-foot">International = airports with scheduled international flights. Domestic = served by flights within India. Airline schedules change, so check your ticket for the airport you fly from.</div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -380,7 +453,7 @@ const AIRLINES = [
   {name:"Akasa Air", code:"QP", region:"India", url:"https://www.akasaair.com/check-in/web-check-in", window:"48 hrs – 60 min before", color:"#ff6d38"},
   {name:"SpiceJet", code:"SG", region:"India", url:"https://www.spicejet.com/", window:"Closes 60 min before · via “Check-in” tab", color:"#c8102e"},
   {name:"Alliance Air", code:"9I", region:"India", url:"https://www.allianceair.in/", color:"#7a1f2b"},
-  {name:"Star Air", code:"S5", region:"India", url:"https://www.starair.in/", color:"#1d3f8f"},
+  {name:"Star Air", code:"S5", region:"India", url:"https://book-sdg.crane.aero/ibe/checkin/search", color:"#1d3f8f"},
   {name:"Fly91", code:"IC", region:"India", url:"https://www.fly91.in/", color:"#0f7b6c"},
 
   // ---------- Middle East ----------
@@ -553,6 +626,187 @@ document.addEventListener("keydown", e=>{
 
 $("#statCount").textContent = AIRLINES.length + "+";
 $("#yr").textContent = new Date().getFullYear();
+
+/* ---------- Airport names & codes ---------- */
+const AIRPORTS = [
+  ["DEL","Indira Gandhi International Airport","Delhi","I"],
+  ["BOM","Chhatrapati Shivaji Maharaj International Airport","Mumbai, Maharashtra","I"],
+  ["NMI","Navi Mumbai International Airport","Navi Mumbai, Maharashtra","I"],
+  ["BLR","Kempegowda International Airport","Bengaluru, Karnataka","I"],
+  ["MAA","Chennai International Airport","Chennai, Tamil Nadu","I"],
+  ["CCU","Netaji Subhas Chandra Bose International Airport","Kolkata, West Bengal","I"],
+  ["HYD","Rajiv Gandhi International Airport","Hyderabad, Telangana","I"],
+  ["COK","Cochin International Airport","Kochi, Kerala","I"],
+  ["TRV","Thiruvananthapuram International Airport","Thiruvananthapuram, Kerala","I"],
+  ["CCJ","Calicut International Airport","Kozhikode, Kerala","I"],
+  ["CNN","Kannur International Airport","Kannur, Kerala","I"],
+  ["AMD","Sardar Vallabhbhai Patel International Airport","Ahmedabad, Gujarat","I"],
+  ["GOI","Dabolim Airport","Goa","I"],
+  ["GOX","Manohar International Airport (Mopa)","North Goa","I"],
+  ["JAI","Jaipur International Airport","Jaipur, Rajasthan","I"],
+  ["LKO","Chaudhary Charan Singh International Airport","Lucknow, Uttar Pradesh","I"],
+  ["VNS","Lal Bahadur Shastri International Airport","Varanasi, Uttar Pradesh","I"],
+  ["ATQ","Sri Guru Ram Dass Jee International Airport","Amritsar, Punjab","I"],
+  ["IXC","Shaheed Bhagat Singh International Airport","Chandigarh","I"],
+  ["PNQ","Pune Airport","Pune, Maharashtra","I"],
+  ["NAG","Dr. Babasaheb Ambedkar International Airport","Nagpur, Maharashtra","I"],
+  ["GAY","Gaya Airport","Gaya, Bihar","I"],
+  ["TRZ","Tiruchirappalli International Airport","Tiruchirappalli, Tamil Nadu","I"],
+  ["CJB","Coimbatore International Airport","Coimbatore, Tamil Nadu","I"],
+  ["IXE","Mangaluru International Airport","Mangaluru, Karnataka","I"],
+  ["SXR","Sheikh ul-Alam International Airport","Srinagar, Jammu & Kashmir","I"],
+  ["GAU","Lokpriya Gopinath Bordoloi International Airport","Guwahati, Assam","I"],
+  ["VTZ","Visakhapatnam Airport","Visakhapatnam, Andhra Pradesh","I"],
+  ["AGR","Agra Airport (Kheria)","Agra, Uttar Pradesh","D"],
+  ["AGX","Agatti Airport","Agatti, Lakshadweep","D"],
+  ["AJL","Lengpui Airport","Aizawl, Mizoram","D"],
+  ["AKD","Akola Airport","Akola, Maharashtra","D"],
+  ["AYJ","Maryada Purushottam Shri Ram Airport","Ayodhya, Uttar Pradesh","D"],
+  ["BBI","Biju Patnaik International Airport","Bhubaneswar, Odisha","D"],
+  ["BDQ","Vadodara Airport","Vadodara, Gujarat","D"],
+  ["BEK","Bareilly Airport","Bareilly, Uttar Pradesh","D"],
+  ["BHJ","Bhuj Airport","Bhuj, Gujarat","D"],
+  ["BHO","Raja Bhoj Airport","Bhopal, Madhya Pradesh","D"],
+  ["BHU","Bhavnagar Airport","Bhavnagar, Gujarat","D"],
+  ["BKB","Nal Airport","Bikaner, Rajasthan","D"],
+  ["BUP","Bathinda Airport","Bathinda, Punjab","D"],
+  ["CBD","Car Nicobar Air Force Base","Car Nicobar, Andaman & Nicobar","D"],
+  ["CDP","Kadapa Airport","Kadapa, Andhra Pradesh","D"],
+  ["COH","Cooch Behar Airport","Cooch Behar, West Bengal","D"],
+  ["DBR","Darbhanga Airport","Darbhanga, Bihar","D"],
+  ["DED","Dehradun Airport (Jolly Grant)","Dehradun, Uttarakhand","D"],
+  ["DGH","Deoghar Airport","Deoghar, Jharkhand","D"],
+  ["DHM","Kangra Airport (Gaggal)","Dharamshala, Himachal Pradesh","D"],
+  ["DIB","Dibrugarh Airport (Mohanbari)","Dibrugarh, Assam","D"],
+  ["DIU","Diu Airport","Diu","D"],
+  ["DMU","Dimapur Airport","Dimapur, Nagaland","D"],
+  ["GBI","Kalaburagi Airport","Kalaburagi, Karnataka","D"],
+  ["GDB","Gondia Airport (Birsi)","Gondia, Maharashtra","D"],
+  ["GOP","Gorakhpur Airport","Gorakhpur, Uttar Pradesh","D"],
+  ["GWL","Gwalior Airport","Gwalior, Madhya Pradesh","D"],
+  ["HBX","Hubballi Airport","Hubballi, Karnataka","D"],
+  ["HDO","Hindon Airport","Ghaziabad, Uttar Pradesh","D"],
+  ["HJR","Khajuraho Airport","Khajuraho, Madhya Pradesh","D"],
+  ["HSS","Hisar Airport","Hisar, Haryana","D"],
+  ["IDR","Devi Ahilya Bai Holkar Airport","Indore, Madhya Pradesh","D"],
+  ["IMF","Bir Tikendrajit Airport","Imphal, Manipur","D"],
+  ["ISK","Nashik Airport (Ozar)","Nashik, Maharashtra","D"],
+  ["IXA","Maharaja Bir Bikram Airport","Agartala, Tripura","D"],
+  ["IXB","Bagdogra Airport","Siliguri, West Bengal","D"],
+  ["IXD","Prayagraj Airport (Bamrauli)","Prayagraj, Uttar Pradesh","D"],
+  ["IXG","Belagavi Airport (Sambra)","Belagavi, Karnataka","D"],
+  ["IXH","Kailashahar Airport","Kailashahar, Tripura","D"],
+  ["IXI","Lilabari Airport","North Lakhimpur, Assam","D"],
+  ["IXJ","Jammu Airport","Jammu, Jammu & Kashmir","D"],
+  ["IXK","Keshod Airport","Keshod, Gujarat","D"],
+  ["IXL","Kushok Bakula Rimpochee Airport","Leh, Ladakh","D"],
+  ["IXM","Madurai Airport","Madurai, Tamil Nadu","D"],
+  ["IXP","Pathankot Airport","Pathankot, Punjab","D"],
+  ["IXR","Birsa Munda Airport","Ranchi, Jharkhand","D"],
+  ["IXS","Silchar Airport (Kumbhirgram)","Silchar, Assam","D"],
+  ["IXT","Pasighat Airport","Pasighat, Arunachal Pradesh","D"],
+  ["IXU","Chhatrapati Sambhajinagar Airport","Aurangabad, Maharashtra","D"],
+  ["IXV","Along Airport","Along, Arunachal Pradesh","D"],
+  ["IXY","Kandla Airport","Kandla, Gujarat","D"],
+  ["IXZ","Veer Savarkar International Airport","Port Blair, Andaman & Nicobar","D"],
+  ["JDH","Jodhpur Airport","Jodhpur, Rajasthan","D"],
+  ["JGA","Jamnagar Airport","Jamnagar, Gujarat","D"],
+  ["JGB","Jagdalpur Airport","Jagdalpur, Chhattisgarh","D"],
+  ["JLG","Jalgaon Airport","Jalgaon, Maharashtra","D"],
+  ["JLR","Jabalpur Airport","Jabalpur, Madhya Pradesh","D"],
+  ["JRG","Veer Surendra Sai Airport","Jharsuguda, Odisha","D"],
+  ["JRH","Jorhat Airport","Jorhat, Assam","D"],
+  ["JSA","Jaisalmer Airport","Jaisalmer, Rajasthan","D"],
+  ["KBK","Kushinagar International Airport","Kushinagar, Uttar Pradesh","D"],
+  ["KGL","Kargil Airport","Kargil, Ladakh","D"],
+  ["KJB","Kurnool Airport (Orvakal)","Kurnool, Andhra Pradesh","D"],
+  ["KLH","Kolhapur Airport","Kolhapur, Maharashtra","D"],
+  ["KNU","Kanpur Airport (Chakeri)","Kanpur, Uttar Pradesh","D"],
+  ["KQH","Kishangarh Airport","Ajmer, Rajasthan","D"],
+  ["KTU","Kota Airport","Kota, Rajasthan","D"],
+  ["KUU","Kullu Manali Airport (Bhuntar)","Kullu, Himachal Pradesh","D"],
+  ["LUH","Ludhiana Airport (Sahnewal)","Ludhiana, Punjab","D"],
+  ["MYQ","Mysuru Airport","Mysuru, Karnataka","D"],
+  ["NDC","Nanded Airport","Nanded, Maharashtra","D"],
+  ["NNP","Naini Saini Airport","Pithoragarh, Uttarakhand","D"],
+  ["PAB","Bilaspur Airport (Chhattisgarh)","Bilaspur, Chhattisgarh","D"],
+  ["PAT","Jay Prakash Narayan Airport","Patna, Bihar","D"],
+  ["PBD","Porbandar Airport","Porbandar, Gujarat","D"],
+  ["PGH","Pantnagar Airport","Pantnagar, Uttarakhand","D"],
+  ["PNY","Puducherry Airport","Puducherry","D"],
+  ["PUT","Sri Sathya Sai Airport (Puttaparthi)","Puttaparthi, Andhra Pradesh","D"],
+  ["PYB","Jeypore Airport","Jeypore, Odisha","D"],
+  ["PYG","Pakyong Airport","Gangtok, Sikkim","D"],
+  ["RAJ","Rajkot Airport","Rajkot, Gujarat","D"],
+  ["RDP","Kazi Nazrul Islam Airport","Durgapur, West Bengal","D"],
+  ["REW","Rewa Airport","Rewa, Madhya Pradesh","D"],
+  ["RGH","Balurghat Airport","Balurghat, West Bengal","D"],
+  ["RJA","Rajahmundry Airport","Rajahmundry, Andhra Pradesh","D"],
+  ["RPR","Swami Vivekananda Airport","Raipur, Chhattisgarh","D"],
+  ["RQY","Shivamogga Airport","Shivamogga, Karnataka","D"],
+  ["RRK","Rourkela Airport","Rourkela, Odisha","D"],
+  ["SAG","Shirdi Airport","Shirdi, Maharashtra","D"],
+  ["SHL","Shillong Airport (Umroi)","Shillong, Meghalaya","D"],
+  ["SLV","Shimla Airport (Jubbarhatti)","Shimla, Himachal Pradesh","D"],
+  ["SSE","Solapur Airport","Solapur, Maharashtra","D"],
+  ["STV","Surat Airport","Surat, Gujarat","D"],
+  ["SXV","Salem Airport","Salem, Tamil Nadu","D"],
+  ["TCR","Tuticorin Airport","Thoothukudi, Tamil Nadu","D"],
+  ["TEI","Tezu Airport","Tezu, Arunachal Pradesh","D"],
+  ["TEZ","Tezpur Airport (Salonibari)","Tezpur, Assam","D"],
+  ["TIR","Tirupati Airport","Tirupati, Andhra Pradesh","D"],
+  ["UDR","Maharana Pratap Airport","Udaipur, Rajasthan","D"],
+  ["VDY","Vidyanagar Airport (Toranagallu)","Ballari, Karnataka","D"],
+  ["VGA","Vijayawada Airport","Vijayawada, Andhra Pradesh","D"],
+  ["ZER","Zero Airport","Ziro, Arunachal Pradesh","D"]
+];
+
+(function(){
+  const bd = $("#apModal"), list = $("#apList"), q = $("#apQ"), count = $("#apCount");
+  let tab = "all", last = null;
+  const esc = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+
+  function render(){
+    const term = q.value.trim().toLowerCase();
+    const rows = AIRPORTS.filter(a =>
+      (tab === "all" || a[3] === tab) &&
+      (!term || (a[0] + " " + a[1] + " " + a[2]).toLowerCase().includes(term)));
+    count.textContent = rows.length + (rows.length === 1 ? " airport" : " airports");
+    list.innerHTML = rows.length ? rows.map(a =>
+      `<button type="button" class="ap-row" data-c="${a[0]}" title="Copy ${a[0]}">
+         <span class="ap-code">${a[0]}</span>
+         <span><div class="ap-name">${esc(a[1])}</div><div class="ap-city">${esc(a[2])}</div></span>
+         <span class="ap-tag ${a[3].toLowerCase()}">${a[3] === "I" ? "International" : "Domestic"}</span>
+       </button>`).join("") : '<p class="ap-none">No airport matches that search.</p>';
+  }
+  function open(){
+    last = document.activeElement; bd.classList.add("open"); document.body.style.overflow = "hidden";
+    render(); q.focus();
+  }
+  function close(){
+    bd.classList.remove("open"); document.body.style.overflow = "";
+    if (last) last.focus();
+  }
+  $("#apOpen").addEventListener("click", open);
+  $("#apClose").addEventListener("click", close);
+  bd.addEventListener("click", e => { if (e.target === bd) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && bd.classList.contains("open")) close(); });
+  q.addEventListener("input", render);
+  $("#apTabs").addEventListener("click", e => {
+    const b = e.target.closest("[data-t]"); if (!b) return;
+    tab = b.dataset.t;
+    document.querySelectorAll("#apTabs .chip").forEach(c => c.classList.toggle("on", c === b));
+    render();
+  });
+  list.addEventListener("click", e => {
+    const row = e.target.closest(".ap-row"); if (!row) return;
+    const c = row.dataset.c;
+    const done = () => toast(c + " copied");
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(c).then(done, done);
+    else done();
+  });
+})();
+
 render();
 </script>
 </body>
