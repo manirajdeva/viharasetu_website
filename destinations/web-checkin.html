@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Airline Web Check-in — Viharasetu</title>
+<meta name="description" content="One place for every airline's official web check-in page. Find your airline, tap once, and get your boarding pass — curated by Viharasetu.">
+<link rel="icon" href="https://viharasetu.co.in/images/new_Logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1712;
+    --ink-2:#4a4036;
+    --muted:#8a7d6f;
+    --ivory:#fbf7f0;
+    --paper:#ffffff;
+    --line:#ece3d4;
+    --saffron:#c8641e;
+    --saffron-deep:#9e4813;
+    --gold:#b8913e;
+    --gold-soft:#f4ead6;
+    --night:#17120d;
+    --radius:18px;
+    --shadow:0 1px 2px rgba(40,25,10,.04),0 8px 28px rgba(40,25,10,.07);
+    --shadow-hover:0 2px 4px rgba(40,25,10,.06),0 18px 40px rgba(40,25,10,.13);
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--ivory);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* ---------- Header ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(251,247,240,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
+  .brand b{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:.3px;display:block;line-height:1}
+  .brand small{font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .menu{display:flex;gap:28px;font-size:.92rem;color:var(--ink-2)}
+  .menu a:hover,.menu a.active{color:var(--saffron)}
+  .menu a.active{font-weight:600}
+  .cta{background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-size:.88rem;font-weight:500;white-space:nowrap;transition:background .2s}
+  .cta:hover{background:var(--saffron)}
+  .burger{display:none;background:none;border:0;font-size:1.5rem;cursor:pointer;color:var(--ink)}
+  @media (max-width:900px){
+    .menu{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;gap:0;background:var(--ivory);border-bottom:1px solid var(--line)}
+    .menu.open{display:flex}
+    .menu a{padding:14px 20px;border-top:1px solid var(--line)}
+    .burger{display:block}
+    .cta{display:none}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;background:var(--night);color:#f7efe2;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+      radial-gradient(900px 420px at 85% -10%,rgba(200,100,30,.38),transparent 60%),
+      radial-gradient(700px 380px at -10% 120%,rgba(184,145,62,.28),transparent 60%)}
+  .hero .route{position:absolute;right:-60px;top:30px;width:560px;opacity:.16;pointer-events:none}
+  .hero-in{position:relative;padding:76px 0 120px;max-width:720px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.4rem,5.6vw,4rem);line-height:1.05;margin:18px 0 18px;letter-spacing:-.01em}
+  h1 em,h2 em{font-style:italic;color:var(--saffron)}
+  .hero h1 em{color:#e9a564}
+  .hero p.lead{font-size:1.06rem;color:#d8ccbb;max-width:560px}
+  .hero-stats{display:flex;gap:34px;margin-top:34px;flex-wrap:wrap}
+  .hero-stats div{font-size:.8rem;color:#b9ab98;letter-spacing:.04em}
+  .hero-stats strong{display:block;font-family:var(--serif);font-size:2rem;color:#fff;font-weight:500;line-height:1.1}
+
+  /* ---------- Search panel ---------- */
+  .panel{position:relative;z-index:2;margin-top:-64px;background:var(--paper);border-radius:22px;box-shadow:var(--shadow-hover);padding:22px;border:1px solid var(--line)}
+  .search{display:flex;align-items:center;gap:12px;background:var(--ivory);border:1px solid var(--line);border-radius:14px;padding:4px 6px 4px 16px;transition:border-color .2s,box-shadow .2s}
+  .search:focus-within{border-color:var(--saffron);box-shadow:0 0 0 4px rgba(200,100,30,.12)}
+  .search svg{flex:none;color:var(--muted)}
+  .search input{flex:1;border:0;background:transparent;font:inherit;font-size:1.02rem;padding:14px 0;outline:none;color:var(--ink);min-width:0}
+  .search kbd{font-family:var(--sans);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:3px 7px;background:#fff}
+  .chips{display:flex;gap:8px;margin-top:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:inherit;font-size:.86rem;color:var(--ink-2);cursor:pointer;transition:all .18s}
+  .chip:hover{border-color:var(--gold)}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip .n{opacity:.55;margin-left:6px;font-size:.78rem}
+
+  /* ---------- Sections ---------- */
+  section.block{padding:56px 0 8px}
+  .sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.5rem);line-height:1.1}
+  .sec-head p{color:var(--muted);font-size:.92rem}
+
+  /* ---------- Cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+  .card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease,border-color .22s}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:#e2d3b8}
+  .card-top{display:flex;align-items:center;gap:14px}
+  .badge{flex:none;width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-weight:600;font-size:.98rem;letter-spacing:.04em;background:#fff;border:1px solid var(--line);overflow:hidden}
+  .badge img{width:82%;height:82%;object-fit:contain}
+  .badge span{display:none}
+  .badge.nologo{background:var(--c);border:0;color:#fff;box-shadow:inset 0 -10px 20px rgba(0,0,0,.12)}
+  .badge.nologo span{display:block}
+  .card h3{font-size:1.02rem;font-weight:600;line-height:1.25}
+  .card .meta{font-size:.78rem;color:var(--muted);margin-top:3px}
+  .win{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--ink-2);background:var(--gold-soft);border-radius:10px;padding:8px 11px}
+  .win svg{flex:none;color:var(--gold)}
+  .actions{display:flex;gap:8px;margin-top:auto}
+  .go{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--saffron);color:#fff;border-radius:12px;padding:12px 14px;font-size:.9rem;font-weight:500;transition:background .2s}
+  .go:hover{background:var(--saffron-deep)}
+  .go svg{transition:transform .2s}
+  .go:hover svg{transform:translate(2px,-2px)}
+  .icon-btn{flex:none;width:44px;border:1px solid var(--line);background:#fff;border-radius:12px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2);transition:all .18s}
+  .icon-btn:hover{border-color:var(--gold);color:var(--ink)}
+  .star{position:absolute;top:14px;right:14px;background:none;border:0;cursor:pointer;color:#d6cab6;padding:6px;border-radius:8px;transition:color .18s,transform .18s}
+  .star:hover{color:var(--gold);transform:scale(1.1)}
+  .star.on{color:var(--gold)}
+  .star.on svg{fill:currentColor}
+
+  .empty{display:none;text-align:center;padding:50px 20px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:var(--radius)}
+  .empty b{display:block;font-family:var(--serif);font-size:1.5rem;color:var(--ink);font-weight:500;margin-bottom:6px}
+  .empty a{color:var(--saffron);font-weight:500}
+
+  #favWrap{display:none}
+
+  /* ---------- Guide ---------- */
+  .guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:6px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .step .num{font-family:var(--serif);font-size:2.4rem;color:var(--gold);line-height:1;font-style:italic}
+  .step h4{font-size:1rem;margin:10px 0 6px}
+  .step p{font-size:.88rem;color:var(--ink-2)}
+
+  .note{margin-top:22px;display:flex;gap:14px;align-items:flex-start;background:#fff8ef;border:1px solid #f1dcc0;border-radius:var(--radius);padding:18px 20px;font-size:.88rem;color:var(--ink-2)}
+  .note svg{flex:none;color:var(--saffron);margin-top:2px}
+
+  /* ---------- Baggage guide ---------- */
+  .bag{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:6px}
+  .bag-col{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+  .bag-col h3{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:1.35rem;line-height:1.15;margin-bottom:4px}
+  .bag-col h3 i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:.95rem;color:#fff}
+  .bag-col.ok h3 i{background:#2f8f5b}
+  .bag-col.chk h3 i{background:var(--gold)}
+  .bag-col.no h3 i{background:#c2412d}
+  .bag-col .sub{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+  .bag-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .bag-col li{position:relative;padding-left:22px;font-size:.88rem;color:var(--ink-2)}
+  .bag-col li::before{content:"";position:absolute;left:2px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+  .bag-col.ok li::before{background:#2f8f5b}
+  .bag-col.no li::before{background:#c2412d}
+  .bag-col li b{color:var(--ink);font-weight:600}
+  .pilgrim{margin-top:22px;background:var(--night);color:#f2e8d9;border-radius:var(--radius);padding:26px 28px;position:relative;overflow:hidden}
+  .pilgrim::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 220px at 100% 0,rgba(200,100,30,.3),transparent 60%)}
+  .pilgrim>*{position:relative}
+  .pilgrim h3{font-family:var(--serif);font-weight:500;font-size:1.5rem;margin-bottom:12px}
+  .pilgrim h3 em{color:#e9a564}
+  .pilgrim ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px 28px}
+  .pilgrim li{font-size:.88rem;color:#d8ccbb;padding-left:18px;position:relative}
+  .pilgrim li::before{content:"\2766";position:absolute;left:0;color:#e9a564;font-size:.8rem}
+  .pilgrim li b{color:#fff;font-weight:600}
+
+  /* ---------- Help banner ---------- */
+  .help{margin:64px 0 0;background:var(--night);color:#f2e8d9;border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .help::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 260px at 100% 0,rgba(200,100,30,.35),transparent 60%)}
+  .help>*{position:relative}
+  .help h2 em{color:#e9a564}
+  .help p{color:#cbbda9;margin-top:8px;max-width:520px;font-size:.95rem}
+  .wa{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);padding:14px 22px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .2s}
+  .wa:hover{transform:translateY(-2px)}
+  .wa svg{color:#25a244}
+
+  /* ---------- Footer ---------- */
+  footer{margin-top:72px;border-top:1px solid var(--line);padding:30px 0 40px;font-size:.84rem;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a:hover{color:var(--saffron)}
+
+  /* ---------- Toast ---------- */
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-size:.88rem;opacity:0;pointer-events:none;transition:all .25s;z-index:100}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:600px){
+    .hero-in{padding:52px 0 104px}
+    .panel{padding:16px;border-radius:18px}
+    .search kbd{display:none}
+    .help{padding:28px 22px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="https://viharasetu.co.in/index.html">
+      <img src="https://viharasetu.co.in/images/new_Logo.jpg" alt="Viharasetu logo">
+      <span><b>Viharasetu</b><small>From Aastha to Eternal Anubhav</small></span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="https://viharasetu.co.in/destinations/All_packages/Explore_Destination.html">Explore Destinations</a>
+      <a href="https://viharasetu.co.in/index.html#journeys">Journeys</a>
+      <a href="web-checkin.html" class="active">Web Check-in</a>
+      <a href="https://viharasetu.co.in/feedback.html">Feedback</a>
+      <a href="https://viharasetu.co.in/pdf_files/Viharasetu_about.pdf">About</a>
+    </nav>
+    <a class="cta" href="https://viharasetu.co.in/index.html#contact">Plan My Journey</a>
+    <button class="burger" aria-label="Open menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="route" viewBox="0 0 560 300" fill="none" aria-hidden="true">
+    <path d="M10 260 C 160 40, 380 40, 550 200" stroke="#e9a564" stroke-width="2" stroke-dasharray="6 9"/>
+    <circle cx="10" cy="260" r="6" fill="#e9a564"/><circle cx="550" cy="200" r="6" fill="#e9a564"/>
+    <path d="M300 92 l22 -6 -8 10 10 8 -22 -4z" fill="#e9a564"/>
+  </svg>
+  <div class="wrap">
+    <div class="hero-in">
+      <span class="eyebrow">Traveller Desk</span>
+      <h1>Every airline's web check-in, <em>one tap away</em></h1>
+      <p class="lead">Skip the queue before you even reach the airport. Find your airline, open its official check-in page, and keep your boarding pass ready — so the journey begins in calm.</p>
+      <div class="hero-stats">
+        <div><strong id="statCount">—</strong>Airlines listed</div>
+        <div><strong>48 hrs</strong>Typical window opens</div>
+        <div><strong>2 mins</strong>To get your pass</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="panel">
+    <label class="search" for="q">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search airline or code — e.g. IndiGo, 6E, Emirates" autocomplete="off">
+      <kbd>/</kbd>
+    </label>
+    <div class="chips" id="chips" role="tablist" aria-label="Filter by region"></div>
+  </div>
+
+  <section class="block" id="favWrap">
+    <div class="sec-head">
+      <h2>Your <em>saved</em> airlines</h2>
+      <p>Tap the star on any airline to keep it here.</p>
+    </div>
+    <div class="grid" id="favGrid"></div>
+  </section>
+
+  <section class="block">
+    <div class="sec-head">
+      <h2 id="listTitle">All <em>airlines</em></h2>
+      <p>Links open the airline's own official website in a new tab.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty">
+      <b>No airline found</b>
+      Try the airline's two-letter code, or <a href="https://wa.me/919885180515?text=Hi%20Viharasetu%2C%20I%20need%20help%20with%20web%20check-in" target="_blank" rel="noopener">ask us on WhatsApp</a>.
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="sec-head">
+      <h2>Check in, <em>the easy way</em></h2>
+    </div>
+    <div class="guide">
+      <div class="step"><div class="num">i.</div><h4>Keep your PNR ready</h4><p>The 6-character booking reference from your ticket email or SMS, along with the passenger's last name exactly as on the ticket.</p></div>
+      <div class="step"><div class="num">ii.</div><h4>Open at the right time</h4><p>Most airlines open check-in 48 hours before departure (24 hours for many international flights) and close 60–75 minutes before.</p></div>
+      <div class="step"><div class="num">iii.</div><h4>Choose seats &amp; add-ons</h4><p>Pick a free seat or let the airline assign one. Add extra baggage or meals only if you need them.</p></div>
+      <div class="step"><div class="num">iv.</div><h4>Save your boarding pass</h4><p>Download the PDF or save to your phone. Link it with DigiYatra at Indian airports for a faster entry.</p></div>
+    </div>
+    <div class="note">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+      <span>Unaccompanied minors, passengers needing wheelchair assistance, and those travelling with pets usually have to check in at the airport counter. Check-in windows can change — always confirm on the airline's website before you fly.</span>
+    </div>
+  </section>
+
+  <section class="block" id="baggage">
+    <div class="sec-head">
+      <h2>What you can carry, <em>and what you can't</em></h2>
+      <p>A quick guide for air travel in India. Always match it against your airline's own rules.</p>
+    </div>
+    <div class="bag">
+      <div class="bag-col ok">
+        <h3><i>&#10003;</i> In your cabin bag</h3>
+        <p class="sub">Hand baggage that goes on board with you</p>
+        <ul>
+          <li><b>One cabin bag</b> &mdash; usually up to 7 kg (some airlines 8 kg) and about 55 &times; 35 &times; 25 cm, plus one small personal item such as a handbag or laptop bag.</li>
+          <li><b>Power banks and spare lithium batteries</b> &mdash; cabin only, never in checked baggage. Up to 100 Wh is fine; 100&ndash;160 Wh needs airline approval.</li>
+          <li><b>Phones, laptops, tablets, cameras</b> and chargers.</li>
+          <li><b>Medicines</b> in their original packs, with the prescription handy. Insulin and syringes need a doctor's note.</li>
+          <li><b>Baby food, milk and essentials</b> for an infant travelling with you.</li>
+          <li><b>Liquids on international flights</b> &mdash; containers of 100 ml or less, all together in one clear, resealable 1-litre bag.</li>
+          <li><b>Dry snacks</b>, an empty water bottle (fill it after security), a shawl or jacket.</li>
+          <li><b>Valuables and documents</b> &mdash; ID, tickets, cash, jewellery, and any medicine you cannot do without.</li>
+        </ul>
+      </div>
+      <div class="bag-col chk">
+        <h3><i>&#9873;</i> Checked bag only</h3>
+        <p class="sub">Allowed in the hold, not in the cabin</p>
+        <ul>
+          <li><b>Liquids over 100 ml</b> &mdash; perfume, oils, lotions, large water bottles, sealed in leak-proof bottles.</li>
+          <li><b>Sharp items</b> &mdash; knives, scissors, razor blades, nail cutters with blades, tools, trekking poles and ice axes.</li>
+          <li><b>Sports gear</b> &mdash; cricket bats, golf clubs, hockey sticks, skates.</li>
+          <li><b>Dry coconut (copra)</b> and <b>ghee, pickles and oils</b> in sealed packing.</li>
+          <li><b>Gangajal and sealed prasad liquids</b> in tightly closed containers.</li>
+          <li><b>Pooja items with sharp or pointed parts</b> &mdash; a trishul, a diya stand with a spike, a small knife for cutting fruit.</li>
+          <li><b>Trekking and camping kit</b> without fuel &mdash; tent poles, a stove with no gas, a pocket knife.</li>
+        </ul>
+      </div>
+      <div class="bag-col no">
+        <h3><i>&#10005;</i> Not allowed at all</h3>
+        <p class="sub">Not in your cabin bag, and not in your checked bag</p>
+        <ul>
+          <li><b>Explosives and fireworks</b> &mdash; crackers, sparklers, gunpowder, flares.</li>
+          <li><b>Flammable liquids and gases</b> &mdash; petrol, lighter fluid, spirit, paint thinner, gas cylinders, aerosol sprays above the permitted size.</li>
+          <li><b>Lighters and matchboxes</b> &mdash; generally not permitted in hand baggage in India.</li>
+          <li><b>Camphor (kapoor) and loose incense powders</b> that burn easily.</li>
+          <li><b>Firearms, ammunition and replicas</b> unless you hold a valid licence and the airline has approved them in advance.</li>
+          <li><b>Corrosives, poisons and toxic chemicals</b> &mdash; acid, bleach, mercury, pesticides.</li>
+          <li><b>Damaged or recalled batteries</b>, and spare lithium batteries in the checked bag.</li>
+          <li><b>Illegal items</b> &mdash; drugs, counterfeit goods, wildlife products.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pilgrim">
+      <h3>Going on a <em>yatra?</em> Packing tips</h3>
+      <ul>
+        <li><b>Prasad and sweets</b> are fine in the cabin when dry and sealed; carry wet or oily prasad in the checked bag.</li>
+        <li><b>Flowers and tulsi malas</b> are allowed. Fresh garlands can wilt; pack them flat.</li>
+        <li><b>Dry coconut</b> must go in the checked bag &mdash; it is banned from hand baggage.</li>
+        <li><b>Gangajal</b> is best packed in a sealed can in the checked bag.</li>
+        <li><b>Copper and brass utensils</b> are fine; a heavy kalash is better in the checked bag.</li>
+        <li><b>Pill boxes and medicines</b> stay in your cabin bag so you always have them.</li>
+        <li><b>Carry a photo ID</b> that matches the name on your ticket &mdash; Aadhaar, passport, driving licence or voter ID.</li>
+        <li><b>Arrive early</b> &mdash; 2 hours for domestic and 3 hours for international flights leaves time for security.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+      <span>This is general guidance based on Indian aviation security rules (BCAS and DGCA) and international standards (ICAO). Baggage limits, fees and the items allowed differ by airline, route and fare, and security officers can refuse any item. Check your ticket and the airline's baggage page before you pack.</span>
+    </div>
+  </section>
+
+  <section class="help">
+    <div>
+      <h2>Travelling with <em>Viharasetu?</em></h2>
+      <p>Send us your PNR on WhatsApp and our team will help with check-in, seats and your boarding passes — so you can focus on the yatra.</p>
+    </div>
+    <a class="wa" href="https://wa.me/919885180515?text=Hi%20Viharasetu%2C%20please%20help%20me%20with%20web%20check-in" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+      Chat on WhatsApp
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Viharasetu. Crafted with reverence in India.</span>
+    <span>Airline names belong to their respective owners. Viharasetu is not affiliated with any airline.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   AIRLINE LIST — edit here to add, remove or update airlines.
+   name   : airline name
+   code   : 2-letter IATA code (shown in the badge, also searchable)
+   region : India | Middle East | Asia | Europe | Americas
+   url    : official web check-in page
+   window : (optional) check-in timing note shown on the card
+   color  : badge colour
+   ===================================================================== */
+const AIRLINES = [
+  // ---------- India ----------
+  {name:"IndiGo", code:"6E", region:"India", url:"https://www.goindigo.in/web-check-in.html", window:"Domestic: 48 hrs – 60 min before", color:"#1a2a6c"},
+  {name:"Air India", code:"AI", region:"India", url:"https://www.airindia.com/in/en/manage/web-checkin.html", window:"Domestic: 48 hrs – 60 min before", color:"#b0102b"},
+  {name:"Air India Express", code:"IX", region:"India", url:"https://www.airindiaexpress.com/", window:"Opens 48 hrs before · via “Check-in” tab", color:"#d9480f"},
+  {name:"Akasa Air", code:"QP", region:"India", url:"https://www.akasaair.com/check-in/web-check-in", window:"48 hrs – 60 min before", color:"#ff6d38"},
+  {name:"SpiceJet", code:"SG", region:"India", url:"https://www.spicejet.com/", window:"Closes 60 min before · via “Check-in” tab", color:"#c8102e"},
+  {name:"Alliance Air", code:"9I", region:"India", url:"https://www.allianceair.in/", color:"#7a1f2b"},
+  {name:"Star Air", code:"S5", region:"India", url:"https://www.starair.in/", color:"#1d3f8f"},
+  {name:"Fly91", code:"IC", region:"India", url:"https://www.fly91.in/", color:"#0f7b6c"},
+
+  // ---------- Middle East ----------
+  {name:"Emirates", code:"EK", region:"Middle East", url:"https://www.emirates.com/in/english/manage-booking/online-check-in/", color:"#c8102e"},
+  {name:"Qatar Airways", code:"QR", region:"Middle East", url:"https://www.qatarairways.com/en-in/manage-booking/online-check-in.html", color:"#5c0632"},
+  {name:"Etihad Airways", code:"EY", region:"Middle East", url:"https://www.etihad.com/en-in/manage/check-in", color:"#8a6d3b"},
+  {name:"flydubai", code:"FZ", region:"Middle East", url:"https://www.flydubai.com/en/", color:"#0b3a6f"},
+  {name:"Air Arabia", code:"G9", region:"Middle East", url:"https://www.airarabia.com/", color:"#d1142b"},
+  {name:"Saudia", code:"SV", region:"Middle East", url:"https://www.saudia.com/", color:"#0d6b4f"},
+  {name:"Oman Air", code:"WY", region:"Middle East", url:"https://www.omanair.com/", color:"#6b4f2a"},
+  {name:"Gulf Air", code:"GF", region:"Middle East", url:"https://www.gulfair.com/", color:"#7a5c12"},
+  {name:"Kuwait Airways", code:"KU", region:"Middle East", url:"https://www.kuwaitairways.com/", color:"#1f4e8c"},
+
+  // ---------- Asia ----------
+  {name:"Singapore Airlines", code:"SQ", region:"Asia", url:"https://www.singaporeair.com/en_UK/in/plan-travel/online-check-in/", color:"#1d3767"},
+  {name:"Thai Airways", code:"TG", region:"Asia", url:"https://www.thaiairways.com/", color:"#5b2a86"},
+  {name:"Malaysia Airlines", code:"MH", region:"Asia", url:"https://www.malaysiaairlines.com/", color:"#0b3d91"},
+  {name:"AirAsia", code:"AK", region:"Asia", url:"https://www.airasia.com/check-in/", color:"#e30613"},
+  {name:"Cathay Pacific", code:"CX", region:"Asia", url:"https://www.cathaypacific.com/", color:"#00645a"},
+  {name:"SriLankan Airlines", code:"UL", region:"Asia", url:"https://www.srilankan.com/", color:"#1a4b8c"},
+  {name:"Vietjet Air", code:"VJ", region:"Asia", url:"https://www.vietjetair.com/", color:"#d71920"},
+  {name:"Scoot", code:"TR", region:"Asia", url:"https://www.flyscoot.com/", color:"#c9a400"},
+  {name:"Buddha Air", code:"U4", region:"Asia", url:"https://www.buddhaair.com/", color:"#1b5e9c"},
+  {name:"Nepal Airlines", code:"RA", region:"Asia", url:"https://www.nepalairlines.com.np/", color:"#a01d26"},
+  {name:"Drukair", code:"KB", region:"Asia", url:"https://www.drukair.com.bt/", color:"#b5651d"},
+
+  // ---------- Europe ----------
+  {name:"British Airways", code:"BA", region:"Europe", url:"https://www.britishairways.com/", color:"#075aaa"},
+  {name:"Lufthansa", code:"LH", region:"Europe", url:"https://www.lufthansa.com/in/en/online-check-in", color:"#0a1d3d"},
+  {name:"Air France", code:"AF", region:"Europe", url:"https://wwws.airfrance.in/check-in", color:"#002157"},
+  {name:"KLM", code:"KL", region:"Europe", url:"https://www.klm.co.in/check-in", color:"#00a1de"},
+  {name:"Turkish Airlines", code:"TK", region:"Europe", url:"https://www.turkishairlines.com/en-in/flights/manage-booking/online-check-in/", color:"#c70a0c"},
+  {name:"Virgin Atlantic", code:"VS", region:"Europe", url:"https://www.virginatlantic.com/", color:"#9b0d2e"},
+  {name:"Swiss", code:"LX", region:"Europe", url:"https://www.swiss.com/", color:"#d52b1e"},
+
+  // ---------- Americas ----------
+  {name:"United Airlines", code:"UA", region:"Americas", url:"https://www.united.com/en/us/checkin", color:"#002244"},
+  {name:"American Airlines", code:"AA", region:"Americas", url:"https://www.aa.com/check-in/", color:"#36495a"},
+  {name:"Delta Air Lines", code:"DL", region:"Americas", url:"https://www.delta.com/", color:"#003366"},
+  {name:"Air Canada", code:"AC", region:"Americas", url:"https://www.aircanada.com/", color:"#c8102e"}
+];
+
+const REGIONS = ["All","India","Middle East","Asia","Europe","Americas"];
+const FAV_KEY = "vs_fav_airlines";
+
+let state = { q:"", region:"All", favs: loadFavs() };
+
+function loadFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }catch(e){ return []; } }
+function saveFavs(){ try{ localStorage.setItem(FAV_KEY, JSON.stringify(state.favs)); }catch(e){} }
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const ICON_ARROW = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+const ICON_COPY  = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+const ICON_SHARE = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>';
+const ICON_STAR  = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>';
+const ICON_CLOCK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+
+/* ---------- Logos ----------
+   1st try : your own file  -> add  logo:"images/airlines/6E.png"  to an airline above
+   2nd try : airline logo service, by IATA code
+   3rd try : the airline website's own icon
+   Last    : coloured code badge (e.g. "6E")                                      */
+function logoUrl(a){
+  return a.logo || `https://pics.avs.io/200/200/${encodeURIComponent(a.code)}@2x.png`;
+}
+function logoFail(img){
+  if(!img.dataset.tried){
+    img.dataset.tried = "1";
+    img.src = `https://www.google.com/s2/favicons?domain=${img.dataset.domain}&sz=128`;
+  } else {
+    img.parentElement.classList.add("nologo");
+    img.remove();
+  }
+}
+
+function card(a){
+  const fav = state.favs.includes(a.code);
+  const share = navigator.share ? `<button class="icon-btn" title="Share link" aria-label="Share ${esc(a.name)} check-in link" data-share="${esc(a.code)}">${ICON_SHARE}</button>` : "";
+  return `
+  <article class="card">
+    <button class="star ${fav?"on":""}" data-fav="${esc(a.code)}" aria-pressed="${fav}" title="${fav?"Remove from saved":"Save airline"}" aria-label="Save ${esc(a.name)}">${ICON_STAR}</button>
+    <div class="card-top">
+      <div class="badge" style="--c:${esc(a.color)}">
+        <img src="${esc(logoUrl(a))}" alt="${esc(a.name)} logo" loading="lazy" data-domain="${esc(new URL(a.url).hostname)}" onerror="logoFail(this)">
+        <span>${esc(a.code)}</span>
+      </div>
+      <div><h3>${esc(a.name)}</h3><div class="meta">${esc(a.region)} · IATA ${esc(a.code)}</div></div>
+    </div>
+    ${a.window ? `<div class="win">${ICON_CLOCK}<span>${esc(a.window)}</span></div>` : ""}
+    <div class="actions">
+      <a class="go" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">Web Check-in ${ICON_ARROW}</a>
+      <button class="icon-btn" title="Copy link" aria-label="Copy ${esc(a.name)} check-in link" data-copy="${esc(a.code)}">${ICON_COPY}</button>
+      ${share}
+    </div>
+  </article>`;
+}
+
+function renderChips(){
+  $("#chips").innerHTML = REGIONS.map(r=>{
+    const n = r==="All" ? AIRLINES.length : AIRLINES.filter(a=>a.region===r).length;
+    return `<button class="chip ${state.region===r?"on":""}" role="tab" aria-selected="${state.region===r}" data-region="${r}">${r}<span class="n">${n}</span></button>`;
+  }).join("");
+}
+
+function render(){
+  const q = state.q.trim().toLowerCase();
+  const list = AIRLINES.filter(a =>
+    (state.region==="All" || a.region===state.region) &&
+    (!q || a.name.toLowerCase().includes(q) || a.code.toLowerCase()===q || a.code.toLowerCase().includes(q))
+  );
+  $("#grid").innerHTML = list.map(card).join("");
+  $("#empty").style.display = list.length ? "none" : "block";
+  $("#listTitle").innerHTML = q ? `Results for <em>“${esc(state.q.trim())}”</em>`
+                                 : (state.region==="All" ? "All <em>airlines</em>" : `${esc(state.region)} <em>airlines</em>`);
+
+  const favs = AIRLINES.filter(a=>state.favs.includes(a.code));
+  $("#favWrap").style.display = favs.length && !q ? "block" : "none";
+  $("#favGrid").innerHTML = favs.map(card).join("");
+  renderChips();
+}
+
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove("show"), 1800);
+}
+
+document.addEventListener("click", e=>{
+  const chip = e.target.closest("[data-region]");
+  if(chip){ state.region = chip.dataset.region; render(); return; }
+
+  const star = e.target.closest("[data-fav]");
+  if(star){
+    const c = star.dataset.fav;
+    state.favs = state.favs.includes(c) ? state.favs.filter(x=>x!==c) : [...state.favs, c];
+    saveFavs(); render();
+    toast(state.favs.includes(c) ? "Saved to your airlines" : "Removed from saved");
+    return;
+  }
+
+  const cp = e.target.closest("[data-copy]");
+  if(cp){
+    const a = AIRLINES.find(x=>x.code===cp.dataset.copy);
+    const done = ()=>toast(`${a.name} link copied`);
+    if(navigator.clipboard){ navigator.clipboard.writeText(a.url).then(done, ()=>fallbackCopy(a.url, done)); }
+    else fallbackCopy(a.url, done);
+    return;
+  }
+
+  const sh = e.target.closest("[data-share]");
+  if(sh){
+    const a = AIRLINES.find(x=>x.code===sh.dataset.share);
+    navigator.share({title:`${a.name} Web Check-in`, text:`${a.name} web check-in link:`, url:a.url}).catch(()=>{});
+  }
+});
+
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea"); ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); done(); }catch(e){ toast("Couldn't copy — long-press the button instead"); }
+  ta.remove();
+}
+
+$("#q").addEventListener("input", e=>{ state.q = e.target.value; render(); });
+document.addEventListener("keydown", e=>{
+  if(e.key==="/" && document.activeElement!==$("#q")){ e.preventDefault(); $("#q").focus(); }
+  if(e.key==="Escape" && document.activeElement===$("#q")){ $("#q").value=""; state.q=""; render(); $("#q").blur(); }
+});
+
+$("#statCount").textContent = AIRLINES.length + "+";
+$("#yr").textContent = new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
