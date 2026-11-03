@@ -344,12 +344,13 @@ footer{background:#140607;color:#a99b86;text-align:center;font-size:.82rem;paddi
 }
 
 /* ---------- Shiva lingam abhishekam ---------- */
-.abhi{display:none;position:relative;align-self:center;justify-self:center;width:340px;height:520px;margin:20px 0 40px}
+.abhi{position:relative;align-self:center;justify-self:center;width:min(340px,84vw);aspect-ratio:340/520;margin:0 0 30px;grid-column:1/-1}
 .abhi::before{content:"";position:absolute;inset:6% -10% 4%;background:radial-gradient(ellipse at 50% 55%,rgba(243,167,59,.22),transparent 68%);pointer-events:none}
-.abhi canvas{position:relative;width:340px;height:520px;display:block;transform-style:preserve-3d;will-change:transform}
+.abhi canvas{position:relative;width:100%;height:100%;display:block;transform-style:preserve-3d;will-change:transform}
+@media(max-width:1179px){.hero-content{padding-bottom:30px}}
 @media(min-width:1180px){
   .hero>.container{grid-template-columns:minmax(0,1fr) 340px minmax(300px,34%);gap:clamp(24px,3vw,56px)}
-  .abhi{display:block}
+  .abhi{grid-column:auto;width:340px;margin:20px 0 40px}
 }
 </style>
 </head>
@@ -863,7 +864,7 @@ var PLANS=[
   var CX=170, R=46, DOME=46, Y0=282, YB=392, APEX=Y0-DOME;
   var POT={x:170,y:68,r:40}, HOLE=POT.y+POT.r+2;
   var PX=170, PY=392, PRX=118, PRY=28, PTH=32;
-  var SPX=288, SPY=398;
+  var SPX=262, SPY=398;
 
   function clamp(v){return v<0?0:v>255?255:v|0}
   /* horizontal gradient that fakes a lit cylinder: diffuse + specular + warm rim */
@@ -897,7 +898,7 @@ var PLANS=[
   }
   function spawnSpout(dt){
     var n=dt*60*.55; n=Math.floor(n)+(Math.random()<n%1?1:0);
-    for(var i=0;i<n;i++) sp.push({x:SPX+40+rnd(-2,2),y:SPY+3,vx:rnd(8,26),vy:rnd(-6,10),r:rnd(.8,1.7)});
+    for(var i=0;i<n;i++) sp.push({x:SPX+44+rnd(-2,2),y:SPY+3,vx:rnd(8,26),vy:rnd(-6,10),r:rnd(.8,1.7)});
   }
   function step(dt){
     var G=560,i,d;
@@ -1076,7 +1077,7 @@ var PLANS=[
     c.strokeStyle='rgba(255,255,255,.8)'; c.lineWidth=.9; c.setLineDash([10,8]); c.lineDashOffset=-t*160;
     c.beginPath(); c.moveTo(x0+16,y0+46); c.lineTo(x0+17,503); c.stroke();
     c.restore();
-    c.fillStyle='rgba(170,215,255,.35)'; ell(x0+17,505,34,6); c.fill();
+    c.fillStyle='rgba(170,215,255,.35)'; ell(x0+17,505,16,4); c.fill();
     ripples.forEach(function(r){
       if(!r.gr) return;
       c.strokeStyle='rgba(225,242,255,'+(r.a*.9).toFixed(3)+')'; c.lineWidth=1; ell(r.x,r.y,r.r*1.5,r.r*.35); c.stroke();
