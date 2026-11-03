@@ -291,6 +291,25 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 .map-list a{font-size:.8rem;font-weight:600;color:var(--gold)}
 .pm-icon{background:none;border:0}
 @media(max-width:960px){.map-wrap{grid-template-columns:1fr}#pmap{min-height:380px}}
+
+/* ---------- Mobile menu ---------- */
+.nav-burger{display:none;align-items:center;justify-content:center;width:44px;height:44px;flex:none;border-radius:12px;border:1px solid rgba(224,191,128,.5);background:rgba(255,255,255,.06);cursor:pointer;padding:0}
+.nav-burger span{display:block;position:relative;width:20px;height:2px;border-radius:2px;background:#f6ecd8;transition:background .2s}
+.nav-burger span::before,.nav-burger span::after{content:"";position:absolute;left:0;width:20px;height:2px;border-radius:2px;background:#f6ecd8;transition:transform .25s,top .25s}
+.nav-burger span::before{top:-6px}.nav-burger span::after{top:6px}
+.nav.menu-open .nav-burger span{background:transparent}
+.nav.menu-open .nav-burger span::before{top:0;transform:rotate(45deg)}
+.nav.menu-open .nav-burger span::after{top:0;transform:rotate(-45deg)}
+.nav-menu{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(42,15,18,.97);backdrop-filter:blur(14px);border-top:1px solid rgba(224,191,128,.25);box-shadow:0 18px 30px -12px rgba(0,0,0,.6);padding:8px 16px 16px}
+.nav-menu a{display:flex;align-items:center;gap:12px;color:#f6ecd8;font-size:1rem;padding:14px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-menu a:last-child{border-bottom:0}
+.nav-menu svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--gold-light);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:960px){
+  .nav-burger{display:inline-flex}
+  .nav-inner .badge{margin-left:auto}
+  .nav.menu-open{background:rgba(42,15,18,.97)}
+  .nav.menu-open .nav-menu{display:block}
+}
 </style>
 </head>
 <body>
@@ -314,6 +333,7 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
       <a class="hide-m" href="#guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg>Guide</a>
     </div>
     <span class="badge">Uttarakhand</span>
+    <button type="button" class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu"><span></span></button>
   </div>
 </nav>
 
@@ -634,6 +654,24 @@ var PLANS=[
       .addTo(map).bindPopup('<b>'+t[0]+'</b><br>'+t[1]);
   });
   map.fitBounds(L.latLngBounds(ll).pad(.2));
+})();
+</script>
+<script>
+/* ---- Mobile menu: the links hidden on small screens, listed under a three-line button ---- */
+(function(){
+  var nav=document.getElementById('nav'), btn=document.getElementById('navBurger'); if(!nav||!btn) return;
+  var menu=document.createElement('div'); menu.className='nav-menu'; menu.id='navMenu';
+  Array.prototype.forEach.call(nav.querySelectorAll('.nav-links a.hide-m'),function(a){
+    var l=a.cloneNode(true); l.classList.remove('hide-m'); menu.appendChild(l);
+  });
+  if(!menu.children.length){btn.style.display='none';return}
+  nav.appendChild(menu);
+  function set(o){nav.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);btn.setAttribute('aria-label',o?'Close menu':'Open menu')}
+  btn.addEventListener('click',function(e){e.stopPropagation();set(!nav.classList.contains('menu-open'))});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('click',function(e){if(!nav.contains(e.target))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  window.addEventListener('resize',function(){if(window.innerWidth>960)set(false)});
 })();
 </script>
 <script src="../../../js/enquiry-chat.js?v=3" defer></script>
