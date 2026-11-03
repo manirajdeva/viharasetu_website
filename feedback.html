@@ -182,8 +182,22 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
   .container{width:calc(100% - 32px)}
   .stories{grid-template-columns:repeat(2,1fr);gap:12px}
   .story .body{padding:12px 12px 14px}
-  .sm-dialog{grid-template-columns:1fr}
-  .sm-photo{max-width:320px}
+  /* js/mobile-smooth.js forces a tall .hero on small screens; this page's hero is short */
+  header.hero{min-height:0;padding:92px 0 44px}
+  .hero h1{font-size:2.3rem;margin:12px 0 14px}
+  .section{padding:48px 0}
+  .story .thumb{aspect-ratio:1/1}
+  .story .teaser{font-size:1.02rem;line-height:1.4;-webkit-line-clamp:5}
+  .story .more{font-size:.68rem}
+  /* story popup becomes a bottom sheet */
+  .sm-bd{align-items:flex-end;padding:0}
+  .sm-dialog{width:100%;max-height:90vh;grid-template-columns:1fr;gap:14px;padding:22px 18px 28px;border-radius:22px 22px 0 0;outline:none;overscroll-behavior:contain}
+  .sm-photo{display:flex;align-items:flex-end;gap:14px;max-width:none}
+  .sm-photo>img{width:66%;max-height:300px;object-fit:cover;object-position:50% 30%}
+  .sm-landmark{margin:0;width:26%;flex:none}
+  .sm-landmark figcaption{margin:6px -6px 0;font-size:.5rem}
+  .sm-quote{font-size:1.12rem;line-height:1.6;margin-bottom:18px}
+  .sm-close{position:fixed;top:12px;right:12px;z-index:5;width:40px;height:40px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
   .row2{grid-template-columns:1fr}
   .cta .container{grid-template-columns:1fr}
   .cta-logo{order:-1;justify-self:start;margin:16px 0 0 16px}
