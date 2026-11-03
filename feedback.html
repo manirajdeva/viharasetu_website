@@ -22,10 +22,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Almendra:ital,wght@0,400;1,400&family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="images/fevicon.png" type="image/png">
 
 <style>
+@font-face{font-family:'Black Chancery';src:local('Black Chancery'),local('BlackChancery'),url('fonts/BlackChancery.woff2') format('woff2'),url('fonts/BlackChancery.ttf') format('truetype'),url('fonts/BlackChancery.otf') format('opentype');font-display:swap}
 :root{
   --ink:#1c1410; --ink-soft:#3b2e26; --muted:#76695b;
   --ivory:#faf6ee; --sand:#f2e9d8; --line:#e3d6bd;
@@ -34,6 +35,8 @@
   --radius:18px;
   --shadow:0 24px 60px -28px rgba(42,15,18,.45);
   --serif:'Playfair Display',Georgia,serif;
+  --royal:'Black Chancery','Almendra','Playfair Display',serif;
+  --crest:'Marcellus','Playfair Display',Georgia,serif;
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -77,28 +80,43 @@ ul{list-style:none}
 .hero-mark{width:clamp(120px,16vw,220px);height:auto;fill:none;stroke:rgba(224,191,128,.55);stroke-width:1.2;stroke-linejoin:round;margin-right:clamp(0px,4vw,60px)}
 
 /* ---------- Stories ---------- */
-.stories{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
-.story{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:38px 36px 34px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
-.story:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--gold)}
-.story::before{content:"\201C";position:absolute;top:6px;right:26px;font:600 7rem/1 var(--serif);color:rgba(185,138,62,.18);pointer-events:none}
-.stars{display:flex;gap:4px;margin-bottom:18px}
-.stars svg{width:18px;height:18px;fill:var(--gold);stroke:none}
-.quote{font-family:var(--serif);font-size:1.18rem;line-height:1.6;color:var(--maroon-deep);font-style:italic;margin-bottom:28px;position:relative}
-.reviewer{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:22px;border-top:1px dashed var(--line)}
-.avatar{width:62px;height:62px;border-radius:50%;overflow:hidden;flex:none;border:2px solid var(--gold-light);background:var(--sand)}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.avatar svg{width:100%;height:100%;display:block}
-.reviewer-name{font-family:var(--serif);font-weight:600;font-size:1.15rem;color:var(--maroon-deep);line-height:1.2}
-.reviewer-trip{font-size:.84rem;color:var(--muted);letter-spacing:.03em}
-.reviewer-trip::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle}
-.story.featured{grid-column:1/-1;display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:clamp(24px,4vw,56px);padding:clamp(28px,4vw,52px);background:linear-gradient(135deg,#fff,#fbf4e4)}
-.story.featured .photo{position:relative;align-self:start}
-.story.featured .photo::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:1px solid rgba(185,138,62,.5);border-radius:22px}
-.story.featured .photo img{position:relative;width:100%;height:auto;border-radius:20px;box-shadow:0 30px 60px -28px rgba(42,15,18,.55)}
-.story.featured .photo .ph{position:relative;aspect-ratio:1;border-radius:20px;display:grid;place-items:center;font:600 4rem var(--serif);color:#fff}
-.story.featured .quote{font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.55}
-.story.featured .reviewer{border-top-color:rgba(185,138,62,.35)}
-.story.featured .avatar{display:none}
+.stories{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.story{position:relative;display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;padding:0;cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.story:hover,.story:focus-visible{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--gold);outline:none}
+.story .thumb{position:relative;aspect-ratio:4/3;background:var(--sand);overflow:hidden}
+.story .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.story:hover .thumb img{transform:scale(1.05)}
+.story .thumb .ph{width:100%;height:100%;display:grid;place-items:center;font:600 2.6rem var(--serif);color:#fff}
+.story .body{display:flex;flex-direction:column;flex:1;padding:16px 16px 18px}
+.stars{display:flex;gap:3px;margin-bottom:10px}
+.stars svg{width:15px;height:15px;fill:var(--gold);stroke:none}
+.story .teaser{font-family:var(--royal);font-style:normal;font-weight:400;font-size:1.02rem;line-height:1.5;color:var(--maroon-deep);margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.story .who{margin-top:auto;padding-top:12px;border-top:1px dashed var(--line)}
+.reviewer-name{font-family:var(--crest);font-weight:400;font-size:.88rem;letter-spacing:.06em;color:var(--maroon-deep);line-height:1.35}
+.reviewer-trip{font-family:var(--royal);font-style:normal;font-weight:400;font-size:1.1rem;color:var(--gold);margin-top:3px}
+.story .more{display:inline-block;margin-top:10px;font-size:.76rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+
+/* Story popup */
+.sm-bd{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(28,12,14,.72);backdrop-filter:blur(4px)}
+.sm-bd.open{display:flex}
+.sm-dialog{position:relative;border:1px solid rgba(185,138,62,.55);outline:6px solid rgba(255,255,255,.35);outline-offset:-12px;display:grid;grid-template-columns:minmax(220px,340px) 1fr;gap:clamp(20px,3vw,40px);width:min(900px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:clamp(24px,3vw,40px);background:linear-gradient(135deg,#fff,#fbf4e4);border-radius:var(--radius);box-shadow:0 40px 90px -30px rgba(0,0,0,.6)}
+.sm-photo>img{width:100%;height:auto;border-radius:16px;box-shadow:0 30px 60px -12px rgba(42,15,18,.55),0 12px 24px -6px rgba(42,15,18,.35),0 0 0 1px rgba(185,138,62,.25)}
+.sm-landmark{margin:16px auto 0;width:min(24%,80px);text-align:center}
+.sm-landmark img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 100%;border-radius:999px 999px 14px 14px;border:2px solid var(--gold-light);box-shadow:0 14px 28px -8px rgba(42,15,18,.5),0 4px 10px -2px rgba(42,15,18,.3)}
+.sm-landmark small{display:block;margin-top:3px;font-family:var(--sans);font-size:.55rem;letter-spacing:.02em;text-transform:none;opacity:.7}
+.sm-landmark figcaption{margin:6px -60px 0;font-family:var(--crest);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.sm-photo .ph{aspect-ratio:1;border-radius:16px;display:grid;place-items:center;font:600 4rem var(--serif);color:#fff}
+.sm-quote{font-family:var(--royal);font-style:normal;font-weight:400;font-size:clamp(1.15rem,1.8vw,1.4rem);line-height:1.6;color:var(--maroon-deep);margin-bottom:24px;text-wrap:pretty}
+.sm-quote::first-letter{font-family:var(--royal);font-style:normal;font-weight:400;font-size:1.9em;line-height:.9;color:var(--gold)}
+.story .teaser,.sm-quote,.reviewer-trip{font-variant-ligatures:none;font-feature-settings:'liga' 0,'dlig' 0,'hlig' 0}
+.sm-orn{display:flex;align-items:center;gap:12px;margin:0 0 18px;color:var(--gold);font-size:.9rem;letter-spacing:.4em}
+.sm-orn::before,.sm-orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(185,138,62,.7))}
+.sm-orn::after{transform:scaleX(-1)}
+.sm-who{padding-top:16px;border-top:1px dashed var(--line)}
+.sm-who .reviewer-name{font-size:1.05rem;letter-spacing:.1em;text-transform:uppercase}
+.sm-who .reviewer-trip{font-size:1.3rem}
+.sm-close{position:absolute;top:10px;right:12px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--maroon-deep);font-size:1.2rem;line-height:1;cursor:pointer}
+.sm-close:hover{border-color:var(--gold);color:var(--gold)}
 .permission{margin-top:26px;font-size:.84rem;color:var(--muted);text-align:center}
 
 /* ---------- Share your story ---------- */
@@ -154,9 +172,7 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
 
 /* ---------- Responsive ---------- */
 @media (max-width:960px){
-  .stories{grid-template-columns:1fr}
-  .story.featured{grid-template-columns:1fr}
-  .story.featured .photo{max-width:340px;margin-right:14px}
+  .stories{grid-template-columns:repeat(3,1fr)}
   .share-grid{grid-template-columns:1fr}
   .nav-links .hide-m{display:none}
   .hero .container{grid-template-columns:1fr}
@@ -164,6 +180,10 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
 }
 @media (max-width:760px){
   .container{width:calc(100% - 32px)}
+  .stories{grid-template-columns:repeat(2,1fr);gap:12px}
+  .story .body{padding:12px 12px 14px}
+  .sm-dialog{grid-template-columns:1fr}
+  .sm-photo{max-width:320px}
   .row2{grid-template-columns:1fr}
   .cta .container{grid-template-columns:1fr}
   .cta-logo{order:-1;justify-self:start;margin:16px 0 0 16px}
@@ -223,6 +243,18 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
       <p>Every story below comes from a traveller who has been on a Vihara Setu journey.</p>
     </div>
     <div class="stories" id="testimonials-container"></div>
+    <div class="sm-bd" id="storyModal" role="dialog" aria-modal="true" aria-label="Traveller story">
+      <div class="sm-dialog">
+        <button type="button" class="sm-close" id="smClose" aria-label="Close">&times;</button>
+        <div class="sm-photo" id="smPhoto"></div>
+        <div>
+          <div id="smStars"></div>
+          <div class="sm-orn" aria-hidden="true">❦</div>
+          <p class="sm-quote" id="smQuote"></p>
+          <div class="sm-who"><div class="reviewer-name" id="smName"></div><div class="reviewer-trip" id="smTrip"></div></div>
+        </div>
+      </div>
+    </div>
     <p class="permission">Shared with each traveller's permission.</p>
   </div>
 </section>
@@ -296,15 +328,23 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
 
 /* ---- Stories ----
    Add more testimonials to this list. Photos go in images/testimonials/<slug>.jpg
-   (a coloured initial is shown if the photo is missing). The first one is shown large;
-   a random mix of up to 6 is shown on each visit. */
+   (a coloured initial is shown if the photo is missing). Each one is a card (5 per row) that opens its full story in a popup. */
 var TESTIMONIALS=[
   {
     name:"Bimmi & co.",
     trip:"Ujjain, Omkareshwar",
     slug:"bimmi-co",
+    landmark:{src:"images/testimonials/ujjain-mahakal.jpg",alt:"Mahakaleshwar, Ujjain",credit:"Photo: Imakanksha, CC BY-SA 4.0"},
     color:"#4a141b",
     quote:"Our trip was exceptionally well organized from start to finish. Every detail—from tickets, transportation, and sightseeing to the timing of each activity—was thoughtfully planned and executed. The valuable inputs and seamless coordination made the entire journey smooth, enjoyable, and affordable. A truly memorable travel experience. Highly recommended!"
+  },
+  {
+    name:"Baishali, Surabhi & Latasree",
+    trip:"Rajasthan — Udaipur, Jaipur, Jodhpur",
+    slug:"baishali-surabhi-latasree",
+    landmark:{src:"images/testimonials/rajasthan-gate.jpg",alt:"Patrika Gate, Jaipur"},
+    color:"#7a2530",
+    quote:"A heartfelt thank you to the entire Viharasetu team for taking such wonderful care of our Rajasthan trip, covering Udaipur, Jaipur and Jodhpur. From planning the itinerary and coordinating the travel to ensuring everything went smoothly, you made the entire journey seamless and memorable. We truly appreciate all the effort, patience and attention to detail that went into organising everything. Thank you for taking care of all the little things and allowing us to simply relax, explore and enjoy the beautiful cities of Rajasthan. It was a wonderful experience, and we couldn't have asked for better coordination! 😊"
   }
 ];
 
@@ -312,24 +352,39 @@ var TESTIMONIALS=[
   var box=document.getElementById('testimonials-container');
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
   function initials(n){return n.split(' ').map(function(w){return w[0]}).join('').replace(/[^A-Za-z]/g,'').slice(0,2).toUpperCase()}
-  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
   var stars='<div class="stars" aria-label="5 out of 5 stars">'+new Array(6).join('<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg>')+'</div>';
-  function avatar(t){
-    var ph='<svg viewBox="0 0 84 84" aria-hidden="true"><rect width="84" height="84" fill="'+esc(t.color)+'"/><text x="42" y="54" font-family="Playfair Display, serif" font-size="32" fill="#fff" text-anchor="middle">'+esc(initials(t.name))+'</text></svg>';
-    return '<div class="avatar"><img src="images/testimonials/'+esc(t.slug)+'.jpg" alt="'+esc(t.name)+'" loading="lazy" onerror="this.remove()">'+ph+'</div>';
+  function photo(t){
+    return '<img src="images/testimonials/'+esc(t.slug)+'.jpg" alt="'+esc(t.name)+'" loading="lazy" onerror="this.outerHTML=\'<div class=ph style=background:'+esc(t.color)+'>'+esc(initials(t.name))+'</div>\'">';
   }
-  function card(t,featured){
-    var photo=featured
-      ? '<div class="photo"><img src="images/testimonials/'+esc(t.slug)+'.jpg" alt="'+esc(t.name)+'" onerror="this.outerHTML=\'<div class=ph style=background:'+esc(t.color)+'>'+esc(initials(t.name))+'</div>\'"></div>'
-      : '';
-    var body='<div>'+stars+'<p class="quote">“'+esc(t.quote)+'”</p>'+
-      '<div class="reviewer">'+avatar(t)+'<div><div class="reviewer-name">'+esc(t.name)+'</div><div class="reviewer-trip">'+esc(t.trip)+'</div></div></div></div>';
-    return '<article class="story reveal'+(featured?' featured':'')+'">'+photo+body+'</article>';
+  function card(t,i){
+    return '<button type="button" class="story reveal" data-i="'+i+'" aria-haspopup="dialog">'+
+      '<div class="thumb">'+photo(t)+'</div>'+
+      '<div class="body">'+stars+'<p class="teaser">“'+esc(t.quote)+'”</p>'+
+      '<div class="who"><div class="reviewer-name">'+esc(t.name)+'</div><div class="reviewer-trip">'+esc(t.trip)+'</div></div>'+
+      '<span class="more">Read story →</span></div></button>';
   }
-  var list=TESTIMONIALS.slice(1);
-  var picked=[TESTIMONIALS[0]].concat(shuffle(list).slice(0,5));
-  box.innerHTML=picked.map(function(t,i){return card(t,i===0)}).join('');
-  if(picked.length>1) box.classList.add('multi');
+  box.innerHTML=TESTIMONIALS.map(card).join('');
+
+  var modal=document.getElementById('storyModal'), lastFocus=null;
+  function openStory(i){
+    var t=TESTIMONIALS[i];
+    document.getElementById('smPhoto').innerHTML=photo(t)+(t.landmark?'<figure class="sm-landmark"><img src="'+esc(t.landmark.src)+'" alt="'+esc(t.landmark.alt)+'"'+(t.landmark.credit?' title="'+esc(t.landmark.credit)+'"':'')+' loading="lazy"><figcaption>'+esc(t.landmark.alt)+'</figcaption></figure>':'');
+    document.getElementById('smStars').innerHTML=stars;
+    document.getElementById('smQuote').textContent='“'+t.quote+'”';
+    document.getElementById('smName').textContent=t.name;
+    document.getElementById('smTrip').textContent=t.trip;
+    lastFocus=document.activeElement;
+    modal.classList.add('open'); document.body.style.overflow='hidden';
+    document.getElementById('smClose').focus();
+  }
+  function closeStory(){
+    modal.classList.remove('open'); document.body.style.overflow='';
+    if(lastFocus) lastFocus.focus();
+  }
+  box.addEventListener('click',function(e){var c=e.target.closest('.story');if(c)openStory(+c.dataset.i)});
+  document.getElementById('smClose').addEventListener('click',closeStory);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeStory()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeStory()});
 })();
 
 /* ---- Reveal on scroll ---- */
