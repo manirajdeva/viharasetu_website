@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -277,6 +278,19 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 @media(max-width:760px){.cta-logo{justify-self:start}}
 
 @media(max-width:760px){.dest.food ul{grid-template-columns:1fr!important}}
+
+/* ---------- Map ---------- */
+.map-wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;align-items:stretch}
+#pmap{min-height:460px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);z-index:1}
+.map-list{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 22px;max-height:520px;overflow:auto}
+.map-list li{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid #efe5d1}
+.map-list li:first-child{border-top:0}
+.map-list .pin,.pm{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--maroon);color:var(--gold-light);font:600 .86rem var(--serif);border:2px solid var(--gold-light);box-shadow:0 4px 10px -2px rgba(0,0,0,.4)}
+.map-list b{display:block;font-family:var(--serif);color:var(--maroon-deep)}
+.map-list small{display:block;color:var(--muted);font-size:.82rem}
+.map-list a{font-size:.8rem;font-weight:600;color:var(--gold)}
+.pm-icon{background:none;border:0}
+@media(max-width:960px){.map-wrap{grid-template-columns:1fr}#pmap{min-height:380px}}
 </style>
 </head>
 <body>
@@ -438,6 +452,26 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   </div>
 </section>
 
+<section class="section" id="map">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Find the Places</span>
+      <h2>Key places on the map</h2>
+      <p>Tap a marker for the place name.</p>
+    </div>
+    <div class="map-wrap reveal">
+      <div id="pmap" role="region" aria-label="Map of key places"></div>
+      <ol class="map-list">
+        <li><span class="pin">1</span><div><b>Alappuzha</b><small>Backwaters town</small><a href="https://www.google.com/maps/search/?api=1&amp;query=9.4981,76.3388" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">2</span><div><b>Alappuzha Beach</b><small>Pier and lighthouse</small><a href="https://www.google.com/maps/search/?api=1&amp;query=9.493,76.315" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">3</span><div><b>Punnamada Lake</b><small>Houseboat and Nehru Trophy venue</small><a href="https://www.google.com/maps/search/?api=1&amp;query=9.51,76.35" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">4</span><div><b>Ambalappuzha Temple</b><small>Krishna temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=9.385,76.372" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+      </ol>
+    </div>
+    <p class="notes">Map positions are approximate. Map data © OpenStreetMap contributors.</p>
+  </div>
+</section>
+
 <section class="section cta" id="contact">
   <div class="container reveal">
     <div class="cta-text">
@@ -579,6 +613,23 @@ var PLANS=[
     var im=a.querySelector('img'); if(!im) return;
     if(im.complete) size(a); else im.addEventListener('load',function(){size(a)});
   });
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ---- Destination map ---- */
+(function(){
+  var el=document.getElementById('pmap'); if(!el||!window.L) return;
+  var T=[["Alappuzha", "Backwaters town", 9.4981, 76.3388], ["Alappuzha Beach", "Pier and lighthouse", 9.493, 76.315], ["Punnamada Lake", "Houseboat and Nehru Trophy venue", 9.51, 76.35], ["Ambalappuzha Temple", "Krishna temple", 9.385, 76.372]], ROUTE=false;
+  var map=L.map(el,{scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+  var ll=T.map(function(t){return [t[2],t[3]]});
+  if(ROUTE) L.polyline(ll,{color:'#b98a3e',weight:3,opacity:.8,dashArray:'6 8'}).addTo(map);
+  T.forEach(function(t,i){
+    L.marker([t[2],t[3]],{icon:L.divIcon({className:'pm-icon',html:'<span class="pm">'+(i+1)+'</span>',iconSize:[30,30],iconAnchor:[15,15]})})
+      .addTo(map).bindPopup('<b>'+t[0]+'</b><br>'+t[1]);
+  });
+  map.fitBounds(L.latLngBounds(ll).pad(.2));
 })();
 </script>
 <script src="../../../js/enquiry-chat.js?v=3" defer></script>
