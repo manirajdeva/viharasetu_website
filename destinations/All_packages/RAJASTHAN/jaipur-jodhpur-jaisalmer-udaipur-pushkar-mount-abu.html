@@ -577,9 +577,9 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 })();
 
 /* ---- Itineraries ---- */
-/* Set a price (e.g. "₹ 45,000") to show it; leave null to show "Price on request". */
+/* Set a price (e.g. "₹ 45,000") to show it; indicative per person, twin sharing, ex-flights/trains. */
 var PLANS=[
-  { key:"7", nights:7, title:"Rajasthan Highlights", route:"Jaipur · Jodhpur · Jaisalmer", price:null,
+  { key:"7", nights:7, title:"Rajasthan Highlights", route:"Jaipur · Jodhpur · Jaisalmer", price:"₹ 26,500",
     sub:"Jaipur's forts, Jodhpur's Blue City, and a desert camel safari at Jaisalmer.",
     days:[
       {day:1,title:"Arrival in Jaipur",items:["Arrive in Jaipur, check-in and freshen up","Evening at Johari Bazaar"],tags:["Dinner"]},
@@ -591,7 +591,7 @@ var PLANS=[
       {day:7,title:"Desert Safari",items:["Patwon Ki Haveli and Gadisar Lake","Camel safari and sunset at the Sam Sand Dunes"],tags:["Breakfast","Dinner"]},
       {day:8,title:"Departure",items:["Morning at leisure, check-out and departure"],tags:["Breakfast"]}
     ]},
-  { key:"10", nights:10, title:"Complete Rajasthan Circuit", route:"Jaipur · Jodhpur · Jaisalmer · Udaipur · Pushkar", price:null,
+  { key:"10", nights:10, title:"Complete Rajasthan Circuit", route:"Jaipur · Jodhpur · Jaisalmer · Udaipur · Pushkar", price:"₹ 36,500",
     sub:"Jaipur, Jodhpur, Jaisalmer's dunes, Udaipur's lakes, and Pushkar's sacred waters — five towns in one seamless trail.",
     days:[
       {day:1,title:"Arrival in Jaipur",items:["Arrive in Jaipur, check-in and freshen up"],tags:["Dinner"]},
@@ -606,7 +606,7 @@ var PLANS=[
       {day:10,title:"Udaipur to Pushkar",items:["Drive to Pushkar","Evening aarti at Pushkar Lake"],tags:["Breakfast","Dinner"]},
       {day:11,title:"Departure",items:["Morning at Brahma Temple, check-out and departure"],tags:["Breakfast"]}
     ]},
-  { key:"13", nights:13, title:"Grand Royal Rajasthan", route:"All six destinations", price:null,
+  { key:"13", nights:13, title:"Grand Royal Rajasthan", route:"All six destinations", price:"₹ 46,500",
     sub:"All six towns at a relaxed pace, ending in the cool hill-station air of Mount Abu.",
     days:[
       {day:1,title:"Arrival in Jaipur",items:["Arrive in Jaipur, check-in and freshen up"],tags:["Dinner"]},
