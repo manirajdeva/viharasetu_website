@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1V5MTG26VP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1V5MTG26VP');
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kartika Masam Special 2026 — Sacred Yatras | Vihara Setu</title>
+<meta name="description" content="Kartika Masam 2026 special yatras — Pancharama Kshetra darshan, Kashi Dev Deepawali on Karthika Pournami, and a grand Shiva yatra. Curated stays, priests and rituals, arranged end to end.">
+<meta name="theme-color" content="#2a0f12">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kartika Masam Special 2026 — Vihara Setu">
+<meta property="og:description" content="Pancharama darshan, Kashi Dev Deepawali and a grand Kartika Shiva yatra — curated for the holiest month of lamps.">
+<meta property="og:image" content="../../images/Varanasi/v4.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Serif+Telugu:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="icon" href="../../images/fevicon.png" type="image/png">
+
+<style>
+:root{
+  --ink:#1c1410; --ink-soft:#3b2e26; --muted:#76695b;
+  --ivory:#faf6ee; --sand:#f2e9d8; --line:#e3d6bd;
+  --maroon:#4a141b; --maroon-deep:#2a0f12; --night:#1a0809;
+  --gold:#b98a3e; --gold-light:#e0bf80; --flame:#f3a73b;
+  --radius:18px;
+  --shadow:0 24px 60px -28px rgba(42,15,18,.45);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --telugu:'Noto Serif Telugu',var(--serif);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--sans);color:var(--ink);background:var(--ivory);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+.container{width:calc(100% - 72px);max-width:none;margin-inline:auto}
+.eyebrow{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.section{padding:clamp(64px,9vw,120px) 0}
+.section-head{max-width:660px;margin-bottom:48px}
+.section-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.15;margin:12px 0 14px;color:var(--maroon-deep)}
+.section-head p{color:var(--muted);font-size:1.02rem}
+.section-head.center{margin-inline:auto;text-align:center}
+
+/* ---------- Ornament divider ---------- */
+.orn{display:flex;align-items:center;gap:14px;margin-top:18px;color:var(--gold)}
+.section-head.center .orn{justify-content:center}
+.orn::before,.orn::after{content:"";height:1px;width:56px;background:linear-gradient(90deg,transparent,var(--gold))}
+.orn::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.orn svg{width:22px;height:22px}
+
+/* ---------- Nav ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,backdrop-filter .3s,box-shadow .3s}
+.nav.scrolled{background:rgba(42,15,18,.88);backdrop-filter:blur(14px);box-shadow:0 8px 30px -12px rgba(0,0,0,.5)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{color:#f6ecd8;font-size:.86rem;padding:8px 14px;border-radius:999px;transition:background .2s;display:inline-flex;align-items:center;gap:8px}
+.nav-links a:hover{background:rgba(255,255,255,.12)}
+.nav-links svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--gold-light);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.badge{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(224,191,128,.5);padding:6px 14px;border-radius:999px;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 .92rem var(--sans);padding:14px 28px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,#e6c06c,#b98a3e);color:#2a0f12;box-shadow:0 12px 30px -12px rgba(243,167,59,.9)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4);backdrop-filter:blur(6px)}
+.btn-ghost:hover{background:rgba(255,255,255,.18)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:min(96vh,900px);display:flex;align-items:center;color:#fff;overflow:hidden;
+  background:radial-gradient(ellipse 70% 60% at 75% 55%,rgba(243,167,59,.22),transparent 70%),
+             radial-gradient(ellipse 60% 50% at 10% 100%,rgba(185,138,62,.18),transparent 70%),
+             linear-gradient(180deg,#1a0809 0%,#2a0f12 55%,#3a1218 100%)}
+.hero>.container{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,42%);gap:clamp(32px,5vw,88px);align-items:center}
+.hero-content{padding:140px 0 150px;max-width:780px}
+.telugu{font-family:var(--telugu);color:var(--gold-light);font-size:clamp(1.1rem,2vw,1.45rem);letter-spacing:.02em;display:block;margin-top:16px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.8rem);line-height:1.04;margin:10px 0 22px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold-light);font-weight:500;text-shadow:0 0 40px rgba(243,167,59,.45)}
+.hero .intro{font-size:clamp(1rem,1.5vw,1.15rem);color:#eadfca;max-width:620px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero-dates{display:inline-flex;align-items:center;gap:12px;margin-top:26px;font-size:.86rem;color:#e3d6bd;padding:10px 18px;border-radius:999px;border:1px solid rgba(224,191,128,.35);background:rgba(255,255,255,.04)}
+.hero-dates b{color:var(--gold-light);font-weight:600}
+
+/* floating embers */
+.embers{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.embers i{position:absolute;bottom:-20px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#ffd98a 0%,#f3a73b 45%,transparent 70%);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translate(0,0) scale(.6);opacity:0}10%{opacity:.9}80%{opacity:.5}100%{transform:translate(var(--dx,20px),-105vh) scale(1.1);opacity:0}}
+
+/* hero photo with arch frame */
+.hero-media{position:relative;margin:110px 0 130px;justify-self:end;width:100%;max-width:520px}
+.hero-media::before{content:"";position:absolute;inset:-16px;border:1px solid rgba(224,191,128,.5);border-radius:260px 260px 26px 26px}
+.hero-media img{position:relative;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:240px 240px 20px 20px;border:1px solid rgba(224,191,128,.55);box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 80px -20px rgba(243,167,59,.45);background:var(--maroon)}
+.hero-media figcaption{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);white-space:nowrap;background:var(--maroon-deep);border:1px solid rgba(224,191,128,.5);color:var(--gold-light);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border-radius:999px}
+
+/* ---------- Countdown ---------- */
+.facts{position:relative;z-index:3;margin-top:-70px}
+.count{display:grid;grid-template-columns:1.2fr repeat(4,1fr);background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden}
+.count>div{padding:24px 26px;border-right:1px solid var(--line)}
+.count>div:last-child{border-right:0}
+.count .lead{background:var(--sand)}
+.count .lead b{display:block;font-family:var(--serif);font-size:1.12rem;color:var(--maroon-deep);line-height:1.3}
+.count .lead span{font-size:.8rem;color:var(--muted)}
+.count .u b{display:block;font-family:var(--serif);font-size:2.1rem;color:var(--maroon);line-height:1.05;font-variant-numeric:tabular-nums}
+.count .u span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.count.done .u{display:none}
+.count.done{grid-template-columns:1fr}
+
+/* ---------- Diya (CSS lamp) ---------- */
+.diya{position:relative;width:46px;height:46px}
+.diya .bowl{position:absolute;left:3px;right:3px;bottom:4px;height:16px;border-radius:0 0 40px 40px;background:linear-gradient(180deg,#d8a35a,#9c5b22);box-shadow:inset 0 3px 0 rgba(255,255,255,.25)}
+.diya .flame{position:absolute;left:50%;bottom:18px;width:12px;height:22px;margin-left:-6px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(ellipse at 50% 70%,#fff6d6 0%,#ffd06b 35%,#f3a73b 65%,rgba(243,100,30,0) 100%);transform-origin:50% 100%;animation:flick 1.6s ease-in-out infinite alternate;filter:drop-shadow(0 0 10px rgba(255,190,90,.9))}
+@keyframes flick{0%{transform:scale(1,1) rotate(-2deg)}50%{transform:scale(.92,1.08) rotate(2deg)}100%{transform:scale(1.04,.96) rotate(-1deg)}}
+
+/* ---------- Significance ---------- */
+.sig{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px);align-items:center}
+.sig-text p{color:var(--ink-soft);font-size:1.04rem;margin-bottom:16px}
+.sig-text blockquote{margin-top:26px;padding:22px 26px;border-left:2px solid var(--gold);background:var(--sand);border-radius:0 14px 14px 0;font:italic 500 1.12rem var(--serif);color:var(--maroon-deep)}
+.sig-text blockquote small{display:block;margin-top:8px;font:500 .78rem var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-style:normal}
+.sig-media{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sig-media img{width:100%;height:100%;object-fit:cover;border-radius:16px;aspect-ratio:3/4}
+.sig-media img:nth-child(2){margin-top:48px}
+
+/* ---------- Rituals ---------- */
+.exp-wrap{background:var(--maroon-deep);color:#f4e9d3;position:relative;overflow:hidden}
+.exp-wrap::before{content:"";position:absolute;width:680px;height:680px;right:-220px;top:-280px;border-radius:50%;background:radial-gradient(circle,rgba(243,167,59,.2),transparent 70%)}
+.exp-wrap::after{content:"";position:absolute;width:520px;height:520px;left:-220px;bottom:-260px;border-radius:50%;background:radial-gradient(circle,rgba(185,138,62,.16),transparent 70%)}
+.exp-wrap .section-head h2{color:#fff}
+.exp-wrap .section-head p{color:#cdbfa6}
+.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative;z-index:1}
+.exp{padding:32px 28px;border:1px solid rgba(224,191,128,.28);border-radius:var(--radius);background:rgba(255,255,255,.03);transition:transform .3s,background .3s,box-shadow .3s}
+.exp:hover{transform:translateY(-6px);background:rgba(255,255,255,.07);box-shadow:0 30px 60px -30px rgba(243,167,59,.45)}
+.exp h3{font-family:var(--serif);font-weight:600;font-size:1.3rem;color:#fff;margin:18px 0 4px}
+.exp .tel{font-family:var(--telugu);font-size:.92rem;color:var(--gold-light)}
+.exp p{margin-top:12px;font-size:.95rem;color:#dccfb6}
+
+/* ---------- Sacred calendar ---------- */
+.cal{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cal li{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px;display:flex;gap:18px;align-items:flex-start;transition:transform .3s,box-shadow .3s}
+.cal li:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.cal .d{flex:none;text-align:center;width:58px;padding:8px 0;border-radius:12px;background:var(--sand);color:var(--maroon)}
+.cal .d b{display:block;font:600 1.6rem/1 var(--serif)}
+.cal .d span{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.cal strong{display:block;font-family:var(--serif);font-size:1.05rem;color:var(--maroon-deep);line-height:1.3}
+.cal small{display:block;margin-top:4px;color:var(--muted);font-size:.84rem}
+.cal li.hl{background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));border-color:var(--maroon)}
+.cal li.hl .d{background:rgba(224,191,128,.18);color:var(--gold-light)}
+.cal li.hl strong{color:#fff}.cal li.hl small{color:#e3d6bd}
+.cal li.som .d{background:#f7ebcf;color:#8a6420}
+.cal-note{margin-top:20px;font-size:.84rem;color:var(--muted);text-align:center}
+
+/* ---------- Itineraries ---------- */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tier{display:flex;flex-direction:column;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px;cursor:pointer;font:inherit;color:inherit;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
+.tier:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--gold-light)}
+.tier.feat{background:linear-gradient(160deg,#2a0f12,#4a141b);color:#f4e9d3;border-color:var(--maroon)}
+.tier.feat::before{content:"";position:absolute;width:300px;height:300px;right:-120px;top:-140px;border-radius:50%;background:radial-gradient(circle,rgba(243,167,59,.3),transparent 70%)}
+.tier .ribbon{position:absolute;top:18px;right:18px;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:5px 12px;border-radius:999px;background:linear-gradient(135deg,#e6c06c,#b98a3e);color:#2a0f12}
+.tier .route-l{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;padding-right:110px}
+.tier .nights{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--maroon)}
+.tier.feat .nights{color:var(--gold-light)}
+.tier .nights small{font:500 .78rem var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.tier.feat .nights small{color:#cdbfa6}
+.tier h3{font-family:var(--serif);font-size:1.35rem;margin:16px 0 8px;color:var(--maroon-deep)}
+.tier.feat h3{color:#fff}
+.tier p{color:var(--muted);font-size:.94rem;margin-bottom:18px}
+.tier.feat p{color:#d9ccb3}
+.tier .when{display:inline-flex;gap:8px;align-items:center;font-size:.8rem;color:var(--maroon);background:var(--sand);padding:6px 12px;border-radius:999px;margin-bottom:20px}
+.tier.feat .when{background:rgba(224,191,128,.16);color:var(--gold-light)}
+.tier .price{width:100%;margin-top:auto;padding-top:18px;border-top:1px dashed var(--line);font-size:.88rem;color:var(--ink-soft)}
+.tier.feat .price{border-color:rgba(224,191,128,.3);color:#e3d6bd}
+.tier .price b{font:600 1.25rem var(--serif);color:var(--maroon)}
+.tier.feat .price b{color:var(--gold-light)}
+.tier .more{display:block;margin-top:14px;font-weight:600;font-size:.88rem;color:var(--gold)}
+.tier.feat .more{color:var(--gold-light)}
+
+/* Itinerary popup */
+.itin-bd{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px 16px;background:rgba(26,8,9,.78);backdrop-filter:blur(3px)}
+.itin-bd.open{display:flex}
+.itin-dialog{position:relative;width:min(860px,100%);max-height:calc(100vh - 48px);overflow:auto;background:#fff;border-radius:var(--radius);padding:clamp(24px,4vw,48px);box-shadow:var(--shadow);animation:tlIn .35s ease}
+.itin-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--maroon);font-size:1.1rem;cursor:pointer;line-height:1}
+.itin-x:hover{background:var(--sand)}
+.itin-dialog .tl-head{padding-right:40px}
+@keyframes tlIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.tl-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:34px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.tl-head h3{font-family:var(--serif);font-size:clamp(1.4rem,2.6vw,2rem);color:var(--maroon-deep)}
+.tl-head p{color:var(--muted);max-width:560px;margin-top:6px}
+.tl-note{font-size:.8rem;color:var(--muted);letter-spacing:.04em}
+.day{display:grid;grid-template-columns:86px 1fr;gap:10px 26px;padding-bottom:30px;position:relative}
+.day:last-child{padding-bottom:0}
+.day::before{content:"";position:absolute;left:42px;top:54px;bottom:-4px;width:1px;background:var(--line)}
+.day:last-child::before{display:none}
+.day-n{width:84px;text-align:center}
+.day-n span{display:block;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.day-n b{display:grid;place-items:center;width:52px;height:52px;margin:4px auto 0;border-radius:50%;background:var(--maroon);color:var(--gold-light);font:600 1.15rem var(--serif);box-shadow:0 0 0 6px #fff}
+.day h4{font-family:var(--serif);font-size:1.22rem;color:var(--maroon-deep);margin:6px 0 8px}
+.day h4 .dt{font:500 .74rem var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-left:10px}
+.day li{position:relative;padding-left:18px;color:var(--ink-soft);font-size:.96rem}
+.day li::before{content:"";position:absolute;left:0;top:.72em;width:7px;height:1px;background:var(--gold)}
+.meals{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.meals span{font-size:.72rem;letter-spacing:.06em;padding:4px 12px;border-radius:999px;background:var(--sand);color:var(--maroon)}
+.meals span.r{background:#f7ebcf;color:#8a6420}
+.notes{margin-top:22px;font-size:.84rem;color:var(--muted);text-align:center}
+
+/* ---------- Gallery ---------- */
+.mosaic{display:flex;flex-wrap:wrap;gap:14px}
+.mosaic::after{content:"";flex-grow:10000}
+.mosaic a{position:relative;display:block;overflow:hidden;border-radius:14px;background:var(--sand);cursor:zoom-in;flex:1 1 240px}
+.mosaic img{width:100%;height:auto;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.mosaic a:hover img{transform:scale(1.06)}
+.mosaic .cap{position:absolute;inset:auto 0 0 0;padding:34px 16px 14px;color:#fff;font-size:.84rem;background:linear-gradient(transparent,rgba(20,8,8,.8));opacity:0;transition:opacity .3s}
+.mosaic a:hover .cap,.mosaic a:focus-visible .cap{opacity:1}
+
+/* ---------- Inclusions ---------- */
+.inex{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.inex-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px 32px}
+.inex-card.in{border-top:3px solid var(--gold)}
+.inex-card.ex{border-top:3px solid var(--maroon)}
+.inex-card h3{font-family:var(--serif);font-size:1.5rem;color:var(--maroon-deep);margin-bottom:6px}
+.inex-card .sub{font-size:.84rem;color:var(--muted);margin-bottom:18px}
+.inex-card li{position:relative;padding:11px 0 11px 34px;border-top:1px solid #efe5d1;font-size:.97rem;color:var(--ink-soft)}
+.inex-card li:first-of-type{border-top:0}
+.inex-card li::before{content:"";position:absolute;left:0;top:13px;width:20px;height:20px;background-repeat:no-repeat;background-position:center;background-size:contain}
+.inex-card.in li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b98a3e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8 12.3 2.8 2.8L16.2 9.5'/%3E%3C/svg%3E")}
+.inex-card.ex li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a141b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m9 9 6 6M15 9l-6 6'/%3E%3C/svg%3E")}
+.inex-note{margin-top:22px;font-size:.84rem;color:var(--muted);text-align:center}
+
+/* ---------- Destination guide ---------- */
+.guide{background:var(--sand)}
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dest{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;transition:transform .3s,box-shadow .3s}
+.dest:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.dest .no{font:italic 500 .95rem var(--serif);color:var(--gold)}
+.dest h3{font-family:var(--serif);font-size:1.55rem;color:var(--maroon-deep);margin:4px 0 14px}
+.dest li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #efe5d1;font-size:.95rem;color:var(--ink-soft)}
+.dest li:first-child{border-top:0}
+.dest li em{font-style:normal;color:var(--muted);font-size:.84rem}
+.must{flex:none;font-style:normal;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#8a6420;background:#f7ebcf;border-radius:999px;padding:3px 10px;align-self:center;white-space:nowrap}
+.dest.food{background:var(--maroon-deep);border-color:var(--maroon-deep);grid-column:1/-1}
+.dest.food h3{color:#fff}
+.dest.food ul{display:grid;grid-template-columns:repeat(2,1fr);column-gap:40px}
+.dest.food li{border-color:rgba(255,255,255,.12);color:#eadfca}
+.dest.food li:nth-child(2){border-top:0}
+.dest.food .no{color:var(--gold-light)}
+.dest.food .must{background:rgba(224,191,128,.18);color:var(--gold-light)}
+
+/* ---------- Map ---------- */
+.map-wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:stretch}
+#pmap{min-height:500px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);z-index:1}
+.map-list{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 22px;max-height:560px;overflow:auto}
+.map-list li{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-top:1px solid #efe5d1}
+.map-list li:first-child{border-top:0}
+.map-list .pin,.pm{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--maroon);color:var(--gold-light);font:600 .86rem var(--serif);border:2px solid var(--gold-light);box-shadow:0 4px 10px -2px rgba(0,0,0,.4)}
+.map-list b{display:block;font-family:var(--serif);color:var(--maroon-deep)}
+.map-list small{display:block;color:var(--muted);font-size:.82rem}
+.map-list a{font-size:.8rem;font-weight:600;color:var(--gold)}
+.pm-icon{background:none;border:0}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:860px;margin-inline:auto}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.faq summary{cursor:pointer;list-style:none;padding:20px 56px 20px 24px;font-family:var(--serif);font-size:1.08rem;color:var(--maroon-deep);position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:22px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--sand);color:var(--maroon);font:500 1.1rem var(--sans);transition:transform .3s}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details p{padding:0 24px 22px;color:var(--ink-soft);font-size:.96rem}
+
+/* ---------- Contact ---------- */
+.cta{background:linear-gradient(135deg,var(--night),var(--maroon));color:#fff;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 0,rgba(243,167,59,.22),transparent 60%)}
+.cta .container{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,96px);align-items:center}
+.cta h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,3rem);line-height:1.15;margin:14px 0}
+.cta p{color:#e3d6bd;margin-bottom:32px;max-width:560px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px}
+.cta-logo{position:relative;margin-right:clamp(0px,4vw,70px);justify-self:center;width:max-content}
+.cta-logo::before{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(224,191,128,.4)}
+.cta-logo img{position:relative;width:clamp(170px,17vw,270px);height:auto;aspect-ratio:1;object-fit:contain;border-radius:50%;background:#fff;padding:14px;border:2px solid var(--gold-light);box-shadow:0 30px 70px -26px rgba(0,0,0,.7),0 0 60px -10px rgba(243,167,59,.4)}
+footer{background:#140607;color:#a99b86;text-align:center;font-size:.82rem;padding:28px 0}
+
+/* ---------- Lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(14,6,7,.94);padding:24px}
+.lb.open{display:grid}
+.lb img{max-height:86vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lb p{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:#d8cbb4;font-size:.9rem}
+.lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;width:46px;height:46px;border-radius:50%;font-size:1.3rem;cursor:pointer}
+.lb button:hover{background:rgba(255,255,255,.25)}
+.lb .x{top:20px;right:20px}.lb .pv{left:20px;top:50%}.lb .nx{right:20px;top:50%}
+
+.mbar{display:none}
+
+/* ---------- Reveal ---------- */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  *{animation:none!important}
+  .embers{display:none}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1100px){
+  .exp-grid{grid-template-columns:repeat(2,1fr)}
+  .cal{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:960px){
+  .hero>.container{grid-template-columns:1fr;gap:0}
+  .hero-content{padding-bottom:40px}
+  .hero-media{margin:10px auto 120px;justify-self:center;max-width:380px}
+  .count{grid-template-columns:repeat(4,1fr)}
+  .count .lead{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--line)}
+  .tiers,.dest-grid,.inex,.sig{grid-template-columns:1fr}
+  .map-wrap{grid-template-columns:1fr}#pmap{min-height:380px}
+  .nav-links .hide-m{display:none}
+}
+@media (max-width:760px){
+  .container{width:calc(100% - 32px)}
+  .hero-content{padding:116px 0 30px}
+  .count .u{padding:18px 10px;text-align:center}
+  .count .u b{font-size:1.6rem}
+  .count .u span{font-size:.6rem;letter-spacing:.12em}
+  .exp-grid,.cal{grid-template-columns:1fr}
+  .day{grid-template-columns:62px 1fr;gap:6px 14px}
+  .day-n{width:60px}.day-n b{width:44px;height:44px}.day::before{left:30px;top:50px}
+  .dest.food ul{grid-template-columns:1fr}
+  .dest.food li:nth-child(2){border-top:1px solid rgba(255,255,255,.12)}
+  .cta .container{grid-template-columns:1fr}
+  .cta-logo{order:-1;margin:16px 0 0 16px;justify-self:start}
+  .cta-logo img{width:130px}
+  .badge{display:none}
+  .mbar{display:flex;position:fixed;inset:auto 0 0 0;z-index:60;background:rgba(42,15,18,.96);backdrop-filter:blur(10px);justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(224,191,128,.3)}
+  .mbar a{width:44px;height:44px;display:grid;place-items:center;border-radius:50%}
+  .mbar svg{width:22px;height:22px;fill:#fff}
+  footer{padding-bottom:96px}
+}
+
+/* ---------- Shiva lingam abhishekam ---------- */
+.abhi{display:none;position:relative;align-self:center;justify-self:center;width:340px;height:520px;margin:20px 0 40px}
+.abhi::before{content:"";position:absolute;inset:6% -10% 4%;background:radial-gradient(ellipse at 50% 55%,rgba(243,167,59,.22),transparent 68%);pointer-events:none}
+.abhi canvas{position:relative;width:340px;height:520px;display:block;transform-style:preserve-3d;will-change:transform}
+@media(min-width:1180px){
+  .hero>.container{grid-template-columns:minmax(0,1fr) 340px minmax(300px,34%);gap:clamp(24px,3vw,56px)}
+  .abhi{display:block}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38A9.95 9.95 0 0 0 12.04 22c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.06c-1.63 0-3.15-.46-4.44-1.26l-.32-.19-3.12.82.83-3.04-.2-.31A8.06 8.06 0 0 1 3.98 12c0-4.440 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06 0 4.44-3.62 8.06-8.06 8.06Zm4.42-6.04c-.24-.12-1.43-.7-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.020-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.030.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.256 1.216.6 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122c-.05 1.065-.217 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772 4.9 4.9 0 0 1-1.772 1.153c-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06s-3.056-.01-4.122-.06c-1.065-.05-1.79-.217-2.428-.465a4.9 4.9 0 0 1-1.772-1.153 4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.01 15.056 2 14.717 2 12s.01-3.056.06-4.122c.05-1.065.217-1.79.465-2.428A4.9 4.9 0 0 1 3.678 3.678 4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.25A3.25 3.25 0 1 1 12 8.75a3.25 3.25 0 0 1 0 6.5ZM17.5 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm1.5 2.4V17h17V7.4l-8.03 6.020a1 1 0 0 1-1.2 0L4.5 7.4Zm.79-.9 7.21 5.4 7.21-5.4H5.29Z"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M12 3.2 3.5 10.1c-.4.3-.6.9-.3 1.4.2.4.6.6 1 .6H6V20a1 1 0 0 0 1 1h4v-5.5a1 1 0 0 1 1-1 1 1 0 0 1 1 1V21h4a1 1 0 0 0 1-1v-8h1.8c.4 0 .8-.2 1-.6.3-.5.1-1.1-.3-1.4L12 3.2Z"/></symbol>
+  <symbol id="i-lamp" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2 2.4 3.6 2.4 4.8a2.4 2.4 0 0 1-4.8 0c0-1.2.8-2.8 2.4-4.8Z" fill="#f3a73b"/><path d="M3 12.5h18c-.6 3.8-4.3 6.5-9 6.5s-8.4-2.7-9-6.5Z" fill="currentColor"/><path d="M9 21h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+</svg>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="container nav-inner">
+    <div class="nav-links">
+      <a href="../../index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.8l9 7.4M5.5 9.6V20h4.8v-5.6h3.4V20h4.8V9.6"/></svg>Home</a>
+      <a class="hide-m" href="Explore_Destination.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.8 8.2-2.1 5.5-5.5 2.1 2.1-5.5Z"/></svg>All Destinations</a>
+      <a class="hide-m" href="#calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Sacred Dates</a>
+      <a class="hide-m" href="#itineraries"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19c4-1 5-6 8-6s4 5 8 6M12 13V4m0 0-3 3m3-3 3 3"/></svg>Yatras</a>
+      <a class="hide-m" href="#guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg>Guide</a>
+    </div>
+    <span class="badge">Seasonal Special · 2026</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="embers" id="embers" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-content">
+      <span class="eyebrow">Seasonal Special · 10 Nov – 8 Dec 2026</span>
+      <span class="telugu" lang="te">కార్తీక మాసం</span>
+      <h1>Kartika Masam — <em>the month of a thousand lamps</em></h1>
+      <p class="intro">The holiest month for Shiva and Vishnu, when every dawn begins with a river snanam and every dusk with a deepam. We've shaped three sacred yatras around it — from the five Pancharama Kshetras to the lamp-lit ghats of Kashi on Karthika Pournami.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="#itineraries">Explore Kartika Yatras</a>
+        <a class="btn btn-ghost" href="https://wa.me/919885180515?text=Namaskaram%2C%20I%27d%20like%20to%20know%20about%20the%20Kartika%20Masam%20special%20yatras." target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Reserve with an Expert</a>
+      </div>
+      <div class="hero-dates"><svg width="18" height="18" style="color:var(--gold-light)"><use href="#i-lamp"/></svg>Karthika Pournami &amp; Dev Deepawali · <b>Tue, 24 Nov 2026</b></div>
+    </div>
+    <div class="abhi" role="img" aria-label="Animated Shiva lingam receiving abhishekam with flowing water"><canvas id="abhiCanvas" width="340" height="520"></canvas></div>
+    <figure class="hero-media">
+      <img src="../../images/Varanasi/v4.jpg" alt="Ganga Aarti with lamps on the ghats of Kashi" fetchpriority="high" decoding="async">
+      <figcaption>Ganga Aarti · Kashi</figcaption>
+    </figure>
+  </div>
+</header>
+
+<section class="facts" aria-label="Countdown to Karthika Pournami">
+  <div class="container">
+    <div class="count" id="count">
+      <div class="lead"><b id="countTitle">Countdown to Karthika Pournami</b><span id="countSub">Dev Deepawali on the ghats of Kashi · limited boat seats</span></div>
+      <div class="u"><b id="cd-d">--</b><span>Days</span></div>
+      <div class="u"><b id="cd-h">--</b><span>Hours</span></div>
+      <div class="u"><b id="cd-m">--</b><span>Minutes</span></div>
+      <div class="u"><b id="cd-s">--</b><span>Seconds</span></div>
+    </div>
+  </div>
+</section>
+
+<main>
+<!-- Significance -->
+<section class="section">
+  <div class="container sig">
+    <div class="sig-text reveal">
+      <span class="eyebrow">Why Kartika</span>
+      <h2 style="font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.15;margin:12px 0 18px;color:var(--maroon-deep)">A month when Hari and Hara are worshipped as one</h2>
+      <p>Kartika Masam begins the day after Deepavali Amavasya and runs for one lunar month. The Skanda and Padma Puranas call it the most meritorious of all months — a time for pre-dawn river baths, Monday fasts for Shiva, Tulasi worship for Vishnu, and above all, the offering of light.</p>
+      <p>For families in Andhra Pradesh and Telangana, it is the season of Pancharama darshan, Karthika deepams floated on the Godavari, and Vanabhojanam under the amla tree. In Kashi, it ends in Dev Deepawali, when the gods themselves are said to descend to the ghats.</p>
+      <blockquote>Every lamp lit in Kartika is said to light a path for one's ancestors.<small>Traditional belief, Karthika Puranam</small></blockquote>
+    </div>
+    <div class="sig-media reveal">
+      <img loading="lazy" src="../../images/Varanasi/v5.jpg" alt="The Ganges at night with lamps">
+      <img loading="lazy" src="../../images/Varanasi/v9.jpg" alt="Sunrise over the Ganges">
+    </div>
+  </div>
+</section>
+
+<!-- Rituals -->
+<section class="section exp-wrap">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Sacred Practices</span>
+      <h2>Four rituals we arrange for you</h2>
+      <p>Each yatra builds these in, with a local priest, the right muhurtam and every samagri ready — so you can simply be present.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp reveal"><div class="diya"><span class="bowl"></span><span class="flame"></span></div><h3>Deepa Daanam</h3><span class="tel" lang="te">దీప దానం</span><p>Lighting and floating ghee lamps at dusk — on the Godavari at Rajahmundry and on the Ganga in Kashi.</p></div>
+      <div class="exp reveal"><div class="diya"><span class="bowl"></span><span class="flame" style="animation-delay:.4s"></span></div><h3>Karthika Snanam</h3><span class="tel" lang="te">కార్తీక స్నానం</span><p>A sacred river bath before sunrise, with sankalpam performed by a priest on the ghat.</p></div>
+      <div class="exp reveal"><div class="diya"><span class="bowl"></span><span class="flame" style="animation-delay:.8s"></span></div><h3>Somavara Rudrabhishekam</h3><span class="tel" lang="te">సోమవార అభిషేకం</span><p>Abhishekam to the Shiva lingam on Karthika Mondays, at Pancharama temples or Kashi Vishwanath.</p></div>
+      <div class="exp reveal"><div class="diya"><span class="bowl"></span><span class="flame" style="animation-delay:1.2s"></span></div><h3>Vanabhojanam</h3><span class="tel" lang="te">వనభోజనం</span><p>A traditional sattvic feast in a garden, beneath the usiri (amla) tree, shared with your fellow yatris.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Calendar -->
+<section class="section" id="calendar">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Sacred Calendar · 2026</span>
+      <h2>The important days of Kartika</h2>
+      <p>Telugu (amanta) calendar for India. Our fixed departures are timed around the brightest of these.</p>
+      <div class="orn"><svg><use href="#i-lamp"/></svg></div>
+    </div>
+    <ol class="cal reveal">
+      <li><div class="d"><b>10</b><span>Nov</span></div><div><strong>Kartika Masam begins</strong><small>First deepam lit at dusk</small></div></li>
+      <li class="som"><div class="d"><b>16</b><span>Nov</span></div><div><strong>1st Karthika Somavaram</strong><small>Monday vratam &amp; abhishekam</small></div></li>
+      <li><div class="d"><b>21</b><span>Nov</span></div><div><strong>Tulasi Vivaham</strong><small>Around Ksheerabdi Dwadasi</small></div></li>
+      <li class="som"><div class="d"><b>23</b><span>Nov</span></div><div><strong>2nd Karthika Somavaram</strong><small>Eve of the full moon</small></div></li>
+      <li class="hl"><div class="d"><b>24</b><span>Nov</span></div><div><strong>Karthika Pournami · Dev Deepawali</strong><small>Ghats of Kashi lit end to end</small></div></li>
+      <li class="som"><div class="d"><b>30</b><span>Nov</span></div><div><strong>3rd Karthika Somavaram</strong><small>Vanabhojanam season</small></div></li>
+      <li class="som"><div class="d"><b>07</b><span>Dec</span></div><div><strong>4th Karthika Somavaram</strong><small>Final Monday of the month</small></div></li>
+      <li><div class="d"><b>08</b><span>Dec</span></div><div><strong>Karthika Amavasya</strong><small>The month concludes</small></div></li>
+    </ol>
+    <p class="cal-note">Dates follow published panchangams for India; tithi timings can shift by a day. We confirm exact muhurtams for every ritual with our priests.</p>
+  </div>
+</section>
+
+<!-- Itineraries -->
+<section class="section" id="itineraries" style="padding-top:0">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Kartika Special Yatras</span>
+      <h2>Three ways to keep the month</h2>
+      <p>Join a fixed departure timed to the festival days, or travel on your own dates. Tap a yatra to open the day-by-day plan.</p>
+    </div>
+    <div class="tiers" aria-label="Kartika yatras" id="tiers"></div>
+    <p class="notes">Itineraries are indicative and can be tailored to your pace, group size and budget. Seats on Dev Deepawali boats are limited — early booking recommended.</p>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2>Light on the water</h2>
+      <p>Tap any photo to view it full-size.</p>
+    </div>
+    <div class="mosaic reveal" id="mosaic">
+      <a href="../../images/Varanasi/v4.jpg" data-cap="Ganga Aarti ceremony"><img loading="lazy" src="../../images/Varanasi/v4.jpg" alt="Ganga Aarti ceremony"><span class="cap">Ganga Aarti ceremony</span></a>
+      <a href="../../images/Varanasi/v5.jpg" data-cap="Ganges at night"><img loading="lazy" src="../../images/Varanasi/v5.jpg" alt="Ganges at night"><span class="cap">Ganges at night</span></a>
+      <a href="../../images/Varanasi/v9.jpg" data-cap="Sunrise — the hour of Karthika snanam"><img loading="lazy" src="../../images/Varanasi/v9.jpg" alt="Sunrise on the Ganges"><span class="cap">Sunrise — the hour of Karthika snanam</span></a>
+      <a href="../../images/Varanasi/v2.jpg" data-cap="Dashashwamedh Ghat"><img loading="lazy" src="../../images/Varanasi/v2.jpg" alt="Dashashwamedh Ghat"><span class="cap">Dashashwamedh Ghat</span></a>
+      <a href="../../images/Varanasi/v6.jpg" data-cap="Boats on the Ganges"><img loading="lazy" src="../../images/Varanasi/v6.jpg" alt="Boats on the Ganges"><span class="cap">Boats on the Ganges</span></a>
+      <a href="../../images/Varanasi/v3.jpg" data-cap="Kashi Vishwanath Temple"><img loading="lazy" src="../../images/Varanasi/v3.jpg" alt="Kashi Vishwanath Temple"><span class="cap">Kashi Vishwanath Temple</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Inclusions -->
+<section class="section" id="inclusions" style="padding-top:0">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Good to Know</span>
+      <h2>Inclusions &amp; exclusions</h2>
+      <p>What your Kartika yatra covers, and what to plan for separately.</p>
+    </div>
+    <div class="inex reveal">
+      <article class="inex-card in"><h3>What's included</h3><p class="sub">Covered in your package</p><ul>
+          <li>Handpicked stays close to the temples and ghats</li>
+          <li>Private AC vehicle with an experienced driver for all road transfers</li>
+          <li>Pure sattvic vegetarian meals as marked (no onion–garlic on request)</li>
+          <li>Priest-led rituals as listed — sankalpam, Rudrabhishekam, deepa daanam</li>
+          <li>Puja samagri, lamps and ghee for every ritual in the plan</li>
+          <li>Reserved boat for Ganga Aarti and Dev Deepawali (Kashi yatras)</li>
+          <li>Darshan assistance and a Vihara Setu coordinator throughout</li>
+        </ul></article>
+      <article class="inex-card ex"><h3>What's not included</h3><p class="sub">Please plan for these separately</p><ul>
+          <li>Flights and train tickets to and from your starting city</li>
+          <li>Special / VIP darshan tickets and temple-counter seva fees</li>
+          <li>Dakshina to priests beyond the listed rituals</li>
+          <li>Meals not marked in the itinerary</li>
+          <li>Personal expenses such as shopping, laundry, tips and phone calls</li>
+          <li>Travel insurance</li>
+          <li>Extra costs caused by festival crowd controls, weather or road closures</li>
+        </ul></article>
+    </div>
+    <p class="inex-note">Inclusions and exclusions are indicative. The final list is confirmed in writing in your quote.</p>
+  </div>
+</section>
+
+<!-- Guide -->
+<section class="section guide" id="guide">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Kartika Pilgrimage Guide</span>
+      <h2>Where the month is kept most deeply</h2>
+      <p>Must-visit kshetras are marked, so you always know where to begin.</p>
+    </div>
+    <div class="dest-grid">
+      <article class="dest reveal"><span class="no">01</span><h3>Pancharama Kshetras</h3><ul>
+        <li>Draksharamam — Bhimeswara Swamy <i class="must">Must visit</i></li>
+        <li>Amaravati — Amareswara Swamy <em>Amararama</em></li>
+        <li>Bhimavaram — Someswara Swamy <em>Somarama</em></li>
+        <li>Palakollu — Ksheera Ramalingeswara <em>Ksheerarama</em></li>
+        <li>Samalkot — Kumara Bhimeswara <em>Kumararama</em></li></ul></article>
+      <article class="dest reveal"><span class="no">02</span><h3>Jyotirlinga &amp; Shiva Kshetras</h3><ul>
+        <li>Kashi Vishwanath, Varanasi <i class="must">Must visit</i></li>
+        <li>Srisailam Mallikarjuna Swamy</li>
+        <li>Kaal Bhairav Temple, Kashi</li>
+        <li>Annapurna Devi Temple, Kashi</li>
+        <li>Kanaka Durga Temple, Vijayawada</li>
+        <li>Sarnath, near Varanasi</li></ul></article>
+      <article class="dest reveal"><span class="no">03</span><h3>Sacred Rivers &amp; Ghats</h3><ul>
+        <li>Dashashwamedh Ghat, Kashi <i class="must">Must visit</i></li>
+        <li>Pushkar Ghat, Rajahmundry (Godavari)</li>
+        <li>Manikarnika Ghat, Kashi</li>
+        <li>Assi Ghat, Kashi</li>
+        <li>Patala Ganga, Srisailam (Krishna)</li>
+        <li>Krishna riverfront, Amaravati</li></ul></article>
+      <article class="dest food reveal"><span class="no">Kartika Prasadam &amp; Sattvic Tastes</span><h3>What to taste on the way</h3><ul>
+        <li>Vanabhojanam feast under the usiri tree <i class="must">Must try</i></li>
+        <li>Pulihora &amp; daddojanam temple prasadam</li>
+        <li>Kakinada Kaja, near Samalkot</li>
+        <li>Atreyapuram Pootharekulu, Godavari</li>
+        <li>Kachori Gali breakfast, Kashi</li>
+        <li>Malaiyyo — Kashi's winter dawn special</li>
+        <li>Banarasi lassi in a kulhad</li>
+        <li>Rabri &amp; jalebi on the Godowlia lanes</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- Map -->
+<section class="section" id="map">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Find the Places</span>
+      <h2>The Kartika kshetras on the map</h2>
+      <p>From the Godavari delta to the Ganga — tap a marker for the place name.</p>
+    </div>
+    <div class="map-wrap reveal">
+      <div id="pmap" role="region" aria-label="Map of Kartika pilgrimage places"></div>
+      <ol class="map-list" id="mapList"></ol>
+    </div>
+    <p class="notes">Map positions are approximate. Map data © OpenStreetMap contributors.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Questions</span>
+      <h2>Before you travel</h2>
+      <div class="orn"><svg><use href="#i-lamp"/></svg></div>
+    </div>
+    <div class="faq reveal">
+      <details><summary>Can all five Pancharamas be visited in a single day?</summary><p>Yes. Many devotees do the full Pancharama darshan in one day on a Karthika Somavaram, starting before dawn at Amaravati and ending at Samalkot after dark. It's a long, demanding day, so we usually recommend two days — but we'll arrange the one-day circuit on request.</p></details>
+      <details><summary>How early should we book for Dev Deepawali in Kashi?</summary><p>As early as possible. Hotels near the ghats and boats for the evening of Karthika Pournami fill weeks ahead. Our fixed departure holds a reserved boat and rooms, which is the simplest way to secure a place.</p></details>
+      <details><summary>Is the food strictly sattvic?</summary><p>All meals we arrange during Kartika are pure vegetarian. If you observe no onion and garlic, or are fasting on Mondays, tell us and we'll plan meals and timings around it.</p></details>
+      <details><summary>Is the yatra suitable for elderly parents?</summary><p>Yes. We plan short walking distances, wheelchair assistance where temples allow it, rest breaks between darshans, and a coordinator to handle queues. Let us know any mobility needs when you enquire.</p></details>
+      <details><summary>Can we start from Bengaluru, Hyderabad or Chennai?</summary><p>Of course. We plan the yatra from your city, suggest the best flights or trains to connect, and adjust the itinerary so your arrival and departure fit comfortably.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="section cta" id="contact">
+  <div class="container reveal">
+    <div class="cta-text">
+      <span class="eyebrow">Plan Your Kartika Yatra</span>
+      <h2>Keep this Kartika in a place you'll remember</h2>
+      <p>Tell us your dates, starting city and who's travelling — we'll shape the route, rituals and stays around your family.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="https://wa.me/919885180515?text=Namaskaram%2C%20I%27d%20like%20to%20know%20about%20the%20Kartika%20Masam%20special%20yatras." target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Chat on WhatsApp</a>
+        <a class="btn btn-ghost" href="mailto:info@viharasetu.co.in?subject=Kartika%20Masam%20Special%20Yatra"><svg><use href="#i-mail"/></svg>Email Us</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>Follow on Instagram</a>
+      </div>
+    </div>
+    <div class="cta-logo"><img src="../../images/new_Logo.jpg" alt="Viharasetu logo" width="270" height="270" loading="lazy"></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="container">© Vihara Setu · Kartika Masam Special 2026 · <a href="Explore_Destination.html" style="text-decoration:underline">Back to Destinations</a></div></footer>
+
+<nav class="mbar" aria-label="Quick contact">
+  <a href="../../index.html" aria-label="Home"><svg><use href="#i-home"/></svg></a>
+  <a href="tel:+919885180515" aria-label="Call us"><svg><use href="#i-call"/></svg></a>
+  <a href="https://wa.me/919885180515" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+  <a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
+  <a href="../../index.html#contact" aria-label="Enquiry form"><svg><use href="#i-mail"/></svg></a>
+</nav>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="x" aria-label="Close">✕</button>
+  <button class="pv" aria-label="Previous">‹</button>
+  <img id="lbImg" alt="">
+  <button class="nx" aria-label="Next">›</button>
+  <p id="lbCap"></p>
+</div>
+
+<script>
+/* ---- Nav background on scroll ---- */
+(function(){
+  var nav=document.getElementById('nav');
+  function f(){nav.classList.toggle('scrolled',window.scrollY>40)}
+  f();addEventListener('scroll',f,{passive:true});
+})();
+
+/* ---- Floating embers ---- */
+(function(){
+  var box=document.getElementById('embers'); if(!box) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for(var i=0;i<26;i++){
+    var e=document.createElement('i');
+    var s=3+Math.random()*6;
+    e.style.left=(Math.random()*100)+'%';
+    e.style.width=e.style.height=s+'px';
+    e.style.animationDuration=(9+Math.random()*12)+'s';
+    e.style.animationDelay=(-Math.random()*18)+'s';
+    e.style.setProperty('--dx',(Math.random()*120-60)+'px');
+    box.appendChild(e);
+  }
+})();
+
+/* ---- Countdown to Karthika Pournami (Dev Deepawali lamps, ~5:07 PM IST) ---- */
+(function(){
+  var target=new Date('2026-11-24T17:07:00+05:30').getTime();
+  var end=new Date('2026-11-25T06:00:00+05:30').getTime();
+  var el=document.getElementById('count');
+  function pad(n){return (n<10?'0':'')+n}
+  function tick(){
+    var now=Date.now(), diff=target-now;
+    if(diff<=0){
+      el.classList.add('done');
+      if(now<end){
+        document.getElementById('countTitle').textContent='Karthika Pournami is here';
+        document.getElementById('countSub').textContent='The ghats of Kashi are lit tonight — Happy Dev Deepawali.';
+      }else{
+        document.getElementById('countTitle').textContent='Kartika yatras on your own dates';
+        document.getElementById('countSub').textContent='Pancharama darshan and Kashi yatras run through the month until 8 December.';
+      }
+      return;
+    }
+    var s=Math.floor(diff/1000);
+    document.getElementById('cd-d').textContent=pad(Math.floor(s/86400));
+    document.getElementById('cd-h').textContent=pad(Math.floor(s%86400/3600));
+    document.getElementById('cd-m').textContent=pad(Math.floor(s%3600/60));
+    document.getElementById('cd-s').textContent=pad(s%60);
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* ---- Reveal on scroll ---- */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* ---- Itineraries ---- */
+/* Set a price (e.g. "₹ 45,000") to show it; leave null to show "Price on request". */
+var PLANS=[
+  {"key":"pancharama","num":3,"unit":"Days","alt":"2 Nights","dayCount":3,"title":"Pancharama Kshetra Darshan","route":"Vijayawada · Amaravati · Bhimavaram · Palakollu · Draksharamam · Samalkot · Rajahmundry","routeShort":"Andhra Pradesh","when":"Any Karthika weekend · best over a Somavaram","price":null,
+   "sub":"All five ancient Shiva kshetras of the Pancharamas, with Karthika deepam on the Godavari and a dawn snanam at Pushkar Ghat.",
+   "days":[
+    {"day":1,"title":"Amararama & Somarama","items":["Pick-up at Vijayawada airport / railway station","Darshan at Amareswara Swamy temple, Amaravati, on the banks of the Krishna","Drive to Bhimavaram; evening darshan at Someswara Swamy (Somarama), whose lingam is said to change colour with the moon","Overnight stay in Bhimavaram"],"tags":["Dinner"],"rit":["Deepa daanam"]},
+    {"day":2,"title":"Ksheerarama, Draksharama & Kumararama","items":["Early darshan at Ksheera Ramalingeswara, Palakollu","Rudrabhishekam at Bhimeswara Swamy, Draksharamam — also one of the Shakti Peethas (Manikyamba)","Afternoon darshan at Kumara Bhimeswara, Samalkot; taste Kakinada kaja on the way","Evening Godavari aarti and floating Karthika deepams at Pushkar Ghat, Rajahmundry","Overnight stay in Rajahmundry"],"tags":["Breakfast","Dinner"],"rit":["Rudrabhishekam","Godavari deepam"]},
+    {"day":3,"title":"Godavari Snanam & Departure","items":["Pre-dawn Karthika snanam in the Godavari with sankalpam","Vanabhojanam-style sattvic brunch","Transfer to Rajahmundry airport / railway station"],"tags":["Breakfast","Brunch"],"rit":["Karthika snanam"]}
+   ]},
+  {"key":"kashi","num":5,"unit":"Days","alt":"4 Nights","dayCount":5,"title":"Kashi Dev Deepawali","route":"Varanasi · Sarnath","routeShort":"Fixed departure","when":"Fixed departure · 21 – 25 Nov 2026","feat":true,"ribbon":"Signature","price":null,
+   "sub":"Five days in Kashi timed to Karthika Pournami — Somavara abhishekam at Vishwanath, and Dev Deepawali from your own reserved boat.",
+   "days":[
+    {"day":1,"date":"Sat 21 Nov","title":"Arrival & Ganga Aarti","items":["Arrive in Varanasi, welcome and check-in near the ghats","Evening Ganga Aarti at Dashashwamedh Ghat from a reserved boat","Overnight stay in Varanasi"],"tags":["Dinner"],"rit":["Deepa daanam"]},
+    {"day":2,"date":"Sun 22 Nov","title":"Kashi Temple Walk","items":["Sunrise boat ride past the 84 ghats","Darshan at Kashi Vishwanath, Annapurna Devi and Kaal Bhairav","Heritage walk through the old lanes; Kachori Gali breakfast","Overnight stay in Varanasi"],"tags":["Breakfast","Dinner"]},
+    {"day":3,"date":"Mon 23 Nov","title":"Karthika Somavaram & Sarnath","items":["Somavara Rudrabhishekam at Kashi Vishwanath with a local priest","Afternoon at Sarnath — Dhamek Stupa and the Sarnath Museum","Evening at leisure on the ghats — Vaikuntha Chaturdashi","Overnight stay in Varanasi"],"tags":["Breakfast","Dinner"],"rit":["Rudrabhishekam"]},
+    {"day":4,"date":"Tue 24 Nov","title":"Karthika Pournami · Dev Deepawali","items":["Pre-dawn Ganga snanam with sankalpam and deepa daanam","Day at a relaxed pace; sattvic lunch","From dusk, Dev Deepawali from a reserved boat — the ghats lit end to end with lakhs of diyas","Overnight stay in Varanasi"],"tags":["Breakfast","Lunch","Dinner"],"rit":["Karthika snanam","Deepa daanam"]},
+    {"day":5,"date":"Wed 25 Nov","title":"Departure","items":["Morning at leisure; malaiyyo on the Godowlia lanes","Transfer to Varanasi airport / railway station"],"tags":["Breakfast"]}
+   ]},
+  {"key":"grand","num":9,"unit":"Days","alt":"8 Nights","dayCount":9,"title":"Grand Kartika Shiva Yatra","route":"Hyderabad · Srisailam · Vijayawada · Pancharamas · Rajahmundry · Varanasi","routeShort":"Fixed departure","when":"Fixed departure · 17 – 25 Nov 2026","price":null,
+   "sub":"Srisailam's Jyotirlinga, all five Pancharamas and Kashi on Karthika Pournami — the whole month's devotion in one unhurried journey.",
+   "days":[
+    {"day":1,"date":"Tue 17 Nov","title":"Hyderabad to Srisailam","items":["Pick-up in Hyderabad; scenic drive through the Nallamala forest","Evening darshan at Sri Mallikarjuna Swamy & Bhramaramba Devi","Overnight stay in Srisailam"],"tags":["Dinner"]},
+    {"day":2,"date":"Wed 18 Nov","title":"Srisailam to Vijayawada","items":["Morning abhishekam at Mallikarjuna Jyotirlinga","Ropeway to Patala Ganga on the Krishna","Drive to Vijayawada; evening darshan at Kanaka Durga temple","Overnight stay in Vijayawada"],"tags":["Breakfast","Dinner"],"rit":["Abhishekam"]},
+    {"day":3,"date":"Thu 19 Nov","title":"Amararama & Somarama","items":["Darshan at Amareswara Swamy, Amaravati","Drive to Bhimavaram; evening darshan at Somarama","Overnight stay in Bhimavaram"],"tags":["Breakfast","Dinner"],"rit":["Deepa daanam"]},
+    {"day":4,"date":"Fri 20 Nov","title":"Ksheerarama, Draksharama & Kumararama","items":["Ksheerarama, Palakollu → Draksharamam → Kumararama, Samalkot","Evening Godavari aarti and Karthika deepams at Pushkar Ghat","Overnight stay in Rajahmundry"],"tags":["Breakfast","Dinner"],"rit":["Godavari deepam"]},
+    {"day":5,"date":"Sat 21 Nov","title":"Godavari to the Ganga","items":["Pre-dawn Godavari snanam","Transfer to Rajahmundry airport for your onward flight to Varanasi","Evening Ganga Aarti at Dashashwamedh Ghat","Overnight stay in Varanasi"],"tags":["Breakfast","Dinner"],"rit":["Karthika snanam"]},
+    {"day":6,"date":"Sun 22 Nov","title":"Kashi Temple Walk","items":["Sunrise boat ride past the 84 ghats","Darshan at Kashi Vishwanath, Annapurna Devi and Kaal Bhairav","Heritage walk through the old city"],"tags":["Breakfast","Dinner"]},
+    {"day":7,"date":"Mon 23 Nov","title":"Karthika Somavaram & Sarnath","items":["Somavara Rudrabhishekam at Kashi Vishwanath","Afternoon at Sarnath's stupas and museum"],"tags":["Breakfast","Dinner"],"rit":["Rudrabhishekam"]},
+    {"day":8,"date":"Tue 24 Nov","title":"Karthika Pournami · Dev Deepawali","items":["Pre-dawn Ganga snanam and deepa daanam","Group Vanabhojanam lunch in a riverside garden","Dev Deepawali from a reserved boat"],"tags":["Breakfast","Lunch","Dinner"],"rit":["Karthika snanam","Vanabhojanam"]},
+    {"day":9,"date":"Wed 25 Nov","title":"Departure","items":["Morning at leisure","Transfer to Varanasi airport / railway station"],"tags":["Breakfast"]}
+   ]}
+];
+
+(function(){
+  var tiers=document.getElementById('tiers');
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function priceHTML(p){return p ? 'Starting from <b>'+esc(p)+'</b> / person' : '<b>Price on request</b>'}
+  PLANS.forEach(function(p){
+    var b=document.createElement('button');
+    b.className='tier'+(p.feat?' feat':''); b.type='button'; b.setAttribute('aria-haspopup','dialog');
+    b.innerHTML=(p.ribbon?'<span class="ribbon">'+esc(p.ribbon)+'</span>':'')+
+      '<span class="route-l">'+esc(p.routeShort)+'</span>'+
+      '<div class="nights">'+p.num+'<small>'+p.unit+' · '+p.alt+'</small></div>'+
+      '<h3>'+esc(p.title)+'</h3><p>'+esc(p.sub)+'</p>'+
+      '<span class="when">'+esc(p.when)+'</span>'+
+      '<div class="price">'+priceHTML(p.price)+'</div><span class="more">View day-by-day plan →</span>';
+    tiers.appendChild(b);
+  });
+  var bd=document.createElement('div');
+  bd.className='itin-bd';
+  bd.innerHTML='<div class="itin-dialog" role="dialog" aria-modal="true" tabindex="-1"><button type="button" class="itin-x" aria-label="Close">✕</button><div class="itin-body"></div></div>';
+  document.body.appendChild(bd);
+  var dlg=bd.querySelector('.itin-dialog'), body=bd.querySelector('.itin-body'), lastBtn=null;
+  function closeModal(){bd.classList.remove('open');document.body.style.overflow='';if(lastBtn)lastBtn.focus()}
+  function openModal(i,btn){
+    var p=PLANS[i]; lastBtn=btn;
+    dlg.setAttribute('aria-label',p.title+' — '+p.num+' '+p.unit);
+    var html='<div class="tl-head"><div><span class="eyebrow">'+esc(p.route)+'</span><h3>'+esc(p.title)+' — '+p.num+' '+p.unit+'</h3><p>'+esc(p.sub)+'</p></div><span class="tl-note">'+esc(p.when)+'<br>meals &amp; rituals as marked</span></div><div class="days">';
+    p.days.forEach(function(d){
+      var tags=(d.tags||[]).map(function(t){return '<span>'+esc(t)+'</span>'}).concat((d.rit||[]).map(function(t){return '<span class="r">🪔 '+esc(t)+'</span>'}));
+      html+='<div class="day"><div class="day-n"><span>Day</span><b>'+d.day+'</b></div><div><h4>'+esc(d.title)+(d.date?'<span class="dt">'+esc(d.date)+'</span>':'')+'</h4><ul>'+
+        d.items.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>'+
+        (tags.length?'<div class="meals">'+tags.join('')+'</div>':'')+'</div></div>';
+    });
+    body.innerHTML=html+'</div>';
+    bd.classList.add('open'); document.body.style.overflow='hidden';
+    dlg.scrollTop=0; dlg.focus();
+  }
+  tiers.addEventListener('click',function(e){
+    var b=e.target.closest('.tier'); if(!b) return;
+    openModal(Array.prototype.indexOf.call(tiers.children,b),b);
+  });
+  bd.querySelector('.itin-x').addEventListener('click',closeModal);
+  bd.addEventListener('click',function(e){if(e.target===bd)closeModal()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.classList.contains('open'))closeModal()});
+})();
+
+/* ---- Lightbox ---- */
+(function(){
+  var links=Array.prototype.slice.call(document.querySelectorAll('#mosaic a'));
+  var lb=document.getElementById('lb'), img=document.getElementById('lbImg'), cap=document.getElementById('lbCap'), idx=0, last=null;
+  function show(i){idx=(i+links.length)%links.length;img.src=links[idx].href;img.alt=links[idx].dataset.cap||'';cap.textContent=links[idx].dataset.cap||''}
+  function open(i){last=document.activeElement;show(i);lb.classList.add('open');document.body.style.overflow='hidden';lb.querySelector('.x').focus()}
+  function close(){lb.classList.remove('open');document.body.style.overflow='';img.removeAttribute('src');if(last)last.focus()}
+  links.forEach(function(a,i){a.addEventListener('click',function(e){e.preventDefault();open(i)})});
+  lb.querySelector('.x').onclick=close;
+  lb.querySelector('.pv').onclick=function(){show(idx-1)};
+  lb.querySelector('.nx').onclick=function(){show(idx+1)};
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();
+    if(e.key==='ArrowLeft')show(idx-1);
+    if(e.key==='ArrowRight')show(idx+1);
+  });
+})();
+
+/* ---- Gallery: equal-height rows, original proportions ---- */
+(function(){
+  var box=document.getElementById('mosaic'); if(!box) return;
+  var H=230;
+  function size(a){var im=a.querySelector('img');if(!im||!im.naturalWidth)return;var r=im.naturalWidth/im.naturalHeight;a.style.flex=(r*100)+' 1 '+(r*H)+'px'}
+  Array.prototype.forEach.call(box.querySelectorAll('a'),function(a){
+    var im=a.querySelector('img'); if(!im) return;
+    if(im.complete) size(a); else im.addEventListener('load',function(){size(a)});
+  });
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ---- Pilgrimage map ---- */
+(function(){
+  var T=[
+    ["Sri Mallikarjuna Swamy, Srisailam","Jyotirlinga",16.0733,78.8681],
+    ["Amareswara Swamy, Amaravati","Amararama",16.5735,80.3586],
+    ["Someswara Swamy, Bhimavaram","Somarama",16.5418,81.5265],
+    ["Ksheera Ramalingeswara, Palakollu","Ksheerarama",16.5177,81.7276],
+    ["Bhimeswara Swamy, Draksharamam","Draksharama",16.7926,82.0636],
+    ["Kumara Bhimeswara, Samalkot","Kumararama",17.0527,82.1694],
+    ["Pushkar Ghat, Rajahmundry","Godavari deepam",17.0005,81.7780],
+    ["Kashi Vishwanath Temple","Jyotirlinga, Varanasi",25.3109,83.0107],
+    ["Dashashwamedh Ghat","Dev Deepawali, Varanasi",25.3070,83.0100]
+  ];
+  var list=document.getElementById('mapList');
+  T.forEach(function(t,i){
+    var li=document.createElement('li');
+    li.innerHTML='<span class="pin">'+(i+1)+'</span><div><b>'+t[0]+'</b><small>'+t[1]+'</small><a href="https://www.google.com/maps/search/?api=1&amp;query='+t[2]+','+t[3]+'" target="_blank" rel="noopener">Open in Google Maps →</a></div>';
+    list.appendChild(li);
+  });
+  var el=document.getElementById('pmap'); if(!el||!window.L) return;
+  var map=L.map(el,{scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+  var ll=T.map(function(t){return [t[2],t[3]]});
+  L.polyline(ll,{color:'#b98a3e',weight:2.5,opacity:.85,dashArray:'6 8'}).addTo(map);
+  T.forEach(function(t,i){
+    L.marker([t[2],t[3]],{icon:L.divIcon({className:'pm-icon',html:'<span class="pm">'+(i+1)+'</span>',iconSize:[30,30],iconAnchor:[15,15]})})
+      .addTo(map).bindPopup('<b>'+t[0]+'</b><br>'+t[1]);
+  });
+  map.fitBounds(L.latLngBounds(ll).pad(.12));
+})();
+</script>
+<script>
+/* ---- Shiva lingam abhishekam (canvas, pseudo-3D shading + water) ---- */
+(function(){
+  var cv=document.getElementById('abhiCanvas'); if(!cv||!cv.getContext) return;
+  var W=340,H=520,dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr; cv.height=H*dpr;
+  var c=cv.getContext('2d'); c.scale(dpr,dpr);
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var CX=170, R=46, DOME=46, Y0=282, YB=392, APEX=Y0-DOME;
+  var POT={x:170,y:68,r:40}, HOLE=POT.y+POT.r+2;
+  var PX=170, PY=392, PRX=118, PRY=28, PTH=32;
+  var SPX=288, SPY=398;
+
+  function clamp(v){return v<0?0:v>255?255:v|0}
+  /* horizontal gradient that fakes a lit cylinder: diffuse + specular + warm rim */
+  function cylGrad(x0,x1,base,gloss,warm){
+    var g=c.createLinearGradient(x0,0,x1,0), L=[-.55,-.45,.70], n=Math.hypot(L[0],L[1],L[2]);
+    L=[L[0]/n,L[1]/n,L[2]/n];
+    var Hv=[L[0],L[1],L[2]+1], hn=Math.hypot(Hv[0],Hv[1],Hv[2]); Hv=[Hv[0]/hn,Hv[1]/hn,Hv[2]/hn];
+    for(var i=0;i<=20;i++){
+      var u=i/20, nx=u*2-1, nz=Math.sqrt(Math.max(0,1-nx*nx));
+      var d=Math.max(0,nx*L[0]+nz*L[2]);
+      var s=Math.pow(Math.max(0,nx*Hv[0]+nz*Hv[2]),55)*gloss;
+      var rim=Math.pow(1-nz,3)*(nx>0?1:.25)*warm;
+      var k=.30+.95*d;
+      g.addColorStop(u,'rgb('+clamp(base[0]*k+s*255*.85+rim*190)+','+clamp(base[1]*k+s*255*.85+rim*105)+','+clamp(base[2]*k+s*255*.9+rim*35)+')');
+    }
+    return g;
+  }
+  var STONE=cylGrad(CX-R,CX+R,[30,28,36],1,.55);
+  var PEETHA=cylGrad(PX-PRX,PX+PRX,[96,84,78],.35,.5);
+  var PEETHA2=cylGrad(PX-142,PX+142,[78,68,64],.25,.5);
+
+  var drops=[], ripples=[], sp=[], last=0, t=0, tiltX=0, tiltTarget=0;
+  function rnd(a,b){return a+Math.random()*(b-a)}
+
+  function spawnImpact(dt){
+    var n=dt*60*.9; n=Math.floor(n)+(Math.random()<n%1?1:0);
+    for(var i=0;i<n;i++){
+      var a=rnd(-Math.PI*.95,-Math.PI*.05);
+      drops.push({x:CX+rnd(-4,4),y:APEX+2,vx:Math.cos(a)*rnd(25,95),vy:Math.sin(a)*rnd(30,110),r:rnd(.9,2),l:1});
+    }
+  }
+  function spawnSpout(dt){
+    var n=dt*60*.55; n=Math.floor(n)+(Math.random()<n%1?1:0);
+    for(var i=0;i<n;i++) sp.push({x:SPX+40+rnd(-2,2),y:SPY+3,vx:rnd(8,26),vy:rnd(-6,10),r:rnd(.8,1.7)});
+  }
+  function step(dt){
+    var G=560,i,d;
+    for(i=drops.length-1;i>=0;i--){
+      d=drops[i]; d.vy+=G*dt; d.x+=d.vx*dt; d.y+=d.vy*dt;
+      if(d.y>=PY+4 && Math.abs(d.x-PX)<PRX-6){
+        ripples.push({x:d.x,y:PY+rnd(2,16),r:2,a:.55,v:rnd(16,26),gr:0});
+        drops.splice(i,1);
+      } else if(d.y>470){drops.splice(i,1)}
+    }
+    for(i=sp.length-1;i>=0;i--){
+      d=sp[i]; d.vy+=G*dt; d.x+=d.vx*dt; d.y+=d.vy*dt;
+      if(d.y>=500){ripples.push({x:d.x,y:503,r:2,a:.5,v:18,gr:1}); sp.splice(i,1)}
+    }
+    if(Math.random()<dt*7) ripples.push({x:CX+rnd(-70,70),y:PY+rnd(6,18),r:2,a:.35,v:rnd(14,22),gr:0});
+    for(i=ripples.length-1;i>=0;i--){
+      d=ripples[i]; d.r+=d.v*dt; d.a-=dt*.55; if(d.a<=0||d.r>60) ripples.splice(i,1);
+    }
+  }
+
+  function ell(x,y,rx,ry){c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2)}
+
+  function drawGlow(){
+    var g=c.createRadialGradient(CX,300,10,CX,300,230);
+    g.addColorStop(0,'rgba(243,167,59,.30)'); g.addColorStop(.5,'rgba(185,138,62,.10)'); g.addColorStop(1,'rgba(0,0,0,0)');
+    c.fillStyle=g; c.fillRect(0,0,W,H);
+  }
+  function drawGroundShadow(){
+    c.save(); c.translate(PX,462); c.scale(1,.24);
+    var g=c.createRadialGradient(0,0,10,0,0,160);
+    g.addColorStop(0,'rgba(0,0,0,.6)'); g.addColorStop(1,'rgba(0,0,0,0)');
+    c.fillStyle=g; c.beginPath(); c.arc(0,0,160,0,Math.PI*2); c.fill(); c.restore();
+  }
+  function drawPot(){
+    var px=POT.x, py=POT.y, r=POT.r;
+    /* chains */
+    c.save(); c.strokeStyle='rgba(224,191,128,.7)'; c.lineWidth=1.6; c.setLineDash([3,3]);
+    c.beginPath(); c.moveTo(px-24,py-26); c.lineTo(px,-4); c.moveTo(px+24,py-26); c.lineTo(px,-4); c.moveTo(px,py-r+2); c.lineTo(px,-4); c.stroke(); c.restore();
+    /* body */
+    var g=c.createRadialGradient(px-14,py-14,4,px,py,r+4);
+    g.addColorStop(0,'#ffd9a1'); g.addColorStop(.25,'#e0904a'); g.addColorStop(.7,'#9a4f22'); g.addColorStop(1,'#4a210d');
+    c.fillStyle=g; ell(px,py+4,r,r-2); c.fill();
+    /* rim + neck */
+    var g2=c.createLinearGradient(px-22,0,px+22,0);
+    g2.addColorStop(0,'#6b3417'); g2.addColorStop(.35,'#f0b06a'); g2.addColorStop(1,'#5a2a12');
+    c.fillStyle=g2; c.beginPath(); c.roundRect?c.roundRect(px-22,py-r-6,44,16,6):c.rect(px-22,py-r-6,44,16); c.fill();
+    c.strokeStyle='rgba(255,220,160,.55)'; c.lineWidth=1; ell(px,py+4,r-7,r-10); c.stroke();
+    /* decorative band */
+    c.strokeStyle='rgba(255,226,170,.5)'; c.lineWidth=2; c.beginPath(); c.ellipse(px,py+8,r-2,9,0,.1*Math.PI,.9*Math.PI); c.stroke();
+    /* spout hole */
+    c.fillStyle='#2a1208'; ell(px,HOLE-2,5,2.5); c.fill();
+  }
+  function drawStream(){
+    var x0=CX,y0=HOLE,y1=APEX+1;
+    var w=3.6+Math.sin(t*9)*.5;
+    var g=c.createLinearGradient(0,y0,0,y1);
+    g.addColorStop(0,'rgba(205,232,255,.95)'); g.addColorStop(1,'rgba(150,200,245,.75)');
+    c.save(); c.lineCap='round';
+    c.strokeStyle=g; c.lineWidth=w; c.beginPath();
+    c.moveTo(x0,y0); c.bezierCurveTo(x0+Math.sin(t*5)*1.2,y0+40,x0-Math.sin(t*4)*1.2,y0+90,x0,y1); c.stroke();
+    c.strokeStyle='rgba(255,255,255,.9)'; c.lineWidth=1.3; c.setLineDash([14,10]); c.lineDashOffset=-t*220;
+    c.beginPath(); c.moveTo(x0-.8,y0); c.lineTo(x0-.8,y1); c.stroke();
+    c.restore();
+    /* splash bloom at impact */
+    var b=c.createRadialGradient(CX,APEX,0,CX,APEX,22);
+    b.addColorStop(0,'rgba(220,240,255,.8)'); b.addColorStop(1,'rgba(220,240,255,0)');
+    c.fillStyle=b; ell(CX,APEX+1,22,10); c.fill();
+  }
+  function drawPeetha(){
+    /* lower tier */
+    c.fillStyle=PEETHA2;
+    c.beginPath(); c.moveTo(PX-142,PY+34); c.lineTo(PX-142,PY+66); c.ellipse(PX,PY+66,142,34,0,Math.PI,0,true); c.lineTo(PX+142,PY+34); c.closePath(); c.fill();
+    var tg=c.createRadialGradient(PX-30,PY+26,10,PX,PY+34,150); tg.addColorStop(0,'#8a7a70'); tg.addColorStop(1,'#4c423e');
+    c.fillStyle=tg; ell(PX,PY+34,142,34); c.fill();
+    /* upper tier side */
+    c.fillStyle=PEETHA;
+    c.beginPath(); c.moveTo(PX-PRX,PY); c.lineTo(PX-PRX,PY+PTH); c.ellipse(PX,PY+PTH,PRX,PRY,0,Math.PI,0,true); c.lineTo(PX+PRX,PY); c.closePath(); c.fill();
+    /* spout (somasutra) */
+    var sg=c.createLinearGradient(0,SPY-8,0,SPY+16); sg.addColorStop(0,'#8b7b71'); sg.addColorStop(1,'#463c38');
+    c.fillStyle=sg; c.beginPath(); c.moveTo(SPX-10,SPY-9); c.lineTo(SPX+44,SPY-4); c.lineTo(SPX+44,SPY+10); c.lineTo(SPX-10,SPY+18); c.closePath(); c.fill();
+    c.fillStyle='rgba(20,15,14,.55)'; c.beginPath(); c.moveTo(SPX-6,SPY-5); c.lineTo(SPX+44,SPY-1); c.lineTo(SPX+44,SPY+4); c.lineTo(SPX-6,SPY+6); c.closePath(); c.fill();
+    c.fillStyle='rgba(150,205,250,.55)'; c.beginPath(); c.moveTo(SPX-6,SPY-1); c.lineTo(SPX+44,SPY+1); c.lineTo(SPX+44,SPY+4); c.lineTo(SPX-6,SPY+6); c.closePath(); c.fill();
+    /* top surface */
+    var pg=c.createRadialGradient(PX-34,PY-8,8,PX,PY,PRX);
+    pg.addColorStop(0,'#a59388'); pg.addColorStop(.7,'#6a5b53'); pg.addColorStop(1,'#3e3532');
+    c.fillStyle=pg; ell(PX,PY,PRX,PRY); c.fill();
+    c.strokeStyle='rgba(255,225,180,.28)'; c.lineWidth=1.2; ell(PX,PY,PRX,PRY); c.stroke();
+    /* shallow water channel ring around the lingam */
+    c.fillStyle='rgba(15,10,12,.55)'; ell(PX,PY+1,R+16,(R+16)*.26); c.fill();
+  }
+  function drawPoolWater(){
+    c.save();
+    ell(PX,PY,PRX-6,PRY-4); c.clip();
+    var wg=c.createRadialGradient(PX,PY+4,6,PX,PY+4,PRX);
+    wg.addColorStop(0,'rgba(165,215,255,.42)'); wg.addColorStop(1,'rgba(120,175,230,.12)');
+    c.fillStyle=wg; ell(PX,PY+3,PRX-6,PRY-4); c.fill();
+    ripples.forEach(function(r){
+      if(r.gr) return;
+      c.strokeStyle='rgba(225,242,255,'+(r.a*.9).toFixed(3)+')'; c.lineWidth=1.1;
+      ell(r.x,r.y,r.r*1.6,r.r*.42); c.stroke();
+    });
+    c.restore();
+  }
+  function lingamPath(){
+    c.beginPath(); c.moveTo(CX-R,YB); c.lineTo(CX-R,Y0); c.ellipse(CX,Y0,R,DOME,0,Math.PI,Math.PI*2); c.lineTo(CX+R,YB);
+    c.ellipse(CX,YB,R,R*.24,0,0,Math.PI); c.closePath();
+  }
+  function drawLingam(){
+    lingamPath(); c.fillStyle=STONE; c.fill();
+    c.save(); lingamPath(); c.clip();
+    /* ambient occlusion toward the base and under the dome */
+    var ao=c.createLinearGradient(0,Y0,0,YB+10); ao.addColorStop(0,'rgba(0,0,0,0)'); ao.addColorStop(1,'rgba(0,0,0,.55)');
+    c.fillStyle=ao; c.fillRect(CX-R-2,APEX,2*R+4,YB-APEX+12);
+    /* tripundra, drawn on the curve of the cylinder */
+    [304,322,340].forEach(function(y,i){
+      var g=c.createLinearGradient(CX-R,0,CX+R,0);
+      g.addColorStop(0,'rgba(235,228,214,.05)'); g.addColorStop(.35,'rgba(240,234,220,.85)'); g.addColorStop(.7,'rgba(235,228,214,.6)'); g.addColorStop(1,'rgba(235,228,214,.08)');
+      c.strokeStyle=g; c.lineCap='round'; c.lineWidth=i===1?6:5;
+      c.beginPath(); c.ellipse(CX,y,R-1,R*.22,0,.04*Math.PI,.96*Math.PI); c.stroke();
+    });
+    /* wet gloss on the dome */
+    var gl=c.createRadialGradient(CX-17,APEX+22,2,CX-17,APEX+22,44);
+    gl.addColorStop(0,'rgba(255,255,255,.55)'); gl.addColorStop(.4,'rgba(200,225,255,.16)'); gl.addColorStop(1,'rgba(255,255,255,0)');
+    c.fillStyle=gl; c.fillRect(CX-R,APEX,2*R,DOME+30);
+    /* water sheet sliding down the lingam */
+    var sh=c.createLinearGradient(0,APEX,0,YB); sh.addColorStop(0,'rgba(190,225,255,.28)'); sh.addColorStop(1,'rgba(140,190,240,.10)');
+    c.fillStyle=sh; c.fillRect(CX-R,APEX,2*R,YB-APEX);
+    c.lineCap='round';
+    for(var i=-4;i<=4;i++){
+      var o=i/4.6, sx=CX+R*o, sy=Y0-DOME*Math.sqrt(Math.max(0,1-o*o));
+      var edge=1-Math.abs(o)*.55;
+      c.strokeStyle='rgba(215,238,255,'+(.42*edge).toFixed(3)+')'; c.lineWidth=1.8;
+      c.setLineDash([16+((i&1)?6:0),9]); c.lineDashOffset=-(t*95+i*13);
+      c.beginPath(); c.moveTo(sx,sy); c.lineTo(sx+o*4,YB); c.stroke();
+    }
+    c.setLineDash([]);
+    /* soft specular streak that drifts with the flow */
+    var sx0=CX-R*.42+Math.sin(t*1.7)*3;
+    var sg=c.createLinearGradient(sx0-5,0,sx0+5,0); sg.addColorStop(0,'rgba(255,255,255,0)'); sg.addColorStop(.5,'rgba(255,255,255,.35)'); sg.addColorStop(1,'rgba(255,255,255,0)');
+    c.fillStyle=sg; c.fillRect(sx0-5,Y0-30,10,YB-Y0+30);
+    c.restore();
+  }
+  function drawGarland(){
+    var N=22, i, a, x, y, col;
+    for(i=0;i<=N;i++){
+      a=Math.PI*(i/N); x=CX+Math.cos(a)*(R+7); y=YB-4+Math.sin(a)*(R+7)*.26;
+      col=i%2?['#ffb429','#e07a10']:['#ffd25a','#f09a1c'];
+      var g=c.createRadialGradient(x-1.5,y-1.5,.5,x,y,7); g.addColorStop(0,col[0]); g.addColorStop(1,col[1]);
+      c.fillStyle=g; ell(x,y,6.6,5.4); c.fill();
+      c.strokeStyle='rgba(90,40,0,.35)'; c.lineWidth=.6; ell(x,y,6.6,5.4); c.stroke();
+    }
+  }
+  function leaf(x,y,rot,s){
+    c.save(); c.translate(x,y); c.rotate(rot); c.scale(s,s);
+    var g=c.createLinearGradient(-10,0,10,0); g.addColorStop(0,'#3f7a3a'); g.addColorStop(.5,'#6fb056'); g.addColorStop(1,'#2e5f2c');
+    c.fillStyle=g;
+    [[0,-10,0],[-9,-1,-.9],[9,-1,.9]].forEach(function(l){
+      c.save(); c.translate(l[0],l[1]); c.rotate(l[2]); c.beginPath(); c.ellipse(0,-6,4.6,9,0,0,Math.PI*2); c.fill();
+      c.strokeStyle='rgba(20,60,20,.5)'; c.lineWidth=.7; c.beginPath(); c.moveTo(0,2); c.lineTo(0,-14); c.stroke(); c.restore();
+    });
+    c.restore();
+  }
+  function drawDecor(){
+    leaf(70,PY+4,-.3,1); leaf(100,PY+14,.2,.85); leaf(252,PY+10,.5,.9);
+    var pet=[[84,PY+18],[124,PY+22],[210,PY+22],[238,PY+14],[96,PY+8],[258,PY+2]];
+    pet.forEach(function(p,i){
+      c.fillStyle=i%2?'#f7a21b':'#ffcb4a'; ell(p[0],p[1],4.6,3.2); c.fill();
+    });
+  }
+  function drawSpoutFlow(){
+    /* water leaving the spout and falling to the ground */
+    c.save(); c.lineCap='round';
+    var x0=SPX+44,y0=SPY+2;
+    c.strokeStyle='rgba(185,222,255,.75)'; c.lineWidth=2.4;
+    c.beginPath(); c.moveTo(x0,y0); c.quadraticCurveTo(x0+12,y0+6,x0+16,y0+46); c.lineTo(x0+17,503); c.stroke();
+    c.strokeStyle='rgba(255,255,255,.8)'; c.lineWidth=.9; c.setLineDash([10,8]); c.lineDashOffset=-t*160;
+    c.beginPath(); c.moveTo(x0+16,y0+46); c.lineTo(x0+17,503); c.stroke();
+    c.restore();
+    c.fillStyle='rgba(170,215,255,.35)'; ell(x0+17,505,34,6); c.fill();
+    ripples.forEach(function(r){
+      if(!r.gr) return;
+      c.strokeStyle='rgba(225,242,255,'+(r.a*.9).toFixed(3)+')'; c.lineWidth=1; ell(r.x,r.y,r.r*1.5,r.r*.35); c.stroke();
+    });
+  }
+  function drawDrops(){
+    c.fillStyle='rgba(215,238,255,.85)';
+    drops.forEach(function(d){c.beginPath(); c.ellipse(d.x,d.y,d.r,d.r*1.35,0,0,Math.PI*2); c.fill()});
+    c.fillStyle='rgba(200,230,255,.8)';
+    sp.forEach(function(d){c.beginPath(); c.ellipse(d.x,d.y,d.r,d.r*1.35,0,0,Math.PI*2); c.fill()});
+  }
+  function diya(x,y,ph){
+    var g=c.createLinearGradient(0,y,0,y+14); g.addColorStop(0,'#d98a3d'); g.addColorStop(1,'#6e3a14');
+    c.fillStyle=g; c.beginPath(); c.moveTo(x-17,y); c.quadraticCurveTo(x,y+22,x+17,y); c.closePath(); c.fill();
+    var f=1+Math.sin(t*11+ph)*.12+Math.sin(t*17+ph*2)*.07, h=20*f;
+    var halo=c.createRadialGradient(x,y-9,1,x,y-9,34); halo.addColorStop(0,'rgba(255,190,80,.5)'); halo.addColorStop(1,'rgba(255,170,60,0)');
+    c.fillStyle=halo; c.fillRect(x-36,y-46,72,72);
+    var fg=c.createRadialGradient(x,y-6,1,x,y-8,h*.6); fg.addColorStop(0,'#fff6c8'); fg.addColorStop(.45,'#ffb43a'); fg.addColorStop(1,'rgba(255,120,20,0)');
+    c.fillStyle=fg; c.beginPath(); c.moveTo(x-5,y-1); c.quadraticCurveTo(x-7+Math.sin(t*9+ph)*2,y-h*.55,x+Math.sin(t*7+ph)*2,y-h); c.quadraticCurveTo(x+7,y-h*.5,x+5,y-1); c.closePath(); c.fill();
+  }
+
+  function frame(){
+    c.clearRect(0,0,W,H);
+    drawGlow(); drawGroundShadow();
+    drawPot(); drawPeetha(); drawLingam(); drawPoolWater(); drawGarland(); drawDecor();
+    drawStream(); drawSpoutFlow(); drawDrops();
+    diya(46,484,0); diya(236,490,2);
+  }
+  function tick(ms){
+    if(!last) last=ms;
+    var dt=Math.min(.05,(ms-last)/1000); last=ms; t+=dt;
+    spawnImpact(dt); spawnSpout(dt); step(dt); frame();
+    tiltX+=(tiltTarget-tiltX)*Math.min(1,dt*6);
+    cv.style.transform='perspective(900px) rotateY('+tiltX.toFixed(2)+'deg)';
+    if(running) raf=requestAnimationFrame(tick);
+  }
+
+  var running=false, raf=0;
+  function start(){ if(running) return; running=true; last=0; raf=requestAnimationFrame(tick); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
+  if(reduce){
+    for(var k=0;k<90;k++){ t=k/30; spawnImpact(1/30); spawnSpout(1/30); step(1/30); }
+    frame();
+  } else {
+    var inView=true;
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(en){ inView=en[0].isIntersecting; inView&&!document.hidden?start():stop(); },{threshold:.05}).observe(cv);
+    } else start();
+    document.addEventListener('visibilitychange',function(){ document.hidden?stop():(inView&&start()); });
+    var hero=cv.closest('.hero');
+    if(hero){
+      hero.addEventListener('pointermove',function(e){ var b=hero.getBoundingClientRect(); tiltTarget=((e.clientX-b.left)/b.width-.5)*-16; });
+      hero.addEventListener('pointerleave',function(){ tiltTarget=0; });
+    }
+  }
+})();
+</script>
+<script src="../../js/enquiry-chat.js?v=3" defer></script>
+<script src="../../js/mobile-smooth.js?v=3" defer></script>
+<script src="../../js/walking-cursor.js?v=1" defer></script>
+</body>
+</html>

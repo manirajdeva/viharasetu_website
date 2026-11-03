@@ -2647,6 +2647,15 @@ function sendEnquiry(formData) {
   .km-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; line-height: 1.15; margin: 10px 0 6px; color: var(--ink); }
   .km-card p { font-size: .88rem; color: var(--ink-muted); margin-bottom: 14px; }
   .km-go { margin-top: auto; font-size: .86rem; font-weight: 500; color: var(--saffron); }
+  .km-main { position: relative; display: flex; align-items: flex-end; min-height: 190px; margin-bottom: 18px; border-radius: 14px; overflow: hidden; color: #fff; text-decoration: none; background: #2a0f12; }
+  .km-main img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; transition: transform .6s; }
+  .km-main:hover img { transform: scale(1.05); }
+  .km-main-body { position: relative; padding: 22px 26px; max-width: 640px; }
+  .km-main-body .km-tag { background: var(--gold); color: #2a0f12; }
+  .km-main h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 3.2vw, 2.2rem); font-weight: 600; line-height: 1.1; margin: 10px 0 6px; }
+  .km-main p { font-size: .92rem; color: #eadfca; margin-bottom: 12px; }
+  .km-main .km-go { color: var(--gold-light); font-weight: 500; }
+  .km-more { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 12px; }
   @media (max-width: 760px) { .km-grid { grid-template-columns: 1fr; } .km-card { flex-direction: row; } .km-card img { width: 120px; height: auto; flex: none; } .km-card p { display: none; } }
 </style>
 <div class="km-bd" id="kmPopup" role="dialog" aria-modal="true" aria-labelledby="kmTitle">
@@ -2655,6 +2664,11 @@ function sendEnquiry(formData) {
     <span class="km-eyebrow">Karthika Masam Special</span>
     <h2 class="km-title" id="kmTitle">Three sacred journeys for <em>Karthika Masam</em></h2>
     <p class="km-sub">The month of lamps is the best time to visit Shiva&rsquo;s holiest temples. Choose a yatra to see the itineraries.</p>
+    <a class="km-main" href="destinations/All_packages/kartika-masam.html">
+      <img src="images/Varanasi/v5.jpg" alt="Ganges at night, Kartika Masam">
+      <div class="km-main-body"><span class="km-tag">Kartika Masam Special 2026</span><h3>Kartika Masam Special Yatras</h3><p>Pancharama darshan, Kashi Dev Deepawali and a grand Shiva yatra, in the holiest month of lamps.</p><span class="km-go">Explore the special &rarr;</span></div>
+    </a>
+    <p class="km-more">Or choose a yatra</p>
     <div class="km-grid">
       <a class="km-card" href="destinations/All_packages/ANDHRA_PRADESH/pancharama-kshetras.html">
         <img src="images/destinations/pancharama-somarama-someswara-temple-bhimavaram.jpg" alt="Someswara Swamy Temple, Bhimavaram">
@@ -2682,7 +2696,7 @@ function sendEnquiry(formData) {
   bd.querySelector('.km-x').addEventListener('click',close);
   bd.addEventListener('click',function(e){ if(e.target===bd) close(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&bd.classList.contains('open')) close(); });
-  bd.querySelectorAll('.km-card').forEach(function(a){ a.addEventListener('click',mark); });
+  bd.querySelectorAll('.km-card, .km-main').forEach(function(a){ a.addEventListener('click',mark); });
   if(!seen()) setTimeout(open,1200);
 })();
 </script>
