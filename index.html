@@ -2626,6 +2626,66 @@ function sendEnquiry(formData) {
 
 
 
+<!-- Karthika Masam special popup -->
+<style>
+  .km-bd { position: fixed; inset: 0; z-index: 1200; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(26,22,15,0.72); backdrop-filter: blur(3px); }
+  .km-bd.open { display: flex; }
+  .km-dialog { position: relative; width: min(980px, 100%); max-height: calc(100vh - 40px); overflow: auto; background: var(--cream); border-radius: 18px; padding: clamp(24px, 4vw, 44px); box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6); border-top: 4px solid var(--gold); animation: kmIn .45s ease; }
+  @keyframes kmIn { from { opacity: 0; transform: translateY(24px) scale(.98); } to { opacity: 1; transform: none; } }
+  .km-x { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--white); color: var(--ink); font-size: 1.05rem; line-height: 1; cursor: pointer; }
+  .km-x:hover { background: var(--gold-light); }
+  .km-eyebrow { font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+  .km-title { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.1; color: var(--ink); margin: 8px 0 10px; padding-right: 40px; }
+  .km-title em { color: var(--saffron); font-style: italic; }
+  .km-sub { color: var(--ink-muted); max-width: 620px; margin-bottom: 26px; }
+  .km-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .km-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; color: inherit; text-decoration: none; transition: transform .25s, box-shadow .25s; }
+  .km-card:hover { transform: translateY(-5px); box-shadow: 0 18px 40px -18px rgba(26,22,15,0.45); }
+  .km-card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+  .km-body { padding: 18px 18px 20px; display: flex; flex-direction: column; flex: 1; }
+  .km-tag { align-self: flex-start; font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; background: var(--gold-light); color: var(--saffron-dark); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+  .km-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; line-height: 1.15; margin: 10px 0 6px; color: var(--ink); }
+  .km-card p { font-size: .88rem; color: var(--ink-muted); margin-bottom: 14px; }
+  .km-go { margin-top: auto; font-size: .86rem; font-weight: 500; color: var(--saffron); }
+  @media (max-width: 760px) { .km-grid { grid-template-columns: 1fr; } .km-card { flex-direction: row; } .km-card img { width: 120px; height: auto; flex: none; } .km-card p { display: none; } }
+</style>
+<div class="km-bd" id="kmPopup" role="dialog" aria-modal="true" aria-labelledby="kmTitle">
+  <div class="km-dialog" tabindex="-1">
+    <button type="button" class="km-x" aria-label="Close">&#10005;</button>
+    <span class="km-eyebrow">Karthika Masam Special</span>
+    <h2 class="km-title" id="kmTitle">Three sacred journeys for <em>Karthika Masam</em></h2>
+    <p class="km-sub">The month of lamps is the best time to visit Shiva&rsquo;s holiest temples. Choose a yatra to see the itineraries.</p>
+    <div class="km-grid">
+      <a class="km-card" href="destinations/All_packages/ANDHRA_PRADESH/pancharama-kshetras.html">
+        <img src="images/destinations/pancharama-somarama-someswara-temple-bhimavaram.jpg" alt="Someswara Swamy Temple, Bhimavaram">
+        <div class="km-body"><span class="km-tag">Andhra Pradesh</span><h3>Pancharama Kshetras</h3><p>Five ancient Shiva temples across the Godavari delta, in one pilgrimage.</p><span class="km-go">View package &rarr;</span></div>
+      </a>
+      <a class="km-card" href="destinations/All_packages/TAMIL_NADU/pancha-bhoota-lingams.html">
+        <img src="images/destinations/aerial-view-of-sri-rangam-temple-near-tiruchirapalli-2.jpg" alt="Temple near Thiruvanaikaval, Tamil Nadu">
+        <div class="km-body"><span class="km-tag">Tamil Nadu &amp; Andhra</span><h3>Pancha Bhoota Lingams</h3><p>The five Shiva temples of the elements: earth, water, fire, air and space.</p><span class="km-go">View package &rarr;</span></div>
+      </a>
+      <a class="km-card" href="destinations/All_packages/UTTAR_PRADESH/kashi-karthika-masam.html">
+        <img src="images/Varanasi/v4.jpg" alt="Ganga aarti, Varanasi">
+        <div class="km-body"><span class="km-tag">Uttar Pradesh</span><h3>Kashi Yatra</h3><p>Kartika snan, lamps on the ghats and Dev Deepawali in Varanasi.</p><span class="km-go">View package &rarr;</span></div>
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var bd=document.getElementById('kmPopup'); if(!bd) return;
+  var dlg=bd.querySelector('.km-dialog'), last=null;
+  function seen(){ try { return sessionStorage.getItem('km_popup_seen')==='1'; } catch(e){ return false; } }
+  function mark(){ try { sessionStorage.setItem('km_popup_seen','1'); } catch(e){} }
+  function open(){ last=document.activeElement; bd.classList.add('open'); document.body.style.overflow='hidden'; dlg.focus(); }
+  function close(){ bd.classList.remove('open'); document.body.style.overflow=''; mark(); if(last&&last.focus) last.focus(); }
+  bd.querySelector('.km-x').addEventListener('click',close);
+  bd.addEventListener('click',function(e){ if(e.target===bd) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&bd.classList.contains('open')) close(); });
+  bd.querySelectorAll('.km-card').forEach(function(a){ a.addEventListener('click',mark); });
+  if(!seen()) setTimeout(open,1200);
+})();
+</script>
 <script src="js/enquiry-chat.js?v=3" defer></script>
 <script src="js/mobile-smooth.js?v=3" defer></script>
 <script src="js/walking-cursor.js?v=1" defer></script>
