@@ -1,7 +1,7 @@
 {
   "name": "viharasetu-admin",
   "productName": "Viharasetu Admin",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Desktop app for the Viharasetu admin portal",
   "author": "Viharasetu",
   "main": "main.js",
