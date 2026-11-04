@@ -2685,7 +2685,7 @@ function sendEnquiry(formData) {
   bd.addEventListener('click',function(e){ if(e.target===bd) close(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&bd.classList.contains('open')) close(); });
   bd.querySelectorAll('.km-card, .km-main').forEach(function(a){ a.addEventListener('click',mark); });
-  if(!seen()) setTimeout(open,1200);
+  if(!seen() && location.hash!=='#contact') setTimeout(open,1200);   // a direct link to the enquiry form skips the offer popup
 })();
 </script>
 <script src="js/enquiry-chat.js?v=3" defer></script>

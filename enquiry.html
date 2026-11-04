@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1V5MTG26VP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1V5MTG26VP');
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Plan Your Journey — Viharasetu</title>
+<meta name="description" content="Tell us where you want to go and we will craft your journey. Share your destination, dates and preferences with Viharasetu." />
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href="https://viharasetu.co.in/enquiry.html" />
+<link rel="icon" type="image/png" href="images/fevicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --jade: #2A5C45;
+    --gold: #B8913F;
+    --gold-light: #F7EDD5;
+    --ink: #1A160F;
+    --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    min-height: 100vh; font-family: 'Jost', sans-serif; color: var(--white);
+    background: var(--jade); -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+  .brand img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+  .brand b { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.35rem; letter-spacing: 0.04em; line-height: 1.1; }
+  .brand small { display: block; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .bar a.site { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--gold-light); border: 1px solid rgba(247,237,213,0.4); padding: 0.55rem 1rem; white-space: nowrap; }
+  .bar a.site:hover { background: rgba(255,255,255,0.08); }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem 4rem; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 3.5rem; align-items: start; }
+  .tag { display: flex; align-items: center; gap: 0.8rem; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .tag::after { content: ""; width: 44px; height: 1px; background: var(--gold); }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.3rem, 5vw, 3.1rem); line-height: 1.15; margin-top: 1rem; }
+  h1 em { font-style: italic; color: var(--gold-light); }
+  .sub { font-size: 0.92rem; line-height: 1.75; color: rgba(255,255,255,0.7); margin-top: 1.1rem; max-width: 32rem; }
+  .points { list-style: none; margin-top: 1.8rem; display: grid; gap: 0.7rem; }
+  .points li { display: flex; gap: 0.7rem; font-size: 0.86rem; line-height: 1.5; color: rgba(255,255,255,0.78); }
+  .points li::before { content: "\2766"; color: var(--gold); flex: none; }
+  .contact-line { margin-top: 2rem; font-size: 0.84rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+  .contact-line a { color: var(--gold-light); }
+
+  /* Form — same look and fields as the home-page enquiry form */
+  .newsletter-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: flex; gap: 0.8rem; }
+  .nl-input {
+    flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.85rem 1.2rem; font-family: 'Jost', sans-serif; font-size: 0.92rem; color: var(--white);
+    outline: none; transition: border-color 0.3s; min-width: 0; border-radius: 0;
+  }
+  .nl-input::placeholder { color: rgba(255,255,255,0.4); }
+  .nl-input:focus { border-color: var(--gold); }
+  #phoneCc { flex: 0 0 140px; }
+  select.nl-input:invalid { color: rgba(255,255,255,0.4); }
+  select.nl-input option { color: var(--ink); background: var(--white); }
+  textarea.nl-input { resize: vertical; min-height: 5.5rem; line-height: 1.6; }
+  .nl-consent { display: flex; align-items: flex-start; gap: 0.7rem; margin: 0.2rem 0 0.6rem; font-size: 0.82rem; line-height: 1.55; color: rgba(255,255,255,0.7); }
+  .nl-consent input { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-top: 0.15rem; accent-color: var(--gold); cursor: pointer; }
+  .nl-consent a { color: var(--gold-light); text-decoration: underline; text-underline-offset: 2px; }
+  .nl-btn {
+    background: var(--gold); color: var(--ink); border: none; padding: 0.95rem 1.8rem;
+    font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; font-weight: 500; transition: background 0.3s; align-self: flex-start;
+  }
+  .nl-btn:hover { background: #d4a84d; }
+  .nl-btn[disabled] { opacity: 0.6; cursor: wait; }
+  .nl-note { font-size: 0.72rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); }
+  .status { display: none; padding: 0.9rem 1.1rem; font-size: 0.9rem; line-height: 1.55; border: 1px solid; }
+  .status.ok { display: block; background: rgba(223,240,232,0.14); border-color: rgba(223,240,232,0.5); }
+  .status.err { display: block; background: rgba(200,97,26,0.2); border-color: rgba(245,160,100,0.6); }
+
+  footer { padding: 1.4rem 1.5rem 2rem; text-align: center; font-size: 0.72rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.4); }
+
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: minmax(0, 1fr); gap: 2rem; padding: 2rem 1.25rem 3rem; }
+    .points, .contact-line { display: none; }
+  }
+  @media (max-width: 480px) {
+    .bar { padding: 0.8rem 1rem; }
+    .brand small { display: none; }
+    .form-row:not(.form-row--phone) { flex-direction: column; }
+    .nl-input { padding-left: 0.9rem; padding-right: 0.9rem; font-size: 16px; }   /* 16px stops iOS zooming on focus */
+    .nl-btn { width: 100%; align-self: stretch; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a class="brand" href="https://viharasetu.co.in/">
+    <img src="images/new_Logo.jpg" alt="Viharasetu logo" />
+    <span><b>Viharasetu</b><small>From Aastha to Eternal Anubhav</small></span>
+  </a>
+  <a class="site" href="https://viharasetu.co.in/">Visit website</a>
+</div>
+
+<main class="wrap">
+  <div>
+    <p class="tag">Plan Your Journey</p>
+    <h1>Begin Your Sacred <em>Journey Today</em></h1>
+    <p class="sub">Share your dream destination and we'll craft a journey that transforms it. No package tours &mdash; only pilgrimages shaped around you.</p>
+    <ul class="points">
+      <li>Tell us where, when and how many are travelling.</li>
+      <li>Our team replies within 24 hours with a plan and a price.</li>
+      <li>Nothing is booked until you are happy with the plan.</li>
+    </ul>
+    <p class="contact-line">Prefer to talk? Call or WhatsApp <a href="https://wa.me/919885180515">+91 98851 80515</a><br>or write to <a href="mailto:info@viharasetu.co.in">info@viharasetu.co.in</a>.</p>
+  </div>
+
+  <form id="contactForm" class="newsletter-form" novalidate>
+    <div class="form-row">
+      <input id="name" class="nl-input" type="text" placeholder="Your Name" autocomplete="name" required>
+      <input id="email" class="nl-input" type="email" placeholder="Email Address" autocomplete="email" required>
+    </div>
+
+    <div class="form-row form-row--phone">
+      <select id="phoneCc" class="nl-input" aria-label="Country code">
+        <option value="+91" selected>India (+91)</option>
+        <option value="+977">Nepal (+977)</option>
+      </select>
+      <input id="phone" class="nl-input" type="tel" placeholder="Contact Number" autocomplete="tel-national" required>
+    </div>
+
+    <input id="destination" class="nl-input" type="text" placeholder="Dream Destination (e.g. Varanasi, Ladakh, Kerala...)" required>
+    <input id="travel" class="nl-input" type="text" placeholder="Travel Dates / Duration" required>
+
+    <div class="form-row">
+      <input id="noOfPeople" class="nl-input" type="number" min="1" max="999" step="1" inputmode="numeric" placeholder="No. of People" required>
+      <select id="hotelPreference" class="nl-input" required>
+        <option value="" disabled selected hidden>Hotel Preference</option>
+        <option value="3 Star">3 Star</option>
+        <option value="4 Star">4 Star</option>
+        <option value="5 Star">5 Star</option>
+      </select>
+    </div>
+
+    <textarea id="specialReq" class="nl-input" rows="3" maxlength="1000" placeholder="Special Requests — flights, celebrations, meals… (optional)"></textarea>
+
+    <label class="nl-consent">
+      <input id="consent" type="checkbox" required>
+      <span>I agree to receive promotional communication and accept the
+        <a href="pdf_files/Terms%20%26%20Conditions.pdf" target="_blank" rel="noopener">Terms &amp; Conditions</a> and
+        <a href="pdf_files/ViharaSetu%20Privacy%20Policy.pdf" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+    </label>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <button type="submit" class="nl-btn" id="sendBtn">Send Enquiry &rarr;</button>
+    <p class="nl-note">We respond within 24 hours. No spam, ever.</p>
+  </form>
+</main>
+
+<footer>© 2026 Viharasetu. All rights reserved. Crafted with reverence in India.</footer>
+
+<script>
+// Same API and payload as the home-page enquiry form (index.html), so enquiries land in the admin portal
+// exactly like the ones from the website.
+function sendEnquiry(formData) {
+    const scriptUrl = "https://viharasetu-api.onrender.com/exec";
+    return fetch(scriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // text/plain avoids a CORS preflight
+        body: JSON.stringify(formData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.ok) {
+            const err = new Error((data.error && data.error.message) || 'Unknown error');
+            err.userMessage = data.error && data.error.message;
+            throw err;
+        }
+        return data;
+    });
+}
+
+const form = document.getElementById("contactForm");
+const statusBox = document.getElementById("status");
+const sendBtn = document.getElementById("sendBtn");
+
+function show(kind, text) {
+    statusBox.className = "status " + kind;
+    statusBox.textContent = text;
+    statusBox.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const phone = document.getElementById("phone").value.trim();
+    const formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: phone ? `${document.getElementById("phoneCc").value} ${phone}` : "",
+        destination: document.getElementById("destination").value,
+        travel: document.getElementById("travel").value,
+        no_of_people: document.getElementById("noOfPeople").value,
+        hotel_preference: document.getElementById("hotelPreference").value,
+        special_req: document.getElementById("specialReq").value.trim(),
+        source: "contact_form"
+    };
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Sending…";
+    sendEnquiry(formData)
+        .then(data => {
+            show("ok", "Thank you! Your enquiry has been sent successfully."
+                + (data.enquiryId ? " Your enquiry ID is " + data.enquiryId + " — please quote it if you contact us again." : "")
+                + " We will reply within 24 hours.");
+            form.reset();
+        })
+        .catch(error => {
+            console.error("Enquiry error:", error);
+            show("err", error.userMessage || "We could not send your enquiry. Please try again, or WhatsApp us on +91 98851 80515.");
+        })
+        .finally(() => { sendBtn.disabled = false; sendBtn.innerHTML = "Send Enquiry &rarr;"; });
+});
+</script>
+</body>
+</html>
