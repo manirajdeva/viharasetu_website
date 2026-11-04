@@ -63,33 +63,32 @@
   }
 
   .nav-logo-mark {
-    width: 62px; height: 62px; object-fit: contain;
+    width: 74px; height: 74px; object-fit: contain;
     border-radius: 50%;
     padding: 0.4rem;
     background: linear-gradient(135deg, var(--saffron-light), var(--white));
     box-shadow: 0 10px 28px rgba(200,97,26,0.18);
   }
 
-  .nav-logo-text {
-    display: flex; flex-direction: column;
-    line-height: 1.05;
-    gap: 0.05rem;
+  /* Wordmark in English, Telugu and Hindi; each is shown for 5 seconds, then it flips round to the next. */
+  .nav-wordmark { position: relative; display: block; width: 140px; height: 41px; flex: none; perspective: 500px; }
+  .nav-wordmark img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: contain; object-position: left center;
+    opacity: 0; transform-origin: 50% 50%; backface-visibility: hidden; will-change: transform, opacity;
+    animation: wordmarkCycle 15s infinite;
   }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.45rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: var(--saffron-dark);
+  .nav-wordmark img:nth-child(2) { animation-delay: 5s; }
+  .nav-wordmark img:nth-child(3) { animation-delay: 10s; }
+  @keyframes wordmarkCycle {
+    0%        { opacity: 0; transform: rotateY(-90deg); }
+    3.3%, 30% { opacity: 1; transform: rotateY(0); }
+    33.3%     { opacity: 0; transform: rotateY(90deg); }
+    100%      { opacity: 0; transform: rotateY(90deg); }
   }
-
-  .nav-logo-sub {
-    font-size: 0.62rem;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--jade);
-    margin-top: 0.2rem;
+  @media (prefers-reduced-motion: reduce) {
+    .nav-wordmark img { animation: none; }
+    .nav-wordmark img:first-child { opacity: 1; }
   }
 
   .nav-right {
@@ -1130,9 +1129,8 @@
   @media (max-width: 480px) {
     nav { padding: 0.9rem 1rem; }
     .nav-brand { gap: 0.6rem; }
-    .nav-logo-mark { width: 40px; height: 40px; }
-    .nav-logo { font-size: 1.05rem; }
-    .nav-logo-sub { display: none; }
+    .nav-logo-mark { width: 48px; height: 48px; }
+    .nav-wordmark { width: 98px; height: 29px; }
     /* Keep "Plan My Journey" on one line with the full-size menu button beside it */
     .nav-right { gap: 0.75rem; }
     .nav-cta { padding: 0.55rem 0.8rem; font-size: 0.68rem; letter-spacing: 0.08em; white-space: nowrap; }
@@ -1149,9 +1147,14 @@
     .nl-input { padding-left: 0.9rem; padding-right: 0.9rem; }
   }
 
+  /* Larger phones (400-480px) have room for a slightly bigger wordmark */
+  @media (min-width: 400px) and (max-width: 480px) {
+    .nav-wordmark { width: 112px; height: 33px; }
+  }
+
   /* Smallest phones: no room for the wordmark beside the CTA and menu, so keep just the round logo */
   @media (max-width: 350px) {
-    .nav-logo-text { display: none; }
+    .nav-wordmark { display: none; }
   }
 </style>
 
@@ -1260,9 +1263,10 @@
   </div>
   <a class="nav-brand" href="#">
     <img class="nav-logo-mark" src="images/new_Logo.jpg" alt="Viharasetu logo" />
-    <span class="nav-logo-text">
-      <span class="nav-logo">Viharasetu</span>
-      <span class="nav-logo-sub">From Aastha to Eternal Anubhav</span>
+    <span class="nav-wordmark" role="img" aria-label="Viharasetu">
+      <img src="images/logo_text/wordmark-en.png" alt="" width="720" height="193" />
+      <img src="images/logo_text/wordmark-te.png" alt="" width="720" height="208" loading="lazy" />
+      <img src="images/logo_text/wordmark-hi.png" alt="" width="720" height="214" loading="lazy" />
     </span>
   </a>
   <div class="nav-right">
