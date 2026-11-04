@@ -72,6 +72,9 @@
   .nl-consent { display: flex; align-items: flex-start; gap: 0.7rem; margin: 0.2rem 0 0.6rem; font-size: 0.82rem; line-height: 1.55; color: rgba(255,255,255,0.7); }
   .nl-consent input { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-top: 0.15rem; accent-color: var(--gold); cursor: pointer; }
   .nl-consent a { color: var(--gold-light); text-decoration: underline; text-underline-offset: 2px; }
+  .nl-wa { margin: 0 0 0.2rem; }
+  .nl-wa b { color: var(--gold-light); font-weight: 500; }
+  .status a.wa-link { display: inline-block; margin-top: 0.6rem; background: #25a244; color: #fff; text-decoration: none; padding: 0.6rem 1.1rem; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
   .nl-btn {
     background: var(--gold); color: var(--ink); border: none; padding: 0.95rem 1.8rem;
     font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
@@ -158,6 +161,11 @@
         <a href="pdf_files/ViharaSetu%20Privacy%20Policy.pdf" target="_blank" rel="noopener">Privacy Policy</a>.</span>
     </label>
 
+    <label class="nl-consent nl-wa">
+      <input id="alsoWhatsApp" type="checkbox" checked>
+      <span>Also send these details to Viharasetu on <b>WhatsApp</b> (WhatsApp opens with your message ready &mdash; just press Send).</span>
+    </label>
+
     <div id="status" class="status" role="status" aria-live="polite"></div>
     <button type="submit" class="nl-btn" id="sendBtn">Send Enquiry &rarr;</button>
     <p class="nl-note">We respond within 24 hours. No spam, ever.</p>
@@ -190,12 +198,48 @@ function sendEnquiry(formData) {
 const form = document.getElementById("contactForm");
 const statusBox = document.getElementById("status");
 const sendBtn = document.getElementById("sendBtn");
+const WA_NUMBER = "919885180515";
 
-function show(kind, text) {
+function show(kind, text, link) {
     statusBox.className = "status " + kind;
     statusBox.textContent = text;
+    if (link) {
+        statusBox.appendChild(document.createElement("br"));
+        const a = document.createElement("a");
+        a.className = "wa-link"; a.href = link; a.target = "_blank"; a.rel = "noopener";
+        a.textContent = "Open WhatsApp";
+        statusBox.appendChild(a);
+    }
     statusBox.scrollIntoView({ behavior: "smooth", block: "center" });
 }
+
+// Same message layout as the website chatbot.
+function whatsAppText(d, enquiryId) {
+    const people = String(d.no_of_people || "").trim();
+    const who = people === "1" ? "1 traveller" : (people + " travellers");
+    return [
+        "✦ *Namaste Viharasetu Team!* ✦",
+        "",
+        "I'm *" + d.name + "* and I'd love to plan a journey with you.",
+        "",
+        "❖ *MY DREAM JOURNEY*",
+        "➤ Destination: *" + d.destination + "*",
+        "➤ When & how long: " + d.travel,
+        "➤ Travelling: " + who,
+        "➤ Stay: " + d.hotel_preference,
+        "➤ Special requests: " + (d.special_req || "None"),
+        "",
+        "☎ *REACH ME AT*",
+        "➤ Phone: " + d.phone,
+        "➤ Email: " + d.email,
+        enquiryId ? "➤ Enquiry ID: " + enquiryId : "",
+        "",
+        "Please share a tailor-made itinerary and quote. Looking forward to hearing from you! ❀",
+        "",
+        "— Sent from viharasetu.co.in"
+    ].filter(function (l, i, a) { return !(l === "" && a[i - 1] === ""); }).join("\n");
+}
+const whatsAppUrl = (d, id) => "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(whatsAppText(d, id));
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -214,18 +258,45 @@ form.addEventListener("submit", function (e) {
         source: "contact_form"
     };
 
+    // Open the WhatsApp tab straight away (inside the click) so pop-up blockers allow it;
+    // it is pointed at the finished message once the enquiry has been saved.
+    const wantWa = document.getElementById("alsoWhatsApp").checked;
+    let wa = null;
+    if (wantWa) {
+        wa = window.open("", "_blank");
+        if (wa) { try { wa.document.title = "Opening WhatsApp..."; wa.document.body.innerHTML = "<p style='font-family:sans-serif;padding:24px'>Opening WhatsApp&hellip;</p>"; } catch (err) {} }
+    }
+    const goWhatsApp = (url) => {
+        if (wa && !wa.closed) { wa.location.href = url; return true; }
+        return false;
+    };
+
     sendBtn.disabled = true;
     sendBtn.textContent = "Sending…";
     sendEnquiry(formData)
         .then(data => {
+            const url = wantWa ? whatsAppUrl(formData, data.enquiryId) : null;
+            const opened = url ? goWhatsApp(url) : false;
             show("ok", "Thank you! Your enquiry has been sent successfully."
                 + (data.enquiryId ? " Your enquiry ID is " + data.enquiryId + " — please quote it if you contact us again." : "")
-                + " We will reply within 24 hours.");
+                + " We will reply within 24 hours."
+                + (opened ? " WhatsApp is opening with your details — just press Send there to reach us instantly." : ""),
+                url && !opened ? url : null);
             form.reset();
+            document.getElementById("alsoWhatsApp").checked = true;
         })
         .catch(error => {
             console.error("Enquiry error:", error);
-            show("err", error.userMessage || "We could not send your enquiry. Please try again, or WhatsApp us on +91 98851 80515.");
+            const url = wantWa ? whatsAppUrl(formData) : null;
+            const opened = url ? goWhatsApp(url) : false;
+            if (url) {
+                show("err", (error.userMessage || "We could not save your enquiry online.")
+                    + (opened ? " Your details are ready on WhatsApp — just press Send there and our team will get them straight away." : " You can still send your details on WhatsApp:"),
+                    opened ? null : url);
+            } else {
+                if (wa && !wa.closed) wa.close();
+                show("err", error.userMessage || "We could not send your enquiry. Please try again, or WhatsApp us on +91 98851 80515.");
+            }
         })
         .finally(() => { sendBtn.disabled = false; sendBtn.innerHTML = "Send Enquiry &rarr;"; });
 });
