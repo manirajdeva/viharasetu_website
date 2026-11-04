@@ -8,8 +8,8 @@ const { app, BrowserWindow, shell, Menu, ipcMain, safeStorage } = require('elect
 const path = require('path');
 const fs = require('fs');
 
-const ADMIN_URL = 'https://viharasetu.co.in/admin/';
-const ALLOWED_HOST = 'viharasetu.co.in';
+const ADMIN_URL = 'https://admin.viharasetu.co.in/';
+const ALLOWED_HOST = 'admin.viharasetu.co.in';
 
 let win = null;
 
@@ -41,7 +41,7 @@ ipcMain.on('creds:pending', (e, c) => {
 function isAppUrl(url) {
   try {
     const u = new URL(url);
-    return u.protocol === 'https:' && (u.hostname === ALLOWED_HOST || u.hostname === 'www.' + ALLOWED_HOST);
+    return u.protocol === 'https:' && u.hostname === ALLOWED_HOST;
   } catch { return false; }
 }
 
@@ -89,7 +89,7 @@ function createWindow() {
 
   // The portal page opening means the login worked: keep the credentials just typed.
   win.webContents.on('did-navigate', (_e, url) => {
-    if (pending && /\/admin\/portal\.html/.test(url)) { saveCreds(pending); pending = null; }
+    if (pending && /\/portal\.html/.test(url)) { saveCreds(pending); pending = null; }
   });
 
   win.on('closed', () => { win = null; });

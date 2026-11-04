@@ -15,7 +15,7 @@ if (location.hostname.endsWith('viharasetu.co.in')) {
   contextBridge.exposeInMainWorld('vihDesktop', { systemName: () => ipcRenderer.invoke('sys:name') });
 }
 
-if (location.hostname.endsWith('viharasetu.co.in') && /\/admin\/(index\.html)?$/.test(location.pathname)) {
+if (location.hostname.endsWith('viharasetu.co.in') && /^\/(index\.html)?$/.test(location.pathname)) {
   window.addEventListener('DOMContentLoaded', async () => {
     const user = document.getElementById('vsUser');
     const pass = document.getElementById('vsPass');

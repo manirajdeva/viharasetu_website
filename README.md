@@ -6,7 +6,7 @@ brand for India-focused pilgrimage and leisure packages.
 | | |
 |---|---|
 | Public site | **[viharasetu.co.in](https://viharasetu.co.in)** |
-| Admin portal | [viharasetu.co.in/admin/](https://viharasetu.co.in/admin/) |
+| Admin portal | [admin.viharasetu.co.in](https://admin.viharasetu.co.in/) — **its own repo:** [manirajdeva/viharasetu_admin](https://github.com/manirajdeva/viharasetu_admin) (edit and deploy it there, not here) |
 | API | [viharasetu-api.onrender.com](https://viharasetu-api.onrender.com/health) (`/health` returns `{ ok: true }`) |
 
 ## How it fits together
@@ -47,7 +47,9 @@ node mock-server/server.js          # mock API  → http://localhost:3001/exec
 node mock-server/static-server.js   # site      → http://localhost:5500  (PORT=5501 node … to change it)
 ```
 
-Open **http://localhost:5500/admin/** and log in as **`admin` / `admin123`**.
+The admin portal now lives in the separate `viharasetu_admin` repo. To try it locally with the mock API, run
+`node mock-server/server.js` here, serve that repo's folder on any static server (for example
+`python -m http.server 5501` inside it), open `http://localhost:5501/` and log in as **`admin` / `admin123`**.
 
 - `admin/js/api.js` switches to `http://localhost:3001/exec` automatically when the page is served
   from `localhost` / `127.0.0.1`. A console line says which backend is active.
@@ -83,19 +85,20 @@ index.html                     Homepage: hero slideshow, Signature Journeys (sto
                                packages, testimonials, contact form, opening plane intro
 feedback.html                  Traveler feedback page (mailto + WhatsApp links, no backend)
 js/airplane-loader.js          Blueprint airplane loading overlay (window.AirplaneLoader), used by every page
-admin.html                     Redirect stub → admin/ (so old bookmarks keep working)
+admin.html                     Redirect stub → https://admin.viharasetu.co.in/ (so old bookmarks keep working)
 CNAME                          GitHub Pages custom domain (viharasetu.co.in)
 .nojekyll                      Disables Jekyll processing on GitHub Pages
 
-admin/                         Admin portal
-  index.html                   Login page (entry point; /admin/ lands here): sunset brand panel + sign-in form,
-                               plane / parachute animation while credentials are checked
-  css/login-premium.css        Login page styles (brand panel, form, credential-check animation)
+admin/                         Redirect stubs only (index.html, portal.html → admin.viharasetu.co.in).
+                               The admin portal source moved to the viharasetu_admin repo.
+  (The notes below describe the portal's files, which are now in that repo.)
+  index.html                   Login page: sunset brand panel + sign-in form, plane / parachute animation
+  css/login-premium.css        Login page styles
   portal.html                  App shell: sidebar + all views
   css/admin.css                Portal design system
   js/api.js                    API wrapper: picks live vs mock backend, attaches the session token
   js/auth.js                   sessionStorage session, page guard, logout
-  js/utils.js                  Toasts, confirm dialog, formatting, phone validation, pagination, CSV/Excel/PDF export
+  js/utils.js                  Toasts, confirm dialog, formatting, phone validation, pagination, exports
   js/shell.js                  Sidebar, routing, shared form modal, Profile, makeSheetModule() table factory
   js/dashboard.js              Bookings / Payments dashboards (stat cards + Chart.js)
   js/{enquiries,suppliers,bookings,payments,supplier_ments,expenses,reports}.js   Per-view modules built on the factory
