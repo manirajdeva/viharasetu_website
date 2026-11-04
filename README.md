@@ -89,9 +89,8 @@ admin.html                     Redirect stub → https://admin.viharasetu.co.in/
 CNAME                          GitHub Pages custom domain (viharasetu.co.in)
 .nojekyll                      Disables Jekyll processing on GitHub Pages
 
-admin/                         Redirect stubs only (index.html, portal.html → admin.viharasetu.co.in).
-                               The admin portal source moved to the viharasetu_admin repo.
-  (The notes below describe the portal's files, which are now in that repo.)
+(admin portal)                 Moved to the viharasetu_admin repo (https://admin.viharasetu.co.in). The files below,
+                               written as admin/..., are now in that repo, not here.
   index.html                   Login page: sunset brand panel + sign-in form, plane / parachute animation
   css/login-premium.css        Login page styles
   portal.html                  App shell: sidebar + all views
