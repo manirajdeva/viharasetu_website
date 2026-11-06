@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>About Viharasetu — From Aastha to Eternal Anubhav</title>
+<meta name="description" content="Viharasetu is a travel experience company creating seamless, personalized spiritual, family and customized journeys across India." />
+<link rel="canonical" href="https://viharasetu.co.in/about.html" />
+<link rel="icon" type="image/png" href="images/fevicon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --saffron: #C8611A; --saffron-dark: #8B3E0D; --saffron-light: #F5E8DC;
+    --jade: #2A5C45; --gold: #B8913F; --gold-light: #F7EDD5;
+    --cream: #FAF6F0; --ink: #1A160F; --ink-muted: #5C5143; --white: #fff;
+    --border: rgba(184,145,63,0.2);
+  }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body { font-family: 'Jost', sans-serif; color: var(--ink); background: var(--cream); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; }
+
+  /* nav — liquid glass */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.9rem 4rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(250,246,240,0.3));
+    -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.65);
+    box-shadow: 0 8px 32px rgba(26,22,15,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+  .brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+  .brand img { height: 58px; width: auto; }
+  .brand span { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.5rem; letter-spacing: 0.04em; }
+  .links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
+  .links a { text-decoration: none; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; transition: color .3s; }
+  .links a:hover, .links a.on { color: var(--saffron); }
+  .cta { background: linear-gradient(135deg, var(--saffron-dark), var(--saffron)); color: #fff !important; padding: 0.7rem 1.6rem; }
+
+  section { padding: 6rem 5rem; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  .inner { max-width: 1080px; margin: 0 auto; width: 100%; }
+  .tag { display: flex; align-items: center; gap: 0.8rem; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--saffron); }
+  .tag::after { content: ""; width: 44px; height: 1px; background: var(--gold); }
+  h1, h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.12; margin-top: 1rem; }
+  h1 { font-size: clamp(2.8rem, 6vw, 4.6rem); }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  h1 em, h2 em { font-style: italic; color: var(--saffron); }
+  p.lead { font-size: 1.05rem; line-height: 1.85; color: var(--ink-muted); max-width: 40rem; margin-top: 1.3rem; }
+  p.lead + p.lead { margin-top: 1rem; }
+
+  .hero { padding-top: 8rem; background: radial-gradient(circle at top left, rgba(200,97,26,0.12), transparent 40%), linear-gradient(135deg, #fcf8f2, var(--cream)); }
+  .hero .sig { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.5rem; color: var(--jade); margin-top: 1.6rem; }
+  .pills { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+  .pills span { padding: 0.6rem 1.3rem; border: 1px solid var(--border); border-radius: 999px; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; background: rgba(255,255,255,0.6); }
+
+  .alt { background: var(--white); }
+  .dark { background: var(--jade); color: #fff; }
+  .dark h2 em { color: var(--gold-light); }
+  .dark p.lead, .dark .card p { color: rgba(255,255,255,0.75); }
+  .dark .tag { color: var(--gold-light); }
+
+  .grid { display: grid; gap: 1.2rem; margin-top: 2.4rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .card { padding: 1.7rem; border: 1px solid var(--border); background: rgba(255,255,255,0.7); border-top: 3px solid var(--gold); }
+  .card .n { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--saffron); line-height: 1; }
+  .card h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.35rem; margin: 0.6rem 0 0.5rem; }
+  .card p { font-size: 0.9rem; line-height: 1.65; color: var(--ink-muted); }
+  .dark .card { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); border-top-color: var(--gold); }
+  .dark .card .n { color: var(--gold-light); }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .checks { list-style: none; display: grid; gap: 0.9rem; }
+  .checks li { display: flex; gap: 0.8rem; font-size: 1rem; line-height: 1.5; }
+  .checks li::before { content: "\2766"; color: var(--gold); flex: none; }
+
+  .final { text-align: center; background: linear-gradient(135deg, var(--saffron-light), var(--gold-light)); align-items: center; }
+  .final .tag { justify-content: center; }
+  .final p.lead { margin-left: auto; margin-right: auto; }
+  .final .quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.5rem, 3vw, 2.2rem); margin-top: 1.8rem; color: var(--saffron-dark); line-height: 1.4; }
+  .btn { display: inline-block; margin-top: 2rem; padding: 0.95rem 2.2rem; background: linear-gradient(135deg, var(--saffron-dark), var(--saffron)); color: #fff; text-decoration: none; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  footer { background: #120F09; color: rgba(255,255,255,0.6); text-align: center; padding: 2rem 1rem; font-size: 0.8rem; }
+  footer a { color: var(--gold-light); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0.7rem 1.2rem; }
+    .brand img { height: 44px; } .brand span { font-size: 1.2rem; }
+    .links { gap: 1rem; } .links li:not(:last-child) { display: none; }
+    .cta { padding: 0.6rem 1rem; font-size: 0.7rem; }
+    section { padding: 4rem 1.5rem; min-height: auto; }
+    .hero { padding-top: 7rem; }
+    .two { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+
+  /* number -> thin-line icon on hover */
+  .card .n { position: relative; height: 2.4rem; width: 2.4rem; }
+  .card .n .num, .card .n .ico { position: absolute; left: 0; top: 0; transition: opacity .55s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
+  .card .n .num { opacity: 1; transform: none; }
+  .card .n .ico { width: 2.4rem; height: 2.4rem; background-color: currentColor; -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; opacity: 0; transform: translateY(10px) rotate(-12deg) scale(.8); }
+  .card:hover .n .num { opacity: 0; transform: translateY(-10px) scale(.8); }
+  .card:hover .n .ico { opacity: 1; transform: none; }
+  .card { transition: transform .5s ease, background-color .5s ease; }
+  .js .card.rv { transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 1.3s cubic-bezier(.22,.61,.36,1), background-color .7s ease, border-color .7s ease, box-shadow .7s ease; transition-delay: var(--d, 0s), var(--d, 0s), 0s, 0s, 0s; }
+  .card:hover { background-color: rgba(255,255,255,0.16); border-color: rgba(184,145,63,0.6); box-shadow: 0 18px 40px rgba(0,0,0,0.18); }
+  .card:not(.dark *):hover { background-color: var(--saffron-light); }
+  .dark .card:hover { background-color: rgba(200,97,26,0.35); border-top-color: var(--gold-light); }
+
+
+  /* premium feature list */
+  .checks { gap: 0.8rem; }
+  .checks li { position: relative; align-items: center; padding: 0.85rem 1.2rem 0.85rem 0.9rem; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,0.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); overflow: hidden; cursor: default; }
+  .checks li::before { content: none; }
+  .checks li::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(200,97,26,0.12), rgba(184,145,63,0.04) 70%, transparent); transform: translateX(-101%); transition: transform .8s cubic-bezier(.22,.61,.36,1); z-index: 0; }
+  .checks li:hover::after { transform: none; }
+  .checks li > * { position: relative; z-index: 1; }
+  .checks .ico { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(184,145,63,0.45); position: relative; transition: background-color .6s ease, border-color .6s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+  .checks .ico::before { content: ""; position: absolute; inset: 0; margin: auto; width: 24px; height: 24px; background-color: var(--saffron); -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; transition: background-color .6s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+  .checks li:hover .ico { background-color: var(--saffron); border-color: var(--saffron); transform: rotate(360deg) scale(1.06); }
+  .checks li:hover .ico::before { background-color: #fff; }
+  .js .checks li.rv { transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 1.3s cubic-bezier(.22,.61,.36,1), border-color .6s ease, box-shadow .6s ease; transition-delay: var(--d,0s), var(--d,0s), 0s, 0s; }
+  .checks li:hover { border-color: rgba(200,97,26,0.5); box-shadow: 0 14px 32px rgba(139,62,13,0.12); }
+  .js .checks li.rv.in:hover { transform: translate3d(8px,0,0); transition-delay: 0s; }
+
+
+  /* icon cards */
+  .card .cico { display: block; width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(184,145,63,0.45); position: relative; margin-bottom: 1rem; transition: background-color .6s ease, border-color .6s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+  .card .cico::before { content: ""; position: absolute; inset: 0; margin: auto; width: 26px; height: 26px; background-color: var(--saffron); -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; transition: background-color .6s ease, transform .8s cubic-bezier(.22,.61,.36,1); }
+  .card:hover .cico { background-color: var(--saffron); border-color: var(--saffron); transform: rotate(360deg) scale(1.08); }
+  .card:hover .cico::before { background-color: #fff; }
+  .card::after { content: ""; display: block; height: 2px; width: 0; margin-top: 1.1rem; background: linear-gradient(90deg, var(--saffron), var(--gold)); transition: width .8s cubic-bezier(.22,.61,.36,1); }
+  .card:hover::after { width: 100%; }
+  .grid.why { grid-template-columns: repeat(5, 1fr); }
+  @media (max-width: 1100px) { .grid.why { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); } }
+
+
+  /* hero: copy + animated "bridge from faith to experience" */
+  .hero .inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center; }
+  .hero-art svg { width: 100%; height: auto; max-height: 72vh; overflow: visible; }
+  .a-arc { stroke-dasharray: 640; stroke-dashoffset: 640; animation: aDraw 3.2s cubic-bezier(.22,.61,.36,1) .4s forwards; }
+  .a-deck { stroke-dasharray: 480; stroke-dashoffset: 480; animation: aDraw 2.2s ease 1.4s forwards; }
+  .a-pillars path { stroke-dasharray: 110; stroke-dashoffset: 110; animation: aDraw 1.8s ease 2.2s forwards; }
+  .a-temple, .a-mount, .a-cap { opacity: 0; animation: aFade 1.6s ease forwards; }
+  .a-temple { animation-delay: .2s; } .a-mount { animation-delay: .6s; }
+  .a-cap { animation-delay: 2.6s; }
+  .a-sun { transform-origin: 300px 150px; animation: aRise 2.4s cubic-bezier(.22,.61,.36,1) both; }
+  .a-rays { transform-box: fill-box; transform-origin: center; animation: aSpin 40s linear infinite; }
+  .a-glow { animation: aPulse 5s ease-in-out infinite; transform-origin: 300px 150px; }
+  .a-flame { animation: aFlame 2.2s ease-in-out infinite; transform-origin: 70px 196px; }
+  .a-water .w1 { animation: aWave 9s linear infinite; }
+  .a-water .w2 { animation: aWave 13s linear infinite reverse; }
+  .p { opacity: 0; animation: aFloat 7s ease-in infinite; }
+  .p2 { animation-delay: 1.2s; } .p3 { animation-delay: 2.4s; } .p4 { animation-delay: 3.4s; } .p5 { animation-delay: 4.4s; } .p6 { animation-delay: 5.4s; }
+  @keyframes aDraw { to { stroke-dashoffset: 0; } }
+  @keyframes aFade { to { opacity: 1; } }
+  @keyframes aRise { from { transform: translateY(60px) scale(.7); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes aSpin { to { transform: rotate(360deg); } }
+  @keyframes aPulse { 0%,100% { transform: scale(.92); opacity: .75; } 50% { transform: scale(1.08); opacity: 1; } }
+  @keyframes aFlame { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: .6; } }
+  @keyframes aWave { to { transform: translateX(-80px); } }
+  @keyframes aFloat { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .9; } 100% { opacity: 0; transform: translateY(-150px); } }
+  @media (max-width: 900px) { .hero .inner { grid-template-columns: 1fr; gap: 2rem; } .hero-art { max-width: 460px; margin: 0 auto; } }
+  @media (prefers-reduced-motion: reduce) { .hero-art * { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; } }
+
+
+  /* two-panel intro section */
+  .two.panels { align-items: stretch; gap: 2rem; }
+  .panel { padding: 2.6rem; border: 1px solid var(--border); border-top: 3px solid var(--gold); border-radius: 6px; background: linear-gradient(160deg, #fff, var(--cream)); transition: box-shadow .7s ease, border-color .7s ease, background-color .7s ease; }
+  .panel:hover { box-shadow: 0 24px 50px rgba(139,62,13,0.12); border-color: rgba(200,97,26,0.45); }
+  .panel .cico.big { width: 64px; height: 64px; margin-bottom: 1.4rem; }
+  .panel .cico.big::before { width: 32px; height: 32px; }
+  .panel:hover .cico { background-color: var(--saffron); border-color: var(--saffron); transform: rotate(360deg) scale(1.08); }
+  .panel:hover .cico::before { background-color: #fff; }
+  .js .panel.rv { transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 1.3s cubic-bezier(.22,.61,.36,1), box-shadow .7s ease, border-color .7s ease; transition-delay: var(--d,0s), var(--d,0s), 0s, 0s; }
+  .pills span { display: inline-flex; align-items: center; gap: .55rem; cursor: default; transition: background-color .5s ease, border-color .5s ease, color .5s ease, transform .5s ease; }
+  .pills span:hover { background: var(--saffron); border-color: var(--saffron); color: #fff; transform: translateY(-3px); }
+  .pi { width: 18px; height: 18px; background-color: var(--saffron); -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; transition: background-color .5s ease; }
+  .pills span:hover .pi { background-color: #fff; }
+
+
+  /* panel illustrations */
+  .panel-art { margin: -.6rem -.6rem 1.4rem; border-radius: 4px; background: linear-gradient(180deg, rgba(245,232,220,.55), rgba(255,255,255,0)); overflow: hidden; }
+  .panel-art svg { display: block; width: 100%; height: auto; }
+  .r-line { animation: rDash 14s linear infinite; }
+  .r-pin { opacity: 0; transform-box: fill-box; transform-origin: center bottom; animation: rPop .8s cubic-bezier(.34,1.56,.64,1) forwards; }
+  .r-p1 { animation-delay: .3s; } .r-p2 { animation-delay: 1.1s; } .r-p3 { animation-delay: 1.9s; } .r-p4 { animation-delay: 2.7s; }
+  .r-ping { transform-box: fill-box; transform-origin: center; animation: rPing 2.6s ease-out 3s infinite; opacity: 0; }
+  .r-tick { stroke-dasharray: 16; stroke-dashoffset: 16; animation: aDraw 1s ease 1.6s forwards; } .r-t2 { animation-delay: 2.4s; }
+  .r-needle { animation: rNeedle 6s ease-in-out infinite; transform-origin: 0 0; }
+  .d-sun { transform-box: fill-box; transform-origin: center; animation: aPulse 5s ease-in-out infinite; }
+  .d-glow { transform-origin: 290px 70px; animation: aPulse 5s ease-in-out infinite; }
+  .d-cloud.c1 { animation: dDrift 24s linear infinite alternate; } .d-cloud.c2 { animation: dDrift 30s linear infinite alternate-reverse; }
+  .d-m1, .d-m2 { stroke-dasharray: 520; stroke-dashoffset: 520; animation: aDraw 3s ease .4s forwards; } .d-m2 { animation-delay: 1s; }
+  .d-temple { opacity: 0; animation: aFade 1.4s ease .2s forwards; }
+  .d-flame { animation: aFlame 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .d-walk .w { animation: dWalk 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center bottom; } .w2 { animation-delay: .25s !important; } .w3 { animation-delay: .5s !important; }
+  .d-walk { animation: dStroll 12s ease-in-out infinite alternate; }
+  .d-bird { animation: dFly 14s linear infinite; } .d-bird.b2 { animation-duration: 19s; animation-delay: -7s; }
+  @keyframes rDash { to { stroke-dashoffset: -260; } }
+  @keyframes rPop { from { opacity: 0; transform: translateY(-14px) scale(.4); } to { opacity: 1; transform: none; } }
+  @keyframes rPing { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(4); } }
+  @keyframes rNeedle { 0%,100% { transform: rotate(-35deg); } 50% { transform: rotate(40deg); } }
+  @keyframes dDrift { from { transform: translateX(-30px); } to { transform: translateX(60px); } }
+  @keyframes dWalk { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes dStroll { from { transform: translateX(0); } to { transform: translateX(70px); } }
+  @keyframes dFly { from { transform: translate(-40px, 60px); } 50% { transform: translate(240px, 20px); } to { transform: translate(520px, 50px); } }
+  @media (prefers-reduced-motion: reduce) { .panel-art * { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; } }
+
+
+  /* smart travel illustration */
+  .smart-right .panel-art { margin: 0 0 1.2rem; border: 1px solid var(--border); border-radius: 14px; }
+  .s-hand-h { animation: sSpin 24s linear infinite; } .s-hand-m { animation: sSpin 4s linear infinite; }
+  .s-hand-h, .s-hand-m { transform-box: view-box; transform-origin: 0 0; }
+  .s-road { animation: sRoad 1s linear infinite; }
+  .s-bus { animation: sDrive 9s linear infinite; }
+  .s-bob { animation: sBob .5s ease-in-out infinite alternate; }
+  .s-wheel { transform-box: view-box; animation: sSpin .9s linear infinite; }
+  .s-lamp { animation: aFlame 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .s-trees { animation: sTrees 9s linear infinite; }
+  .w-on { fill: rgba(245,179,90,.8); animation: sBlink 3s ease-in-out infinite; }
+  .s-win rect:nth-child(2) { animation: sBlink 4s ease-in-out 1s infinite; }
+  @keyframes sSpin { to { transform: rotate(360deg); } }
+  @keyframes sRoad { to { stroke-dashoffset: -26; } }
+  @keyframes sDrive { from { transform: translateX(-130px); } to { transform: translateX(520px); } }
+  @keyframes sBob { to { transform: translateY(-1.5px); } }
+  @keyframes sTrees { from { transform: translateX(0); } to { transform: translateX(-20px); } }
+  @keyframes sBlink { 0%,100% { fill-opacity: .25; } 50% { fill-opacity: 1; } }
+
+
+  .d-flag { transform-box: fill-box; transform-origin: left center; animation: tFlag 1.8s ease-in-out infinite; }
+  @keyframes tFlag { 0%,100% { transform: scaleX(1) skewY(0deg); } 50% { transform: scaleX(.7) skewY(8deg); } }
+
+
+  /* ── closing section: premium scene ── */
+  .final { position: relative; overflow: hidden; isolation: isolate; background: linear-gradient(180deg, #F7EADA 0%, #F5E8DC 45%, #F7EDD5 100%); }
+  .final .inner { position: relative; z-index: 2; }
+  .final-art { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .final-art svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; }
+  .final .px { transition: transform .8s cubic-bezier(.22,.61,.36,1); will-change: transform; }
+  .f-glow { animation: aPulse 8s ease-in-out infinite; }
+  .f-ring { transform-box: fill-box; transform-origin: center; opacity: 0; animation: fRipple 9s cubic-bezier(.22,.61,.36,1) infinite; }
+  .f-ring.r2 { animation-delay: 3s; } .f-ring.r3 { animation-delay: 6s; }
+  .lan { animation: fLantern 30s linear infinite; opacity: 0; }
+  @keyframes fRipple { 0% { opacity: 0; transform: scale(.3); } 20% { opacity: .55; } 100% { opacity: 0; transform: scale(3.2); } }
+  @keyframes fLantern { 0% { transform: translate(0, 0); opacity: 0; } 10% { opacity: 1; } 50% { transform: translate(14px, -330px); } 90% { opacity: .8; } 100% { transform: translate(-8px, -640px); opacity: 0; } }
+
+  .final .shim em { background: linear-gradient(100deg, var(--saffron-dark) 20%, #F5B35A 45%, var(--saffron) 55%, var(--saffron-dark) 80%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: fShine 5s ease-in-out infinite; }
+  @keyframes fShine { 0% { background-position: 120% 0; } 60%,100% { background-position: -120% 0; } }
+
+  .final .quote span { display: block; overflow: hidden; }
+  .final .quote b { display: block; font-weight: inherit; }
+  .js .final .quote.rv b { transform: translateY(110%); transition: transform 1.2s cubic-bezier(.22,.61,.36,1); }
+  .js .final .quote.rv.in b { transform: none; }
+  .js .final .quote.rv.in span:nth-child(2) b { transition-delay: .35s; }
+
+  .final .btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: .8rem; border-radius: 999px; padding: 1.05rem 2.6rem; box-shadow: 0 14px 34px rgba(139,62,13,.32); transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .5s ease; }
+  .final .btn span, .final .btn .arr { position: relative; z-index: 1; }
+  .final .btn::before { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-20deg); animation: fSweep 4s ease-in-out infinite; }
+  .final .btn::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(200,97,26,.5); animation: fRing 2.8s ease-out infinite; }
+  .final .btn .arr { font-style: normal; transition: transform .5s cubic-bezier(.22,.61,.36,1); }
+  .js .final .btn.rv.in:hover, .final .btn:hover { transform: translateY(-4px) scale(1.04); transition-delay: 0s; box-shadow: 0 22px 44px rgba(139,62,13,.42); }
+  .final .btn:hover .arr { transform: translateX(8px); }
+  .js .final .btn.rv { transition: opacity 1.3s cubic-bezier(.22,.61,.36,1) var(--d,0s), transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .5s ease; }
+  @keyframes fSweep { 0%,55% { left: -60%; } 100% { left: 130%; } }
+  @keyframes fRing { 0% { box-shadow: 0 0 0 0 rgba(200,97,26,.45); } 70%,100% { box-shadow: 0 0 0 22px rgba(200,97,26,0); } }
+  @media (prefers-reduced-motion: reduce) { .final-art *, .final .btn::before, .final .btn::after, .final .shim em { animation: none !important; } .lan { opacity: .8; } }
+
+  /* scroll reveal — slow, soft, GPU-only (opacity + transform) */
+  .js .rv { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity 1.3s cubic-bezier(.22,.61,.36,1), transform 1.3s cubic-bezier(.22,.61,.36,1); transition-delay: var(--d, 0s); will-change: opacity, transform; backface-visibility: hidden; }
+  .js .rv.in { opacity: 1; transform: translate3d(0, 0, 0); }
+  .js .rv.left { transform: translate3d(-36px, 0, 0); } .js .rv.right { transform: translate3d(36px, 0, 0); }
+  @media (max-width: 900px) { .js .rv.left, .js .rv.right { transform: translate3d(0, 28px, 0); } }
+  .js .rv.zoom { transform: translate3d(0, 20px, 0) scale(.97); }
+  .js .rv.left.in, .js .rv.right.in, .js .rv.zoom.in { transform: translate3d(0, 0, 0) scale(1); }
+  /* sections drift softly between each other */
+  .js section { transition: background-color .6s ease; }
+  .tag::after { transform-origin: left; transition: transform 1s ease .3s; }
+  .js .rv:not(.in) .tag::after, .js .tag.rv:not(.in)::after { transform: scaleX(0); }
+  #prog { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform: scaleX(0); transform-origin: left; transition: transform .15s linear; background: linear-gradient(90deg, var(--saffron), var(--gold)); z-index: 200; }
+  @media (prefers-reduced-motion: reduce) { .js .rv { opacity: 1; transform: none; filter: none; transition: none; } }
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav aria-label="Primary">
+  <a class="brand" href="index.html"><img src="images/logo_mark.png" alt="Viharasetu logo" /><span>Viharasetu</span></a>
+  <ul class="links">
+    <li><a href="destinations/All_packages/Explore_Destination.html">Explore Destinations</a></li>
+    <li><a href="index.html#journeys">Journeys</a></li>
+    <li><a href="feedback.html">Feedback</a></li>
+    <li><a href="about.html" class="on">About</a></li>
+    <li><a href="index.html#contact" class="cta">Plan My Journey</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="inner">
+    <div class="hero-copy">
+    <div class="tag">About Viharasetu</div>
+    <h1>From <em>Aastha</em><br>to Eternal <em>Anubhav</em></h1>
+    <p class="lead">ViharaSetu is a travel experience company focused on creating seamless, personalized journeys across India. We specialize in spiritual, family, and customized travel, ensuring every trip is planned with care, comfort, and attention to detail.</p>
+    <p class="lead">From itinerary planning to on-ground support, we manage everything — so our customers can travel stress-free and focus on what truly matters: experiences, memories, and peace of mind.</p>
+    <p class="sig">At ViharaSetu, we don't just plan trips. We create meaningful journeys.</p>
+    <div class="pills"><span>Best Destinations</span><span>Good Services</span></div>
+  </div>
+    <div class="hero-art zoom-art" aria-hidden="true">
+      <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F5B35A" stop-opacity=".55"/><stop offset="1" stop-color="#F5B35A" stop-opacity="0"/></radialGradient>
+          <linearGradient id="arcg" x1="0" x2="1"><stop offset="0" stop-color="#B8913F"/><stop offset=".5" stop-color="#C8611A"/><stop offset="1" stop-color="#2A5C45"/></linearGradient>
+          <path id="bridgePath" d="M70 320 Q300 110 530 320"/>
+        </defs>
+        <!-- rising sun: faith dawning -->
+        <circle class="a-glow" cx="300" cy="150" r="120" fill="url(#glow)"/>
+        <g class="a-sun" transform="translate(300 150)">
+          <circle r="34" stroke="#C8611A" stroke-width="1"/>
+          <circle r="22" stroke="#B8913F" stroke-width=".8"/>
+          <g class="a-rays" stroke="#B8913F" stroke-width=".9">
+            <path d="M0-48v-14M0 48v14M-48 0h-14M48 0h14M-34-34l-10-10M34 34l10 10M-34 34l-10 10M34-34l10-10"/>
+          </g>
+        </g>
+        <!-- Aastha: temple (faith) -->
+        <g class="a-temple" stroke="#8B3E0D" stroke-width="1">
+          <g transform="translate(70 320) scale(1.0)">
+            <path d="M-46 0h92M-40 -5h80M-35 -10h70"/>
+            <path d="M-26 -10V-42M26 -10V-42M-26 -42h52"/>
+            <path d="M-16 -10V-40M16 -10V-40" stroke-opacity=".6"/>
+            <path d="M-7 -10v-14a7 7 0 0 1 14 0v14"/>
+            <circle class="d-flame" cx="0" cy="-16" r="1.8" stroke="#C8611A"/>
+            <path d="M-26 -42C-26 -70 -12 -88 0 -100C12 -88 26 -70 26 -42"/>
+            <path d="M-13 -42C-13 -66 -6 -86 0 -100M13 -42C13 -66 6 -86 0 -100M0 -44V-100" stroke-opacity=".55"/>
+            <path d="M-24 -52h48M-21 -62h42M-17 -72h34M-12 -82h24M-7 -90h14" stroke-opacity=".8"/>
+            <ellipse cx="0" cy="-103" rx="8" ry="3.6"/>
+            <circle cx="0" cy="-110" r="3"/>
+            <path d="M0 -113v-8"/>
+            <path class="d-flag" d="M0 -121l13 3.5-13 3.5" fill="#C8611A" fill-opacity=".5" stroke="#C8611A"/>
+            <path d="M-42 -10v-14c0-7 3-12 5-16 2 4 5 9 5 16v14M32 -10v-14c0-7 3-12 5-16 2 4 5 9 5 16v14" stroke-opacity=".8"/>
+          </g>
+        </g>
+        <!-- Anubhav: mountains (experience) -->
+        <g class="a-mount" stroke="#2A5C45" stroke-width="1">
+          <path d="M490 320l36-72 22 34 14-20 28 58z"/>
+          <path d="M515 266l11-18 10 15"/>
+          <path d="M470 320l22-40"/>
+        </g>
+        <!-- the bridge (setu) draws itself -->
+        <path class="a-arc" d="M70 320 Q300 110 530 320" stroke="url(#arcg)" stroke-width="2"/>
+        <path class="a-deck" d="M60 322H540" stroke="#8B3E0D" stroke-width="1.2"/>
+        <g class="a-pillars" stroke="#B8913F" stroke-width=".9">
+          <path d="M162 253V322M231 224V322M300 215V322M369 224V322M438 253V322"/>
+        </g>
+        <!-- water -->
+        <g class="a-water" stroke="#2A5C45" stroke-width=".9" opacity=".55">
+          <path class="w1" d="M0 352q20-9 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0"/>
+          <path class="w2" d="M0 376q20-9 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0"/>
+          <path class="w1" d="M0 400q20-9 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0 40 0"/>
+        </g>
+        <!-- traveller crossing from faith to experience -->
+        <g>
+          <circle r="9" fill="#C8611A" opacity=".22"><animateMotion dur="8s" repeatCount="indefinite" rotate="0"><mpath href="#bridgePath"/></animateMotion></circle>
+          <circle r="3.4" fill="#C8611A"><animateMotion dur="8s" repeatCount="indefinite" rotate="0"><mpath href="#bridgePath"/></animateMotion></circle>
+        </g>
+        <!-- floating diyas / petals -->
+        <g class="a-petals" fill="#B8913F">
+          <circle class="p p1" cx="130" cy="330" r="2.2"/><circle class="p p2" cx="250" cy="340" r="1.8"/>
+          <circle class="p p3" cx="350" cy="335" r="2.4"/><circle class="p p4" cx="470" cy="332" r="1.8"/>
+          <circle class="p p5" cx="200" cy="338" r="1.6"/><circle class="p p6" cx="420" cy="340" r="2"/>
+        </g>
+        <!-- captions -->
+        <g font-family="Cormorant Garamond, serif" text-anchor="middle" fill="#1A160F" stroke="none">
+          <text class="a-cap" x="70" y="455" font-size="26" font-style="italic" fill="#8B3E0D">Aastha</text>
+          <text class="a-cap" x="70" y="477" font-size="12" letter-spacing="3" fill="#5C5143" font-family="Jost, sans-serif">FAITH</text>
+          <text class="a-cap" x="530" y="455" font-size="26" font-style="italic" fill="#2A5C45">Anubhav</text>
+          <text class="a-cap" x="530" y="477" font-size="12" letter-spacing="3" fill="#5C5143" font-family="Jost, sans-serif">EXPERIENCE</text>
+          <text class="a-cap" x="300" y="455" font-size="15" letter-spacing="4" fill="#B8913F" font-family="Jost, sans-serif">THE BRIDGE</text>
+        </g>
+      </svg>
+    </div>
+</div>
+</section>
+
+<section class="alt">
+  <div class="inner two panels">
+    <div class="panel">
+      <div class="panel-art" aria-hidden="true">
+        <svg viewBox="0 0 480 190" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <path id="routeP" d="M40 150 C110 150 120 70 190 90 S290 160 340 100 S420 40 440 50" stroke="none"/>
+          <g stroke="#B8913F" stroke-width=".6" opacity=".35"><path d="M0 40h480M0 100h480M0 160h480M80 0v190M200 0v190M320 0v190M440 0v190"/></g>
+          <path class="r-line" d="M40 150 C110 150 120 70 190 90 S290 160 340 100 S420 40 440 50" stroke="#C8611A" stroke-width="1.6" stroke-dasharray="6 7"/>
+          <g class="r-pin r-p1"><circle cx="40" cy="150" r="6" stroke="#8B3E0D" stroke-width="1.2"/><circle cx="40" cy="150" r="2" fill="#8B3E0D"/></g>
+          <g class="r-pin r-p2"><circle cx="190" cy="90" r="5" stroke="#B8913F" stroke-width="1.2"/><circle cx="190" cy="90" r="1.8" fill="#B8913F"/></g>
+          <g class="r-pin r-p3"><circle cx="340" cy="100" r="5" stroke="#B8913F" stroke-width="1.2"/><circle cx="340" cy="100" r="1.8" fill="#B8913F"/></g>
+          <g class="r-pin r-p4" stroke="#2A5C45" stroke-width="1.3"><path d="M440 50c-9-10-14-16-14-24a14 14 0 0 1 28 0c0 8-5 14-14 24z"/><circle cx="440" cy="26" r="4.5"/></g>
+          <circle class="r-ping" cx="440" cy="52" r="6" stroke="#2A5C45" stroke-width="1"/>
+          <g class="r-tick" stroke="#2A5C45" stroke-width="1.3"><path d="M184 70l4 4 7-8"/></g>
+          <g class="r-tick r-t2" stroke="#2A5C45" stroke-width="1.3"><path d="M334 80l4 4 7-8"/></g>
+          <g transform="translate(405 140)"><circle r="22" stroke="#B8913F" stroke-width=".9"/><circle r="17" stroke="#B8913F" stroke-width=".5" stroke-dasharray="2 3"/>
+            <g class="r-needle"><path d="M0-14l4 14h-8z" fill="#C8611A" stroke="none"/><path d="M0 14l4-14h-8z" fill="#8B3E0D" opacity=".5" stroke="none"/></g></g>
+          <g class="r-plane" stroke="#C8611A" stroke-width="1.2" fill="#fff"><path d="M-9 0l18-5-4 5 4 5z"/><animateMotion dur="7s" repeatCount="indefinite" rotate="auto"><mpath href="#routeP"/></animateMotion></g>
+        </svg>
+      </div>
+      
+      <div class="tag">Travel Planning</div>
+      <h2>A guide for <em>every</em> journey</h2>
+      <p class="lead">We believe every journey should be smooth, comfortable, and well-planned. Our travel planning process is designed to take care of every detail — from understanding your requirements to delivering a seamless experience.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-art" aria-hidden="true">
+        <svg viewBox="0 0 480 190" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="dg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F5B35A" stop-opacity=".6"/><stop offset="1" stop-color="#F5B35A" stop-opacity="0"/></radialGradient></defs>
+          <circle class="d-glow" cx="290" cy="70" r="70" fill="url(#dg)"/>
+          <circle class="d-sun" cx="290" cy="70" r="20" stroke="#C8611A" stroke-width="1.1"/>
+          <g class="d-cloud c1" stroke="#B8913F" stroke-width=".9"><path d="M60 50h46a9 9 0 0 0 0-18 14 14 0 0 0-26-3 11 11 0 0 0-20 6 7 7 0 0 0 0 15z"/></g>
+          <g class="d-cloud c2" stroke="#B8913F" stroke-width=".9"><path d="M360 38h36a7 7 0 0 0 0-14 11 11 0 0 0-20-2 9 9 0 0 0-16 5 5 5 0 0 0 0 11z"/></g>
+          <path class="d-m1" d="M150 160l60-80 40 50 36-44 70 74" stroke="#2A5C45" stroke-width="1" opacity=".6"/>
+          <path class="d-m2" d="M300 160l56-92 34 46 22-30 68 76" stroke="#2A5C45" stroke-width="1.2"/>
+          <path class="d-m2" d="M338 92l18-24 14 20" stroke="#2A5C45" stroke-width="1"/>
+          <g class="d-temple" stroke="#8B3E0D" stroke-width="1.1">
+          <g transform="translate(66 160) scale(0.8)">
+            <path d="M-46 0h92M-40 -5h80M-35 -10h70"/>
+            <path d="M-26 -10V-42M26 -10V-42M-26 -42h52"/>
+            <path d="M-16 -10V-40M16 -10V-40" stroke-opacity=".6"/>
+            <path d="M-7 -10v-14a7 7 0 0 1 14 0v14"/>
+            <circle class="d-flame" cx="0" cy="-16" r="1.8" stroke="#C8611A"/>
+            <path d="M-26 -42C-26 -70 -12 -88 0 -100C12 -88 26 -70 26 -42"/>
+            <path d="M-13 -42C-13 -66 -6 -86 0 -100M13 -42C13 -66 6 -86 0 -100M0 -44V-100" stroke-opacity=".55"/>
+            <path d="M-24 -52h48M-21 -62h42M-17 -72h34M-12 -82h24M-7 -90h14" stroke-opacity=".8"/>
+            <ellipse cx="0" cy="-103" rx="8" ry="3.6"/>
+            <circle cx="0" cy="-110" r="3"/>
+            <path d="M0 -113v-8"/>
+            <path class="d-flag" d="M0 -121l13 3.5-13 3.5" fill="#C8611A" fill-opacity=".5" stroke="#C8611A"/>
+            <path d="M-42 -10v-14c0-7 3-12 5-16 2 4 5 9 5 16v14M32 -10v-14c0-7 3-12 5-16 2 4 5 9 5 16v14" stroke-opacity=".8"/>
+          </g>
+        </g>
+          <g class="d-walk" stroke="#8B3E0D" stroke-width="1.1">
+            <g class="w w1"><circle cx="150" cy="132" r="3.4"/><path d="M150 136v14M150 141l-5 6M150 141l5 6M150 150l-4 10M150 150l4 10"/></g>
+            <g class="w w2"><circle cx="168" cy="134" r="3"/><path d="M168 138v12M168 142l-4 5M168 142l4 5M168 150l-3 10M168 150l3 10"/></g>
+            <g class="w w3"><circle cx="184" cy="136" r="2.6"/><path d="M184 139v11M184 143l-3 4M184 143l3 4M184 150l-3 10M184 150l3 10"/></g>
+          </g>
+          <path d="M0 160H480" stroke="#B8913F" stroke-width="1"/>
+          <g class="d-bird b1" stroke="#5C5143" stroke-width="1"><path d="M0 0q6-7 12 0q6-7 12 0"/></g>
+          <g class="d-bird b2" stroke="#5C5143" stroke-width="1"><path d="M0 0q5-6 10 0q5-6 10 0"/></g>
+        </svg>
+      </div>
+      
+      <div class="tag">Dream Destinations</div>
+      <h2>Journeys that match your <em>purpose</em></h2>
+      <p class="lead">Whether you're seeking divine peace, exploring with friends, or escaping into the mountains, we curate journeys from sacred temple towns to vibrant cities and breathtaking hill stations — destinations that create memories, connection, and meaning.</p>
+      <div class="pills"><span><i class="pi" style="--ico:url(images/about_icons/temple.svg)"></i>Spiritual</span><span><i class="pi" style="--ico:url(images/about_icons/family.svg)"></i>Friends &amp; Groups</span><span><i class="pi" style="--ico:url(images/about_icons/scenic.svg)"></i>Hill Stations &amp; Mountains</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner two">
+    <div>
+      <div class="tag">Smart Travel</div>
+      <h2>Smart travel with <em>ViharaSetu</em></h2>
+      <p class="lead">We focus on making every journey comfortable, safe, and well-organized. From planning your itinerary to ensuring smooth travel arrangements, we take care of every detail so you can enjoy your trip without worries.</p>
+      <p class="lead">Our goal is simple — to give you a seamless travel experience from start to finish.</p>
+    </div>
+    <div class="smart-right">
+      <div class="panel-art smart-art" aria-hidden="true">
+        <svg viewBox="0 0 480 190" fill="none" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="sg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F5B35A" stop-opacity=".55"/><stop offset="1" stop-color="#F5B35A" stop-opacity="0"/></radialGradient></defs>
+          <circle class="d-glow" cx="400" cy="46" r="60" fill="url(#sg)" style="transform-origin:400px 46px"/>
+          <circle class="d-sun" cx="400" cy="46" r="15" stroke="#C8611A" stroke-width="1.1"/>
+          <g class="d-cloud c1" stroke="#B8913F" stroke-width=".9"><path d="M60 48h46a9 9 0 0 0 0-18 14 14 0 0 0-26-3 11 11 0 0 0-20 6 7 7 0 0 0 0 15z"/></g>
+          <!-- 24/7 clock -->
+          <g transform="translate(60 98)"><circle r="22" stroke="#B8913F" stroke-width=".9"/><circle r="17" stroke="#B8913F" stroke-width=".5" stroke-dasharray="2 3"/>
+            <path d="M0-17v3M17 0h-3M0 17v-3M-17 0h3" stroke="#B8913F" stroke-width=".9"/>
+            <path class="s-hand-h" d="M0 0v-9" stroke="#8B3E0D" stroke-width="1.3"/><path class="s-hand-m" d="M0 0v-13" stroke="#C8611A" stroke-width="1"/>
+            <text y="38" text-anchor="middle" font-size="10" letter-spacing="2" fill="#5C5143" stroke="none" font-family="Jost, sans-serif">24/7</text></g>
+          <!-- hills -->
+          <path class="d-m1" d="M0 150l70-50 60 38 70-52 70 56 80-44 90 52z" stroke="#2A5C45" stroke-width="1" opacity=".55"/>
+          <!-- hotel -->
+          <g class="s-hotel" stroke="#8B3E0D" stroke-width="1.1"><path d="M300 150V86h74v64M290 150h94M300 86l37-18 37 18"/>
+            <g class="s-win" stroke="#C8611A" stroke-width=".9"><rect x="310" y="98" width="10" height="10"/><rect x="332" y="98" width="10" height="10"/><rect x="354" y="98" width="10" height="10"/><rect x="310" y="118" width="10" height="10"/><rect class="w-on" x="354" y="118" width="10" height="10"/></g>
+            <path d="M330 150v-14a7 7 0 0 1 14 0v14"/></g>
+          <!-- trees passing -->
+          <g class="s-trees" stroke="#2A5C45" stroke-width="1"><path d="M40 150v-14M40 136l-8 10M40 136l8 10M40 126l-6 8M40 126l6 8"/><path d="M200 150v-12M200 138l-7 9M200 138l7 9M200 129l-5 7M200 129l5 7"/><path d="M440 150v-14M440 136l-8 10M440 136l8 10M440 126l-6 8M440 126l6 8"/></g>
+          <!-- road -->
+          <path d="M0 150H480" stroke="#8B3E0D" stroke-width="1.2"/>
+          <path d="M0 176H480" stroke="#B8913F" stroke-width=".8" opacity=".6"/>
+          <path class="s-road" d="M0 163H480" stroke="#B8913F" stroke-width="1.3" stroke-dasharray="14 12"/>
+          <!-- bus -->
+          <g class="s-bus" stroke="#8B3E0D" stroke-width="1.2">
+            <g class="s-bob"><rect x="0" y="118" width="96" height="40" rx="9" fill="#fff"/>
+              <path d="M0 140h96"/><rect x="8" y="124" width="14" height="12" rx="2"/><rect x="28" y="124" width="14" height="12" rx="2"/><rect x="48" y="124" width="14" height="12" rx="2"/><rect x="68" y="124" width="20" height="12" rx="2"/>
+              <path d="M96 146h6" stroke="#C8611A"/><circle class="s-lamp" cx="92" cy="147" r="2" stroke="#C8611A"/></g>
+            <g class="s-wheel" style="transform-origin:22px 160px"><circle cx="22" cy="160" r="9" fill="#fff"/><path d="M22 153v14M15 160h14"/></g>
+            <g class="s-wheel" style="transform-origin:74px 160px"><circle cx="74" cy="160" r="9" fill="#fff"/><path d="M74 153v14M67 160h14"/></g>
+          </g>
+          <!-- support ping -->
+          <g transform="translate(445 98)"><circle class="r-ping" r="8" stroke="#2A5C45" stroke-width="1" style="animation-delay:0s"/><circle class="r-ping" r="8" stroke="#2A5C45" stroke-width="1" style="animation-delay:1.3s"/><circle r="3" fill="#2A5C45" stroke="none"/></g>
+        </svg>
+      </div>
+      <ul class="checks">
+      <li><i class="ico" style="--ico:url(images/about_icons/stay.svg)"></i>Comfortable stays</li>
+      <li><i class="ico" style="--ico:url(images/about_icons/bus.svg)"></i>Reliable transport</li>
+      <li><i class="ico" style="--ico:url(images/about_icons/headset.svg)"></i>24/7 travel support</li>
+    </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="inner">
+    <div class="tag">Vacation Date Calendar</div>
+    <h2>Choosing the <em>right time</em> to travel</h2>
+    <p class="lead">Planning the right time to travel is key to a smooth and enjoyable experience. We guide you in choosing the best dates based on season, budget, crowd levels, and personal preferences — whether it's a peaceful spiritual journey, a relaxing holiday, or a group trip.</p>
+    <div class="grid">
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/peak.svg)"></i><h3>Peak Seasons</h3><p>Travel during popular seasons for the best experiences, but expect higher demand and pricing.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/calendar.svg)"></i><h3>Off-Peak Deals</h3><p>Enjoy budget-friendly trips with fewer crowds and better availability.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/sparkle.svg)"></i><h3>Festival Times</h3><p>Plan around festivals and special occasions for unique spiritual and cultural experiences.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/sun.svg)"></i><h3>Weather Checks</h3><p>Weather-based travel planning so your trip lands in the best conditions.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="inner">
+    <div class="tag">What Customers Enjoy</div>
+    <h2>Two kinds of <em>unforgettable</em> experience</h2>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <div class="card"><div class="n"><span class="num">01</span><i class="ico" style="--ico:url(images/about_icons/temple.svg)"></i></div><h3>Spiritual Experiences</h3><p>Visit sacred destinations and experience peace, devotion, and cultural richness. From temple darshans to divine rituals, every journey brings a deeper connection and meaningful moments.</p></div>
+      <div class="card"><div class="n"><span class="num">02</span><i class="ico" style="--ico:url(images/about_icons/scenic.svg)"></i></div><h3>Leisure &amp; Scenic Experiences</h3><p>Explore beautiful landscapes, hill stations, and relaxing destinations with friends and family. Enjoy nature, comfort, and unforgettable memories at every step of your journey.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner two">
+    <div>
+      <div class="tag">End-to-End Support</div>
+      <h2>Travel <em>assistance</em> at every stage</h2>
+      <p class="lead">We provide complete support from planning to execution — itinerary design, hotel bookings, transportation, and on-ground coordination, ensuring a smooth and hassle-free experience.</p>
+      <p class="lead">Our team stays connected throughout your trip to handle any requirements, so you can focus on enjoying your journey with complete peace of mind.</p>
+    </div>
+    <div>
+      <div class="tag">Arrangements &amp; Transportation</div>
+      <ul class="checks" style="margin-top:1.4rem">
+        <li><i class="ico" style="--ico:url(images/about_icons/bus.svg)"></i><span><b>Comfortable transport</b> — reliable, comfortable vehicles for local travel throughout your trip.</span></li>
+        <li><i class="ico" style="--ico:url(images/about_icons/route.svg)"></i><span><b>Flexible travel options</b> — from trains to private transfers, based on your comfort, budget, and preference.</span></li>
+        <li><i class="ico" style="--ico:url(images/about_icons/link.svg)"></i><span><b>Seamless coordination</b> — end-to-end coordination of all movements, so you never worry about logistics.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="inner">
+    <div class="tag">Why Choose ViharaSetu</div>
+    <h2>Built on trust, personalization <em>and support</em></h2>
+    <p class="lead">We go beyond just booking trips — we create comfortable, reliable, and meaningful travel experiences. Every traveler is different, so we design trips that match your needs, budget, and expectations.</p>
+    <div class="grid why">
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/shield.svg)"></i><h3>Comfortable &amp; Verified Stays</h3><p>Carefully selected accommodations for a safe and relaxing experience.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/costs.svg)"></i><h3>Transparent Pricing</h3><p>No hidden costs — clear and honest pricing.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/heart.svg)"></i><h3>Senior-Friendly Planning</h3><p>Special care for elders and family travel needs.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/route.svg)"></i><h3>Customized Itineraries</h3><p>Trips designed exactly as per your preference.</p></div>
+      <div class="card"><i class="cico" style="--ico:url(images/about_icons/headset.svg)"></i><h3>Dedicated Support</h3><p>We stay connected with you throughout the journey.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="inner">
+    <div class="tag">Budget-Friendly Planning</div>
+    <h2>Affordable, <em>without compromise</em></h2>
+    <p class="lead">Travel should be affordable without compromising comfort and quality. We plan every trip around your budget, preferences, and travel goals — from cost optimization to smart planning, so you experience more while spending wisely.</p>
+    <div class="grid">
+      <div class="card"><div class="n"><span class="num">01</span><i class="ico" style="--ico:url(images/about_icons/budget.svg)"></i></div><h3>Smart Budget Planning</h3></div>
+      <div class="card"><div class="n"><span class="num">02</span><i class="ico" style="--ico:url(images/about_icons/stay.svg)"></i></div><h3>Best Value Stays</h3></div>
+      <div class="card"><div class="n"><span class="num">03</span><i class="ico" style="--ico:url(images/about_icons/costs.svg)"></i></div><h3>Optimized Travel Costs</h3></div>
+      <div class="card"><div class="n"><span class="num">04</span><i class="ico" style="--ico:url(images/about_icons/deals.svg)"></i></div><h3>Exclusive Deals</h3></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner two">
+    <div>
+      <div class="tag">Comfortable Stay Options</div>
+      <h2>Stays that balance <em>comfort and value</em></h2>
+      <p class="lead">Every stay should be comfortable, safe, and well-suited to your travel needs. We select accommodations based on location, quality, and budget — for a spiritual trip, family vacation, or group travel.</p>
+    </div>
+    <ul class="checks">
+      <li><i class="ico" style="--ico:url(images/about_icons/hotel.svg)"></i>Verified hotels</li>
+      <li><i class="ico" style="--ico:url(images/about_icons/coin.svg)"></i>Budget-friendly stays</li>
+      <li><i class="ico" style="--ico:url(images/about_icons/family.svg)"></i>Family-friendly rooms</li>
+      <li><i class="ico" style="--ico:url(images/about_icons/crown.svg)"></i>Premium options</li>
+    </ul>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-art" aria-hidden="true">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hg" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".95"/><stop offset=".45" stop-color="#F5B35A" stop-opacity=".28"/><stop offset="1" stop-color="#F5B35A" stop-opacity="0"/></radialGradient>
+        <radialGradient id="lg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F5B35A" stop-opacity=".4"/><stop offset="1" stop-color="#F5B35A" stop-opacity="0"/></radialGradient>
+        <linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C8611A" stop-opacity=".16"/><stop offset="1" stop-color="#C8611A" stop-opacity=".03"/></linearGradient>
+        <linearGradient id="h2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A5C45" stop-opacity=".2"/><stop offset="1" stop-color="#2A5C45" stop-opacity=".04"/></linearGradient>
+      </defs>
+      <g class="px" data-d="8">
+        <ellipse class="f-glow" cx="720" cy="720" rx="720" ry="420" fill="url(#hg)" style="transform-origin:720px 720px"/>
+        <circle class="f-ring r1" cx="720" cy="700" r="220" stroke="#B8913F" stroke-width="1"/>
+        <circle class="f-ring r2" cx="720" cy="700" r="220" stroke="#B8913F" stroke-width="1"/>
+        <circle class="f-ring r3" cx="720" cy="700" r="220" stroke="#B8913F" stroke-width="1"/>
+      </g>
+      <g class="px" data-d="14"><path d="M0 610C200 540 380 560 560 600S900 640 1100 580 1340 540 1440 570V700H0z" fill="url(#h1)"/></g>
+      <g class="px" data-d="24"><path d="M0 660C220 610 420 630 640 660S1020 690 1220 640 1380 620 1440 630V700H0z" fill="url(#h2)"/></g>
+      <g class="px" data-d="34"><g class="lan" style="animation-duration:26s;animation-delay:-3s"><g transform="translate(150 700) scale(0.90)"><ellipse rx="12" ry="16" fill="#F5B35A" fill-opacity=".28" stroke="#C8611A" stroke-opacity=".7" stroke-width="1"/><path d="M-12 0h24M0-16v32" stroke="#C8611A" stroke-opacity=".45" stroke-width=".6"/><circle r="26" fill="url(#lg)"/></g></g>
+<g class="lan" style="animation-duration:32s;animation-delay:-15s"><g transform="translate(290 700) scale(0.60)"><ellipse rx="12" ry="16" fill="#F5B35A" fill-opacity=".28" stroke="#C8611A" stroke-opacity=".7" stroke-width="1"/><path d="M-12 0h24M0-16v32" stroke="#C8611A" stroke-opacity=".45" stroke-width=".6"/><circle r="26" fill="url(#lg)"/></g></g>
+<g class="lan" style="animation-duration:28s;animation-delay:-9s"><g transform="translate(1150 700) scale(0.90)"><ellipse rx="12" ry="16" fill="#F5B35A" fill-opacity=".28" stroke="#C8611A" stroke-opacity=".7" stroke-width="1"/><path d="M-12 0h24M0-16v32" stroke="#C8611A" stroke-opacity=".45" stroke-width=".6"/><circle r="26" fill="url(#lg)"/></g></g>
+<g class="lan" style="animation-duration:34s;animation-delay:-20s"><g transform="translate(1290 700) scale(0.65)"><ellipse rx="12" ry="16" fill="#F5B35A" fill-opacity=".28" stroke="#C8611A" stroke-opacity=".7" stroke-width="1"/><path d="M-12 0h24M0-16v32" stroke="#C8611A" stroke-opacity=".45" stroke-width=".6"/><circle r="26" fill="url(#lg)"/></g></g>
+<g class="lan" style="animation-duration:36s;animation-delay:-26s"><g transform="translate(60 700) scale(0.55)"><ellipse rx="12" ry="16" fill="#F5B35A" fill-opacity=".28" stroke="#C8611A" stroke-opacity=".7" stroke-width="1"/><path d="M-12 0h24M0-16v32" stroke="#C8611A" stroke-opacity=".45" stroke-width=".6"/><circle r="26" fill="url(#lg)"/></g></g>
+<g class="lan" style="animation-duration:38s;animation-delay:-12s"><g transform="translate(1380 700) scale(0.55)"><ellipse rx="12" ry="16" fill="#F5B35A" fill-opacity=".28" stroke="#C8611A" stroke-opacity=".7" stroke-width="1"/><path d="M-12 0h24M0-16v32" stroke="#C8611A" stroke-opacity=".45" stroke-width=".6"/><circle r="26" fill="url(#lg)"/></g></g>
+</g>
+    </svg>
+  </div>
+  <div class="inner">
+    <div class="tag">Let's Begin</div>
+    <h2 class="shim">Begin your journey with <em>ViharaSetu</em></h2>
+    <p class="lead">Every journey is more than just travel — it's an experience filled with memories, emotions, and meaningful moments. Let us take care of everything while you focus on enjoying the journey.</p>
+    <p class="quote"><span><b>We don't just plan trips.</b></span><span><b>We create meaningful journeys.</b></span></p>
+    <a class="btn" href="index.html#contact"><span>Plan My Journey</span><i class="arr">&rarr;</i></a>
+  </div>
+</section>
+
+<footer>© 2026 Viharasetu. All rights reserved. · <a href="index.html">Back to Home</a> · <a href="https://www.viharasetu.co.in">www.viharasetu.co.in</a></footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function () {
+  var sel = '.panel, .tag, h1, h2, p.lead, .sig, .pills, .card, .checks li, .quote, .btn';
+  document.querySelectorAll('section').forEach(function (sec) {
+    var i = 0;
+    sec.querySelectorAll(sel).forEach(function (el) {
+      el.classList.add('rv');
+      var inTwo = el.closest('.two');
+      if (el.classList.contains('card') || el.tagName === 'LI') { el.style.setProperty('--d', (i++ * 0.14) + 's'); el.classList.add('zoom'); }
+      else if (inTwo) { el.classList.add(el.closest('.two > div:last-child') && !el.closest('.two > div:first-child') ? 'right' : 'left'); el.style.setProperty('--d', (i++ * 0.12) + 's'); }
+      else { el.style.setProperty('--d', (i++ * 0.12) + 's'); }
+    });
+  });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+  var bar = document.getElementById('prog');
+  addEventListener('scroll', function () {
+    var h = document.documentElement; bar.style.transform = 'scaleX(' + (h.scrollTop / (h.scrollHeight - h.clientHeight || 1)) + ')';
+  }, { passive: true });
+})();
+
+  /* mouse parallax for the closing scene */
+  (function () {
+    var f = document.querySelector('.final'); if (!f || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var layers = f.querySelectorAll('.px');
+    f.addEventListener('mousemove', function (e) {
+      var r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      layers.forEach(function (l) { var d = +l.dataset.d; l.style.transform = 'translate(' + (-x * d * 2) + 'px,' + (-y * d) + 'px)'; });
+    });
+    f.addEventListener('mouseleave', function () { layers.forEach(function (l) { l.style.transform = ''; }); });
+  })();
+</script>
+</body>
+</html>

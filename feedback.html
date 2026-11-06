@@ -71,7 +71,7 @@ ul{list-style:none}
 .btn-ghost:hover{background:rgba(255,255,255,.18)}
 
 /* ---------- Hero ---------- */
-.hero{position:relative;color:#fff;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));overflow:hidden;padding:clamp(130px,16vw,190px) 0 clamp(90px,10vw,130px)}
+.hero{position:relative;color:#fff;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));overflow:hidden;padding:clamp(96px,8vw,112px) 0 clamp(36px,4vw,52px)}
 .hero::before{content:"";position:absolute;width:620px;height:620px;right:-180px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(224,191,128,.24),transparent 70%)}
 .hero .container{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center}
 .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.08;margin:16px 0 20px;letter-spacing:-.01em}
@@ -176,7 +176,7 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
   .share-grid{grid-template-columns:1fr}
   .nav-links .hide-m{display:none}
   .hero .container{grid-template-columns:1fr}
-  .hero-mark{display:none}
+  .hero-mark,.hero-vis{display:none}
 }
 @media (max-width:760px){
   .container{width:calc(100% - 32px)}
@@ -207,6 +207,31 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
   .mbar svg{width:22px;height:22px;fill:#fff}
   footer{padding-bottom:96px}
 }
+
+/* hero motion — gold on maroon, slow and quiet */
+.hero-vis{width:clamp(160px,15vw,210px);height:auto;margin-right:clamp(0px,3vw,48px);overflow:visible}
+.hv-q{stroke-dasharray:420;stroke-dashoffset:420;fill:rgba(224,191,128,0);animation:hvDraw 2.4s cubic-bezier(.22,.61,.36,1) .3s forwards,hvFill 1.6s ease 2.2s forwards}
+.hv-glow{transform-origin:130px 110px;animation:hvPulse 6s ease-in-out infinite}
+.hv-orbit{transform-origin:130px 110px;animation:hvSpin 60s linear infinite}
+.hv-ico{opacity:.85}
+.hv-ico path{transform-box:fill-box;transform-origin:center;animation:hvSpinBack 60s linear infinite}
+.hv-star{opacity:0;transform-box:fill-box;transform-origin:center;animation:hvStarIn .7s cubic-bezier(.34,1.56,.64,1) forwards,hvTwinkle 5s ease-in-out 4s infinite}
+.hero .eyebrow,.hero h1,.hero .intro{opacity:0;transform:translateY(22px);animation:hvUp 1.2s cubic-bezier(.22,.61,.36,1) forwards}
+.hero h1{animation-delay:.2s}.hero .intro{animation-delay:.45s}
+.hero .rule{transform:scaleX(0);transform-origin:left;animation:hvRule 1.2s ease .9s forwards}
+.hero h1 em{background:linear-gradient(100deg,var(--gold) 20%,#fff2cf 45%,var(--gold-light) 55%,var(--gold) 80%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:hvShine 6s ease-in-out 1.6s infinite}
+.hero::before{animation:hvPulse 9s ease-in-out infinite}
+@keyframes hvDraw{to{stroke-dashoffset:0}}
+@keyframes hvFill{to{fill:rgba(224,191,128,.16)}}
+@keyframes hvPulse{0%,100%{transform:scale(.94);opacity:.8}50%{transform:scale(1.06);opacity:1}}
+@keyframes hvSpin{to{transform:rotate(360deg)}}
+@keyframes hvSpinBack{to{transform:rotate(-360deg)}}
+@keyframes hvStarIn{from{opacity:0;transform:scale(.2) rotate(-40deg)}to{opacity:1;transform:none}}
+@keyframes hvTwinkle{0%,70%,100%{transform:scale(1);filter:none}80%{transform:scale(1.35)}90%{transform:scale(1)}}
+@keyframes hvUp{to{opacity:1;transform:none}}
+@keyframes hvRule{to{transform:scaleX(1)}}
+@keyframes hvShine{0%{background-position:120% 0}60%,100%{background-position:-120% 0}}
+@media (prefers-reduced-motion:reduce){.hero *,.hero::before{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}.hv-q{fill:rgba(224,191,128,.16)}}
 </style>
 </head>
 <body>
@@ -242,8 +267,19 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
       <p class="intro">What our travellers say after coming home — real trips, real words, shared with their permission.</p>
       <div class="rule"></div>
     </div>
-    <svg class="hero-mark" viewBox="0 0 120 120" aria-hidden="true">
-      <path d="M18 62c0-22 12-38 30-42v14c-9 3-14 10-14 18h14v38H18V62Zm54 0c0-22 12-38 30-42v14c-9 3-14 10-14 18h14v38H72V62Z"/>
+    <svg class="hero-vis" viewBox="0 0 260 260" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <defs><radialGradient id="hvg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#e0bf80" stop-opacity=".35"/><stop offset="1" stop-color="#e0bf80" stop-opacity="0"/></radialGradient></defs>
+      <circle class="hv-glow" cx="130" cy="110" r="95" fill="url(#hvg)"/>
+      <g class="hv-orbit">
+        <circle cx="130" cy="110" r="104" stroke="#e0bf80" stroke-opacity=".3" stroke-dasharray="2 7"/>
+        <g class="hv-ico" transform="translate(234 110)"><path d="M0 5.500C-9-1-8-9 -3-9 -1-9 0-8 0-6.500 0-8 1-9 3-9 8-9 9-1 0 5.500z" stroke="#e0bf80" stroke-width="1.2"/></g>
+        <g class="hv-ico" transform="translate(78 200)"><path d="M-9-7h18v11h-10l-5 4v-4h-3z" stroke="#e0bf80" stroke-width="1.2"/></g>
+        <g class="hv-ico" transform="translate(78 20)"><path d="M0-8l2.300 5 5.400.600-4 3.700 1.100 5.300L0 3.700l-4.800 2.900L-3.700 1.300l-4-3.700 5.400-.6z" stroke="#e0bf80" stroke-width="1.2"/></g>
+      </g>
+      <g transform="translate(65 40) scale(1.1)">
+        <path class="hv-q" stroke="#e0bf80" stroke-width="1.4" d="M18 62c0-22 12-38 30-42v14c-9 3-14 10-14 18h14v38H18V62Zm54 0c0-22 12-38 30-42v14c-9 3-14 10-14 18h14v38H72V62Z"/>
+      </g>
+      <g class="hv-stars" fill="#e0bf80" stroke="none"><path class="hv-star" style="animation-delay:2.40s" transform="translate(50 222) scale(1.15)" d="M0-10l2.9 6.2 6.8.8-5 4.7 1.3 6.7L0 5.600l-6 3.400 1.300-6.700-5-4.700 6.800-.8z"/><path class="hv-star" style="animation-delay:2.58s" transform="translate(90 222) scale(1.15)" d="M0-10l2.9 6.2 6.8.8-5 4.7 1.3 6.7L0 5.600l-6 3.400 1.300-6.700-5-4.700 6.800-.8z"/><path class="hv-star" style="animation-delay:2.76s" transform="translate(130 222) scale(1.15)" d="M0-10l2.9 6.2 6.8.8-5 4.7 1.3 6.7L0 5.600l-6 3.400 1.300-6.700-5-4.700 6.800-.8z"/><path class="hv-star" style="animation-delay:2.94s" transform="translate(170 222) scale(1.15)" d="M0-10l2.9 6.2 6.8.8-5 4.7 1.3 6.7L0 5.600l-6 3.400 1.300-6.700-5-4.700 6.800-.8z"/><path class="hv-star" style="animation-delay:3.12s" transform="translate(210 222) scale(1.15)" d="M0-10l2.9 6.2 6.8.8-5 4.7 1.3 6.7L0 5.600l-6 3.400 1.300-6.700-5-4.700 6.800-.8z"/></g>
     </svg>
   </div>
 </header>

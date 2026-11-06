@@ -14,7 +14,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Viharasetu — Sacred Journeys, Timeless Paths</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -51,10 +51,17 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center;
     padding: 1.2rem 4rem;
-    background: rgba(250,246,240,0.9);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 8px 30px rgba(26,22,15,0.04);
+    /* liquid glass: same cream tint, translucent, with refraction-style highlights */
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(250,246,240,0.28) 55%, rgba(250,246,240,0.38) 100%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.04);
+    backdrop-filter: blur(22px) saturate(180%) brightness(1.04);
+    border-bottom: 1px solid rgba(255,255,255,0.65);
+    box-shadow:
+      0 8px 32px rgba(26,22,15,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      inset 0 -1px 0 rgba(184,145,63,0.18),
+      inset 0 -12px 24px rgba(255,255,255,0.18);
   }
 
   .nav-brand {
@@ -100,12 +107,20 @@
   .nav-links a {
     text-decoration: none;
     font-size: 0.78rem;
+    font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ink-muted);
+    color: var(--ink);
     transition: color 0.3s;
   }
 
+  .nav-links a { display: inline-flex; align-items: center; gap: 0.55rem; }
+  .nav-ico {
+    width: 16px; height: 16px; flex: none;
+    background-color: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat;
+    mask: var(--ico) center / contain no-repeat;
+  }
   .nav-links a:hover { color: var(--saffron); }
 
   .nav-cta {
@@ -641,6 +656,26 @@
     border-left: 3px solid var(--gold);
   }
 
+  /* experiences: bolder, darker copy */
+  .exp-content > p:not(.section-tag) { font-weight: 500; color: var(--ink) !important; }
+  .exp-list .exp-item-text { font-weight: 500; color: #3d3428; }
+  .exp-list .exp-item-title { font-weight: 700; }
+  /* experiences: hover the icon / row and the icon comes alive */
+  .exp-item { cursor: default; transition: transform .6s cubic-bezier(.22,.61,.36,1); }
+  .exp-item:hover { transform: translateX(8px); }
+  .exp-icon { position: relative; overflow: visible; transition: background-color .6s ease, color .6s ease, transform .7s cubic-bezier(.34,1.56,.64,1), box-shadow .6s ease; }
+  .exp-icon::before { content: ""; position: absolute; inset: 0; border: 1px solid var(--saffron); opacity: 0; transform: scale(1); pointer-events: none; }
+  .exp-icon svg { transition: transform .8s cubic-bezier(.34,1.56,.64,1); }
+  .exp-item:hover .exp-icon { background: var(--saffron); color: #fff; transform: rotate(-6deg) scale(1.1); box-shadow: 0 12px 24px rgba(200,97,26,.3); }
+  .exp-item:hover .exp-icon::before { animation: expRing 1.4s ease-out infinite; }
+  .exp-item:hover .exp-icon svg { transform: rotate(6deg) scale(1.08); animation: expWiggle 1.6s ease-in-out .3s infinite; }
+  .exp-item:hover .exp-item-title { color: var(--saffron-dark); }
+  .exp-item-title { transition: color .4s ease; }
+  @keyframes expRing { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(1.9); } }
+  @keyframes expWiggle { 0%,100% { transform: rotate(6deg) scale(1.08); } 50% { transform: rotate(-6deg) scale(1.14) translateY(-1px); } }
+  @media (hover: none) { .exp-item:hover { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .exp-icon::before, .exp-icon svg { animation: none !important; } }
+
   .exp-content { padding-left: 1rem; }
 
   .exp-list {
@@ -855,7 +890,7 @@
   }
 
   /* Keep the enquiry form clear of the fixed nav when jumping to #contact */
-  #contact { scroll-margin-top: 170px; }
+  #contact { scroll-margin-top: 70px; }   /* phones: just clear the fixed nav */
 
   .newsletter-title {
     font-family: 'Cormorant Garamond', serif;
@@ -963,7 +998,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.8rem;
     font-weight: 600;
-    color: var(--cream);
+    color: #fff;
     letter-spacing: 0.06em;
     display: block;
     margin-bottom: 0.8rem;
@@ -971,7 +1006,7 @@
 
   .footer-brand-tagline {
     font-size: 0.78rem;
-    color: rgba(250,246,240,0.4);
+    color: #fff;
     letter-spacing: 0.1em;
     line-height: 1.7;
     max-width: 38ch;
@@ -1004,12 +1039,12 @@
 
   .footer-links a {
     font-size: 0.83rem;
-    color: rgba(250,246,240,0.45);
+    color: #fff;
     text-decoration: none;
     transition: color 0.3s;
   }
 
-  .footer-links a:hover { color: var(--cream); }
+  .footer-links a:hover { color: var(--gold); }
 
   .footer-bottom {
     display: flex;
@@ -1019,14 +1054,20 @@
 
   .footer-copy {
     font-size: 0.72rem;
-    color: rgba(250,246,240,0.25);
+    color: #fff;
     letter-spacing: 0.06em;
   }
 
   .footer-socials {
     display: flex;
     gap: 1.2rem;
+    justify-content: center;
   }
+  /* centre the copyright line and the social icons */
+  .footer-bottom { flex-direction: column; justify-content: center; align-items: center; gap: 1.1rem; text-align: center; width: 100%; }
+  .footer-bottom .footer-copy { width: 100%; text-align: center; }
+  .footer-socials .social-link { color: #fff; border-color: rgba(255,255,255,0.35); }
+  .footer-socials .social-link:hover { color: var(--gold); border-color: var(--gold); }
 
   .social-link {
     width: 32px;
@@ -1043,6 +1084,9 @@
     letter-spacing: 0;
   }
 
+  .soc-ico { display: block; width: 18px; height: 18px; background-color: currentColor;
+    -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; transition: transform .4s ease; }
+  .social-link:hover .soc-ico { transform: translateY(-2px) scale(1.12); }
   .social-link:hover {
     border-color: var(--gold);
     color: var(--gold);
@@ -1075,6 +1119,16 @@
   .hero-left > *:nth-child(5) { animation-delay: 0.65s; }
 
   /* ── SCROLL REVEAL ── */
+  /* destinations: cards glide up as you scroll down, photos zoom out and drift with the scroll */
+  .dest-card.scroll-reveal { transform: translateY(90px) scale(.92); transition: opacity 1.1s ease, transform 1.4s cubic-bezier(.22,.61,.36,1); }
+  .dest-card.scroll-reveal.is-visible { transform: none; }
+  .dest-card.scroll-reveal img { scale: 1.22; transition: transform .7s ease, scale 1.9s cubic-bezier(.22,.61,.36,1); }
+  .dest-card.scroll-reveal.is-visible img { scale: 1; }
+  .dest-card.scroll-reveal .dest-info { opacity: 0; translate: 0 26px; transition: opacity .9s ease .55s, translate 1s cubic-bezier(.22,.61,.36,1) .55s; }
+  .dest-card.scroll-reveal.is-visible .dest-info { opacity: 1; translate: 0 0; }
+  .dest-card img { position: absolute; left: 0; top: -8%; height: 116%; will-change: translate; }
+  .dest-section .section-title em { margin-left: .28em; }
+
   .scroll-reveal {
     opacity: 0;
     transform: translateY(42px);
@@ -1093,6 +1147,123 @@
   }
 
   /* ── MOBILE ── */
+
+  /* ── Journeys: Incredible India scene ── */
+  .tours-scene { position: relative; margin-top: 1.4rem; height: 190px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+  .tours-scene svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ts-cap { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; font-size: .66rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(224,191,128,.55); }
+  .ts-caravan { animation: tsCross 52s linear infinite; }
+  .ts-auto { animation: tsBack 20s linear infinite; }
+  .ts-bob { animation: tsBump .5s ease-in-out infinite alternate; }
+  .ts-wheel { transform-box: view-box; animation: tsSpin .7s linear infinite; }
+  .ts-camel { animation: tsBump 1.2s ease-in-out infinite alternate; }
+  .ts-camel .tl { transform-box: fill-box; transform-origin: top center; animation: tsLeg 1.2s ease-in-out infinite alternate; }
+  .ts-camel .l2, .ts-camel .l3 { animation-direction: alternate-reverse; }
+  .ts-balloon { animation: tsDrift 70s ease-in-out infinite alternate; }
+  .ts-float { animation: tsFloat 7s ease-in-out infinite alternate; }
+  .ts-boatwrap { animation: tsSail 38s ease-in-out infinite alternate; }
+  .ts-sway { animation: tsSway 4s ease-in-out infinite alternate; transform-origin: 0 10px; }
+  .ts-water { animation: tsWave 6s linear infinite; }
+  .ts-road { animation: tsRoad 1.4s linear infinite; }
+  @keyframes tsCross { from { transform: translateX(-260px); } to { transform: translateX(1700px); } }
+  @keyframes tsBack { from { transform: translateX(1560px); } to { transform: translateX(-220px); } }
+  @keyframes tsBump { to { transform: translateY(-2px); } }
+  @keyframes tsSpin { to { transform: rotate(-360deg); } }
+  @keyframes tsLeg { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+  @keyframes tsDrift { from { transform: translateX(-60px); } to { transform: translateX(520px); } }
+  @keyframes tsFloat { from { transform: translateY(8px); } to { transform: translateY(-14px); } }
+  @keyframes tsSail { from { transform: translate(150px, 158px); } to { transform: translate(250px, 158px); } }
+  @keyframes tsSway { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+  @keyframes tsWave { to { transform: translateX(-56px); } }
+  @keyframes tsRoad { to { stroke-dashoffset: -32; } }
+  @media (max-width: 900px) { .tours-scene { height: 150px; } }
+  @media (prefers-reduced-motion: reduce) { .tours-scene * { animation: none !important; } }
+
+
+  /* ── Traveller stories: passport stamps thud in, a paper plane keeps writing a route ── */
+  .testimonial-section { position: relative; overflow: hidden; isolation: isolate; }
+  .testimonial-section > *:not(.st-layer) { position: relative; z-index: 1; }
+  .st-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; color: #8B3E0D; }
+  .st-stamp { position: absolute; width: clamp(110px, 11vw, 170px); height: auto; opacity: 0; animation: stThud 16s cubic-bezier(.2,.8,.2,1) infinite; }
+  .st-tl { left: 6%; top: 16%; --r: -14deg; }
+  .st-tr { right: 7%; top: 14%; --r: 11deg; color: #2A5C45; }
+  .st-bl { left: 11%; bottom: 14%; --r: 9deg; color: #2A5C45; }
+  .st-br { right: 10%; bottom: 12%; --r: -10deg; }
+  .st-post { position: absolute; right: 24%; top: 8%; width: clamp(100px, 10vw, 150px); opacity: .28; transform: rotate(-5deg); }
+  .st-flight { position: absolute; left: 0; right: 0; top: 4%; width: 100%; height: 22%; opacity: .75; }
+  .st-trail { stroke: #C8611A; stroke-opacity: .35; stroke-width: 1.2; stroke-dasharray: 3 8; animation: stDash 12s linear infinite; }
+  @keyframes stThud {
+    0% { opacity: 0; transform: rotate(var(--r)) scale(1.7); }
+    4% { opacity: .62; transform: rotate(var(--r)) scale(.97); }
+    6% { transform: rotate(var(--r)) scale(1); }
+    22% { opacity: .5; transform: rotate(var(--r)) scale(1); }
+    30% { opacity: 0; transform: rotate(var(--r)) scale(1); }
+    100% { opacity: 0; transform: rotate(var(--r)) scale(1); }
+  }
+  @keyframes stDash { to { stroke-dashoffset: -110; } }
+  @media (max-width: 1000px) { .st-tr, .st-bl, .st-post { display: none; } .st-stamp { width: 96px; opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .st-layer * { animation: none !important; } .st-stamp { opacity: .35; transform: rotate(var(--r)); } .st-paper { display: none; } }
+
+
+  /* a little traveller sits on the gold corner and swings his legs */
+  .exp-accent { overflow: visible; }
+  .exp-sitter { position: absolute; left: -26px; bottom: calc(100% + 1px); width: 150px; height: auto; pointer-events: none; transform-origin: 50% 100%; animation: sitBreathe 4.2s ease-in-out infinite; filter: drop-shadow(0 6px 6px rgba(60,40,20,.22)); }
+  .exp-say { position: absolute; left: 92px; bottom: calc(100% + 112px); padding: .25rem .8rem; background: #fff; border: 1px solid var(--gold); border-radius: 999px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: .95rem; color: var(--saffron-dark); white-space: nowrap; opacity: 0; transform-origin: 0 100%; animation: sitSay 10s ease-in-out 1.5s infinite; pointer-events: none; box-shadow: 0 6px 14px rgba(60,40,20,.12); }
+  .exp-say::after { content: ""; position: absolute; left: 12px; bottom: -6px; width: 9px; height: 9px; background: #fff; border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); transform: rotate(45deg); }
+  @keyframes sitBreathe { 0%,100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.012, 1.02) rotate(-.5deg); } }
+  @keyframes sitSay { 0%,6% { opacity: 0; transform: scale(.4); } 12%,38% { opacity: 1; transform: scale(1); } 46%,100% { opacity: 0; transform: scale(.9); } }
+  @media (max-width: 900px) { .exp-sitter { width: 112px; left: -14px; } .exp-say { left: 72px; bottom: calc(100% + 84px); font-size: .85rem; } }
+  @media (prefers-reduced-motion: reduce) { .exp-sitter, .exp-say { animation: none !important; } .exp-say { opacity: 0; } }
+
+
+  /* the hiker stands still on the top edge of the "View All" button */
+  .va-wrap { position: relative; display: flex; margin-bottom: 0.3rem; }
+  .va-hiker { position: absolute; bottom: calc(100% - 1px); left: calc(64% - 38.5px); width: 77px; pointer-events: none; }
+  .va-hiker img { display: block; width: 100%; height: auto; filter: drop-shadow(0 3px 3px rgba(40,30,20,.25)); }
+  .va-wrap .btn-ghost { font-weight: 600; }
+  .va-trek { width: 86px; left: calc(64% - 43px); }
+  .va-trek img { filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); }
+
+  /* phones: the walking figures keep clear of the title when the button wraps below it */
+  @media (max-width: 900px) {
+    .va-wrap { margin-top: 5.2rem; }
+    .va-hiker { width: 54px; left: calc(64% - 27px); }
+    .va-trek { width: 46px; left: calc(64% - 23px); }
+    .exp-sitter { left: 24px; width: 96px; }
+    .exp-say { left: 98px; bottom: calc(100% + 90px); }
+  }
+
+  /* ── Each section fills one screen (desktop/tablet landscape) ── */
+  @media (min-width: 901px) {
+    .hero, .dest-section, .exp-section, .tours-section, .testimonial-section, .newsletter-section {
+      min-height: 100vh; min-height: 100svh;
+      scroll-margin-top: 0;
+    }
+    .dest-section, .tours-section, .testimonial-section {
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 7.5rem; padding-bottom: 4rem;   /* clear the fixed nav */
+    }
+    /* destinations grid sized to fit the remaining screen height */
+    /* journeys: pull content up so the cards sit higher, no dead space above the title */
+    .tours-section { justify-content: flex-start; padding-top: 6rem; padding-bottom: 2.5rem; }
+    .tours-section .tours-header { margin-bottom: 1.6rem; }
+    .dest-section { padding-top: 5.8rem; padding-bottom: 1.5rem; justify-content: flex-start; }
+    .dest-section .dest-header { margin-bottom: 1rem; align-items: flex-end; }
+    .dest-section .section-title { font-size: clamp(1.8rem, 3vw, 2.4rem); max-width: none; line-height: 1.1; }
+    .dest-section .section-title br { display: none; }
+    .dest-section .section-tag { margin-bottom: 0.4rem; }
+    .dest-grid { grid-template-rows: 1fr 1fr; height: clamp(304px, calc((100svh - 14rem) * 0.8), 608px); width: 80%; margin: 0 auto; gap: 0.9rem; }
+    .dest-card .dest-info { padding: 1.2rem 1.4rem; }
+    .dest-card:first-child .dest-name { font-size: 2rem; }
+    .exp-section, .newsletter-section {
+      align-content: center;
+      padding-top: 7.5rem; padding-bottom: 4rem;
+    }
+    /* "Plan My Journey" lands with the enquiry section flush to the top of the screen and the whole form in view */
+    #contact { scroll-margin-top: 0; padding-top: 5.8rem; padding-bottom: 1.6rem; }
+  }
+
   @media (max-width: 900px) {
     nav { padding: 1.2rem 2rem; }
     .nav-toggle { display: flex; }
@@ -1174,6 +1345,11 @@
     .nav-wordmark { display: none; }
   }
 </style>
+<script>
+  /* On reload, start at the top (hero + date visible) unless a #section link was used */
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+  window.addEventListener('load', function () { if (!location.hash) window.scrollTo(0, 0); });
+</script>
 
 <style>
 /* Mobile quick-contact bar */
@@ -1288,10 +1464,10 @@
   </a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="destinations/All_packages/Explore_Destination.html">Explore Destinations</a></li>
-      <li><a href="#journeys">Journeys</a></li>    
-      <li><a href="feedback.html">Feedback</a></li>
-      <li><a href="pdf_files/Viharasetu_about.pdf" target="_blank" rel="noopener">About</a></li>
+      <li><a href="destinations/All_packages/Explore_Destination.html"><i class="nav-ico" style="--ico:url(images/nav_icons/explore.svg)"></i>Explore Destinations</a></li>
+      <li><a href="#journeys"><i class="nav-ico" style="--ico:url(images/nav_icons/journeys.svg)"></i>Journeys</a></li>    
+      <li><a href="feedback.html"><i class="nav-ico" style="--ico:url(images/nav_icons/feedback.svg)"></i>Feedback</a></li>
+      <li><a href="about.html"><i class="nav-ico" style="--ico:url(images/nav_icons/about.svg)"></i>About</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Plan My Journey</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1382,7 +1558,10 @@
       <p class="section-tag">Seasonal Destinations in India</p>
       <h2 class="section-title">Destinations That<br><em>Stir the Soul</em></h2>
     </div>
-    <a href="destinations/All_packages/Explore_Destination.html" class="btn-ghost" style="margin-bottom:0.3rem;">View All →</a>
+    <span class="va-wrap">
+      <span class="va-hiker" aria-hidden="true"><img src="images/hiker.png" alt="" width="260" height="405" loading="lazy" /></span>
+      <a href="destinations/All_packages/Explore_Destination.html" class="btn-ghost">View All →</a>
+    </span>
   </div>
 
   <div class="dest-grid">
@@ -1437,7 +1616,10 @@
 <!-- EXPERIENCES -->
 <section id="experiences" class="exp-section">
   <div class="exp-visual">
-    <div class="exp-accent"></div>
+    <div class="exp-accent">
+      <img class="exp-sitter" src="images/traveller.png" alt="" width="380" height="386" loading="lazy" />
+      <span class="exp-say" aria-hidden="true">Namaste</span>
+    </div>
     <img class="exp-img-main" src="images/Tanjavure.jpg" alt="Temples" loading="lazy" />
     <img class="exp-img-secondary" src="images/kashi_ghats.jpg" alt="kashi_ghats" loading="lazy" />
   </div>
@@ -1487,7 +1669,10 @@
       <p class="section-tag">Curated Itineraries</p>
       <h2 class="section-title">Signature <em>Journeys</em></h2>
     </div>
-    <a href="#" class="btn-ghost" style="border-color:rgba(255,255,255,0.2); color:var(--cream);">All Journeys →</a>
+    <span class="va-wrap">
+      <span class="va-hiker va-trek" aria-hidden="true"><img src="images/trekker.png" alt="" width="208" height="440" loading="lazy" /></span>
+      <a href="#" class="btn-ghost" style="border-color:rgba(255,255,255,0.2); color:var(--cream);">All Journeys →</a>
+    </span>
   </div>
 
   <div class="tours-grid">
@@ -1569,10 +1754,63 @@
       </div>
     </div>
   </div>
+
+    <div class="tours-scene" aria-hidden="true">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice" fill="none" stroke="#e0bf80" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+        <g class="ts-far" stroke-opacity=".16"><path d="M0 150L90 92 150 126 250 60 340 118 420 84 520 130 620 70 720 120 820 88 930 136 1040 72 1140 120 1240 90 1340 128 1440 100V150" /></g>
+        <g class="ts-back" stroke-opacity=".28">
+          <g transform="translate(300 150) scale(.8)"><path d="M-60 0V-28H60V0M-40-28V-58H40V-28M-18-58C-18-98 -6-112 0-120C6-112 18-98 18-58M0-120v-14M-72 0V-92M-66 0V-92M-74-92h10M72 0V-92M66 0V-92M64-92h10"/></g>
+          <g transform="translate(870 150) scale(.95)"><path d="M-30 0h60M-24-6h48M-18-6V-34M18-6V-34M-18-34C-18-58-8-76 0-86C8-76 18-58 18-34Z M-14-44h28M-11-54h22M-8-64h16M0-86v-12M0-98l9 3-9 3"/></g>
+          <g transform="translate(560 150) scale(.85)"><path d="M0 0C3-30 2-50 8-70M8-70c-14-4-26 0-34 10M8-70c-8-12-22-14-30-12M8-70c10-12 24-12 32-6M8-70c2-14 14-20 26-18M8-70c-2-14-8-20-18-22"/></g><g transform="translate(1180 150) scale(.75)"><path d="M0 0C3-30 2-50 8-70M8-70c-14-4-26 0-34 10M8-70c-8-12-22-14-30-12M8-70c10-12 24-12 32-6M8-70c2-14 14-20 26-18M8-70c-2-14-8-20-18-22"/></g><g transform="translate(1330 150) scale(.6)"><path d="M0 0C3-30 2-50 8-70M8-70c-14-4-26 0-34 10M8-70c-8-12-22-14-30-12M8-70c10-12 24-12 32-6M8-70c2-14 14-20 26-18M8-70c-2-14-8-20-18-22"/></g>
+        </g>
+        <path d="M0 150H1440" stroke-opacity=".55"/>
+        <path class="ts-road" d="M0 172H1440" stroke-opacity=".35" stroke-dasharray="18 14"/>
+        <g class="ts-water" stroke-opacity=".4"><path d="M30 162q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0 28 0 28 0 28 0 28 0"/><path d="M30 172q14-8 28 0t28 0 28 0 28 0 28 0 28 0 28 0 28 0 28 0 28 0 28 0"/></g>
+        <g transform="translate(150 158)" class="ts-boatwrap"><g class="ts-boat"><g class="ts-sway">
+  <path d="M-46 0h92l-10 12h-72z"/><path d="M-36 0V-14Q0-34 36-14V0"/><path d="M-22 0v-12M-6 0v-18M10 0v-18M26 0v-12"/><path d="M0-26v-14l10 4-10 4" stroke="#C8611A"/>
+</g></g></g>
+        <g transform="translate(0 150)" stroke-opacity=".8"><g class="ts-caravan"><g transform="translate(0 0) scale(.92)" style="animation-delay:0.0s"><g class="ts-camel">
+  <path class="tl l1" d="M-20-24V0"/><path class="tl l2" d="M-12-24V0"/><path class="tl l3" d="M12-24V0"/><path class="tl l4" d="M19-24V0"/>
+  <path d="M-26-28C-26-38-14-40-10-38C-8-50 4-50 6-38C14-40 22-36 22-28C22-22-26-22-26-28Z"/>
+  <path d="M20-34C28-40 30-52 34-58M34-58l10 2-2 5-9-1M-26-30q-6 6-4 14"/>
+</g></g><g transform="translate(-74 0) scale(.92)" style="animation-delay:-0.3s"><g class="ts-camel">
+  <path class="tl l1" d="M-20-24V0"/><path class="tl l2" d="M-12-24V0"/><path class="tl l3" d="M12-24V0"/><path class="tl l4" d="M19-24V0"/>
+  <path d="M-26-28C-26-38-14-40-10-38C-8-50 4-50 6-38C14-40 22-36 22-28C22-22-26-22-26-28Z"/>
+  <path d="M20-34C28-40 30-52 34-58M34-58l10 2-2 5-9-1M-26-30q-6 6-4 14"/>
+</g></g><g transform="translate(-148 0) scale(.92)" style="animation-delay:-0.7s"><g class="ts-camel">
+  <path class="tl l1" d="M-20-24V0"/><path class="tl l2" d="M-12-24V0"/><path class="tl l3" d="M12-24V0"/><path class="tl l4" d="M19-24V0"/>
+  <path d="M-26-28C-26-38-14-40-10-38C-8-50 4-50 6-38C14-40 22-36 22-28C22-22-26-22-26-28Z"/>
+  <path d="M20-34C28-40 30-52 34-58M34-58l10 2-2 5-9-1M-26-30q-6 6-4 14"/>
+</g></g></g></g>
+        <g transform="translate(0 150)" stroke-opacity=".9"><g class="ts-auto"><g class="ts-bob">
+  <path d="M-30-12h48v-16Q18-40 2-40H-20Q-30-40-30-28z"/><path d="M-24-40Q-6-54 14-40M-4-40v12h20"/>
+  <path d="M-34-12h56" stroke="#C8611A"/>
+</g>
+  <g class="ts-wheel" style="transform-origin:-24px -6px"><circle cx="-24" cy="-6" r="6"/><path d="M-24-12v12M-30-6h12"/></g>
+  <g class="ts-wheel" style="transform-origin:12px -6px"><circle cx="12" cy="-6" r="6"/><path d="M12-12v12M6-6h12"/></g>
+</g></g>
+        <g transform="translate(650 128)" stroke-opacity=".8"><g class="ts-balloon"><g class="ts-float">
+  <path d="M0-92c-26 0-38 22-30 44 4 10 14 18 30 26 16-8 26-16 30-26 8-22-4-44-30-44z" fill="#C8611A" fill-opacity=".12"/>
+  <path d="M-12-86C-20-66-16-50 0-22M12-86C20-66 16-50 0-22M0-92V-22M-26-70h52M-29-56h58" stroke-opacity=".7"/>
+  <path d="M-8-22l-3 12M8-22l3 12M-11-10h22v10h-22z"/>
+</g></g></g>
+      </svg>
+      <p class="ts-cap">Deserts &nbsp;·&nbsp; Backwaters &nbsp;·&nbsp; Heritage &nbsp;·&nbsp; Himalaya</p>
+    </div>
 </section>
 
 <!-- TESTIMONIAL -->
 <section class="testimonial-section">
+  <div class="st-layer" aria-hidden="true">
+  <svg class="st-stamp st-tl" style="animation-delay:0s" viewBox="0 0 150 150" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><defs><path id="stp0" d="M75 75m-53 0a53 53 0 1 1 106 0a53 53 0 1 1-106 0"/></defs><circle cx="75" cy="75" r="70"/><circle cx="75" cy="75" r="65" stroke-width=".7"/><circle cx="75" cy="75" r="40" stroke-dasharray="2 4" stroke-width=".8"/><text font-size="10.5" letter-spacing="2.6" fill="currentColor" stroke="none" font-family="Jost, sans-serif" font-weight="500"><textPath href="#stp0" startOffset="0">VARANASI · UTTAR PRADESH · </textPath></text><g transform="translate(75 72)"><path d="M-14 10h28M-10 6h20M-8 6V-4M8 6V-4M-8-4C-8-14-3-20 0-24C3-20 8-14 8-4Z M0-24v-6M0-30l5 2-5 2"/></g><text x="75" y="106" text-anchor="middle" font-size="8" letter-spacing="3" fill="currentColor" stroke="none" font-family="Jost, sans-serif">INDIA</text></svg><svg class="st-stamp st-tr" style="animation-delay:4s" viewBox="0 0 150 150" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><defs><path id="stp1" d="M75 75m-53 0a53 53 0 1 1 106 0a53 53 0 1 1-106 0"/></defs><circle cx="75" cy="75" r="70"/><circle cx="75" cy="75" r="65" stroke-width=".7"/><circle cx="75" cy="75" r="40" stroke-dasharray="2 4" stroke-width=".8"/><text font-size="10.5" letter-spacing="2.6" fill="currentColor" stroke="none" font-family="Jost, sans-serif" font-weight="500"><textPath href="#stp1" startOffset="0">LEH LADAKH · HIMALAYA · </textPath></text><g transform="translate(75 72)"><path d="M-22 12L-8-12 0 0 8-14 22 12Z M-12-4l4 4 3-5"/></g><text x="75" y="106" text-anchor="middle" font-size="8" letter-spacing="3" fill="currentColor" stroke="none" font-family="Jost, sans-serif">INDIA</text></svg><svg class="st-stamp st-bl" style="animation-delay:8s" viewBox="0 0 150 150" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><defs><path id="stp2" d="M75 75m-53 0a53 53 0 1 1 106 0a53 53 0 1 1-106 0"/></defs><circle cx="75" cy="75" r="70"/><circle cx="75" cy="75" r="65" stroke-width=".7"/><circle cx="75" cy="75" r="40" stroke-dasharray="2 4" stroke-width=".8"/><text font-size="10.5" letter-spacing="2.6" fill="currentColor" stroke="none" font-family="Jost, sans-serif" font-weight="500"><textPath href="#stp2" startOffset="0">ALLEPPEY · KERALA · BACKWATERS · </textPath></text><g transform="translate(75 72)"><path d="M-20 6h40l-5 8h-30z M-14 6V-4Q0-16 14-4V6M-6 6V-2M2 6V-2M0-16v-8l6 2-6 2"/></g><text x="75" y="106" text-anchor="middle" font-size="8" letter-spacing="3" fill="currentColor" stroke="none" font-family="Jost, sans-serif">INDIA</text></svg><svg class="st-stamp st-br" style="animation-delay:12s" viewBox="0 0 150 150" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><defs><path id="stp3" d="M75 75m-53 0a53 53 0 1 1 106 0a53 53 0 1 1-106 0"/></defs><circle cx="75" cy="75" r="70"/><circle cx="75" cy="75" r="65" stroke-width=".7"/><circle cx="75" cy="75" r="40" stroke-dasharray="2 4" stroke-width=".8"/><text font-size="10.5" letter-spacing="2.6" fill="currentColor" stroke="none" font-family="Jost, sans-serif" font-weight="500"><textPath href="#stp3" startOffset="0">GOA · KONKAN COAST · SUNSETS · </textPath></text><g transform="translate(75 72)"><circle cx="0" cy="-2" r="8"/><path d="M0-18v-5M0 14v5M-16-2h-5M16-2h5M-11-13l-3-3M11-13l3-3M-11 9l-3 3M11 9l3 3"/></g><text x="75" y="106" text-anchor="middle" font-size="8" letter-spacing="3" fill="currentColor" stroke="none" font-family="Jost, sans-serif">INDIA</text></svg>
+  <svg class="st-post" viewBox="0 0 200 70" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="2" y="2" width="96" height="66" rx="3"/><text x="50" y="28" text-anchor="middle" font-size="11" letter-spacing="3" fill="currentColor" stroke="none" font-family="Jost, sans-serif">AIR MAIL</text><text x="50" y="50" text-anchor="middle" font-size="9" letter-spacing="2" fill="currentColor" stroke="none" font-family="Jost, sans-serif">PAR AVION</text><path d="M108 14q9-8 18 0t18 0 18 0 18 0M108 30q9-8 18 0t18 0 18 0 18 0M108 46q9-8 18 0t18 0 18 0 18 0M108 62q9-8 18 0t18 0 18 0 18 0"/></svg>
+  <svg class="st-flight" viewBox="0 0 1400 160" preserveAspectRatio="none" fill="none" stroke-linecap="round">
+    <path id="stFlightP" class="st-trail" d="M-20 120C180 130 260 40 380 70S500 140 440 100 470 40 560 60 760 130 900 80 1150 10 1420 50"/>
+    <g class="st-paper"><path d="M-10 4l22-10-8 12-4 8-4-6z M12-6L-4 8" fill="#C8611A" fill-opacity=".18" stroke="#C8611A" stroke-width="1.3"/>
+      <animateMotion dur="15s" repeatCount="indefinite" rotate="auto"><mpath href="#stFlightP"/></animateMotion></g>
+  </svg>
+</div>
+
   <p class="section-tag" style="justify-content:center; text-align:center;">Traveller Stories</p>
   <blockquote id="test-quote" class="testimonial-quote">
     "A heartfelt thank you to the Viharasetu team for making our Rajasthan trip (Udaipur, Jaipur &amp; Jodhpur) truly memorable! ❤️ From planning to travel coordination, everything was perfectly managed. We enjoyed every moment without any worries. Wonderful experience and amazing hospitality!"
@@ -1699,10 +1937,10 @@
       <p class="footer-col-title">Company</p>
       <ul class="footer-links">
         <li><a href="#" class="footer-popup-link" data-popup="our-story">Our Story</a></li>
-        <li><a href="#">Our Guides</a></li>
-        <li><a href="#">Responsible Travel</a></li>
-        <li><a href="#">Press & Media</a></li>
-        <li><a href="#">Careers</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="our-guides">Our Guides</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="responsible-travel">Responsible Travel</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="press-media">Press &amp; Media</a></li>
+        <li><a href="#" class="footer-popup-link" data-popup="careers">Careers</a></li>
       </ul>
     </div>
     <div>
@@ -1720,10 +1958,10 @@
   <div class="footer-bottom">
     <p class="footer-copy">© 2026 Viharasetu. All rights reserved. Crafted with reverence in India.</p>
     <div class="footer-socials">
-      <a class="social-link" href="https://www.linkedin.com/company/viharasetu/">in</a>
-      <a class="social-link" href="https://www.instagram.com/viharasetu/">ig</a>
-      <a class="social-link" href="#">tw</a>
-      <a class="social-link" href="#">yt</a>
+      <a class="social-link" href="https://www.linkedin.com/company/viharasetu/" target="_blank" rel="noopener" aria-label="Viharasetu on LinkedIn"><i class="soc-ico" style="--ico:url(images/social_icons/linkedin.svg)"></i></a>
+      <a class="social-link" href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener" aria-label="Viharasetu on Instagram"><i class="soc-ico" style="--ico:url(images/social_icons/instagram.svg)"></i></a>
+      <a class="social-link" href="#" aria-label="X (Twitter)"><i class="soc-ico" style="--ico:url(images/social_icons/x.svg)"></i></a>
+      <a class="social-link" href="#" aria-label="YouTube"><i class="soc-ico" style="--ico:url(images/social_icons/youtube.svg)"></i></a>
     </div>
   </div>
 </footer>
@@ -1957,6 +2195,53 @@
         <p><strong>A bridge for your travel dreams.</strong></p>
         <p class="fp-story-tagline"><strong>From Aastha to Eternal Anubhav.</strong></p>
       </div>`
+    },
+    'our-guides': {
+      tag: 'On the Ground',
+      title: 'Our Guides',
+      body: `<p>A good guide turns a place into a story. Every ViharaSetu journey is supported by people who know the destination, speak your language and care about how your trip feels.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">Local guides &amp; coordinators</p><p class="fp-item-text">Knowledgeable people on the ground — at the ghats, the temples, the hill roads — who share the history, the rituals and the little details no brochure covers.</p></div>
+          <div><p class="fp-item-title">Your travel coordinator</p><p class="fp-item-text">A dedicated contact who plans your itinerary with you and stays connected through the trip, so any change or request is handled quickly.</p></div>
+          <div><p class="fp-item-title">Spiritual &amp; cultural context</p><p class="fp-item-text">For pilgrimages and heritage trails we arrange guides who explain the traditions, so you take part rather than just watch.</p></div>
+          <div><p class="fp-item-title">Care for every traveller</p><p class="fp-item-text">Pace and plans are adjusted for seniors, families with children and first-time travellers.</p></div>
+        </div>
+        <a class="footer-popup-cta" href="#contact">Plan a guided journey →</a>`
+    },
+    'responsible-travel': {
+      tag: 'Travel With Care',
+      title: 'Responsible Travel',
+      body: `<p>India's temples, mountains and villages are living places. We plan journeys so that they stay that way, and we ask our travellers to help.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">Respect for sacred places</p><p class="fp-item-text">Dress modestly at temples and monasteries, follow the customs of each place and ask before photographing people or rituals.</p></div>
+          <div><p class="fp-item-title">Support local people</p><p class="fp-item-text">We prefer locally run stays, local drivers and guides and neighbourhood eateries, so your trip supports the community you visit.</p></div>
+          <div><p class="fp-item-title">Leave places as you found them</p><p class="fp-item-text">Carry a refillable bottle, avoid single-use plastic and take your waste with you, especially in the mountains and on river ghats.</p></div>
+          <div><p class="fp-item-title">Respect the mountains and wildlife</p><p class="fp-item-text">Stay on marked trails, keep a distance from animals and follow permit rules in protected and high-altitude areas.</p></div>
+          <div><p class="fp-item-title">Honest, transparent travel</p><p class="fp-item-text">Clear pricing, fair dealings with local partners and no pressure to buy anything you don't want.</p></div>
+        </div>`
+    },
+    'press-media': {
+      tag: 'Newsroom',
+      title: 'Press &amp; Media',
+      body: `<p>Writing about travel in India, spiritual journeys or small travel businesses? We'd be glad to help with a story.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">About ViharaSetu</p><p class="fp-item-text">A travel experience company founded on February 20, 2026 by three friends who love to travel. We plan spiritual, family and customised journeys across India — "From Aastha to Eternal Anubhav".</p></div>
+          <div><p class="fp-item-title">What we can help with</p><p class="fp-item-text">Interviews with the founders, information about our destinations and journeys, and logo and photographs for editorial use (on request).</p></div>
+          <div><p class="fp-item-title">Media enquiries</p><p class="fp-item-text"><a href="mailto:info@viharasetu.co.in?subject=Media%20enquiry">info@viharasetu.co.in</a> · <a href="https://wa.me/919885180515" target="_blank" rel="noopener">WhatsApp +91 98851 80515</a></p></div>
+          <div><p class="fp-item-title">Follow our journeys</p><p class="fp-item-text"><a href="https://www.instagram.com/viharasetu/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/company/viharasetu/" target="_blank" rel="noopener">LinkedIn</a></p></div>
+        </div>`
+    },
+    careers: {
+      tag: 'Work With Us',
+      title: 'Careers',
+      body: `<p>We're a young, growing team. Right now we work with freelancers on a <strong>commission basis</strong> — you earn when your travellers travel.</p>
+        <div class="footer-popup-list">
+          <div><p class="fp-item-title">Freelance travel partner</p><p class="fp-item-text">Introduce friends, family, groups or your own community to ViharaSetu journeys and earn a commission on every confirmed booking.</p></div>
+          <div><p class="fp-item-title">How it works</p><ul class="fp-terms"><li>No salary or fixed targets — you work on your own time, from anywhere.</li><li>You share the lead; we handle the itinerary, quote, bookings and on-trip support.</li><li>Commission is paid on confirmed bookings; the details are shared when you join.</li></ul></div>
+          <div><p class="fp-item-title">Who it suits</p><p class="fp-item-text">Travel enthusiasts, trip organisers, community and group leaders, content creators and anyone who loves recommending great journeys.</p></div>
+          <div><p class="fp-item-title">How to apply</p><p class="fp-item-text">Tell us a little about yourself and the kind of travellers you can reach — <a href="mailto:info@viharasetu.co.in?subject=Freelance%20partner%20(commission%20basis)">info@viharasetu.co.in</a> or <a href="https://wa.me/919885180515?text=Hi%20ViharaSetu%2C%20I%27m%20interested%20in%20freelancing%20on%20a%20commission%20basis." target="_blank" rel="noopener">WhatsApp us</a>.</p></div>
+        </div>
+        <a class="footer-popup-cta" href="mailto:info@viharasetu.co.in?subject=Freelance%20partner%20(commission%20basis)">Apply as a freelancer →</a>`
     },
     faqs: {
       tag: 'Good to Know',
@@ -2587,6 +2872,26 @@ function sendEnquiry(formData) {
       revealObserver.observe(el);
     });
   });
+})();
+</script>
+
+<script>
+/* parallax: destination photos drift slightly as the page scrolls */
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.dest-card img')), tick = false;
+  function upd() {
+    var vh = innerHeight;
+    imgs.forEach(function (img) {
+      var r = img.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+      img.style.translate = '0 ' + (p * -20).toFixed(1) + 'px';
+    });
+    tick = false;
+  }
+  addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
+  addEventListener('resize', upd); upd();
 })();
 </script>
 
