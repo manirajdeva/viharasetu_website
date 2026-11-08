@@ -112,6 +112,8 @@ ul{list-style:none}
 .dest-card .thumb{position:relative;aspect-ratio:4/3.1;overflow:hidden;background:var(--sand)}
 .dest-card .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,15,18,.28) 0%,rgba(42,15,18,0) 38%,rgba(42,15,18,.55) 100%);pointer-events:none}
 .dest-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.dest-card .thumb-ph{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,rgba(224,191,128,.28),transparent 60%),linear-gradient(135deg,var(--maroon-deep,#2a0f12),var(--maroon,#4a141b))}
+.dest-card .thumb-ph span{font:italic 500 1.5rem var(--serif);color:var(--gold-light,#e0bf80);border-top:1px solid rgba(224,191,128,.5);border-bottom:1px solid rgba(224,191,128,.5);padding:6px 16px}
 .dest-card:hover .thumb img{transform:scale(1.07)}
 .dest-card .thumb .tag{position:absolute;z-index:2;left:10px;top:10px;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gold-light);background:rgba(42,15,18,.78);border:1px solid rgba(224,191,128,.5);backdrop-filter:blur(6px);padding:4px 9px;border-radius:999px}
 .dest-card .thumb .season-tags{position:absolute;z-index:2;left:10px;bottom:9px;display:flex;flex-wrap:wrap;gap:4px}
@@ -368,7 +370,7 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
       </div>
     </div>
     <div class="container hero-stats" aria-label="At a glance">
-      <div class="stat"><b id="stat-journeys">39</b><span>Journeys</span></div>
+      <div class="stat"><b id="stat-journeys">53</b><span>Journeys</span></div>
       <div class="stat"><b id="stat-states">16</b><span>States &amp; Territories</span></div>
       <div class="stat"><b id="stat-seasons">3</b><span>Seasons covered</span></div>
     </div>
@@ -706,6 +708,110 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
         </div>
       </a>
 
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/chennai.html" data-state="Tamil Nadu" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>Chennai</span></div>
+        </div>
+        <div class="body">
+          <h3>Chennai</h3>
+          <p class="tagline">Temples, colonial heritage and Marina Beach in Tamil Nadu’s capital.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/thanjavur.html" data-state="Tamil Nadu" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="../../images/destinations/brihadeeswara-temple-thanjavur.jpg" alt="Thanjavur" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Thanjavur</h3>
+          <p class="tagline">The Chola capital and its thousand-year-old Brihadeeswarar Temple.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/kanyakumari.html" data-state="Tamil Nadu" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="../../images/destinations/vivekananda-rock-memorial-kanyakumari.jpg" alt="Kanyakumari" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Kanyakumari</h3>
+          <p class="tagline">India’s southern tip, where three seas meet at sunrise and sunset.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/madurai.html" data-state="Tamil Nadu" data-seasons="Winter,Summer">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span><span>Summer</span></div>
+          <img src="../../images/destinations/meenakshi-temple-gopuram-madurai-india.jpg" alt="Madurai" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Madurai</h3>
+          <p class="tagline">The temple city of the Meenakshi Amman Temple and its towering gopurams.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/rameswaram.html" data-state="Tamil Nadu" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="../../images/destinations/ramanathaswamy-temple7.jpg" alt="Rameswaram" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Rameswaram</h3>
+          <p class="tagline">Island Jyotirlinga, the Pamban Bridge and the ghost town of Dhanushkodi.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/kodaikanal.html" data-state="Tamil Nadu" data-seasons="Summer,Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Summer</span><span>Winter</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>Kodaikanal</span></div>
+        </div>
+        <div class="body">
+          <h3>Kodaikanal</h3>
+          <p class="tagline">The Princess of Hill Stations: a misty lake, pine forests and cliff views.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/mahabalipuram.html" data-state="Tamil Nadu" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>Mahabalipuram</span></div>
+        </div>
+        <div class="body">
+          <h3>Mahabalipuram</h3>
+          <p class="tagline">Pallava shore temples and rock-cut monuments on the Bay of Bengal.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="TAMIL_NADU/kanchipuram.html" data-state="Tamil Nadu" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Tamil Nadu</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>Kanchipuram</span></div>
+        </div>
+        <div class="body">
+          <h3>Kanchipuram</h3>
+          <p class="tagline">The City of a Thousand Temples and the home of Kanchi silk.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
       <a class="dest-card" data-cursor-text="Explore" href="PUDUCHERRY/pondicherry.html" data-state="Puducherry" data-seasons="Winter">
         <div class="thumb">
           <span class="tag">Puducherry</span>
@@ -874,6 +980,84 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
         <div class="body">
           <h3>Vizag &amp; Araku Valley</h3>
           <p class="tagline">Beach promenades and hilltop viewpoints, then coffee hills across the Eastern Ghats.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="ANDHRA_PRADESH/north-andhra-temples.html" data-state="Andhra Pradesh" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Andhra Pradesh</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>North Andhra</span></div>
+        </div>
+        <div class="body">
+          <h3>North Andhra Divine Darshan</h3>
+          <p class="tagline">Simhachalam, Arasavalli, Srikurmam and Srimukhalingam from Visakhapatnam.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="ANDHRA_PRADESH/godavari-konaseema-yatra.html" data-state="Andhra Pradesh" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Andhra Pradesh</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="../../images/destinations/pancharama-draksharama-bhimeswara-temple-draksharamam.jpg" alt="Godavari Pancharama &amp; Konaseema Yatra" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Godavari Pancharama &amp; Konaseema Yatra</h3>
+          <p class="tagline">Annavaram, Draksharamam, Antarvedi and Dwaraka Tirumala through the Godavari delta.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="ANDHRA_PRADESH/central-andhra-temples.html" data-state="Andhra Pradesh" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Andhra Pradesh</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <img src="../../images/destinations/pancharama-amararama-amareswara-temple-amaravati.jpg" alt="Central Andhra Pancharama &amp; Divine Temples" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Central Andhra Pancharama &amp; Divine Temples</h3>
+          <p class="tagline">Kanaka Durga, Mangalagiri, Amaravati and Kotappakonda from Vijayawada.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="ANDHRA_PRADESH/rayalaseema-yatra.html" data-state="Andhra Pradesh" data-seasons="Winter">
+        <div class="thumb">
+          <span class="tag">Andhra Pradesh</span>
+          <div class="season-tags"><span>Winter</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>Rayalaseema</span></div>
+        </div>
+        <div class="body">
+          <h3>Rayalaseema Shiva &amp; Narasimha Kshetra Yatra</h3>
+          <p class="tagline">Mahanandi, Yaganti, Ahobilam, Lepakshi and Srisailam across the Nallamala hills.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="ANDHRA_PRADESH/tirupati-south-andhra.html" data-state="Andhra Pradesh" data-seasons="Winter,Summer">
+        <div class="thumb">
+          <span class="tag">Andhra Pradesh</span>
+          <div class="season-tags"><span>Winter</span><span>Summer</span></div>
+          <div class="thumb-ph" aria-hidden="true"><span>Tirupati &amp; South Andhra</span></div>
+        </div>
+        <div class="body">
+          <h3>Tirumala &amp; Pancha Temple Darshan</h3>
+          <p class="tagline">Tirumala, Tiruchanur, Srikalahasti and Kanipakam from Tirupati.</p>
+          <div class="meta"><span class="explore">Explore →</span></div>
+        </div>
+      </a>
+
+      <a class="dest-card" data-cursor-text="Explore" href="ANDHRA_PRADESH/konaseema-divya-darshan.html" data-state="Andhra Pradesh" data-seasons="Winter,Monsoon">
+        <div class="thumb">
+          <span class="tag">Andhra Pradesh</span>
+          <div class="season-tags"><span>Winter</span><span>Monsoon</span></div>
+          <img src="../../images/destinations/pancharama-draksharama-bhimeswara-temple-draksharamam.jpg" alt="Konaseema Divya Darshan" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Konaseema Divya Darshan</h3>
+          <p class="tagline">Draksharamam, Ainavilli, Ryali and Antarvedi among Konaseema’s coconut groves.</p>
           <div class="meta"><span class="explore">Explore →</span></div>
         </div>
       </a>
@@ -1055,7 +1239,7 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
 <script>
 /* hero locator: the pin hops at random between our destinations, naming each one */
 (function () {
-  var D = [["Delhi", "Delhi", 77.21, 28.61], ["Agra", "Uttar Pradesh", 78.04, 27.18], ["Mathura & Vrindavan", "Uttar Pradesh", 77.67, 27.49], ["Varanasi", "Uttar Pradesh", 82.99, 25.32], ["Rishikesh", "Uttarakhand", 78.27, 30.09], ["Haridwar", "Uttarakhand", 78.16, 29.95], ["Kedarnath", "Uttarakhand", 79.07, 30.73], ["Badrinath", "Uttarakhand", 79.49, 30.74], ["Valley of Flowers", "Uttarakhand", 79.6, 30.73], ["Hampi", "Karnataka", 76.46, 15.34], ["Mysore", "Karnataka", 76.64, 12.3], ["Coorg", "Karnataka", 75.74, 12.42], ["Gokarna", "Karnataka", 74.32, 14.55], ["Leh Ladakh", "Ladakh", 77.58, 34.15], ["Spiti Valley", "Himachal Pradesh", 78.07, 32.25], ["Shimla", "Himachal Pradesh", 77.17, 31.1], ["Manali", "Himachal Pradesh", 77.19, 32.24], ["Munnar", "Kerala", 77.06, 10.09], ["Alleppey", "Kerala", 76.33, 9.49], ["Kochi", "Kerala", 76.27, 9.93], ["Kovalam", "Kerala", 76.98, 8.4], ["Goa", "Goa", 73.83, 15.5], ["Jaipur", "Rajasthan", 75.79, 26.91], ["Jaisalmer", "Rajasthan", 70.91, 26.92], ["Udaipur", "Rajasthan", 73.71, 24.58], ["Jodhpur", "Rajasthan", 73.02, 26.24], ["Ooty", "Tamil Nadu", 76.69, 11.41], ["Madurai", "Tamil Nadu", 78.12, 9.93], ["Rameswaram", "Tamil Nadu", 79.31, 9.29], ["Pondicherry", "Puducherry", 79.81, 11.94], ["Srinagar", "Jammu & Kashmir", 74.8, 34.08], ["Gulmarg", "Jammu & Kashmir", 74.38, 34.05], ["Pahalgam", "Jammu & Kashmir", 75.34, 34.02], ["Sonmarg", "Jammu & Kashmir", 75.29, 34.3], ["Vaishno Devi", "Jammu & Kashmir", 74.95, 33.03], ["Lakshadweep", "Lakshadweep", 72.64, 10.57], ["Vizag", "Andhra Pradesh", 83.22, 17.69], ["Araku Valley", "Andhra Pradesh", 82.88, 18.33], ["Bhimavaram", "Andhra Pradesh", 81.52, 16.54], ["Tawang", "Arunachal Pradesh", 91.86, 27.59]], P = [67.8, 37.3, 17.0, 18.3];
+  var D = [["Delhi", "Delhi", 77.21, 28.61], ["Agra", "Uttar Pradesh", 78.04, 27.18], ["Mathura & Vrindavan", "Uttar Pradesh", 77.67, 27.49], ["Varanasi", "Uttar Pradesh", 82.99, 25.32], ["Rishikesh", "Uttarakhand", 78.27, 30.09], ["Haridwar", "Uttarakhand", 78.16, 29.95], ["Kedarnath", "Uttarakhand", 79.07, 30.73], ["Badrinath", "Uttarakhand", 79.49, 30.74], ["Valley of Flowers", "Uttarakhand", 79.6, 30.73], ["Hampi", "Karnataka", 76.46, 15.34], ["Mysore", "Karnataka", 76.64, 12.3], ["Coorg", "Karnataka", 75.74, 12.42], ["Gokarna", "Karnataka", 74.32, 14.55], ["Leh Ladakh", "Ladakh", 77.58, 34.15], ["Spiti Valley", "Himachal Pradesh", 78.07, 32.25], ["Shimla", "Himachal Pradesh", 77.17, 31.1], ["Manali", "Himachal Pradesh", 77.19, 32.24], ["Munnar", "Kerala", 77.06, 10.09], ["Alleppey", "Kerala", 76.33, 9.49], ["Kochi", "Kerala", 76.27, 9.93], ["Kovalam", "Kerala", 76.98, 8.4], ["Goa", "Goa", 73.83, 15.5], ["Jaipur", "Rajasthan", 75.79, 26.91], ["Jaisalmer", "Rajasthan", 70.91, 26.92], ["Udaipur", "Rajasthan", 73.71, 24.58], ["Jodhpur", "Rajasthan", 73.02, 26.24], ["Ooty", "Tamil Nadu", 76.69, 11.41], ["Madurai", "Tamil Nadu", 78.12, 9.93], ["Rameswaram", "Tamil Nadu", 79.31, 9.29], ["Chennai", "Tamil Nadu", 80.2824, 13.05], ["Thanjavur", "Tamil Nadu", 79.1318, 10.7828], ["Kanyakumari", "Tamil Nadu", 77.555, 8.078], ["Kodaikanal", "Tamil Nadu", 77.487, 10.234], ["Mahabalipuram", "Tamil Nadu", 80.199, 12.6165], ["Kanchipuram", "Tamil Nadu", 79.703, 12.841], ["Pondicherry", "Puducherry", 79.81, 11.94], ["Srinagar", "Jammu & Kashmir", 74.8, 34.08], ["Gulmarg", "Jammu & Kashmir", 74.38, 34.05], ["Pahalgam", "Jammu & Kashmir", 75.34, 34.02], ["Sonmarg", "Jammu & Kashmir", 75.29, 34.3], ["Vaishno Devi", "Jammu & Kashmir", 74.95, 33.03], ["Lakshadweep", "Lakshadweep", 72.64, 10.57], ["Vizag", "Andhra Pradesh", 83.22, 17.69], ["Araku Valley", "Andhra Pradesh", 82.88, 18.33], ["Bhimavaram", "Andhra Pradesh", 81.52, 16.54], ["Simhachalam", "Andhra Pradesh", 83.25, 17.77], ["Annavaram", "Andhra Pradesh", 82.4, 17.28], ["Antarvedi", "Andhra Pradesh", 81.73, 16.33], ["Vijayawada", "Andhra Pradesh", 80.61, 16.51], ["Ahobilam", "Andhra Pradesh", 78.72, 15.13], ["Srisailam", "Andhra Pradesh", 78.87, 16.07], ["Tirupati", "Andhra Pradesh", 79.42, 13.63], ["Tawang", "Arunachal Pradesh", 91.86, 27.59]], P = [67.8, 37.3, 17.0, 18.3];
   var pin = document.getElementById('hbPin'); if (!pin) return;
   var marks = document.getElementById('hbMarks'), label = document.getElementById('hbLabel'), ret = pin.querySelector('.hb-ret'),
       trail = document.getElementById('hbTrail'), bg = document.getElementById('hbLabBg'), ln = document.getElementById('hbLabName'),
