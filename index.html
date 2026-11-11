@@ -3013,7 +3013,7 @@ function sendEnquiry(formData) {
   function seen(){ try { return sessionStorage.getItem('km_popup_seen')==='1'; } catch(e){ return false; } }
   function mark(){ try { sessionStorage.setItem('km_popup_seen','1'); } catch(e){} }
   function open(){ last=document.activeElement; bd.classList.add('open'); document.body.style.overflow='hidden'; dlg.focus(); }
-  function close(){ bd.classList.remove('open'); document.body.style.overflow=''; mark(); if(last&&last.focus) last.focus(); if(window.vsFireworks) window.vsFireworks.play(); }   // Diwali fireworks once the offer popup is closed
+  function close(){ bd.classList.remove('open'); document.body.style.overflow=''; mark(); if(last&&last.focus) last.focus(); }
   bd.querySelector('.km-x').addEventListener('click',close);
   bd.addEventListener('click',function(e){ if(e.target===bd) close(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&bd.classList.contains('open')) close(); });
@@ -3032,7 +3032,6 @@ function sendEnquiry(formData) {
   tick(); setInterval(tick,1000);
 })();
 </script>
-<script src="js/diwali-fireworks.js?v=1" defer></script>
 <script src="js/enquiry-chat.js?v=3" defer></script>
 <script src="js/mobile-smooth.js?v=3" defer></script>
 <script src="js/walking-cursor.js?v=1" defer></script>
