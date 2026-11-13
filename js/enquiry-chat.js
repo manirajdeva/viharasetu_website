@@ -6,8 +6,25 @@
 (function () {
   if (document.getElementById("ec-launcher")) return;
   var API = "https://viharasetu-api.onrender.com/exec";   // keep in sync with sendEnquiry() in index.html
+  // Anti-spam fields (signed form token etc.) come from js/enquiry-guard.js, loaded next to this file.
+  if (!window.VSGuard && document.currentScript && document.currentScript.src) {
+    var gs = document.createElement("script");
+    gs.src = document.currentScript.src.replace(/enquiry-chat\.js.*$/, "enquiry-guard.js?v=1");
+    document.head.appendChild(gs);
+  }
+  function guarded(fd) {
+    return new Promise(function (resolve) {
+      (function wait(n) {
+        if (window.VSGuard) window.VSGuard.prepare(fd).then(resolve, function () { resolve(fd); });
+        else if (n > 0) setTimeout(function () { wait(n - 1); }, 100);
+        else resolve(fd);
+      })(30);
+    });
+  }
   window.ecPost = function (formData) {
-    return fetch(API, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(formData) })
+    return guarded(formData).then(function (fd) {
+      return fetch(API, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(fd) });
+    })
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (!d.ok) { var e = new Error((d.error && d.error.message) || "Unknown error"); e.userMessage = d.error && d.error.message; throw e; }

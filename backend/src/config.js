@@ -43,6 +43,10 @@ module.exports = {
       : undefined,
   },
 
+  // Public-form bot protection (see src/antiSpam.js)
+  formTokenSecret: process.env.FORM_TOKEN_SECRET || '',
+  turnstileSecret: process.env.TURNSTILE_SECRET_KEY || '',   // set to turn Cloudflare Turnstile CAPTCHA on
+
   sessionTtlMs: int('SESSION_TTL_HOURS', 6) * 60 * 60 * 1000,
   bcryptRounds: int('BCRYPT_ROUNDS', 12),
   corsOrigins: (process.env.CORS_ORIGINS || 'https://viharasetu.co.in,https://www.viharasetu.co.in')

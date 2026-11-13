@@ -2450,13 +2450,15 @@ function sendEnquiry(formData) {
     //   https://viharasetu-api.up.railway.app/exec
     const scriptUrl = "https://viharasetu-api.onrender.com/exec";
 
-    return fetch(scriptUrl, {
+    // js/enquiry-guard.js adds the anti-spam fields (signed form token, honeypot, optional CAPTCHA)
+    const guarded = window.VSGuard ? window.VSGuard.prepare(formData) : Promise.resolve(formData);
+    return guarded.then(fd => fetch(scriptUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'text/plain;charset=utf-8'
         },
-        body: JSON.stringify(formData)
-    })
+        body: JSON.stringify(fd)
+    }))
     .then(res => res.json())
     .then(data => {
         if (!data.ok) {
@@ -3032,6 +3034,7 @@ function sendEnquiry(formData) {
   tick(); setInterval(tick,1000);
 })();
 </script>
+<script src="js/enquiry-guard.js?v=1" defer></script>
 <script src="js/enquiry-chat.js?v=3" defer></script>
 <script src="js/mobile-smooth.js?v=3" defer></script>
 <script src="js/walking-cursor.js?v=1" defer></script>

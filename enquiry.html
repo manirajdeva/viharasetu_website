@@ -179,11 +179,13 @@
 // exactly like the ones from the website.
 function sendEnquiry(formData) {
     const scriptUrl = "https://viharasetu-api.onrender.com/exec";
-    return fetch(scriptUrl, {
+    // js/enquiry-guard.js adds the anti-spam fields (signed form token, honeypot, optional CAPTCHA)
+    const guarded = window.VSGuard ? window.VSGuard.prepare(formData) : Promise.resolve(formData);
+    return guarded.then(fd => fetch(scriptUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },   // text/plain avoids a CORS preflight
-        body: JSON.stringify(formData)
-    })
+        body: JSON.stringify(fd)
+    }))
     .then(res => res.json())
     .then(data => {
         if (!data.ok) {
@@ -301,5 +303,6 @@ form.addEventListener("submit", function (e) {
         .finally(() => { sendBtn.disabled = false; sendBtn.innerHTML = "Send Enquiry &rarr;"; });
 });
 </script>
+<script src="js/enquiry-guard.js?v=1" defer></script>
 </body>
 </html>

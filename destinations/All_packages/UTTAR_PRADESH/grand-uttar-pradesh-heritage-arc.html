@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" media="print" onload="this.media=\'all\'">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -669,10 +669,11 @@ var PLANS=[
   });
 })();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-/* ---- Destination map ---- */
+/* ---- Destination map: Leaflet and the map tiles load only when the map is about to scroll into view ---- */
 (function(){
+  var holder=document.getElementById('pmap'); if(!holder) return;
+  function init(){
   var el=document.getElementById('pmap'); if(!el||!window.L) return;
   var T=[["Agra", "Start", 27.1767, 78.0081], ["Lucknow", "Awadh", 26.8467, 80.9462], ["Varanasi", "Kashi", 25.3176, 82.9739], ["Prayagraj", "Sangam", 25.4358, 81.8463], ["Ayodhya", "Saryu", 26.7922, 82.1998], ["Mathura", "Braj", 27.4924, 77.6737]], ROUTE=true;
   var map=L.map(el,{scrollWheelZoom:false});
@@ -684,8 +685,19 @@ var PLANS=[
       .addTo(map).bindPopup('<b>'+t[0]+'</b><br>'+t[1]);
   });
   map.fitBounds(L.latLngBounds(ll).pad(.2));
+  }
+  var started=false;
+  function start(){
+    if(started) return; started=true;
+    var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js'; s.onload=init; document.head.appendChild(s);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){ io.disconnect(); start(); } },{rootMargin:'500px 0px'});
+    io.observe(holder);
+  } else start();
 })();
 </script>
+
 <script>
 /* ---- Mobile menu: the links hidden on small screens, listed under a three-line button ---- */
 (function(){

@@ -24,6 +24,7 @@ const reports = require('../services/reports');
 const bootstrap = require('../services/bootstrap');
 const users = require('../services/users');
 const siteEnquiries = require('../services/siteEnquiries');
+const antiSpam = require('../antiSpam');
 const { updateProfile } = require('../services/profile');
 const { validate } = require('../validation');
 const { ENTITY_KEYS } = require('../mappers');
@@ -47,6 +48,12 @@ const loginLimiter = rateLimit({
   },
 });
 
+// Public enquiry form: tight per-IP caps (the global limiter allows 600 / 15 min).
+const isPublicEnquiry = (req) => !!(req.body && typeof req.body === 'object' && !req.body.sheet && !req.body.action);
+const tooMany = { ok: false, error: { code: 'RATE_LIMITED', message: 'Too many enquiries from your network. Please try again later or call us.' } };
+const enquiryHourly = rateLimit({ windowMs: 60 * 60 * 1000, max: 8, standardHeaders: true, legacyHeaders: false, message: tooMany });
+const enquiryDaily = rateLimit({ windowMs: 24 * 60 * 60 * 1000, max: 25, standardHeaders: true, legacyHeaders: false, message: tooMany });
+
 function sheetKey(body) {
   const key = String(body.sheet || 'enquiries').toLowerCase();
   return ENTITY_KEYS.includes(key) ? key : null;
@@ -57,6 +64,7 @@ function sheetKey(body) {
 router.get('/', async (req, res, next) => {
   try {
     const { sheet, token } = req.query;
+    if (req.query.action === 'ftoken') return res.json({ ok: true, token: antiSpam.issueToken() });
     if (!sheet) return res.json({ ok: true, message: 'Viharasetu admin API is running.' });
     if (!(await auth.sessionUsername(token))) {
       return fail(res, 'SESSION_EXPIRED', 'Your session has expired. Please log in again.');
@@ -75,6 +83,8 @@ router.get('/', async (req, res, next) => {
 router.post(
   '/',
   (req, res, next) => (req.body && req.body.action === 'login' ? loginLimiter(req, res, next) : next()),
+  (req, res, next) => (isPublicEnquiry(req) ? enquiryHourly(req, res, next) : next()),
+  (req, res, next) => (isPublicEnquiry(req) ? enquiryDaily(req, res, next) : next()),
   async (req, res, next) => {
     const body = req.body && typeof req.body === 'object' ? req.body : {};
 
@@ -82,7 +92,11 @@ router.post(
       // Public website forms: no sheet, no action -> append an enquiry and its
       // site_enquirys log row. A VALIDATION error is surfaced by the catch below.
       if (!body.sheet && !body.action) {
+        const verdict = await antiSpam.inspect(req, body);
+        if (verdict.action === 'drop') return res.json({ ok: true });
+        if (verdict.action === 'reject') return fail(res, verdict.code, verdict.message);
         const result = await siteEnquiries.submit(body);
+        antiSpam.markSubmitted(body);
         return res.json({ ok: true, enquiryId: result.enquiryId });
       }
 

@@ -12,18 +12,18 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Godavari Pancharama &amp; Konaseema Yatra — Destinations | Vihara Setu</title>
-<meta name="description" content="The great temples of the Godavari delta, from Rajahmundry: Annavaram on its hill, three of the Pancharama Shiva temples, Ainavilli’s Vinayaka, Ryali,…">
+<title>Godavari River &amp; Papikondalu — Destinations | Vihara Setu</title>
+<meta name="description" content="The Papikondalu river gorge, Rajamahendravaram&#x27;s bridges and ghats, Dowleswaram Barrage and Coringa mangroves.">
 <meta name="theme-color" content="#2a0f12">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Godavari Pancharama &amp; Konaseema Yatra — Vihara Setu">
-<meta property="og:description" content="The great temples of the Godavari delta, from Rajahmundry: Annavaram on its hill, three of the Pancharama Shiva temples, Ainavilli’s Vinayaka, Ryali,…">
-<meta property="og:image" content="../../../images/destinations/pancharama-draksharama-bhimeswara-temple-draksharamam.jpg">
+<meta property="og:title" content="Godavari River &amp; Papikondalu — Vihara Setu">
+<meta property="og:description" content="The Papikondalu river gorge, Rajamahendravaram&#x27;s bridges and ghats, Dowleswaram Barrage and Coringa mangroves.">
+<meta property="og:image" content="../../../images/destinations/papikondalu-hills.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" media="print" onload="this.media=\'all\'">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -221,7 +221,6 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   .mbar svg{width:22px;height:22px;fill:#fff}
   footer{padding-bottom:96px}
 }
-@media(min-width:961px){.exp-grid{grid-template-columns:repeat(3,1fr)}}
 .nav-links a{display:inline-flex;align-items:center;gap:8px}.nav-links svg{width:17px;height:17px;flex:none;fill:none;stroke:var(--gold-light);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- Inclusions & exclusions ---------- */
@@ -283,7 +282,7 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 /* ---------- Map ---------- */
 .map-wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;align-items:stretch}
 #pmap{min-height:460px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);z-index:1}
-.map-list{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 22px}
+.map-list{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 22px;max-height:520px;overflow:auto}
 .map-list li{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid #efe5d1}
 .map-list li:first-child{border-top:0}
 .map-list .pin,.pm{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--maroon);color:var(--gold-light);font:600 .86rem var(--serif);border:2px solid var(--gold-light);box-shadow:0 4px 10px -2px rgba(0,0,0,.4)}
@@ -312,6 +311,7 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   .nav.menu-open .nav-menu{display:block}
 }
 </style>
+</head>
 <body>
 <script>document.documentElement.classList.add('js')</script>
 
@@ -340,23 +340,23 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 <header class="hero">
   <div class="container">
     <div class="hero-content">
-      <span class="eyebrow">Andhra Pradesh · Godavari &amp; Konaseema Circuit</span>
-      <h1>Godavari Pancharama &amp; Konaseema Yatra</h1>
-      <p class="intro">The great temples of the Godavari delta, from Rajahmundry: Annavaram on its hill, three of the Pancharama Shiva temples, Ainavilli’s Vinayaka, Ryali, Antarvedi where the Godavari meets the sea, and Dwaraka Tirumala. It includes Pancharama shrines but is not a Pancharama-only tour.</p>
+      <span class="eyebrow">Andhra Pradesh · The Godavari</span>
+      <h1>Godavari River &amp; Papikondalu</h1>
+      <p class="intro">The Godavari narrows into a gorge between the Papikondalu hills, a signature river cruise from Rajamahendravaram, before it widens through bridges, barrages and the Coringa mangroves. The city's ghats and bridges are a heritage riverfront in themselves.</p>
       <div class="hero-cta">
         <a class="btn btn-gold" href="#itineraries">Explore Itineraries</a>
         <a class="btn btn-ghost" href="https://wa.me/919885180515" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Plan with an Expert</a>
       </div>
     </div>
-    <figure class="hero-media"><img src="../../../images/destinations/pancharama-draksharama-bhimeswara-temple-draksharamam.jpg" alt="Bhimeswara Swamy Temple, Draksharamam" fetchpriority="high" decoding="async"></figure>
+    <figure class="hero-media"><img src="../../../images/destinations/papikondalu-hills.jpg" alt="Papikondalu hills on the Godavari" fetchpriority="high" decoding="async"></figure>
   </div>
 </header>
 
 <section class="facts" aria-label="Trip at a glance">
   <div class="container">
     <div class="facts-grid">
-      <div class="fact"><b>12</b><span>Temples on the circuit</span></div>
-      <div class="fact"><b>3 – 5</b><span>Days, your choice</span></div>
+      <div class="fact"><b>6</b><span>River stops</span></div>
+      <div class="fact"><b>2 – 3</b><span>Nights, your choice</span></div>
       <div class="fact"><b>100%</b><span>Customisable itineraries</span></div>
       <div class="fact"><b>24 hrs</b><span>Enquiry response time</span></div>
     </div>
@@ -368,18 +368,18 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   <div class="container reveal">
     <div class="section-head" style="margin-bottom:34px">
       <span class="eyebrow">The Journey</span>
-      <h2>The Godavari &amp; Konaseema route</h2>
-      <p>Starting from Rajahmundry. Districts covered: East Godavari, Kakinada, Konaseema, Eluru, West Godavari.</p>
+      <h2>From Rajamahendravaram</h2>
+      <p>Rajamahendravaram is the hub for the Godavari and the Papikondalu cruise. The boarding point varies by operator, so the exact jetty, vessel and itinerary are confirmed in writing, and Visakhapatnam to Rajamahendravaram is 190 to 200 km (4 to 5 hours).</p>
       <div class="rule"></div>
     </div>
     <div class="route">
-      <ol style="min-width:840px">
-        <li><div class="dot">1</div><strong>Rajahmundry</strong><small>Start</small></li>
-        <li><div class="dot">2</div><strong>Samalkot · Annavaram</strong><small>Kumararama</small></li>
-        <li><div class="dot">3</div><strong>Draksharamam</strong><small>Ainavilli · Ryali</small></li>
-        <li><div class="dot">4</div><strong>Antarvedi</strong><small>Appanapalli</small></li>
-        <li><div class="dot">5</div><strong>Palakollu · Bhimavaram</strong><small>Ksheerarama · Somarama</small></li>
-        <li><div class="dot">6</div><strong>Dwaraka Tirumala</strong><small>Return</small></li>
+      <ol style="min-width:980px">
+        <li><div class="dot">1</div><strong>Rajamahendravaram</strong><small>Gateway</small></li>
+        <li><div class="dot">2</div><strong>Godavari Bridges</strong><small>Riverfront</small></li>
+        <li><div class="dot">3</div><strong>Dowleswaram</strong><small>Barrage</small></li>
+        <li><div class="dot">4</div><strong>Pattiseema</strong><small>River stop</small></li>
+        <li><div class="dot">5</div><strong>Papikondalu</strong><small>Gorge</small></li>
+        <li><div class="dot">6</div><strong>Coringa</strong><small>Mangroves</small></li>
       </ol>
     </div>
   </div>
@@ -388,23 +388,16 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 <section class="section exp-wrap" id="temples">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">The Temples</span>
-      <h2>Temples on this circuit</h2>
-      <p>Each temple with its town and main deity.</p>
+      <span class="eyebrow">River &amp; Gorge</span>
+      <h2>Highlights of this circuit</h2>
     </div>
     <div class="exp-grid">
-      <div class="exp reveal"><div class="n">01</div><p><b>Annavaram</b> — Kakinada. Main deity: Satyanarayana.</p></div>
-      <div class="exp reveal"><div class="n">02</div><p><b>Samalkot (Kumararama)</b> — Kakinada. Main deity: Kumararama Bhimeswara.</p></div>
-      <div class="exp reveal"><div class="n">03</div><p><b>Pithapuram</b> — Kakinada. Main deity: Kukkuteswara.</p></div>
-      <div class="exp reveal"><div class="n">04</div><p><b>Gollala Mamidada</b> — Kakinada. Main deity: Surya Narayana.</p></div>
-      <div class="exp reveal"><div class="n">05</div><p><b>Draksharamam</b> — Konaseema. Main deity: Bhimeswara.</p></div>
-      <div class="exp reveal"><div class="n">06</div><p><b>Ainavilli</b> — Konaseema. Main deity: Vinayaka.</p></div>
-      <div class="exp reveal"><div class="n">07</div><p><b>Ryali</b> — Konaseema. Main deity: Jaganmohini Kesava.</p></div>
-      <div class="exp reveal"><div class="n">08</div><p><b>Appanapalli</b> — Konaseema. Main deity: Venkateswara.</p></div>
-      <div class="exp reveal"><div class="n">09</div><p><b>Antarvedi</b> — Konaseema. Main deity: Lakshmi Narasimha.</p></div>
-      <div class="exp reveal"><div class="n">10</div><p><b>Palakollu (Ksheerarama)</b> — West Godavari. Main deity: Ksheera Ramalingeswara.</p></div>
-      <div class="exp reveal"><div class="n">11</div><p><b>Bhimavaram (Somarama)</b> — West Godavari. Main deity: Someswara.</p></div>
-      <div class="exp reveal"><div class="n">12</div><p><b>Dwaraka Tirumala</b> — Eluru. Main deity: Venkateswara.</p></div>
+      <div class="exp reveal"><div class="n">01</div><p><b>Papikondalu</b> — A river-gorge cruise with scheduled stops.</p></div>
+      <div class="exp reveal"><div class="n">02</div><p><b>Godavari riverfront</b> — Ghats and the old city.</p></div>
+      <div class="exp reveal"><div class="n">03</div><p><b>Godavari bridges</b> — Rail and road crossings and arch-bridge viewpoints.</p></div>
+      <div class="exp reveal"><div class="n">04</div><p><b>Dowleswaram Barrage</b> — A great barrage on the river.</p></div>
+      <div class="exp reveal"><div class="n">05</div><p><b>Pattiseema</b> — A river lift project and temple on the Godavari.</p></div>
+      <div class="exp reveal"><div class="n">06</div><p><b>Coringa mangroves</b> — A mangrove forest and wildlife sanctuary.</p></div>
     </div>
   </div>
 </section>
@@ -413,16 +406,17 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Gallery</span>
-      <h2>Glimpses of the Godavari &amp; Konaseema circuit</h2>
+      <h2>Glimpses of Godavari River &amp; Papikondalu</h2>
       <p>Tap any photo to view it full-size.</p>
     </div>
     <div class="mosaic reveal" id="mosaic">
-      <a href="../../../images/destinations/pancharama-draksharama-bhimeswara-temple-draksharamam.jpg" data-cap="Bhimeswara Swamy Temple, Draksharamam"><img loading="lazy" src="../../../images/destinations/pancharama-draksharama-bhimeswara-temple-draksharamam.jpg" alt="Bhimeswara Swamy Temple, Draksharamam"><span class="cap">Bhimeswara Swamy Temple, Draksharamam</span></a>
-      <a href="../../../images/destinations/pancharama-kumararama-bhimeswara-temple-samalkota.jpg" data-cap="Kumara Bhimeswara Swamy Temple, Samalkota"><img loading="lazy" src="../../../images/destinations/pancharama-kumararama-bhimeswara-temple-samalkota.jpg" alt="Kumara Bhimeswara Swamy Temple, Samalkota"><span class="cap">Kumara Bhimeswara Swamy Temple, Samalkota</span></a>
-      <a href="../../../images/destinations/pancharama-ksheerarama-ramalingeswara-temple-palakollu.jpg" data-cap="Ksheera Ramalingeswara Swamy Temple gopuram, Palakollu"><img loading="lazy" src="../../../images/destinations/pancharama-ksheerarama-ramalingeswara-temple-palakollu.jpg" alt="Ksheera Ramalingeswara Swamy Temple gopuram, Palakollu"><span class="cap">Ksheera Ramalingeswara Swamy Temple gopuram, Palakollu</span></a>
-      <a href="../../../images/destinations/pancharama-somarama-someswara-temple-bhimavaram.jpg" data-cap="Someswara Swamy Temple gopuram, Bhimavaram"><img loading="lazy" src="../../../images/destinations/pancharama-somarama-someswara-temple-bhimavaram.jpg" alt="Someswara Swamy Temple gopuram, Bhimavaram"><span class="cap">Someswara Swamy Temple gopuram, Bhimavaram</span></a>
+      <a href="../../../images/destinations/papikondalu-hills.jpg" data-cap="Papikondalu hills"><img loading="lazy" src="../../../images/destinations/papikondalu-hills.jpg" alt="Papikondalu hills"><span class="cap">Papikondalu hills</span></a>
+      <a href="../../../images/destinations/rajahmundry-godavari-bridge.jpg" data-cap="The Godavari at Rajamahendravaram"><img loading="lazy" src="../../../images/destinations/rajahmundry-godavari-bridge.jpg" alt="The Godavari at Rajamahendravaram"><span class="cap">The Godavari at Rajamahendravaram</span></a>
+      <a href="../../../images/destinations/rajahmundry-godavari-ghat.jpg" data-cap="Godavari ghat, Rajamahendravaram"><img loading="lazy" src="../../../images/destinations/rajahmundry-godavari-ghat.jpg" alt="Godavari ghat, Rajamahendravaram"><span class="cap">Godavari ghat, Rajamahendravaram</span></a>
+      <a href="../../../images/destinations/dowleswaram-barrage.jpg" data-cap="Dowleswaram Barrage"><img loading="lazy" src="../../../images/destinations/dowleswaram-barrage.jpg" alt="Dowleswaram Barrage"><span class="cap">Dowleswaram Barrage</span></a>
+      <a href="../../../images/destinations/coringa-mangroves.jpg" data-cap="Waterways at Coringa"><img loading="lazy" src="../../../images/destinations/coringa-mangroves.jpg" alt="Waterways at Coringa"><span class="cap">Waterways at Coringa</span></a>
     </div>
-    <p class="notes">Photos from Wikimedia Commons: Draksharama — Anudeep43 (CC BY-SA 4.0); Kumararama — Palagiri (CC BY-SA 3.0); Ksheerarama — Vjsuseela (CC BY-SA 4.0); Somarama — PV Bhaskar (CC BY-SA 3.0).</p>
+    <p class="notes">Photos from Wikimedia Commons: Papikondalu hills — Ivaturi. Puja Ankitha (CC BY-SA 4.0); The Godavari at Rajamahendravaram — Adityamadhav83 (CC BY-SA 3.0); Godavari ghat, Rajamahendravaram — Adivaitha (CC BY-SA 4.0); Dowleswaram Barrage — Adityamadhav83 (CC BY-SA 3.0); Waterways at Coringa — రహ్మానుద్దీన్ (CC BY-SA 4.0).</p>
   </div>
 </section>
 
@@ -433,9 +427,9 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
       <h2>Moments you'll carry home</h2>
     </div>
     <div class="exp-grid">
-      <div class="exp reveal"><div class="n">01</div><p>Satyanarayana Swamy vratam at Annavaram on the Ratnagiri hill</p></div>
-      <div class="exp reveal"><div class="n">02</div><p>Antarvedi, where the Vasishta Godavari meets the Bay of Bengal</p></div>
-      <div class="exp reveal"><div class="n">03</div><p>Coconut groves and canal roads between the temples of the delta</p></div>
+      <div class="exp reveal"><div class="n">01</div><p>A boat gliding between the Papikondalu hills</p></div>
+      <div class="exp reveal"><div class="n">02</div><p>Evening light on the Godavari bridges</p></div>
+      <div class="exp reveal"><div class="n">03</div><p>The ghats of Rajamahendravaram at dusk</p></div>
     </div>
   </div>
 </section>
@@ -444,14 +438,14 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Choose Your Itinerary</span>
-      <h2>3, 4 or 5 days in Godavari &amp; Konaseema</h2>
+      <h2>Two ways to explore the Godavari</h2>
       <p>Every trip is fully customisable — tap an option to open the day-by-day plan.</p>
     </div>
 
     <div class="tiers" aria-label="Itinerary length" id="tiers"></div>
-    <p class="price-note" style="margin:14px 0 0;font-size:.8rem;opacity:.75;text-align:center">Indicative starting prices per person on twin sharing, excluding flights/trains. Final quote depends on dates, hotels and group size.</p>
+    <p class="price-note" style="margin:14px 0 0;font-size:.8rem;opacity:.75;text-align:center">Prices are shared on request, per person on twin sharing, excluding flights/trains. Your quote depends on dates, hotels, vehicle and group size.</p>
 
-    <p class="notes">Itineraries are indicative and can be tailored to your pace, interests and budget. Temple timings are confirmed before travel.</p>
+    <p class="notes">Cruise operation depends on water levels, weather, navigation safety and government and operator permissions, and cruises can be suspended due to floods, water levels or official directions. We never promise departure before confirmation, and confirm the exact vessel, boarding jetty, route, meal plan, life jackets and cancellation terms. Only authorised boat operators are used. Itineraries are indicative.</p>
   </div>
 </section>
 
@@ -465,8 +459,8 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
     <div class="inex reveal">
       <article class="inex-card in"><h3>What's included</h3><p class="sub">Covered in your package</p><ul>
           <li>Accommodation as per your chosen itinerary</li>
-          <li>Ground transport as per the itinerary</li>
-          <li>Meals as marked in the plan (Breakfast, Dinner)</li>
+          <li>Ground transport as per the itinerary, with driver allowance, tolls and parking</li>
+          <li>Meals as marked in the plan (Dinner, Breakfast)</li>
           <li>Sightseeing and experiences listed in the day-by-day plan</li>
           <li>Planning support from the Viharasetu team before and during your trip</li>
         </ul></article>
@@ -475,8 +469,9 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
           <li>Meals not marked in the itinerary</li>
           <li>Personal expenses such as shopping, laundry, tips and phone calls</li>
           <li>Optional activities and anything marked optional in the plan</li>
+          <li>Entry tickets, camera fees and local ritual charges unless listed in your quote</li>
           <li>Travel insurance</li>
-          <li>Extra costs caused by events outside our control, such as weather or road closures</li>
+          <li>Extra costs caused by events outside our control, such as weather, road closures or local advisories</li>
         </ul></article>
     </div>
     <p class="inex-note">Inclusions and exclusions are indicative. The final list is confirmed in writing in your quote.</p>
@@ -487,32 +482,25 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Destination Guide</span>
-      <h2>What to see on the way</h2>
-      <p>Must-visit temples are marked, so you always know where to begin.</p>
+      <h2>What to see in each stop</h2>
+      <p>Must-visit highlights are marked, so you always know where to begin.</p>
     </div>
     <div class="dest-grid">
-      <article class="dest reveal"><span class="no">01</span><h3>Kakinada District</h3><ul>
-        <li>Annavaram Satyanarayana Swamy <i class="must">Must visit</i></li>
-        <li>Kumararama, Samalkot <i class="must">Must visit</i></li>
-        <li>Kukkuteswara, Pithapuram (Shakti Peetha)</li>
-        <li>Surya Narayana, Gollala Mamidada</li></ul></article>
-      <article class="dest reveal"><span class="no">02</span><h3>Konaseema</h3><ul>
-        <li>Draksharamam Bhimeswara <i class="must">Must visit</i></li>
-        <li>Ainavilli Siddhi Vinayaka <i class="must">Must visit</i></li>
-        <li>Ryali Jaganmohini Kesava</li>
-        <li>Appanapalli Venkateswara</li>
-        <li>Antarvedi Lakshmi Narasimha</li></ul></article>
-      <article class="dest reveal"><span class="no">03</span><h3>West Godavari &amp; Eluru</h3><ul>
-        <li>Dwaraka Tirumala <i class="must">Must visit</i></li>
-        <li>Ksheerarama, Palakollu</li>
-        <li>Somarama, Bhimavaram</li>
-        <li>Mavullamma Temple, Bhimavaram</li></ul></article>
-      <article class="dest food reveal" style="grid-column:1/-1"><span class="no">Godavari Delta Fare</span><h3>Food &amp; Local Specialties</h3><ul style="display:grid;grid-template-columns:repeat(2,1fr);column-gap:40px">
-        <li>Annavaram prasadam <i class="must">Must try</i></li>
-        <li>Atreyapuram pootharekulu <i class="must">Must try</i></li>
-        <li>Kakinada kaja</li>
-        <li>Godavari-style vegetarian meals on banana leaf</li>
-        <li>Tender coconut from the Konaseema groves</li></ul></article>
+      <article class="dest reveal"><span class="no">01</span><h3>Rajamahendravaram</h3><ul>
+        <li>Godavari riverfront and ghats <i class="must">Must visit</i></li>
+        <li>Godavari bridges</li>
+        <li>Dowleswaram Barrage</li></ul></article>
+      <article class="dest reveal"><span class="no">02</span><h3>The river</h3><ul>
+        <li>Papikondalu cruise (pre-booked) <i class="must">Must visit</i></li>
+        <li>Pattiseema</li>
+        <li>Coringa mangroves</li></ul></article>
+      <article class="dest food reveal" style="grid-column:1/-1"><span class="no">Taste of Andhra Pradesh</span><h3>Famous Food</h3><ul style="display:grid;grid-template-columns:repeat(2,1fr);column-gap:40px">
+        <li>Pulasa fish, in season <i class="must">Must try</i></li>
+        <li>Godavari-style fish curry</li>
+        <li>Pootharekulu sweets</li>
+        <li>Bobbatlu</li>
+        <li>Andhra meals with pickles</li>
+        <li>Coconut water by the river</li></ul></article>
     </div>
   </div>
 </section>
@@ -520,24 +508,19 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 <section class="section" id="map">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Find the Temples</span>
-      <h2>The Godavari &amp; Konaseema route on the map</h2>
-      <p>Numbered in the order of the full route. Tap a marker for the temple name.</p>
+      <span class="eyebrow">Find the Places</span>
+      <h2>Key places on the map</h2>
+      <p>Tap a marker for the place name.</p>
     </div>
     <div class="map-wrap reveal">
-      <div id="pmap" role="region" aria-label="Map of the Godavari &amp; Konaseema temples"></div>
+      <div id="pmap" role="region" aria-label="Map of key places"></div>
       <ol class="map-list">
-        <li><span class="pin">1</span><div><b>Kumararama</b><small>Samalkot</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.0543,82.1696" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">2</span><div><b>Kukkuteswara</b><small>Pithapuram</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.116,82.256" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">3</span><div><b>Annavaram</b><small>Satyanarayana Swamy Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.281,82.403" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">4</span><div><b>Draksharamam</b><small>Bhimeswara Swamy Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.7927,82.0627" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">5</span><div><b>Ainavilli</b><small>Siddhi Vinayaka Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.696,81.967" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">6</span><div><b>Ryali</b><small>Jaganmohini Kesava Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.764,81.883" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">7</span><div><b>Appanapalli</b><small>Venkateswara Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.578,81.856" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">8</span><div><b>Antarvedi</b><small>Lakshmi Narasimha Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.327,81.731" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">9</span><div><b>Ksheerarama</b><small>Palakollu</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.519,81.729" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">10</span><div><b>Somarama</b><small>Bhimavaram</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.5449,81.5212" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
-        <li><span class="pin">11</span><div><b>Dwaraka Tirumala</b><small>Venkateswara Temple</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.95,81.258" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">1</span><div><b>Rajamahendravaram</b><small>Gateway</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.0005,81.804" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">2</span><div><b>Godavari Bridges</b><small>Riverfront</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.0,81.76" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">3</span><div><b>Dowleswaram</b><small>Barrage</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.94,81.78" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">4</span><div><b>Pattiseema</b><small>River stop</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.22,81.67" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">5</span><div><b>Papikondalu</b><small>Gorge</small><a href="https://www.google.com/maps/search/?api=1&amp;query=17.45,81.65" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
+        <li><span class="pin">6</span><div><b>Coringa</b><small>Mangroves</small><a href="https://www.google.com/maps/search/?api=1&amp;query=16.79,82.32" target="_blank" rel="noopener">Open in Google Maps →</a></div></li>
       </ol>
     </div>
     <p class="notes">Map positions are approximate. Map data © OpenStreetMap contributors.</p>
@@ -600,9 +583,8 @@ footer{background:#1a0a0c;color:#a99b86;text-align:center;font-size:.82rem;paddi
 /* ---- Itineraries ---- */
 /* Set a price (e.g. "₹ 45,000") to show it; indicative per person, twin sharing, ex-flights/trains. */
 var PLANS=[
-  {"key":"1","nights":2,"num":2,"unit":"Nights","alt":"3 Days","dayCount":3,"title":"Godavari Temples in Three Days","price":"₹ 9,500","sub":"Annavaram, Pithapuram, Samalkot, Draksharamam, Ainavilli, Ryali and Dwaraka Tirumala.","days":[{"day":1,"title":"Rajahmundry to Annavaram","items":["Arrive in Rajahmundry","Kumararama Bhimeswara Temple, Samalkot","Kukkuteswara Temple, Pithapuram","Annavaram Satyanarayana Swamy Temple; overnight in Annavaram or Kakinada"],"tags":["Dinner"]},{"day":2,"title":"Konaseema Temples","items":["Bhimeswara Swamy Temple, Draksharamam","Siddhi Vinayaka Temple, Ainavilli","Jaganmohini Kesava Temple, Ryali","Overnight in Rajahmundry"],"tags":["Breakfast","Dinner"]},{"day":3,"title":"Dwaraka Tirumala & Departure","items":["Dwaraka Tirumala Venkateswara Temple","Departure from Rajahmundry or Vijayawada"],"tags":["Breakfast"]}]},
-  {"key":"2","nights":3,"num":3,"unit":"Nights","alt":"4 Days","dayCount":4,"title":"Delta & Coast in Four Days","price":"₹ 13,000","sub":"Adds Antarvedi, Palakollu and Bhimavaram.","days":[{"day":1,"title":"Rajahmundry to Annavaram","items":["Arrive in Rajahmundry","Samalkot and Pithapuram temples","Annavaram Satyanarayana Swamy Temple"],"tags":["Dinner"]},{"day":2,"title":"Konaseema Temples","items":["Draksharamam, Ainavilli and Ryali temples"],"tags":["Breakfast","Dinner"]},{"day":3,"title":"Antarvedi, Palakollu & Bhimavaram","items":["Lakshmi Narasimha Temple, Antarvedi, and the river mouth","Ksheera Ramalingeswara Temple, Palakollu","Someswara Temple, Bhimavaram; overnight in Bhimavaram"],"tags":["Breakfast","Dinner"]},{"day":4,"title":"Dwaraka Tirumala & Departure","items":["Dwaraka Tirumala Venkateswara Temple","Departure from Rajahmundry or Vijayawada"],"tags":["Breakfast"]}]},
-  {"key":"3","nights":4,"num":4,"unit":"Nights","alt":"5 Days","dayCount":5,"title":"Godavari Pancharama & Konaseema Yatra","price":"₹ 16,500","sub":"The full circuit, with Appanapalli and time at the Godavari.","days":[{"day":1,"title":"Rajahmundry to Annavaram","items":["Arrive in Rajahmundry","Samalkot and Pithapuram temples","Annavaram Satyanarayana Swamy Temple"],"tags":["Dinner"]},{"day":2,"title":"Draksharamam, Ainavilli & Ryali","items":["Bhimeswara Swamy Temple, Draksharamam","Siddhi Vinayaka Temple, Ainavilli","Jaganmohini Kesava Temple, Ryali"],"tags":["Breakfast","Dinner"]},{"day":3,"title":"Appanapalli & Antarvedi","items":["Venkateswara Temple, Appanapalli","Lakshmi Narasimha Temple, Antarvedi","Konaseema countryside and the Godavari river mouth"],"tags":["Breakfast","Dinner"]},{"day":4,"title":"Palakollu & Bhimavaram","items":["Ksheera Ramalingeswara Temple, Palakollu","Someswara Temple, Bhimavaram"],"tags":["Breakfast","Dinner"]},{"day":5,"title":"Dwaraka Tirumala & Departure","items":["Dwaraka Tirumala Venkateswara Temple","Departure from Rajahmundry or Vijayawada"],"tags":["Breakfast"]}]}
+  {"key": "1", "nights": 2, "num": 2, "unit": "Nights", "alt": "3 Days", "dayCount": 3, "title": "Papikondalu River Cruise", "price": "", "sub": "Rajamahendravaram's riverfront and a pre-booked Papikondalu cruise.", "route": "Rajamahendravaram · Papikondalu", "days": [{"day": 1, "title": "Arrival", "items": ["Arrive Rajamahendravaram", "Godavari riverfront, bridge viewpoints and local heritage"], "tags": ["Dinner"]}, {"day": 2, "title": "Papikondalu cruise", "items": ["Pre-booked authorised cruise from the confirmed embarkation point", "River-gorge scenery and scheduled stops"], "tags": ["Breakfast", "Lunch", "Dinner"]}, {"day": 3, "title": "Departure", "items": ["Optional local temple or riverfront visit", "Departure"], "tags": ["Breakfast"]}]},
+  {"key": "2", "nights": 3, "num": 3, "unit": "Nights", "alt": "4 Days", "dayCount": 4, "title": "Godavari Riverfront & Delta", "price": "", "sub": "The river from the gorge to the barrage and the mangroves.", "route": "Rajamahendravaram · Dowleswaram · Pattiseema · Coringa", "days": [{"day": 1, "title": "Arrival", "items": ["Arrive Rajamahendravaram", "Godavari riverfront and bridges"], "tags": ["Dinner"]}, {"day": 2, "title": "Papikondalu cruise", "items": ["Pre-booked authorised cruise, subject to water levels and permissions"], "tags": ["Breakfast", "Lunch", "Dinner"]}, {"day": 3, "title": "Barrage and river", "items": ["Dowleswaram Barrage", "Pattiseema, subject to access"], "tags": ["Breakfast", "Dinner"]}, {"day": 4, "title": "Coringa", "items": ["Coringa mangroves, subject to forest-department rules", "Departure"], "tags": ["Breakfast"]}]}
 ];
 
 (function(){
@@ -687,23 +669,35 @@ var PLANS=[
   });
 })();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-/* ---- Route map ---- */
+/* ---- Destination map: Leaflet and the map tiles load only when the map is about to scroll into view ---- */
 (function(){
+  var holder=document.getElementById('pmap'); if(!holder) return;
+  function init(){
   var el=document.getElementById('pmap'); if(!el||!window.L) return;
-  var T=[["Kumararama","Samalkot",17.0543,82.1696],["Kukkuteswara","Pithapuram",17.116,82.256],["Annavaram","Satyanarayana Swamy Temple",17.281,82.403],["Draksharamam","Bhimeswara Swamy Temple",16.7927,82.0627],["Ainavilli","Siddhi Vinayaka Temple",16.696,81.967],["Ryali","Jaganmohini Kesava Temple",16.764,81.883],["Appanapalli","Venkateswara Temple",16.578,81.856],["Antarvedi","Lakshmi Narasimha Temple",16.327,81.731],["Ksheerarama","Palakollu",16.519,81.729],["Somarama","Bhimavaram",16.5449,81.5212],["Dwaraka Tirumala","Venkateswara Temple",16.95,81.258]];
+  var T=[["Rajamahendravaram", "Gateway", 17.0005, 81.804], ["Godavari Bridges", "Riverfront", 17.0, 81.76], ["Dowleswaram", "Barrage", 16.94, 81.78], ["Pattiseema", "River stop", 17.22, 81.67], ["Papikondalu", "Gorge", 17.45, 81.65], ["Coringa", "Mangroves", 16.79, 82.32]], ROUTE=true;
   var map=L.map(el,{scrollWheelZoom:false});
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
   var ll=T.map(function(t){return [t[2],t[3]]});
-  L.polyline(ll,{color:'#b98a3e',weight:3,opacity:.8,dashArray:'6 8'}).addTo(map);
+  if(ROUTE) L.polyline(ll,{color:'#b98a3e',weight:3,opacity:.8,dashArray:'6 8'}).addTo(map);
   T.forEach(function(t,i){
     L.marker([t[2],t[3]],{icon:L.divIcon({className:'pm-icon',html:'<span class="pm">'+(i+1)+'</span>',iconSize:[30,30],iconAnchor:[15,15]})})
       .addTo(map).bindPopup('<b>'+t[0]+'</b><br>'+t[1]);
   });
   map.fitBounds(L.latLngBounds(ll).pad(.2));
+  }
+  var started=false;
+  function start(){
+    if(started) return; started=true;
+    var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js'; s.onload=init; document.head.appendChild(s);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){ io.disconnect(); start(); } },{rootMargin:'500px 0px'});
+    io.observe(holder);
+  } else start();
 })();
 </script>
+
 <script>
 /* ---- Mobile menu: the links hidden on small screens, listed under a three-line button ---- */
 (function(){

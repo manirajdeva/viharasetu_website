@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" media="print" onload="this.media=\'all\'">
 <link rel="icon" href="../../../images/fevicon.png" type="image/png">
 
 <style>
@@ -676,10 +676,11 @@ var PLANS=[
   });
 })();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-/* ---- Destination map ---- */
+/* ---- Destination map: Leaflet and the map tiles load only when the map is about to scroll into view ---- */
 (function(){
+  var holder=document.getElementById('pmap'); if(!holder) return;
+  function init(){
   var el=document.getElementById('pmap'); if(!el||!window.L) return;
   var T=[["Colva", "Beach", 15.2797, 73.9128], ["Benaulim", "Beach", 15.25, 73.928], ["Cavelossim", "Resort coast", 15.173, 73.942], ["Cabo de Rama", "Clifftop fort", 15.088, 73.92], ["Agonda", "Quiet bay", 15.042, 73.987], ["Palolem", "Crescent bay", 15.01, 74.023]], ROUTE=true;
   var map=L.map(el,{scrollWheelZoom:false});
@@ -691,8 +692,19 @@ var PLANS=[
       .addTo(map).bindPopup('<b>'+t[0]+'</b><br>'+t[1]);
   });
   map.fitBounds(L.latLngBounds(ll).pad(.2));
+  }
+  var started=false;
+  function start(){
+    if(started) return; started=true;
+    var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js'; s.onload=init; document.head.appendChild(s);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){ io.disconnect(); start(); } },{rootMargin:'500px 0px'});
+    io.observe(holder);
+  } else start();
 })();
 </script>
+
 <script>
 /* ---- Mobile menu: the links hidden on small screens, listed under a three-line button ---- */
 (function(){

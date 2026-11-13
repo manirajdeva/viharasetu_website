@@ -209,3 +209,18 @@ After that, pushing to `main` redeploys the service.
   comparisons entirely on the database side, or entirely in Node.
 - **No outbound email:** Render's free plan blocks SMTP. That is why there is no emailed password
   reset. Admins reset passwords from the portal instead.
+
+
+## Spam / bot protection on the public enquiry form
+
+`src/antiSpam.js` guards `POST /exec` (no `sheet`/`action`) and `POST /api/public/enquiries`:
+
+| Layer | What it does |
+|---|---|
+| Honeypot | Hidden `hp_website` field (added by `js/enquiry-guard.js`); if filled, the enquiry is silently dropped. |
+| Form token | `GET /exec?action=ftoken` returns a signed timestamp. Submissions must carry one that is 3 s to 4 h old. Token-less submissions (old cached pages) are allowed only 3 per IP per hour. |
+| Rate limits | `/exec`: 8 enquiries / hour and 25 / day per IP. `/api/public/enquiries`: 8 / hour. |
+| Duplicates | Same phone or email is rejected for 10 minutes after a stored enquiry. |
+| CAPTCHA (optional) | Cloudflare Turnstile. Set `TURNSTILE_SECRET_KEY` here and `VS_TURNSTILE_SITEKEY` in `js/enquiry-guard.js`. |
+
+Set `FORM_TOKEN_SECRET` (long random string) in the environment. Deploy the API **before or together with** the site files: the new front end works against an old API, but the protection only applies once the API is updated.
