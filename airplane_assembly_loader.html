@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Airplane Assembly Loader</title>
+<style>
+  :root { --ink:#102d50; --blue:#2776b9; --cyan:#75c8e8; --muted:#6586a5; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; display:grid; place-items:center;
+    background:linear-gradient(135deg,#f8fbff,#eaf3fb);
+    color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  .demo { width:min(900px,100%); padding:24px; text-align:center; }
+  .loader { width:min(680px,100%); margin:auto; position:relative; }
+  svg { display:block; width:100%; height:auto; overflow:visible; }
+  .blueprint-grid { opacity:.48; }
+  .plane-line { fill:none; stroke:var(--blue); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .fine-line { fill:none; stroke:var(--cyan); stroke-width:1.15; stroke-linecap:round; stroke-linejoin:round; }
+  .dimension { fill:none; stroke:var(--muted); stroke-width:1; stroke-dasharray:3 4; opacity:.8; }
+  .part { transform-box:fill-box; transform-origin:center; }
+  .fuselage { animation:fuselageIn 5.2s cubic-bezier(.2,.75,.25,1) infinite; }
+  .wing { animation:wingIn 5.2s cubic-bezier(.2,.75,.25,1) infinite; }
+  .tail { animation:tailIn 5.2s cubic-bezier(.2,.75,.25,1) infinite; }
+  .engine { animation:engineIn 5.2s cubic-bezier(.2,.75,.25,1) infinite; }
+  .gear { animation:gearIn 5.2s cubic-bezier(.2,.75,.25,1) infinite; }
+  .assembled { opacity:0; animation:assembled 5.2s ease-in-out infinite; }
+  .trail { opacity:0; animation:trail 5.2s ease-in-out infinite; }
+  .label { font-size:10px; letter-spacing:1.7px; fill:var(--muted); font-weight:650; }
+  .loader-copy { margin-top:-4px; }
+  .eyebrow { font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#4783b3; font-weight:750; }
+  h1 { margin:8px 0 6px; font-size:clamp(20px,4vw,29px); letter-spacing:-.035em; font-weight:650; }
+  .status { color:#52728f; font-size:14px; min-height:22px; }
+  .bar { width:min(220px,60%); height:3px; border-radius:9px; margin:16px auto 0; background:#d5e6f3; overflow:hidden; }
+  .bar span { display:block; height:100%; width:35%; border-radius:9px; background:var(--blue); animation:progress 5.2s ease-in-out infinite; }
+  .demo-controls { margin-top:26px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+  button { border:1px solid #b9d2e7; border-radius:999px; padding:10px 16px; background:#fff; color:var(--ink); cursor:pointer; font:600 13px inherit; }
+  button:hover { background:#edf6fd; }
+  .note { margin:18px auto 0; max-width:560px; color:#7690a8; font-size:12px; line-height:1.6; }
+  @keyframes fuselageIn {
+    0%,8% { transform:translate(-95px,20px) rotate(-7deg); opacity:0; }
+    20%,68% { transform:translate(0,0) rotate(0); opacity:1; }
+    78% { transform:translate(0,-5px) rotate(-1deg); opacity:1; }
+    100% { transform:translate(360px,-115px) rotate(-8deg); opacity:0; }
+  }
+  @keyframes wingIn {
+    0%,12% { transform:translate(0,-80px) rotate(-16deg); opacity:0; }
+    25%,68% { transform:translate(0,0) rotate(0); opacity:1; }
+    78% { transform:translate(0,-5px); opacity:1; }
+    100% { transform:translate(360px,-115px) rotate(-8deg); opacity:0; }
+  }
+  @keyframes tailIn {
+    0%,17% { transform:translate(95px,-55px) rotate(20deg); opacity:0; }
+    29%,68% { transform:translate(0,0) rotate(0); opacity:1; }
+    78% { transform:translate(0,-5px); opacity:1; }
+    100% { transform:translate(360px,-115px) rotate(-8deg); opacity:0; }
+  }
+  @keyframes engineIn {
+    0%,23% { transform:translate(-70px,65px) scale(.75); opacity:0; }
+    36%,68% { transform:translate(0,0) scale(1); opacity:1; }
+    78% { transform:translate(0,-5px); opacity:1; }
+    100% { transform:translate(360px,-115px) rotate(-8deg); opacity:0; }
+  }
+  @keyframes gearIn {
+    0%,29% { transform:translate(30px,70px); opacity:0; }
+    41%,68% { transform:translate(0,0); opacity:1; }
+    78% { transform:translate(0,-5px); opacity:1; }
+    100% { transform:translate(360px,-115px) rotate(-8deg); opacity:0; }
+  }
+  @keyframes assembled {
+    0%,39% { opacity:0; }
+    44%,69% { opacity:1; }
+    78%,100% { opacity:0; }
+  }
+  @keyframes trail {
+    0%,68% { opacity:0; transform:translateX(-20px); }
+    77% { opacity:.9; transform:translateX(0); }
+    100% { opacity:0; transform:translateX(180px); }
+  }
+  @keyframes progress { 0% { transform:translateX(-120%); } 75% { transform:translateX(220%); } 100% { transform:translateX(400%); } }
+  @media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { animation-duration:12s !important; }
+  }
+</style>
+</head>
+<body>
+<main class="demo">
+  <div class="loader" role="status" aria-live="polite" aria-label="Preparing your journey">
+    <svg viewBox="0 0 680 360" role="img" aria-label="Technical blueprint of an airplane being assembled and taking off">
+      <defs>
+        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M20 0H0V20" fill="none" stroke="#b7d6eb" stroke-width=".65"/>
+        </pattern>
+        <linearGradient id="blueprintWash" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f7fbff"/><stop offset="1" stop-color="#eaf5fc"/>
+        </linearGradient>
+      </defs>
+      <rect x="18" y="12" width="644" height="316" rx="16" fill="url(#blueprintWash)" stroke="#c9dfef"/>
+      <rect class="blueprint-grid" x="18" y="12" width="644" height="316" rx="16" fill="url(#grid)"/>
+      <path class="dimension" d="M92 190H590 M340 42V290 M135 245V270H555V245"/>
+      <path class="fine-line" d="M55 48h24m-12-12v24M615 48h-24m12-12v24M55 292h24m-12-12v24M615 292h-24m12-12v24"/>
+      <text x="42" y="34" class="label">AIRFRAME / A-01</text>
+      <text x="526" y="314" class="label">ASSEMBLY SEQUENCE</text>
+
+      <!-- Detached fuselage -->
+      <g class="part fuselage">
+        <path class="plane-line" d="M174 172 Q205 163 260 166 L424 181 Q449 184 466 192 Q449 199 424 201 L260 208 Q205 210 174 198 Q164 192 174 172Z"/>
+        <path class="fine-line" d="M190 178 Q202 173 224 173 L420 188"/>
+        <path class="fine-line" d="M193 194 L420 196"/>
+        <path class="plane-line" d="M432 182l17 10-17 8"/>
+        <path class="fine-line" d="M242 174l-4 30m18-29-4 28m18-27-4 26m18-25-4 24m18-23-4 22m18-21-4 20m18-19-4 18m18-17-4 16"/>
+      </g>
+      <!-- Wings -->
+      <g class="part wing">
+        <path class="plane-line" d="M300 184 L353 91 Q360 82 370 87 L390 98 L354 190Z"/>
+        <path class="fine-line" d="M354 105L343 178 M365 100L354 181"/>
+        <path class="plane-line" d="M310 194 L350 248 Q355 254 364 250 L382 242 L352 190Z"/>
+        <path class="fine-line" d="M326 208L357 243"/>
+      </g>
+      <!-- Tail surfaces -->
+      <g class="part tail">
+        <path class="plane-line" d="M202 174 L179 132 L193 128 L235 169Z"/>
+        <path class="fine-line" d="M190 137l28 32"/>
+        <path class="plane-line" d="M207 202 L179 235 L192 239 L237 207Z"/>
+      </g>
+      <!-- Engines -->
+      <g class="part engine">
+        <ellipse class="plane-line" cx="350" cy="162" rx="18" ry="10"/>
+        <ellipse class="fine-line" cx="350" cy="162" rx="11" ry="6"/>
+        <path class="plane-line" d="M333 162h34"/>
+        <ellipse class="plane-line" cx="372" cy="220" rx="18" ry="10"/>
+        <ellipse class="fine-line" cx="372" cy="220" rx="11" ry="6"/>
+        <path class="plane-line" d="M355 220h34"/>
+      </g>
+      <!-- Landing gear -->
+      <g class="part gear">
+        <path class="plane-line" d="M275 205l-4 24m0 0h-11m11 0h10"/>
+        <circle class="plane-line" cx="264" cy="234" r="5"/><circle class="plane-line" cx="282" cy="234" r="5"/>
+        <path class="plane-line" d="M411 201l-3 21m0 0h-9m9 0h9"/>
+        <circle class="plane-line" cx="399" cy="226" r="4"/><circle class="plane-line" cx="417" cy="226" r="4"/>
+      </g>
+      <!-- Fully assembled aircraft silhouette / technical drawing -->
+      <g class="assembled">
+        <path class="plane-line" d="M135 181 Q162 169 218 174 L525 190 Q550 192 567 200 Q550 208 525 210 L218 226 Q162 231 135 218 Q122 200 135 181Z"/>
+        <path class="plane-line" d="M300 188L370 72Q375 65 384 71L410 86L362 196 M307 207L366 270Q372 277 381 269L402 253L361 196"/>
+        <path class="plane-line" d="M170 176L139 139L154 135L211 174 M170 222L139 258L154 262L212 224"/>
+        <path class="fine-line" d="M163 186L516 198 M164 211L516 203 M227 178l-4 45m20-44-4 43m20-42-4 41m20-40-4 39m20-38-4 37m20-36-4 35"/>
+        <path class="plane-line" d="M325 201q-3-22 19-22t19 22 M400 205q-3-22 19-22t19 22"/>
+        <ellipse class="plane-line" cx="344" cy="201" rx="17" ry="9"/>
+        <ellipse class="plane-line" cx="419" cy="205" rx="17" ry="9"/>
+        <path class="fine-line" d="M336 201h16m59 4h16"/>
+        <path class="plane-line" d="M275 224l-3 21h-12m12 0h12 M475 211l-2 18h-10m10 0h10"/>
+        <circle class="plane-line" cx="263" cy="248" r="5"/><circle class="plane-line" cx="284" cy="248" r="5"/>
+        <circle class="plane-line" cx="459" cy="232" r="4"/><circle class="plane-line" cx="480" cy="232" r="4"/>
+      </g>
+      <g class="trail fine-line">
+        <path d="M70 185h70M48 200h83M80 215h56"/>
+      </g>
+      <text x="42" y="314" class="label">PRECISION / ENGINEERED FOR THE JOURNEY</text>
+    </svg>
+  </div>
+  <section class="loader-copy">
+    <div class="eyebrow">Your journey is taking shape</div>
+    <h1>Assembling your aircraft</h1>
+    <div class="status" id="statusText">Aligning the airframe…</div>
+    <div class="bar" aria-hidden="true"><span></span></div>
+  </section>
+  <div class="demo-controls">
+    <button id="previewBtn" type="button">Preview animation again</button>
+    <button id="finishBtn" type="button">Simulate page loaded</button>
+  </div>
+  <p class="note">Demo controls are for preview only. In your website, call <code>hideAirplaneLoader()</code> when your page data and essential content are ready.</p>
+</main>
+<script>
+(() => {
+  const status = document.getElementById('statusText');
+  const title = document.querySelector('h1');
+  const svg = document.querySelector('svg');
+  const messages = [
+    [0, 'Aligning the airframe…'],
+    [1150, 'Fitting wings and tail…'],
+    [2150, 'Installing engines and landing gear…'],
+    [2950, 'Running final checks…'],
+    [3650, 'Ready for departure…'],
+    [4100, 'Taking off…']
+  ];
+  let timers = [];
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function play() {
+    clearTimers();
+    svg.style.animation = 'none';
+    void svg.offsetWidth;
+    svg.style.animation = '';
+    title.textContent = 'Assembling your aircraft';
+    status.textContent = messages[0][1];
+    messages.slice(1).forEach(([delay, message]) => timers.push(setTimeout(() => status.textContent = message, delay)));
+  }
+  window.hideAirplaneLoader = function() {
+    clearTimers();
+    document.querySelector('.demo').innerHTML = '<div style="padding:50px 12px"><div class="eyebrow">Welcome aboard</div><h1>Your journey starts here.</h1><p style="color:#52728f">The loading animation has finished.</p><button onclick="location.reload()">Replay demo</button></div>';
+  };
+  document.getElementById('previewBtn').addEventListener('click', play);
+  document.getElementById('finishBtn').addEventListener('click', () => window.hideAirplaneLoader());
+  play();
+})();
+</script>
+</body>
+</html>
