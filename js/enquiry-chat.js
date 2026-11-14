@@ -9,7 +9,7 @@
   // Anti-spam fields (signed form token etc.) come from js/enquiry-guard.js, loaded next to this file.
   if (!window.VSGuard && document.currentScript && document.currentScript.src) {
     var gs = document.createElement("script");
-    gs.src = document.currentScript.src.replace(/enquiry-chat\.js.*$/, "enquiry-guard.js?v=1");
+    gs.src = document.currentScript.src.replace(/enquiry-chat\.js.*$/, "enquiry-guard.js?v=2");
     document.head.appendChild(gs);
   }
   function guarded(fd) {
