@@ -171,6 +171,9 @@ CREATE TABLE IF NOT EXISTS admins (
   mobile        VARCHAR(20)      NULL,                                  -- "Mobile"
   email         VARCHAR(190)     NULL,                                  -- "Email"
   active        TINYINT(1)   NOT NULL DEFAULT 1,                        -- 0 = inactive: cannot log in, sessions are dropped
+  totp_secret    VARCHAR(255)     NULL,                                 -- authenticator-app secret, AES-256-GCM encrypted (src/mfa.js)
+  totp_enabled   TINYINT(1)   NOT NULL DEFAULT 0,                       -- 1 once the user has confirmed a code from their app
+  totp_last_step BIGINT           NULL,                                 -- last accepted 30s step, blocks code re-use
   created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

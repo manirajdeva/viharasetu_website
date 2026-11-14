@@ -16,6 +16,7 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 
 const auth = require('../auth');
+const mfa = require('../mfa');
 const audit = require('../audit');
 const loginAudit = require('../loginAudit');
 const sheets = require('../services/sheets');
@@ -82,7 +83,7 @@ router.get('/', async (req, res, next) => {
 
 router.post(
   '/',
-  (req, res, next) => (req.body && req.body.action === 'login' ? loginLimiter(req, res, next) : next()),
+  (req, res, next) => (req.body && ['login', 'mfaSetupStart', 'mfaVerify'].includes(req.body.action) ? loginLimiter(req, res, next) : next()),
   (req, res, next) => (isPublicEnquiry(req) ? enquiryHourly(req, res, next) : next()),
   (req, res, next) => (isPublicEnquiry(req) ? enquiryDaily(req, res, next) : next()),
   async (req, res, next) => {
@@ -112,6 +113,26 @@ router.post(
         if (!auth.isActive(admin)) {
           loginAudit.record(req, { event: 'LOGIN_FAILED', username: admin.username, admin, reason: 'INACTIVE' });
           return fail(res, 'INACTIVE', 'This account is inactive. Please contact an administrator.');
+        }
+        // Password accepted - but no session yet. The caller must pass the authenticator step first.
+        return res.json({ ok: true, mfaRequired: true, mfaSetup: !auth.mfaEnrolled(admin), mfaToken: mfa.issueChallenge(admin.username) });
+      }
+
+      if (body.action === 'mfaSetupStart') {
+        return res.json({ ok: true, ...(await auth.startMfaSetup(body.mfaToken)) });
+      }
+
+      if (body.action === 'mfaVerify') {
+        let admin;
+        try {
+          admin = await auth.verifyMfaCode(body.mfaToken, body.code);
+        } catch (e) {
+          if (e && e.code && String(e.code).startsWith('MFA_')) {
+            const who = mfa.readChallenge(body.mfaToken);
+            const known = who ? await auth.findAdmin(who).catch(() => null) : null;
+            if (known) loginAudit.record(req, { event: 'LOGIN_FAILED', username: known.username, admin: known, reason: e.code });
+          }
+          throw e;
         }
         const sess = await auth.createSession(admin.username);
         loginAudit.record(req, { event: 'LOGIN', admin, token: sess.token });
@@ -160,6 +181,11 @@ router.post(
         case 'listUsers':
           if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
           return res.json({ ok: true, users: await users.listUsers() });
+
+        case 'resetMfa':   // user lost their phone: they re-enrol on next login
+          if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');
+          await auth.resetMfa(body.username);
+          return res.json({ ok: true });
 
         case 'createUser':
           if (!isAdmin(admin)) return fail(res, 'FORBIDDEN', 'Only admins can manage users.');

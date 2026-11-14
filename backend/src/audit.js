@@ -17,7 +17,7 @@ const { istString, ensureIstColumn } = require('./time');
 const { ensureConsecutiveIds } = require('./tidb');
 
 const IGNORED_COLUMNS = new Set(['updated_at', 'created_id', 'updated_id']); // bookkeeping; the log's own changed_by already says who
-const REDACTED_COLUMNS = new Set(['password_hash']);
+const REDACTED_COLUMNS = new Set(['password_hash', 'totp_secret', 'totp_last_step']);
 
 async function ensureSchema() {
   await pool.query(`

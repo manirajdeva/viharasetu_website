@@ -30,7 +30,7 @@ async function adminCount() {
 
 async function listUsers() {
   const [rows] = await pool.query(
-    'SELECT username, role, can_delete, active, mobile, email, created_at FROM admins ORDER BY role ASC, username ASC',
+    'SELECT username, role, can_delete, active, mobile, email, created_at, totp_enabled FROM admins ORDER BY role ASC, username ASC',
   );
   return rows.map((r) => ({
     username: r.username,
@@ -38,6 +38,7 @@ async function listUsers() {
     active: isActive(r),
     mobile: r.mobile || '',
     email: r.email || '',
+    mfaEnabled: !!r.totp_enabled,
     createdAt: r.created_at instanceof Date ? r.created_at.toISOString() : (r.created_at || ''),
   }));
 }
