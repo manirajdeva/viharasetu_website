@@ -399,3 +399,7 @@ used and is kept only as a reference and cold backup. `gas-deploy/` (git-ignored
 `clasp` deploy folder for it. Production data was not imported from the Sheet, because the MySQL
 database started fresh. The importer (`backend/migrate/import-from-sheets.js`) is still available if
 that is ever needed.
+
+## Licence
+
+Copyright (c) 2026 Vihara Setu. All rights reserved. This is proprietary work; see [LICENSE](LICENSE). Contributions are by invitation only; see [CONTRIBUTING.md](CONTRIBUTING.md). Third-party images and fonts keep their own licences.
