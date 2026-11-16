@@ -19,6 +19,8 @@
 const http = require('http');
 const crypto = require('crypto');
 
+const mfa = require('../backend/src/mfa');   // same TOTP code as the real API
+
 const PORT = 3001;
 const SESSION_TTL_MS = 6 * 60 * 60 * 1000;
 
@@ -35,6 +37,7 @@ const publicUser = (u) => ({
   canDelete: true,
   mobile: u.mobile || '',
   email: u.email || '',
+  mfaEnabled: !!u.totpEnabled,
 });
 
 const HEADERS = {
@@ -116,6 +119,35 @@ function login(p) {
   sessions.set(token, { exp: expiresAt, username: u.username });
   return { ok: true, token, expiresAt, user: publicUser(u) };
 }
+/* MFA: password OK -> challenge token -> authenticator code -> session (mirrors backend/src/routes/exec.js). */
+function loginStep1(p) {
+  const u = findUser(String(p.username || '').trim());
+  if (!u || String(p.password || '') !== u.password) throw new AppError('BAD_LOGIN', 'Invalid username or password.');
+  if (!isActive(u)) throw new AppError('INACTIVE', 'This account is inactive. Please contact an administrator.');
+  return { ok: true, mfaRequired: true, mfaSetup: !u.totpEnabled, mfaToken: mfa.issueChallenge(u.username) };
+}
+function mfaUser(p) {
+  const u = findUser(mfa.readChallenge(p.mfaToken));
+  if (!u || !isActive(u)) throw new AppError('MFA_EXPIRED', 'Your sign-in timed out. Please enter your password again.');
+  return u;
+}
+function mfaSetupStart(p) {
+  const u = mfaUser(p);
+  if (u.totpEnabled) throw new AppError('MFA_ALREADY_SET', 'Authenticator is already set up for this account.');
+  u.totpSecret = mfa.generateSecret();
+  return { ok: true, secret: u.totpSecret, otpauthUri: mfa.otpauthUri(u.username, u.totpSecret) };
+}
+function mfaVerify(p) {
+  const u = mfaUser(p);
+  const wait = mfa.lockedFor(u.username);
+  if (wait) throw new AppError('MFA_LOCKED', 'Too many wrong codes. Try again in ' + wait + ' minute(s).');
+  if (!u.totpSecret) throw new AppError('MFA_NOT_SETUP', 'Authenticator setup was not started. Please sign in again.');
+  const step = mfa.verifyCode(u.totpSecret, p.code, u.totpEnabled ? u.totpLastStep : null);
+  if (step === null) { mfa.recordFailure(u.username); throw new AppError('MFA_BAD_CODE', 'That code is not correct or has expired. Check the latest code in your authenticator app.'); }
+  mfa.clearFailures(u.username);
+  u.totpEnabled = true; u.totpLastStep = step;
+  return login({ username: u.username, password: u.password });
+}
 /** Returns the acting user, or throws SESSION_EXPIRED. */
 function requireSession(token) {
   const s = sessions.get(token);
@@ -132,7 +164,7 @@ const isActive = (u) => u.active !== false;
 const adminCount = () => users.filter((u) => u.role === 'admin' && isActive(u)).length;
 
 function listUsers() {
-  return { ok: true, users: users.map((u) => ({ username: u.username, role: u.role, active: isActive(u), mobile: u.mobile || '', email: u.email || '' })) };
+  return { ok: true, users: users.map((u) => ({ username: u.username, role: u.role, active: isActive(u), mobile: u.mobile || '', email: u.email || '', mfaEnabled: !!u.totpEnabled })) };
 }
 function createUser(p) {
   const v = p.values || {};
@@ -533,13 +565,21 @@ function handlePost(body, res) {
       });
       return send(res, { ok: true, enquiryId: id });
     }
-    if (p.action === 'login') return send(res, login(p));
+    if (p.action === 'login') return send(res, loginStep1(p));
+    if (p.action === 'mfaSetupStart') return send(res, mfaSetupStart(p));
+    if (p.action === 'mfaVerify') return send(res, mfaVerify(p));
     if (p.action === 'logout') { sessions.delete(p.token); return send(res, { ok: true }); }
 
     const actor = requireSession(p.token);
     const adminsOnly = () => ({ ok: false, error: { code: 'FORBIDDEN', message: 'Only admins can manage users.' } });
     switch (p.action) {
       case 'whoami': return send(res, { ok: true, user: publicUser(actor) });
+      case 'resetMfa': {
+        if (actor.role !== 'admin') return send(res, adminsOnly());
+        const t = findUser(p.username);
+        if (t) { t.totpSecret = null; t.totpEnabled = false; t.totpLastStep = null; for (const [tok, s] of sessions) if (s.username === t.username) sessions.delete(tok); }
+        return send(res, { ok: true });
+      }
       case 'bootstrap': return send(res, {
         ok: true,
         data: {

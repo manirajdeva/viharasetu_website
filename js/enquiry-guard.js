@@ -78,10 +78,32 @@
     });
   }
 
+  /* ---- no hyperlinks in any text box ---- */
+  var LINK_RE = /(https?:\/\/|ftp:\/\/|www\.|<\s*a\s|href\s*=|\b[a-z0-9-]+\.(com|net|org|in|co|io|info|biz|xyz|ru|cn|top|site|online|shop|link|click|live|me|ly|tk|ml|cf|ga|gq)\b(\/\S*)?)/i;
+  var LINK_MSG = "Links / web addresses are not allowed in the form. Please remove them and try again.";
+  function hasLink(s) { return typeof s === "string" && LINK_RE.test(s.replace(/\S+@\S+\.\S+/g, "")); }   // ignore e-mail addresses
+
+  function checkForm(form) {
+    var els = form.querySelectorAll("input[type=text],input:not([type]),input[type=url],textarea");
+    for (var i = 0; i < els.length; i++) {
+      if (els[i].classList.contains("vs-hp")) continue;
+      if (hasLink(els[i].value)) { els[i].focus(); return els[i]; }
+    }
+    return null;
+  }
+  document.addEventListener("submit", function (e) {
+    var bad = e.target && e.target.querySelectorAll ? checkForm(e.target) : null;
+    if (bad) { e.preventDefault(); e.stopImmediatePropagation(); alert(LINK_MSG); }
+  }, true);
+
   window.VSGuard = {
     warm: warm,
+    hasLink: hasLink,
     /** Returns a Promise of formData + anti-spam fields. Never mutates the object passed in. */
     prepare: function (formData) {
+      for (var k in (formData || {})) {
+        if (hasLink(String(formData[k]))) { var le = new Error(LINK_MSG); le.userMessage = LINK_MSG; return Promise.reject(le); }
+      }
       var tp = warm();
       return Promise.all([tp, captcha()]).then(function (r) {
         var wait = Math.max(0, MIN_AGE_MS - (Date.now() - tokenAt));      // never post inside the first 3 s

@@ -14,6 +14,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const pool = require('./db');
 const config = require('./config');
+const mfa = require('./mfa');
 
 class AuthError extends Error {
   constructor(code, message) {
@@ -39,6 +40,12 @@ async function ensureSchema() {
   if (!cols.length) {
     await pool.query('ALTER TABLE admins ADD COLUMN active TINYINT(1) NOT NULL DEFAULT 1 AFTER email');
   }
+  const [mfaCols] = await pool.query(
+    "SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'admins' AND COLUMN_NAME = 'totp_enabled'",
+  );
+  if (!mfaCols.length) {
+    await pool.query('ALTER TABLE admins ADD COLUMN totp_secret VARCHAR(255) NULL, ADD COLUMN totp_enabled TINYINT(1) NOT NULL DEFAULT 0, ADD COLUMN totp_last_step BIGINT NULL');
+  }
 }
 
 /** Public view of an admin row — never includes the hash. */
@@ -52,6 +59,7 @@ const publicAdmin = (a) => {
     canDelete: true,
     mobile: a.mobile || '',
     email: a.email || '',
+    mfaEnabled: mfaEnrolled(a),
   };
 };
 
@@ -65,6 +73,48 @@ async function verifyAdmin(username, password) {
   if (!admin || !password) return null;
   const ok = await bcrypt.compare(String(password), admin.password_hash);
   return ok ? admin : null;
+}
+
+/* ------------------------------ MFA (TOTP) ------------------------------ */
+
+const mfaEnrolled = (a) => !!(a && (a.totp_enabled === 1 || a.totp_enabled === true || a.totp_enabled === '1') && a.totp_secret);
+
+/** Resolve a challenge token (issued after the password check) to an active admin, or throw. */
+async function adminFromChallenge(challenge) {
+  const username = mfa.readChallenge(challenge);
+  const admin = username && (await findAdmin(username));
+  if (!admin || !isActive(admin)) throw new AuthError('MFA_EXPIRED', 'Your sign-in timed out. Please enter your password again.');
+  return admin;
+}
+
+/** First-time setup: (re)generate a pending secret and return what the QR code needs. Refused once enrolled. */
+async function startMfaSetup(challenge) {
+  const admin = await adminFromChallenge(challenge);
+  if (mfaEnrolled(admin)) throw new AuthError('MFA_ALREADY_SET', 'Authenticator is already set up for this account.');
+  const secret = mfa.generateSecret();
+  await pool.query('UPDATE admins SET totp_secret = ?, totp_enabled = 0, totp_last_step = NULL WHERE id = ?', [mfa.encryptSecret(secret), admin.id]);
+  return { secret, otpauthUri: mfa.otpauthUri(admin.username, secret) };
+}
+
+/** Check a code for the challenge's user (confirming enrolment on first success). Returns the admin row. */
+async function verifyMfaCode(challenge, code) {
+  const admin = await adminFromChallenge(challenge);
+  const wait = mfa.lockedFor(admin.username);
+  if (wait) throw new AuthError('MFA_LOCKED', `Too many wrong codes. Try again in ${wait} minute${wait === 1 ? '' : 's'}.`);
+  if (!admin.totp_secret) throw new AuthError('MFA_NOT_SETUP', 'Authenticator setup was not started. Please sign in again.');
+  const step = mfa.verifyCode(mfa.decryptSecret(admin.totp_secret), code, mfaEnrolled(admin) ? admin.totp_last_step : null);
+  if (step === null) {
+    mfa.recordFailure(admin.username);
+    throw new AuthError('MFA_BAD_CODE', 'That code is not correct or has expired. Check the latest code in your authenticator app.');
+  }
+  mfa.clearFailures(admin.username);
+  await pool.query('UPDATE admins SET totp_enabled = 1, totp_last_step = ? WHERE id = ?', [step, admin.id]);
+  return admin;
+}
+
+async function resetMfa(username) {
+  await pool.query('UPDATE admins SET totp_secret = NULL, totp_enabled = 0, totp_last_step = NULL WHERE username = ?', [String(username)]);
+  await pool.query('DELETE FROM sessions WHERE username = ?', [String(username)]);   // force re-login
 }
 
 async function createSession(username) {
@@ -123,6 +173,10 @@ module.exports = {
   findAdmin,
   verifyAdmin,
   createSession,
+  mfaEnrolled,
+  startMfaSetup,
+  verifyMfaCode,
+  resetMfa,
   sessionUsername,
   deleteSession,
   purgeExpiredSessions,
