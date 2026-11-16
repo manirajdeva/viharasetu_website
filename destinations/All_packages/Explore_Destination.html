@@ -284,6 +284,31 @@ footer a{color:var(--gold-light);text-decoration:underline;text-underline-offset
 @media (max-width:700px){.state-grid{grid-template-columns:repeat(2,1fr);gap:10px}.state-btn{padding:12px}}
 @media (prefers-reduced-motion:reduce){.pill:hover .pi{transform:none}}
 </style>
+<style id="glass-header">
+/* White "liquid glass" header */
+.page-header{background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(255,255,255,.52));-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(26px) saturate(190%);border-bottom:1px solid rgba(255,255,255,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(35,42,54,.06),0 12px 32px -14px rgba(35,42,54,.35)}
+.nav-logo-mark{filter:drop-shadow(0 4px 8px rgba(35,42,54,.2))}
+.nav-logo{color:#232a36;font-weight:700}
+.nav-logo-sub{color:#c23a16;font-weight:700}
+.nav-links a{color:#1a2230;font-weight:700}
+.nav-links a:hover{background:rgba(255,90,50,.12)}
+.nav-links svg{stroke:#e8451c}
+.nav-toggle span{background:#232a36}
+.nav-cta{color:#fff;font-weight:700;background:linear-gradient(135deg,#ff7a52,#ff5a32);box-shadow:0 8px 20px -8px rgba(255,90,50,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+@media (max-width:900px){
+  .nav-links{background:linear-gradient(135deg,rgba(255,255,255,.97),rgba(255,255,255,.9));-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);border-bottom:1px solid rgba(255,255,255,.8);box-shadow:0 18px 30px -16px rgba(35,42,54,.35)}
+  .nav-links a{border-bottom:1px solid rgba(35,42,54,.08)}
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="header-font">
+/* Header font: Jost (a Futura-style geometric sans) */
+.nav-logo,.nav-brand-text b{font-family:'Jost','Futura','Century Gothic',sans-serif!important;font-weight:600;letter-spacing:.01em}
+.nav-logo-sub,.nav-brand-text small,.nav-links a,.nav-menu a,.badge,.nav-cta{font-family:'Jost','Futura','Century Gothic',sans-serif!important;font-weight:600}
+.nav-links a,.nav-menu a{font-size:.95rem;letter-spacing:.01em}
+.nav-cta{font-size:.95rem}
+</style>
 </head>
 <body>
   <header class="page-header">
